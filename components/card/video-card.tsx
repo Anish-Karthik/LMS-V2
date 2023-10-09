@@ -17,7 +17,7 @@ const VideoCard = ({ title, url, thumbnail }: VideoCardProps ) => {
     return null;
   }
   return (
-    <ReactPlayer url={"https://www.youtube.com/watch?v=7CqJlxBYj-M"} width="100%" height="100%" controls={true} />
+    <ReactPlayer url={url || "https://www.youtube.com/watch?v=7CqJlxBYj-M"} width="100%" height="100%" controls={true} />
   )
 }
 
