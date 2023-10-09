@@ -30,11 +30,11 @@ export default function ChapterBar({chapters}: {chapters: Tchapters}) {
           }>
             <div>
               {tag.subTopics.map((subTopic) =>(
-                <div className="pl-2 flex items-center justify-start gap-2 hover:bg-secondary">
-                  {subTopic.type === "video" && <VideoIcon className="w-6 h-6"/>}
-                  {subTopic.type === "quiz" && <Quiz className="w-4 h-4"/>}
-                  {subTopic.type === "lab" && <Pen className="w-6 h-6"/>}
-                  {subTopic.type === "assignment" && <FileQuestion className="w-6 h-6"/>}
+                <div className="flex items-center justify-start gap-2 pl-2 hover:bg-secondary">
+                  {subTopic.type === "video" && <VideoIcon className="h-6 w-6"/>}
+                  {subTopic.type === "quiz" && <Quiz className="h-4 w-4"/>}
+                  {subTopic.type === "lab" && <Pen className="h-6 w-6"/>}
+                  {subTopic.type === "assignment" && <FileQuestion className="h-6 w-6"/>}
                   <div className="cursor-pointer p-2">{subTopic.title}</div>
                 </div>
               ))}

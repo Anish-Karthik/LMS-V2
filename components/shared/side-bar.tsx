@@ -18,15 +18,15 @@ const Sidebar = () => {
   const pathname = usePathname();
   return (
     <div className='inset-y-0 hidden h-full md:fixed md:flex md:w-60 md:flex-col' >
-      <div className='m-2 flex h-full flex-col space-y-4 rounded-md border-2 py-4'>
-        <div className='flex-1 px-3 py-2'>
+      <div className=' flex h-full flex-col space-y-4 rounded-md border-2 py-4'>
+        <div className='mt-4 flex-1 px-3 py-2'>
 
-          <div className='space-y-6 '>
+          <div className='space-y-2 '>
             {routes.map((route) =>(
               <Link
                 key={route.label}
                 href={route.href}
-                className={cn('group flex w-full cursor-pointer justify-start rounded-lg bg-secondary p-6 text-sm transition-all duration-200 ease-in-out hover:bg-primary hover:text-secondary', 
+                className={cn('group flex w-full cursor-pointer justify-start rounded-lg p-3 text-sm transition-all duration-200 ease-in-out hover:bg-secondary', 
                 pathname === route.href ? '' : ''
                 )}
               >

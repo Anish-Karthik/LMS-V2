@@ -19,13 +19,13 @@ export interface Route {
   href: string
 }
 export const routes: Route[] = [
-  {
-    label: "Dashboard",
-    icon: LayoutDashboardIcon,
-    color: "text-sky-500",
-    bgColor: "bg-sky-500/10",
-    href: "/dashboard",
-  },
+  // {
+  //   label: "Dashboard",
+  //   icon: LayoutDashboardIcon,
+  //   color: "text-sky-500",
+  //   bgColor: "bg-sky-500/10",
+  //   href: "/dashboard",
+  // },
   {
     label: "Announcements",
     icon: InfoIcon,
