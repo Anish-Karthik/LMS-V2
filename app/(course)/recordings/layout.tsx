@@ -1,5 +1,6 @@
 import AdminTabs from '@/components/section/recording-section'
 import ChapterBar from '@/components/shared/chapter-bar'
+import { Header } from '@/components/shared/header';
 import React from 'react'
   const chapters = [
     {
@@ -100,7 +101,8 @@ const DashBoardLayout = async ({
   return (
     <div className='relative h-full'>
       {/* desktop view */}
-      <AdminTabs /> 
+      <Header />
+      {/* <AdminTabs />  */}
       <div className='flex'>
         <ChapterBar chapters={chapters} />
         <main className='w-full'>

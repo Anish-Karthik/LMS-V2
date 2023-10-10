@@ -5,7 +5,7 @@ import Link from 'next/link'
 import { usePathname } from 'next/navigation'
 
 import { cn } from '@/lib/utils'
-import { routes } from '@/app/constants'
+import { Trole, routes } from '@/app/constants'
 
 
 const montserrat = Montserrat({
@@ -14,7 +14,7 @@ const montserrat = Montserrat({
 });
 
 
-const Sidebar = () => {
+const Sidebar = ({role}: {role: Trole}) => {
   const pathname = usePathname();
   return (
     <div className='inset-y-0 hidden h-full md:fixed md:flex md:w-60 md:flex-col' >
@@ -23,7 +23,8 @@ const Sidebar = () => {
 
           <div className='space-y-2 '>
             {routes.map((route) =>(
-              <Link
+              route.roles.includes(role) && (
+                <Link
                 key={route.label}
                 href={route.href}
                 className={cn('group flex w-full cursor-pointer justify-start rounded-lg p-3 text-sm transition-all duration-200 ease-in-out hover:bg-secondary', 
@@ -35,6 +36,7 @@ const Sidebar = () => {
                   {route.label}
                 </div>
               </Link>
+              )
             ))}
           </div>
         </div>

@@ -5,8 +5,9 @@ import { ChevronsUpDown, FileQuestion, GrabIcon, Pen, Plus, Video, VideoIcon, X 
 import { ScrollArea } from "@/components/ui/scroll-area"
 import { Separator } from "@/components/ui/separator"
 import { CollapsibleTopics } from "./collapsible-topics"
-import { Tchapters } from "@/app/(dashboard)/(routes)/(recordings)/layout"
+
 import { Quiz } from "@mui/icons-material"
+import { Tchapters } from "@/app/(course)/recordings/layout"
 
 
 

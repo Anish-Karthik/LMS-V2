@@ -9,14 +9,17 @@ import {
   SettingsIcon,
   VideoIcon,
 } from "lucide-react"
+import { type } from "os"
 
 // give type to routes
+export type Trole = "admin" | "moderator" | "teacher" | "user";
 export interface Route {
   label: string
   icon: any
   color: string
   bgColor: string
   href: string
+  roles: Trole[]
 }
 export const routes: Route[] = [
   // {
@@ -32,6 +35,7 @@ export const routes: Route[] = [
     color: "text-violet-500",
     bgColor: "bg-violet-500/10",
     href: "/annoucements",
+    roles: ["admin", "moderator", "teacher", "user"],
   },
   {
     label: "Recordings",
@@ -39,6 +43,7 @@ export const routes: Route[] = [
     href: "/recordings",
     color: "text-orange-700",
     bgColor: "bg-orange-500/10",
+    roles: ["admin", "moderator", "teacher", "user"],
   },
   {
     label: "Analytics",
@@ -46,6 +51,7 @@ export const routes: Route[] = [
     href: "/analytics",
     color: "text-emerald-500",
     bgColor: "bg-emerald-500/10",
+    roles: ["admin", "moderator", "teacher"],
   },
   {
     label: "Settings",
@@ -53,6 +59,23 @@ export const routes: Route[] = [
     href: "/settings",
     color: "text-white-500",
     bgColor: "bg-white-500/10",
+    roles: ["admin", "moderator", "teacher", "user"],
+  },
+  {
+    label: "Create a new batch",
+    icon: ImageIcon,
+    href: "/create-batch",
+    color: "text-white-500",
+    bgColor: "bg-white-500/10",
+    roles: ["admin", "moderator", "teacher"],
+  },
+  {
+    label: "Edit a batch",
+    icon: ImageIcon,
+    href: "/edit-batch",
+    color: "text-white-500",
+    bgColor: "bg-white-500/10",
+    roles: ["admin", "moderator", "teacher"],
   },
 ]
 
