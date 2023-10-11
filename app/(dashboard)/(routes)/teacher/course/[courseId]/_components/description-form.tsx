@@ -20,6 +20,7 @@ import {
 import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
 import { Textarea } from "@/components/ui/textarea";
+import { editCourse } from "@/lib/actions/course.actions";
 
 interface DescriptionFormProps {
   initialData: Course;
@@ -53,7 +54,10 @@ export const DescriptionForm = ({
 
   const onSubmit = async (values: z.infer<typeof formSchema>) => {
     try {
-      await axios.patch(`/api/courses/${courseId}`, values);
+      await editCourse({
+        id: courseId,
+        ...values
+      })
       toast.success("Course updated");
       toggleEdit();
       router.refresh();
@@ -63,7 +67,7 @@ export const DescriptionForm = ({
   }
 
   return (
-    <div className="mt-6 border bg-slate-100 rounded-md p-4">
+    <div className="mt-6 border  rounded-md p-4">
       <div className="font-medium flex items-center justify-between">
         Course description
         <Button onClick={toggleEdit} variant="ghost">

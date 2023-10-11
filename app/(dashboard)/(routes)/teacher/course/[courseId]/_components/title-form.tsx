@@ -18,6 +18,7 @@ import {
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
+import { editCourse } from "@/lib/actions/course.actions";
 
 interface TitleFormProps {
   initialData: {
@@ -51,7 +52,10 @@ export const TitleForm = ({
 
   const onSubmit = async (values: z.infer<typeof formSchema>) => {
     try {
-      await axios.patch(`/api/courses/${courseId}`, values);
+      await editCourse({
+        id: courseId,
+        ...values
+      })
       toast.success("Course updated");
       toggleEdit();
       router.refresh();
@@ -61,7 +65,7 @@ export const TitleForm = ({
   }
 
   return (
-    <div className="mt-6 border bg-slate-100 rounded-md p-4">
+    <div className="mt-6 border rounded-md p-4">
       <div className="font-medium flex items-center justify-between">
         Course title
         <Button onClick={toggleEdit} variant="ghost">

@@ -6,13 +6,16 @@ import {
   LayoutDashboardIcon,
   MessageSquareIcon,
   MusicIcon,
+  Pen,
+  PencilIcon,
+  PlusIcon,
   SettingsIcon,
   VideoIcon,
 } from "lucide-react"
 import { type } from "os"
 
 // give type to routes
-export type Trole = "admin" | "moderator" | "teacher" | "user";
+export type Trole = "admin" | "moderator" | "teacher" | "student";
 export interface Route {
   label: string
   icon: any
@@ -35,7 +38,7 @@ export const routes: Route[] = [
     color: "text-violet-500",
     bgColor: "bg-violet-500/10",
     href: "/annoucements",
-    roles: ["admin", "moderator", "teacher", "user"],
+    roles: ["admin", "moderator", "teacher", "student"],
   },
   {
     label: "Recordings",
@@ -43,7 +46,7 @@ export const routes: Route[] = [
     href: "/recordings",
     color: "text-orange-700",
     bgColor: "bg-orange-500/10",
-    roles: ["admin", "moderator", "teacher", "user"],
+    roles: ["admin", "moderator", "teacher", "student"],
   },
   {
     label: "Analytics",
@@ -59,20 +62,28 @@ export const routes: Route[] = [
     href: "/settings",
     color: "text-white-500",
     bgColor: "bg-white-500/10",
-    roles: ["admin", "moderator", "teacher", "user"],
+    roles: ["admin", "moderator", "teacher", "student"],
+  },
+  {
+    label: "Course Details",
+    icon: Pen,
+    href: "/teacher/course",
+    color: "text-white-500",
+    bgColor: "bg-white-500/10",
+    roles: ["admin", "moderator", "teacher"],
   },
   {
     label: "Create a new batch",
-    icon: ImageIcon,
-    href: "/create-batch",
+    icon: PlusIcon,
+    href: "/teacher/course/batch",
     color: "text-white-500",
     bgColor: "bg-white-500/10",
     roles: ["admin", "moderator", "teacher"],
   },
   {
     label: "Edit a batch",
-    icon: ImageIcon,
-    href: "/edit-batch",
+    icon: PencilIcon,
+    href: "/teacher/course/batch",
     color: "text-white-500",
     bgColor: "bg-white-500/10",
     roles: ["admin", "moderator", "teacher"],

@@ -1,3 +1,4 @@
+"use server"
 import { currentUser } from "@clerk/nextjs"
 import { Batch, Course } from "@prisma/client"
 
@@ -47,10 +48,10 @@ export const editCourse = async ({
   price,
 }: {
   id: string
-  title: string
-  description: string
-  imageUrl: string
-  price: number
+  title?: string
+  description?: string
+  imageUrl?: string
+  price?: number
 }) => {
   try {
     const course = await db.course.update({

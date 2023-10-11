@@ -1,3 +1,4 @@
+"use server"
 import { Batch } from "@prisma/client";
 import { db } from "../db"
 import { string } from "zod";
