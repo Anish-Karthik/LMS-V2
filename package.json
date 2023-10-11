@@ -53,6 +53,7 @@
     "react-hot-toast": "^2.4.1",
     "react-player": "^2.13.0",
     "sharp": "^0.31.3",
+    "stripe": "^13.9.0",
     "tailwind-merge": "^1.13.2",
     "tailwindcss-animate": "^1.0.6",
     "uploadthing": "^5.7.1",
