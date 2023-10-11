@@ -8,15 +8,32 @@ datasource db {
 }
 
 model User {
-  id        String   @id @default(auto()) @map("_id") @db.ObjectId
-  phoneNo   String?  @unique
-  userId    String   @unique
-  email     String?  @unique
+  id        String     @id @default(auto()) @map("_id") @db.ObjectId
+  phoneNo   String?    @unique
+  userId    String     @unique
+  email     String?    @unique
   name      String
   image     String?
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
-  role      String   @default("user") // admin, user, teacher
+  createdAt DateTime   @default(now())
+  updatedAt DateTime   @updatedAt
+  role      String     @default("user") // admin, user, teacher
+  purchases Purchase[]
+  teacher   Teacher?
+  // @@index([userId])
+}
+
+model Teacher {
+  id        String @id @default(auto()) @map("_id") @db.ObjectId
+  userId    String @unique
+  userObjId String @unique @db.ObjectId
+  user      User   @relation(fields: [userObjId], references: [id])
+
+  courseIds String[] @db.ObjectId
+  courses   Course[] @relation(fields: [courseIds], references: [id])
+
+  batchesIds String[] @db.ObjectId
+  batches    Batch[]  @relation(fields: [batchesIds], references: [id])
+
   // @@index([userId])
 }
 
@@ -30,6 +47,8 @@ model Course {
   batches     Batch[]
   updatedAt   DateTime   @updatedAt
   Purchase    Purchase[]
+  teacherIds  String[]   @db.ObjectId
+  teachers    Teacher[]  @relation(fields: [teacherIds], references: [id])
 }
 
 model Batch {
@@ -42,6 +61,8 @@ model Batch {
   chapters    Chapter[]
   attachments Attachment[]
   purchases   Purchase[]
+  teacherIds  String[]     @db.ObjectId
+  teachers    Teacher[]    @relation(fields: [teacherIds], references: [id])
 }
 
 model Chapter {
@@ -125,6 +146,9 @@ model Purchase {
   updatedAt DateTime @updatedAt()
   Batch     Batch?   @relation(fields: [batchId], references: [id])
   batchId   String?  @db.ObjectId
+
+  userObjId String @db.ObjectId
+  user      User   @relation(fields: [userObjId], references: [id])
 
   @@unique([userId, courseId])
   @@index([courseId])

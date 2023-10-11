@@ -1,4 +1,5 @@
 "use server"
+
 import { currentUser } from "@clerk/nextjs"
 import { Batch, Course } from "@prisma/client"
 
@@ -26,7 +27,7 @@ export const createCourse = async ({
       },
     })
     const batch = await createBatch({
-      name: "Default Batch",
+      name: "unassigned",
       courseId: course.id,
     })
     if (!batch) throw new Error("Batch creation failed")
@@ -114,6 +115,22 @@ export const getCourseById = async (id: string) => {
       },
     })
     return course
+  } catch (e) {
+    console.log(e)
+    return null
+  }
+}
+
+export const getDefaultBatch = async (courseId: string) => {
+  try {
+    const course = await db.course.findUnique({
+      where: { id: courseId },
+      include: {
+        batches: true,
+      },
+    })
+    if (!course) throw new Error("Course not found")
+    return course.batches[0]
   } catch (e) {
     console.log(e)
     return null

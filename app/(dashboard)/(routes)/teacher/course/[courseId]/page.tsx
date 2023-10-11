@@ -7,6 +7,7 @@ import { ImageForm } from './_components/image-form'
 import { getCourseById } from '@/lib/actions/course.actions'
 import { PriceForm } from './_components/price-form'
 import { ChaptersForm } from './_components/chapters-form'
+import { BatchesForm } from './_components/batches-form'
 
 const page = async ({ params }: { params: {courseId: string } }) => {
   const course = await getCourseById(params.courseId);
@@ -21,7 +22,7 @@ const page = async ({ params }: { params: {courseId: string } }) => {
           <span className='text-sm text-primary' >Complete all fields</span>
         </div>
       </div>
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mt-16">
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mt-8">
         <div>
           <div className="flex items-center gap-x-2">
             <IconBadge icon={LayoutDashboardIcon} />
@@ -41,13 +42,13 @@ const page = async ({ params }: { params: {courseId: string } }) => {
             initialData={course}
             courseId={course.id}
           /> */}
-           <div>
-            <div className="flex items-center gap-x-2">
+          <div>
+            {/* <div className="flex items-center gap-x-2">
               <IconBadge icon={DollarSign} />
               <h2 className="text-xl">
                 Sell your course
               </h2>
-            </div>
+            </div> */}
             <PriceForm
               initialData={course}
               courseId={course.id}
@@ -59,7 +60,7 @@ const page = async ({ params }: { params: {courseId: string } }) => {
             <div className="flex items-center gap-x-2">
               <IconBadge icon={ListChecksIcon} />
               <h2 className="text-xl">
-                Course chapters
+                Course batches
               </h2>
             </div>
             <BatchesForm
