@@ -1,6 +1,3 @@
-// This is your Prisma schema file,
-// learn more about it in the docs: https://pris.ly/d/prisma-schema
-
 generator client {
   provider = "prisma-client-js"
 }
@@ -10,14 +7,134 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
-// model Course {
-//   id          String       @id @default(auto()) @map("_id") @db.ObjectId
-//   createdAt   DateTime     @default(now())
-//   updatedAt   DateTime     @updatedAt
-//   title       String
-//   description String
-//   lessons     Lesson[]
-//   quizzes     Quiz[]
-//   assignments Assignment[]
-//   tests       Test[]
-// }
+model User {
+  id        String   @id @default(auto()) @map("_id") @db.ObjectId
+  phoneNo   String?  @unique
+  userId    String   @unique
+  email     String?  @unique
+  name      String
+  image     String?
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  role      String   @default("user") // admin, user, teacher
+  // @@index([userId])
+}
+
+model Course {
+  id          String     @id @default(auto()) @map("_id") @db.ObjectId
+  title       String
+  description String?
+  imageUrl    String?
+  price       Float?
+  // isPublished Boolean @default(false)
+  batches     Batch[]
+  updatedAt   DateTime   @updatedAt
+  Purchase    Purchase[]
+}
+
+model Batch {
+  id          String       @id @default(auto()) @map("_id") @db.ObjectId
+  createdAt   DateTime     @default(now())
+  updatedAt   DateTime     @updatedAt
+  name        String
+  courseId    String       @db.ObjectId
+  course      Course       @relation(fields: [courseId], references: [id], onDelete: Cascade)
+  chapters    Chapter[]
+  attachments Attachment[]
+  purchases   Purchase[]
+}
+
+model Chapter {
+  id           String         @id @default(auto()) @map("_id") @db.ObjectId
+  title        String
+  description  String?
+  position     Int
+  userProgress UserProgress[]
+  batchId      String         @db.ObjectId
+  batch        Batch          @relation(fields: [batchId], references: [id], onDelete: Cascade)
+  topics       Topic[]
+  createdAt    DateTime       @default(now())
+  updatedAt    DateTime       @updatedAt
+
+  @@index([batchId])
+}
+
+model Topic {
+  id           String      @id @default(auto()) @map("_id") @db.ObjectId
+  title        String
+  description  String?
+  type         String
+  videoUrl     String?
+  muxData      MuxData?
+  chapterId    String      @db.ObjectId
+  chapter      Chapter     @relation(fields: [chapterId], references: [id], onDelete: Cascade)
+  attachment   Attachment?
+  attachmentId String      @db.ObjectId
+  isPublished  Boolean     @default(false)
+  isFree       Boolean     @default(false)
+  position     Int
+
+  @@index([chapterId])
+}
+
+model Attachment {
+  id        String   @id @default(auto()) @map("_id") @db.ObjectId
+  name      String
+  url       String
+  topic     Topic    @relation(fields: [topicId], references: [id])
+  topicId   String   @unique @db.ObjectId
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  Batch     Batch?   @relation(fields: [batchId], references: [id])
+  batchId   String?  @db.ObjectId
+}
+
+model MuxData {
+  id         String  @id @default(auto()) @map("_id") @db.ObjectId
+  assetId    String
+  playbackId String?
+
+  topicId String @unique @db.ObjectId
+  topic   Topic  @relation(fields: [topicId], references: [id], onDelete: Cascade)
+}
+
+model UserProgress {
+  id     String @id @default(auto()) @map("_id") @db.ObjectId
+  userId String
+
+  chapterId String  @db.ObjectId
+  chapter   Chapter @relation(fields: [chapterId], references: [id], onDelete: Cascade)
+
+  isCompleted Boolean @default(false)
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@unique([userId, chapterId])
+  @@index([chapterId])
+}
+
+model Purchase {
+  id     String @id @default(auto()) @map("_id") @db.ObjectId
+  userId String
+
+  courseId String @db.ObjectId
+  course   Course @relation(fields: [courseId], references: [id], onDelete: Cascade)
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt()
+  Batch     Batch?   @relation(fields: [batchId], references: [id])
+  batchId   String?  @db.ObjectId
+
+  @@unique([userId, courseId])
+  @@index([courseId])
+}
+
+model StripeCustomer {
+  id               String @id @default(auto()) @map("_id") @db.ObjectId
+  userId           String @unique
+  stripeCustomerId String @unique
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
