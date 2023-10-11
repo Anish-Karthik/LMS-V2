@@ -3,7 +3,8 @@ import { redirect } from "next/navigation";
 import { Tabs, TabsList, TabsTrigger, TabsContent } from '@/components/ui/tabs';
 import UserCard from '@/components/card/user-card';
 import { getDefaultBatch } from "@/lib/actions/course.actions";
-export const batchTabs = [
+
+const batchTabs = [
   { value: "students", label: "Students", icon: "/assets/members.svg" },
   { value: "teachers", label: "Teachers", icon: "/assets/members.svg" },
   { value: "details", label: "Details", icon: "/assets/edit.svg" },
