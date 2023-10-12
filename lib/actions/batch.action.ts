@@ -67,9 +67,9 @@ export const getBatches = async (courseId: string) => {
       where: { courseId },
     })
     return batches
-  } catch (e) {
-    console.log(e)
-    return null
+  } catch (e: any) {
+    console.error(e)
+    throw new Error("Batches not found",e.message)
   }
 }
 export const deleteBatch = async (courseId: string, batchId: string) => {
@@ -89,9 +89,9 @@ export const deleteBatch = async (courseId: string, batchId: string) => {
       where: { id: batchId },
     })
     return batch
-  } catch (e) {
-    console.log(e)
-    return null
+  } catch (e: any) {
+    console.error(e)
+    throw new Error(e.message)
   }
 }
 export const getBatchByName = async (courseId: string, name: string) => {
@@ -100,9 +100,9 @@ export const getBatchByName = async (courseId: string, name: string) => {
       where: { courseId, name },
     })
     return batch
-  } catch (e) {
-    console.log(e)
-    return null
+  } catch (e: any) {
+    console.error(e)
+    throw new Error(e.message)
   }
 }
 
@@ -120,9 +120,9 @@ export const addStudentToBatch = async (
       },
     })
     return batch
-  } catch (e) {
+  } catch (e: any) {
     console.error(e)
-    return null
+    throw new Error(e.message)
   }
 }
 

@@ -90,8 +90,8 @@ export const getUser = async (userId: string) => {
     })
     return user
   } catch (e: any) {
-    console.log(e)
-    return null
+    console.error(e)
+    throw new Error(e.message)
   }
 }
 

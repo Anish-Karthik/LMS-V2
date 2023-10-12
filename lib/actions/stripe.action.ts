@@ -25,10 +25,9 @@ export const createStripeCustomer = async (userId: string, stripeCustomerId: str
       },
     });
     return stripeCustomer;
-  }
-  catch (e) {
+  } catch (e: any) {
     console.error(e);
-    throw new Error("Stripe customer creation failed");
+    throw new Error("Stripe customer creation failed", e.message);
   }
 }
 
@@ -40,9 +39,8 @@ export const getStripeCustomer = async (userId: string) => {
       },
     });
     return stripeCustomer;
-  }
-  catch (e) {
-    console.log(e);
-    return null;
+  } catch (e: any) {
+    console.error(e)
+    throw new Error(e.message)
   }
 }

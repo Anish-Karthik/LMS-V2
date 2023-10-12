@@ -99,6 +99,16 @@ export const TopicsList = ({
 
 
                   <div className="ml-auto flex items-center gap-x-2 pr-2">
+                    {topic.isPublished ? (
+                      <span className="text-xs text-green-500">
+                        Published
+                      </span>
+                      ) : (
+                      <span className="text-xs text-slate-500">
+                          Unpublished
+                      </span>
+                      )
+                    }
                     <Pencil
                     onClick={() => onEdit(topic.id)}
                       className="h-4 w-4 cursor-pointer transition hover:opacity-75"

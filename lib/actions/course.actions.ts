@@ -35,9 +35,9 @@ export const createCourse = async ({
     await addBatchToCourse(batch.id, course.id)
 
     return course
-  } catch (e) {
-    console.log(e)
-    return null
+  } catch (e: any) {
+    console.error(e)
+    throw new Error(e.message)
   }
 }
 
@@ -65,9 +65,9 @@ export const editCourse = async ({
       },
     })
     return course
-  } catch (e) {
-    console.log(e)
-    return null
+  } catch (e: any) {
+    console.error(e)
+    throw new Error(e.message)
   }
 }
 
@@ -84,9 +84,9 @@ export const addBatchToCourse = async (batchId: string, courseId: string) => {
       },
     })
     return course
-  } catch (e) {
-    console.log(e)
-    return null
+  } catch (e: any) {
+    console.error(e)
+    throw new Error(e.message)
   }
 }
 
@@ -100,9 +100,9 @@ export const getCourses = async () => {
     })
     if (!courses || !courses.length) return null
     return courses
-  } catch (e) {
-    console.log(e)
-    return null
+  } catch (e: any) {
+    console.error(e)
+    throw new Error(e.message)
   }
 }
 
@@ -115,9 +115,9 @@ export const getCourseById = async (id: string) => {
       },
     })
     return course
-  } catch (e) {
-    console.log(e)
-    return null
+  } catch (e: any) {
+    console.error(e)
+    throw new Error(e.message)
   }
 }
 
@@ -133,7 +133,9 @@ export const getDefaultBatch = async (courseId: string) => {
     if (!course) throw new Error("Course not found")
     if(!course.batches.length) res = (await createBatch({ name: "unassigned", courseId })).id;
     else res = course.batches[0].id
-    return await getBatchById(res);
+    const ans = await getBatchById(res);
+    if(!ans) throw new Error("Batch not found")
+    return ans;
   } catch (e: any) {
     console.error(e)
     throw new Error(e.message || "Course not found");
