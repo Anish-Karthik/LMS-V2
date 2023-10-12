@@ -6,6 +6,10 @@ import { getDefaultBatch } from "@/lib/actions/course.actions";
 import { getBatchById, swapUserBatch } from "@/lib/actions/batch.action";
 import UsersList from "./_components/users-list";
 import Image from "next/image";
+import { IconBadge } from "@/components/icon-badge";
+import { ChaptersForm } from "./_components/chapters-form";
+import { ListChecks } from "lucide-react";
+import { getChaptersByBatchId } from "@/lib/actions/chapter.action";
 
 const batchTabs = [
   { value: "students", label: "Students", icon: "/assets/members.svg" },
@@ -25,6 +29,7 @@ const CourseIdPage = async ({
   if (!userId || !defaultBatch || !currentBatch) {
     return redirect("/");
   }
+  const initialData = await getChaptersByBatchId(batchId);
   return (<>
     
     <Tabs defaultValue={`${batchTabs[0].value}`} className='w-full'>
@@ -53,8 +58,19 @@ const CourseIdPage = async ({
         {/* <UsersList defaultBatch={defaultBatch} currentBatch={currentBatch} switchBatch={swapUserBatch} /> */}
       </TabsContent>
       <TabsContent key={batchTabs[2].label} value={batchTabs[2].value} className='w-full'>
-        {/* @ts-ignore */}
-        {/* <UsersList defaultBatch={defaultBatch} currentBatch={currentBatch} switchBatch={swapUserBatch} /> */}
+        <div>
+          <div className="flex items-center gap-x-2">
+            <IconBadge icon={ListChecks} />
+            <h2 className="text-xl">
+              Course chapters
+            </h2>
+          </div>
+          <ChaptersForm
+            initialData={initialData}
+            batchId={batchId}
+            courseId={courseId}
+          />
+        </div>
       </TabsContent>
     </Tabs>
   </>);

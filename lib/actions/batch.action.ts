@@ -39,6 +39,12 @@ export const getBatchById = async (batchId: string, courseId?: string) => {
           },
         },
         teachers: true,
+        attachments: true,
+        chapters: {
+          include: {
+            topics: true,
+          },
+        },
       },
     })
     return batch

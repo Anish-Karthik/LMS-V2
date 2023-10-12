@@ -8,7 +8,7 @@ import { Loader2, PlusCircle } from "lucide-react";
 import { useState } from "react";
 import toast from "react-hot-toast";
 import { useRouter } from "next/navigation";
-import { Chapter, Course } from "@prisma/client";
+import { Batch, Chapter, Course } from "@prisma/client";
 
 import {
   Form,
@@ -22,9 +22,13 @@ import { cn } from "@/lib/utils";
 import { Input } from "@/components/ui/input";
 
 import { ChaptersList } from "./chapters-list";
+import { createChapter, editChapter, getChapterById, reorderChapters } from "@/lib/actions/chapter.action";
+import { positions } from "@mui/system";
+import { get } from "http";
 
 interface ChaptersFormProps {
-  initialData: Course & { chapters: Chapter[] };
+  initialData: Chapter[];
+  batchId: string;
   courseId: string;
 };
 
@@ -34,10 +38,14 @@ const formSchema = z.object({
 
 export const ChaptersForm = ({
   initialData,
+  batchId,
   courseId
 }: ChaptersFormProps) => {
   const [isCreating, setIsCreating] = useState(false);
   const [isUpdating, setIsUpdating] = useState(false);
+  const [isEditing, setIsEditing] = useState(false);
+  const [editId, setEditId] = useState("");
+  const [editIdTitle, setEditIdTitle] = useState("");
 
   const toggleCreating = () => {
     setIsCreating((current) => !current);
@@ -56,11 +64,12 @@ export const ChaptersForm = ({
 
   const onSubmit = async (values: z.infer<typeof formSchema>) => {
     try {
-      await axios.post(`/api/courses/${courseId}/chapters`, values);
+      await createChapter(batchId, values.title);
       toast.success("Chapter created");
       toggleCreating();
       router.refresh();
-    } catch {
+    } catch(error: any) {
+      toast.error(error.message);
       toast.error("Something went wrong");
     }
   }
@@ -68,10 +77,10 @@ export const ChaptersForm = ({
   const onReorder = async (updateData: { id: string; position: number }[]) => {
     try {
       setIsUpdating(true);
-
-      await axios.put(`/api/courses/${courseId}/chapters/reorder`, {
-        list: updateData
-      });
+      await reorderChapters(batchId, updateData);
+      // await axios.put(`/api/courses/${batchId}/chapters/reorder`, {
+      //   list: updateData
+      // });
       toast.success("Chapters reordered");
       router.refresh();
     } catch {
@@ -80,13 +89,29 @@ export const ChaptersForm = ({
       setIsUpdating(false);
     }
   }
+  const onEditing = async (values: z.infer<typeof formSchema>) => {
+    try {
+      await editChapter(editId, values.title);
+      toast.success("Chapter created");
+      setIsEditing(false);
+      setEditId("");
+      router.refresh();
+    } catch(error: any) {
+      toast.error(error.message);
+      toast.error("Something went wrong");
+    }
+  }
 
-  const onEdit = (id: string) => {
-    router.push(`/teacher/courses/${courseId}/chapters/${id}`);
+  const onEdit = async (id: string) => {
+    // router.push(`/teacher/courses/${courseId}/${batchId}/chapters/${id}`);
+    const tmpTitle = (await getChapterById(id)).title;
+    setEditIdTitle(tmpTitle);
+    setIsEditing(true);
+    setEditId(id);
   }
 
   return (
-    <div className="relative mt-6 rounded-md border bg-slate-100 p-4">
+    <div className="relative mt-6 rounded-md border bg-secondary p-4">
       {isUpdating && (
         <div className="rounded-m absolute right-0 top-0 flex h-full w-full items-center justify-center bg-slate-500/20">
           <Loader2 className="h-6 w-6 animate-spin text-sky-700" />
@@ -135,25 +160,83 @@ export const ChaptersForm = ({
             </Button>
           </form>
         </Form>
+        
       )}
+
       {!isCreating && (
         <div className={cn(
           "mt-2 text-sm",
-          !initialData.chapters.length && "italic text-slate-500"
+          !initialData.length && "italic text-slate-500"
         )}>
-          {!initialData.chapters.length && "No chapters"}
-          <ChaptersList
-            onEdit={onEdit}
-            onReorder={onReorder}
-            items={initialData.chapters || []}
-          />
+          {!initialData.length && "No chapters"}
+          {isEditing? 
+              <EditForm onSubmit={onEditing} editIdTitle={editIdTitle} setIsEditing={setIsEditing}/>
+            :
+            <ChaptersList
+              onEdit={onEdit}
+              onReorder={onReorder}
+              items={initialData || []}
+            />
+          }
         </div>
       )}
-      {!isCreating && (
+      {!isCreating && !isEditing && (
         <p className="mt-4 text-xs text-muted-foreground">
           Drag and drop to reorder the chapters
         </p>
       )}
     </div>
+  )
+}
+
+function EditForm({onSubmit, editIdTitle, setIsEditing}: {onSubmit: any, editIdTitle: string, setIsEditing: any}) {
+
+  const form = useForm<z.infer<typeof formSchema>>({
+    resolver: zodResolver(formSchema),
+    defaultValues: {
+      title: editIdTitle || "",
+    },
+  });
+  const { isSubmitting, isValid } = form.formState;
+  return (
+    <Form {...form}>
+      <form
+        onSubmit={form.handleSubmit(onSubmit)}
+        className="mt-4 space-y-4"
+      >
+        <FormField
+          control={form.control}
+          name="title"
+          render={({ field }) => {
+            return (<FormItem>
+              <FormControl>
+                <Input
+                  disabled={isSubmitting}
+                  {...field}
+                  defaultValue={editIdTitle}
+                  placeholder={editIdTitle}
+                />
+              </FormControl>
+              <FormMessage />
+            </FormItem>
+          )}}
+        />
+        <Button
+          disabled={!isValid || isSubmitting}
+          type="submit"
+          
+        >
+          Edit
+        </Button>
+        <Button
+          type={'button'}
+          className="ml-5"
+          variant={'ghost'}
+          onClick={() => setIsEditing(false)}
+        >
+          Cancel
+        </Button>
+      </form>
+    </Form>
   )
 }

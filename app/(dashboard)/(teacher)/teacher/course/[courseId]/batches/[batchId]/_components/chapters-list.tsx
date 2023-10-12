@@ -8,16 +8,31 @@ import {
   Draggable,
   DropResult,
 } from "@hello-pangea/dnd";
-import { GripVertical, Pencil } from "lucide-react";
-
+import { Loader2, GripVertical, Pencil, PlusCircle } from "lucide-react";
+import * as z from "zod";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { useForm } from "react-hook-form";
+import {
+  Form,
+  FormControl,
+  FormField,
+  FormItem,
+  FormMessage,
+} from "@/components/ui/form";
+import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
-import { Badge } from "@/components/ui/badge";
+import { Input } from "@/components/ui/input";
+import { toast } from "react-hot-toast";
+
 
 interface ChaptersListProps {
   items: Chapter[];
   onReorder: (updateData: { id: string; position: number }[]) => void;
   onEdit: (id: string) => void;
 };
+const formSchema = z.object({
+  title: z.string().min(1),
+});
 
 export const ChaptersList = ({
   items,
@@ -26,7 +41,6 @@ export const ChaptersList = ({
 }: ChaptersListProps) => {
   const [isMounted, setIsMounted] = useState(false);
   const [chapters, setChapters] = useState(items);
-
   useEffect(() => {
     setIsMounted(true);
   }, []);
@@ -36,8 +50,8 @@ export const ChaptersList = ({
   }, [items]);
 
   const onDragEnd = (result: DropResult) => {
+    // If there is no destination, return
     if (!result.destination) return;
-
     const items = Array.from(chapters);
     const [reorderedItem] = items.splice(result.source.index, 1);
     items.splice(result.destination.index, 0, reorderedItem);
@@ -51,11 +65,11 @@ export const ChaptersList = ({
 
     const bulkUpdateData = updatedChapters.map((chapter) => ({
       id: chapter.id,
-      position: items.findIndex((item) => item.id === chapter.id)
+      position: items.findIndex((item) => item.id === chapter.id)+1
     }));
 
     onReorder(bulkUpdateData);
-  }
+  };
 
   if (!isMounted) {
     return null;
@@ -75,16 +89,16 @@ export const ChaptersList = ({
                 {(provided) => (
                   <div
                     className={cn(
-                      "flex items-center gap-x-2 bg-slate-200 border-slate-200 border text-slate-700 rounded-md mb-4 text-sm",
-                      chapter && "bg-sky-100 border-sky-200 text-sky-700"
+                      "mb-4 flex items-center gap-x-2 rounded-md border border-slate-200 bg-slate-200 text-sm text-slate-700",
+                      chapter && "border-sky-200 bg-sky-100 text-sky-700"
                     )}
                     ref={provided.innerRef}
                     {...provided.draggableProps}
                   >
-                    {/* <div
+                    <div
                       className={cn(
-                        "px-2 py-3 border-r border-r-slate-200 hover:bg-slate-300 rounded-l-md transition",
-                        chapter.isPublished && "border-r-sky-200 hover:bg-sky-200"
+                        "rounded-l-md border-r border-r-slate-200 px-2 py-3 transition hover:bg-slate-300",
+                        chapter && "border-r-sky-200 hover:bg-sky-200"
                       )}
                       {...provided.dragHandleProps}
                     >
@@ -93,8 +107,8 @@ export const ChaptersList = ({
                       />
                     </div>
                     {chapter.title}
-                    <div className="ml-auto pr-2 flex items-center gap-x-2">
-                      {chapter.isFree && (
+                    <div className="ml-auto flex items-center gap-x-2 pr-2">
+                      {/* {chapter.isFree && (
                         <Badge>
                           Free
                         </Badge>
@@ -106,12 +120,9 @@ export const ChaptersList = ({
                         )}
                       >
                         {chapter.isPublished ? "Published" : "Draft"}
-                      </Badge>
-                      <Pencil
-                        onClick={() => onEdit(chapter.id)}
-                        className="w-4 h-4 cursor-pointer hover:opacity-75 transition"
-                      />
-                    </div> */}
+                      </Badge>*/}
+                      {/* <CreateTopicForm chapterId={chapter.id} /> */}
+                    </div> 
                   </div>
                 )}
               </Draggable>
@@ -121,5 +132,32 @@ export const ChaptersList = ({
         )}
       </Droppable>
     </DragDropContext>
+  )
+}
+
+function CreateTopicForm({
+  chapterId,
+}:{
+  chapterId: string
+}) {
+  
+  const [isCreating, setIsCreating] = useState(false);
+  const toggleCreating = () => {
+    setIsCreating((current) => !current);
+  }
+  return (
+    <div className="flex items-center justify-between font-medium">
+      Course topics
+      <Button onClick={toggleCreating} variant="ghost">
+        {isCreating ? (
+          <>Cancel</>
+        ) : (
+          <>
+            <PlusCircle className="mr-2 h-4 w-4" />
+            Add a topic
+          </>
+        )}
+      </Button>
+    </div>
   )
 }

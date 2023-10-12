@@ -6,7 +6,7 @@ import { DescriptionForm } from './_components/description-form'
 import { ImageForm } from './_components/image-form'
 import { getCourseById } from '@/lib/actions/course.actions'
 import { PriceForm } from './_components/price-form'
-import { ChaptersForm } from './_components/chapters-form'
+import { ChaptersForm } from './batches/[batchId]/_components/chapters-form'
 import { BatchesForm } from './_components/batches-form'
 
 const page = async ({ params }: { params: {courseId: string } }) => {
