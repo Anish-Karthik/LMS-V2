@@ -7,7 +7,8 @@ import { Separator } from "@/components/ui/separator"
 import { CollapsibleTopics } from "./collapsible-topics"
 
 import { Quiz } from "@mui/icons-material"
-import { Tchapters } from "@/app/(course)/recordings/layout"
+import { Tchapters } from "@/app/constants"
+
 
 
 
