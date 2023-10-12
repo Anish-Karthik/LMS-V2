@@ -6,7 +6,8 @@ import { currentUser } from '@clerk/nextjs'
 import { redirect } from 'next/navigation'
 import React from 'react'
 import { clerkClient } from "@clerk/nextjs";
-import { Trole } from '../constants'
+import { Trole } from '@/app/constants'
+import { getUser } from '@/lib/actions/user.actions'
 
 const DashBoardLayout = async ({
   children,
@@ -15,12 +16,9 @@ const DashBoardLayout = async ({
 }) => {
   const user = await currentUser();
   if (!user) redirect('/sign-in');
-  if (!user.publicMetadata.role) await clerkClient.users.updateUserMetadata(user.id, {
-    publicMetadata: {
-      role: "user",
-    }
-  })
-  const isAdmin = user?.publicMetadata.role === 'admin';
+  const userInfo = await getUser(user.id);
+  if (!userInfo) redirect('/sign-in');
+  if(userInfo.role === 'student') redirect('/');
 
   return (
     <div className='relative h-full'>

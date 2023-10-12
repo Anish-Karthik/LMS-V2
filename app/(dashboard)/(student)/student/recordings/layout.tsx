@@ -101,7 +101,7 @@ const DashBoardLayout = async ({
   return (
     <div className='relative h-full'>
       {/* desktop view */}
-      <Header />
+      {/* <Header /> */}
       {/* <AdminTabs />  */}
       <div className='flex'>
         <ChapterBar chapters={chapters} />

@@ -126,13 +126,24 @@ export const getDefaultBatch = async (courseId: string) => {
     const course = await db.course.findUnique({
       where: { id: courseId },
       include: {
-        batches: true,
+        batches: {
+          include: {
+            purchases: {
+              include: {
+                user: true,
+              },
+            },
+            teachers: true,
+          },
+        }
       },
     })
     if (!course) throw new Error("Course not found")
-    return course.batches[0]
-  } catch (e) {
-    console.log(e)
-    return null
+    if(!course.batches.length) return await createBatch({ name: "unassigned", courseId });
+    const res =  course.batches[0];
+    return res
+  } catch (e: any) {
+    console.error(e)
+    throw new Error(e.message || "Course not found");
   }
 }

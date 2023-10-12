@@ -101,13 +101,15 @@ export const BatchesList = ({
                     <div className="ml-auto pr-2 flex items-center gap-x-2">
                       
                     </div>
-                    <div>
-                      <Link href={`/teacher/course/${courseId}/batches/${batch.id}`}>
-                        <Button variant={"ghost"}>
-                          <Pencil className="h-5 w-5" />
-                        </Button>
-                      </Link>
-                    </div>
+                    {batch.name !== "unassigned" && (
+                      <div>
+                        <Link href={`/teacher/course/${courseId}/batches/${batch.id}`}>
+                          <Button variant={"ghost"}>
+                            <Pencil className="h-5 w-5" />
+                          </Button>
+                        </Link>
+                      </div>
+                    )}
                     {batch.name !== "unassigned" && (
                       <div>
                       <Button variant={"destructive"} onClick={async () => {

@@ -2,11 +2,10 @@
 const nextConfig = {
   reactStrictMode: true,
   experimental: {
-    appDir: true,
     serverActions: true,
   },
   images: {
-    domains: ['utfs.io', 'clerk.com'],
+    domains: ['utfs.io', 'img.clerk.com'],
   },
 }
 

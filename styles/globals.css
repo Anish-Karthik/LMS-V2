@@ -79,5 +79,20 @@
     font-feature-settings: "rlig" 1, "calt" 1;
   }
 }
+.account-form_image-label {
+  @apply flex h-24 w-24 items-center justify-center rounded-full bg-secondary-foreground !important;
+}
+
+.account-form_image-input {
+  @apply cursor-pointer border-none bg-transparent outline-none file:text-blue-700 !important;
+}
+
+.account-form_input {
+  @apply border border-secondary  !important;
+}
+.tab {
+  @apply w-full;
+}
+
 
 @import "~@uploadthing/react/styles.css"

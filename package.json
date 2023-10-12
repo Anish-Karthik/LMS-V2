@@ -11,7 +11,8 @@
     "preview": "next build && next start",
     "typecheck": "tsc --noEmit",
     "format:write": "prettier --write \"**/*.{ts,tsx,mdx}\" --cache",
-    "format:check": "prettier --check \"**/*.{ts,tsx,mdx}\" --cache"
+    "format:check": "prettier --check \"**/*.{ts,tsx,mdx}\" --cache",
+    "postinstall": "prisma generate"
   },
   "dependencies": {
     "@clerk/nextjs": "^4.25.3",
@@ -56,6 +57,7 @@
     "stripe": "^13.9.0",
     "tailwind-merge": "^1.13.2",
     "tailwindcss-animate": "^1.0.6",
+    "typewriter-effect": "^2.21.0",
     "uploadthing": "^5.7.1",
     "webpack": "^5.88.2",
     "zod": "^3.22.4",

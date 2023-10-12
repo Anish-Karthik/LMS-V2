@@ -1,3 +1,4 @@
+import { Approval } from "@mui/icons-material";
 import {
   Code2Icon,
   CodeIcon,
@@ -43,7 +44,7 @@ export const routes: Route[] = [
   {
     label: "Recordings",
     icon: VideoIcon,
-    href: "/recordings",
+    href: "/student/recordings",
     color: "text-orange-700",
     bgColor: "bg-orange-500/10",
     roles: ["admin", "moderator", "teacher", "student"],
@@ -80,6 +81,14 @@ export const routes: Route[] = [
   //   bgColor: "bg-white-500/10",
   //   roles: ["admin", "moderator", "teacher"],
   // },
+  {
+    label: "Approval",
+    icon: MessageSquareIcon,
+    href: "/approve",
+    color: "text-white-500",
+    bgColor: "bg-white-500/10",
+    roles: ["admin", "moderator"],
+  },
   {
     label: "Settings",
     icon: SettingsIcon,
