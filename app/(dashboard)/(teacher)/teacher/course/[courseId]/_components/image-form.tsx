@@ -49,8 +49,8 @@ export const ImageForm = ({
   }
 
   return (
-    <div className="mt-6 border  rounded-md p-4">
-      <div className="font-medium flex items-center justify-between">
+    <div className="mt-6 rounded-md border p-4">
+      <div className="flex items-center justify-between font-medium">
         Course image
         <Button onClick={toggleEdit} variant="ghost">
           {isEditing && (
@@ -58,13 +58,13 @@ export const ImageForm = ({
           )}
           {!isEditing && !initialData.imageUrl && (
             <>
-              <PlusCircle className="h-4 w-4 mr-2" />
+              <PlusCircle className="mr-2 h-4 w-4" />
               Add an image
             </>
           )}
           {!isEditing && initialData.imageUrl && (
             <>
-              <Pencil className="h-4 w-4 mr-2" />
+              <Pencil className="mr-2 h-4 w-4" />
               Edit image
             </>
           )}
@@ -72,15 +72,15 @@ export const ImageForm = ({
       </div>
       {!isEditing && (
         !initialData.imageUrl ? (
-          <div className="flex items-center justify-center h-60 bg-secondary rounded-md">
+          <div className="flex h-60 items-center justify-center rounded-md bg-secondary">
             <ImageIcon className="h-10 w-10 text-slate-500" />
           </div>
         ) : (
-          <div className="relative aspect-video mt-2">
+          <div className="relative mt-2 aspect-video">
             <Image
               alt="Upload"
               fill
-              className="object-cover rounded-md"
+              className="rounded-md object-cover"
               src={initialData.imageUrl}
             />
           </div>
@@ -96,7 +96,7 @@ export const ImageForm = ({
               }
             }}
           />
-          <div className="text-xs text-muted-foreground mt-4">
+          <div className="mt-4 text-xs text-muted-foreground">
             16:9 aspect ratio recommended
           </div>
         </div>

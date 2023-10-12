@@ -11,7 +11,7 @@ const RecordingPage = () => {
   const curBatch = 1;
   return (
     <div className='h-full w-full'>
-      <VideoCard url={'http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4'} />
+      here beautiful course description will be showed, Until then just navigate around the tabs
     </div>
   )
 }

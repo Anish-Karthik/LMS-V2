@@ -221,3 +221,18 @@ export const unpublishTopic = async (topicId: string) => {
     throw new Error("Topic unpublish failed: ", error.message)
   }
 }
+
+export const getTopicById = async (topicId: string) => {
+  try {
+    const topic = await db.topic.findUnique({
+      where: {
+        id: topicId,
+      },
+    })
+
+    return topic
+  } catch (error: any) {
+    console.error(error)
+    throw new Error("Topic not found: ", error.message)
+  }
+}
