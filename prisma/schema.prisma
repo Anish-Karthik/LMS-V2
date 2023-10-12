@@ -84,13 +84,13 @@ model Topic {
   id           String      @id @default(auto()) @map("_id") @db.ObjectId
   title        String
   description  String?
-  type         String
+  type         String      @default("video")
   videoUrl     String?
   muxData      MuxData?
   chapterId    String      @db.ObjectId
   chapter      Chapter     @relation(fields: [chapterId], references: [id], onDelete: Cascade)
   attachment   Attachment?
-  attachmentId String      @db.ObjectId
+  attachmentId String?     @db.ObjectId
   isPublished  Boolean     @default(false)
   isFree       Boolean     @default(false)
   position     Int

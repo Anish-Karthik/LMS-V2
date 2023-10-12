@@ -42,7 +42,14 @@ export const getBatchById = async (batchId: string, courseId?: string) => {
         attachments: true,
         chapters: {
           include: {
-            topics: true,
+            topics: {
+              orderBy: {
+                position: "asc",
+              },
+            }
+          },
+          orderBy: {
+            position: "asc",
           },
         },
       },

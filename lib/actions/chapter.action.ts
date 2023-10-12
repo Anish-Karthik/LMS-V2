@@ -67,6 +67,13 @@ export const getChaptersByBatchId = async(batchId: string) => {
       where: {
         batchId,
       },
+      include: {
+        topics: {
+          orderBy: {
+            position: "asc"
+          }
+        }
+      },
       orderBy: {
         position: "asc"
       }

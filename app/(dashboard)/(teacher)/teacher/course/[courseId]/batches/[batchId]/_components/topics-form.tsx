@@ -7,7 +7,7 @@ import { useForm } from "react-hook-form";
 import { Loader2, PlusCircle } from "lucide-react";
 import { useState } from "react";
 import toast from "react-hot-toast";
-import { useRouter } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
 import { Batch, Chapter, Course, Topic } from "@prisma/client";
 
 import {
@@ -25,32 +25,31 @@ import { ChaptersList } from "./chapters-list";
 import { createChapter, editChapter, getChapterById, reorderChapters } from "@/lib/actions/chapter.action";
 import { positions } from "@mui/system";
 import { get } from "http";
+import { createTopic, reorderTopics } from "@/lib/actions/topic.actions";
+import { TopicsList } from "./topics-list";
 
-interface ChaptersFormProps {
-  initialData: (Chapter & {topics: Topic[]})[];
+interface TopicsFormProps {
+  initialData: Topic[];
+  chapterId: string;
   batchId: string;
-  courseId: string;
 };
 
 const formSchema = z.object({
   title: z.string().min(1),
 });
 
-export const ChaptersForm = ({
+export const TopicsForm = ({
   initialData,
+  chapterId,
   batchId,
-  courseId
-}: ChaptersFormProps) => {
+  
+}: TopicsFormProps) => {
   const [isCreating, setIsCreating] = useState(false);
   const [isUpdating, setIsUpdating] = useState(false);
-  const [isEditing, setIsEditing] = useState(false);
-  const [editId, setEditId] = useState("");
-  const [editIdTitle, setEditIdTitle] = useState("");
-
   const toggleCreating = () => {
     setIsCreating((current) => !current);
   }
-
+  const pathname = usePathname();
   const router = useRouter();
 
   const form = useForm<z.infer<typeof formSchema>>({
@@ -64,7 +63,7 @@ export const ChaptersForm = ({
 
   const onSubmit = async (values: z.infer<typeof formSchema>) => {
     try {
-      await createChapter(batchId, values.title);
+      await createTopic(chapterId, values.title);
       toast.success("Chapter created");
       toggleCreating();
       router.refresh();
@@ -74,14 +73,11 @@ export const ChaptersForm = ({
     }
   }
 
-  const onReorder = async (updateData: { id: string; position: number }[]) => {
+  const onReorderTopic = async (updateData: { id: string; position: number }[]) => {
     try {
       setIsUpdating(true);
-      await reorderChapters(batchId, updateData);
-      // await axios.put(`/api/courses/${batchId}/chapters/reorder`, {
-      //   list: updateData
-      // });
-      toast.success("Chapters reordered");
+      await reorderTopics(chapterId, updateData);
+      toast.success("Topics reordered");
       router.refresh();
     } catch {
       toast.error("Something went wrong");
@@ -89,25 +85,8 @@ export const ChaptersForm = ({
       setIsUpdating(false);
     }
   }
-  const onEditing = async (values: z.infer<typeof formSchema>) => {
-    try {
-      await editChapter(editId, values.title);
-      toast.success("Chapter created");
-      setIsEditing(false);
-      setEditId("");
-      router.refresh();
-    } catch(error: any) {
-      toast.error(error.message);
-      toast.error("Something went wrong");
-    }
-  }
-
-  const onEdit = async (id: string) => {
-    // router.push(`/teacher/courses/${courseId}/${batchId}/chapters/${id}`);
-    const tmpTitle = (await getChapterById(id)).title;
-    setEditIdTitle(tmpTitle);
-    setIsEditing(true);
-    setEditId(id);
+  const onEditTopic = async (id: string) => {
+    router.push(`${pathname}/topics/${id}`);
   }
 
   return (
@@ -118,14 +97,13 @@ export const ChaptersForm = ({
         </div>
       )}
       <div className="flex items-center justify-between font-medium">
-        Course chapters
         <Button onClick={toggleCreating} variant="ghost">
           {isCreating ? (
             <>Cancel</>
           ) : (
             <>
               <PlusCircle className="mr-2 h-4 w-4" />
-              Add a chapter
+              Add a topic
             </>
           )}
         </Button>
@@ -144,7 +122,7 @@ export const ChaptersForm = ({
                   <FormControl>
                     <Input
                       disabled={isSubmitting}
-                      placeholder="e.g. 'Introduction to the course'"
+                      placeholder="e.g. 'Basics of Trading'"
                       {...field}
                     />
                   </FormControl>
@@ -168,75 +146,19 @@ export const ChaptersForm = ({
           "mt-2 text-sm",
           !initialData.length && "italic text-slate-500"
         )}>
-          {!initialData.length && "No chapters"}
-          {isEditing? 
-              <EditForm onSubmit={onEditing} editIdTitle={editIdTitle} setIsEditing={setIsEditing}/>
-            :
-            <ChaptersList
-              onEdit={onEdit}
-              onReorder={onReorder}
+          {!initialData.length && "No Topics"}
+            <TopicsList
+              onEdit={onEditTopic}
+              onReorder={onReorderTopic}
               items={initialData || []}
             />
-          }
         </div>
       )}
-      {!isCreating && !isEditing && (
+      {!isCreating && (
         <p className="mt-4 text-xs text-muted-foreground">
-          Drag and drop to reorder the chapters
+          Drag and drop to reorder the topics
         </p>
       )}
     </div>
-  )
-}
-
-function EditForm({onSubmit, editIdTitle, setIsEditing}: {onSubmit: any, editIdTitle: string, setIsEditing: any}) {
-
-  const form = useForm<z.infer<typeof formSchema>>({
-    resolver: zodResolver(formSchema),
-    defaultValues: {
-      title: editIdTitle || "",
-    },
-  });
-  const { isSubmitting, isValid } = form.formState;
-  return (
-    <Form {...form}>
-      <form
-        onSubmit={form.handleSubmit(onSubmit)}
-        className="mt-4 space-y-4"
-      >
-        <FormField
-          control={form.control}
-          name="title"
-          render={({ field }) => {
-            return (<FormItem>
-              <FormControl>
-                <Input
-                  disabled={isSubmitting}
-                  {...field}
-                  defaultValue={editIdTitle}
-                  placeholder={editIdTitle}
-                />
-              </FormControl>
-              <FormMessage />
-            </FormItem>
-          )}}
-        />
-        <Button
-          disabled={!isValid || isSubmitting}
-          type="submit"
-          
-        >
-          Edit
-        </Button>
-        <Button
-          type={'button'}
-          className="ml-5"
-          variant={'ghost'}
-          onClick={() => setIsEditing(false)}
-        >
-          Cancel
-        </Button>
-      </form>
-    </Form>
   )
 }
