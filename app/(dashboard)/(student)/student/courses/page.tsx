@@ -1,15 +1,10 @@
-import { Header } from '@/components/shared/header';
 import { getCourses } from '@/lib/actions/course.actions';
 import { isUserPurchasedCourse } from '@/lib/actions/user.actions';
 import { currentUser } from '@clerk/nextjs';
 import { redirect } from 'next/navigation';
 import React from 'react'
 
-const DashBoardLayout = async ({
-  children,
-}: {
-  children: React.ReactNode
-}) => {
+const page = async () => {
   const user = await currentUser();
   if(!user) redirect('/sign-in');
   const courses = await getCourses();
@@ -22,4 +17,4 @@ const DashBoardLayout = async ({
   )
 }
 
-export default DashBoardLayout
+export default page
