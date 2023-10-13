@@ -1,15 +1,19 @@
 "use client"
 import * as React from "react"
 
-import { ChevronsUpDown, FileQuestion, GrabIcon, Pen, Plus, Video, VideoIcon, X } from "lucide-react"
+import { CheckCircle, ChevronsUpDown, ExpandIcon, FileQuestion, GrabIcon, HelpCircle, LucideIcon, Pen, PlayCircle, Plus, Video, VideoIcon, X } from "lucide-react"
 import { ScrollArea } from "@/components/ui/scroll-area"
 import { Separator } from "@/components/ui/separator"
 import { CollapsibleTopics } from "./collapsible-topics"
 
-import { Quiz } from "@mui/icons-material"
+import { ArrowDropDownCircle, Quiz } from "@mui/icons-material"
 import { Tchapters } from "@/app/constants"
-import { Chapter, Topic } from "@prisma/client"
+import { Chapter, Topic, UserProgressTopic } from "@prisma/client"
 import Link from "next/link"
+import { CourseProgress } from "../course-progress"
+import { useParams } from "next/navigation"
+import { cn } from "@/lib/utils"
+import { CircleProgress } from "../chapter-progress-circle"
 
 
 
@@ -18,35 +22,72 @@ const tags = Array.from({ length: 50 }).map(
   (_, i, a) => `v1.2.123456789123456789-sssssss0-beta.${a.length - i}`
 )
 
-export default function ChapterBar({chapters, courseId}: {chapters: (Chapter & {topics: Topic[]})[], courseId: string}) {
+export default function ChapterBar({
+  chapters, courseId, userId
+}: {
+  chapters: (Chapter & {topics: (Topic & {userProgressTopic: UserProgressTopic[]}) []})[];
+  courseId: string;
+  userId: string
+}) {
 
+  const params = useParams();
+  
   return (
     <ScrollArea className="h-[655px] w-64 rounded-md border">
-      <br />
-      {chapters.map((chapter) => (
+      <div className=" mb-2 border-b p-2 font-bold">
+        <h2>Chapters</h2>
+      </div>
+      {chapters.map((chapter) => {
+        const totalPublishedTopics = chapter.topics.filter((topic) => topic.isPublished).length;
+        const completedPublishedTopics = chapter.topics.filter((topic) => topic.isPublished).filter((topic) => topic.userProgressTopic.find((progress) => progress.userId === userId)?.isCompleted).length;
+        const percentage = (completedPublishedTopics / totalPublishedTopics) * 100;
+        if(!totalPublishedTopics) return null;
+        return (
         <>
           <CollapsibleTopics trigger={
-            <div key={chapter.id} className="cursor-pointer px-3">
-              <p className="text-sm">
-                {chapter.title} 
-              </p>
+            <div key={chapter.id} className="flex cursor-pointer items-center justify-between px-3">
+              <div className="flex items-center justify-start gap-1">
+                <CircleProgress
+                  value={percentage}
+                  variant={completedPublishedTopics === totalPublishedTopics ? "success" : "default"}
+                  size="sm"
+                />
+                <p className="text-sm">
+                  {chapter.title} 
+                </p>
+              </div>
+              <ArrowDropDownCircle className="cursor-pointer text-sky-700 transition hover:opacity-75" />
             </div>
           }>
             <div>
-              {chapter.topics.map((topic) =>(
-                <Link href={`/student/courses/${courseId}/recordings/${topic.type}/${topic.id}`} className="flex items-center justify-start gap-2 pl-2 hover:bg-secondary">
-                  {topic.type === "video" && <VideoIcon className="h-6 w-6"/>}
-                  {topic.type === "quiz" && <Quiz className="h-4 w-4"/>}
-                  {topic.type === "lab" && <Pen className="h-6 w-6"/>}
-                  {topic.type === "assignment" && <FileQuestion className="h-6 w-6"/>}
-                  <div className="cursor-pointer p-2">{topic.title}</div>
-                </Link>
-              ))}
+              {chapter.topics.map((topic) => {
+                if(!topic.isPublished) return null;
+                const isCompleted = topic.userProgressTopic.find((progress) => progress.userId === userId)?.isCompleted;
+                const notCompleteIcon = new Map<string, LucideIcon>();
+                notCompleteIcon.set('video', PlayCircle);
+                notCompleteIcon.set('quiz', HelpCircle);
+                notCompleteIcon.set('lab', Pen);
+                notCompleteIcon.set('assignment', FileQuestion);
+                const Icon = (isCompleted ? CheckCircle : notCompleteIcon.get(topic.type)! );
+                return (
+                  <Link href={`/student/courses/${courseId}/recordings/${topic.type}/${topic.id}`} className="flex items-center justify-start gap-2 pl-5 hover:bg-secondary">
+                    <Icon
+                      size={22}
+                      className={cn(
+                        "text-slate-500",
+                        params.courseId === courseId && params.topicId === topic.id && "text-slate-700",
+                        isCompleted && "text-emerald-700"
+                      )}
+                    />
+                    <div className="cursor-pointer p-2">{topic.title}</div>
+                  </Link>
+                );
+              })}
             </div>
           </CollapsibleTopics>
           <Separator className="my-2" />
         </>
-      ))}
+      )})}
     </ScrollArea>
   )
 }

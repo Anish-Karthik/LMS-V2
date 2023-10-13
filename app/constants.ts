@@ -38,7 +38,7 @@ export const routes: Route[] = [
     icon: InfoIcon,
     color: "text-violet-500",
     bgColor: "bg-violet-500/10",
-    href: "/annoucements",
+    href: "/teacher/annoucements",
     roles: ["admin", "moderator", "teacher", "student"],
   },
   {
@@ -52,7 +52,7 @@ export const routes: Route[] = [
   {
     label: "Analytics",
     icon: MusicIcon,
-    href: "/analytics",
+    href: "/teacher/analytics",
     color: "text-emerald-500",
     bgColor: "bg-emerald-500/10",
     roles: ["admin", "moderator", "teacher"],
@@ -84,7 +84,7 @@ export const routes: Route[] = [
   {
     label: "Approval",
     icon: MessageSquareIcon,
-    href: "/approve",
+    href: "/teacher/approve",
     color: "text-white-500",
     bgColor: "bg-white-500/10",
     roles: ["admin", "moderator"],
@@ -92,7 +92,7 @@ export const routes: Route[] = [
   {
     label: "Settings",
     icon: SettingsIcon,
-    href: "/settings",
+    href: "/teacher/settings",
     color: "text-white-500",
     bgColor: "bg-white-500/10",
     roles: ["admin", "moderator", "teacher", "student"],

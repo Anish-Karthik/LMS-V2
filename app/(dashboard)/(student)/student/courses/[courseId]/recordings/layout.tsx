@@ -4,8 +4,10 @@ import ChapterBar from '@/components/shared/chapter-bar';
 import { Header } from '@/components/shared/header';
 import { getChaptersByBatchId } from '@/lib/actions/chapter.action';
 import { getUser } from '@/lib/actions/user.actions';
+import { db } from '@/lib/db';
 import { currentUser } from '@clerk/nextjs';
 import { redirect } from 'next/navigation';
+import { type } from 'os';
 import React from 'react';
   
 const DashBoardLayout = async ({
@@ -20,7 +22,30 @@ const DashBoardLayout = async ({
   if(!user || !userInfo) redirect('/');
   const curBatch = userInfo.purchases[0].batchId;
   if(!curBatch) redirect('/')
-  const chapters = await getChaptersByBatchId(curBatch);
+  const chapters = await db.chapter.findMany({
+    where: {
+      batchId: curBatch
+    },
+    include: {
+      topics: {
+        include: {
+          userProgressTopic: {
+            where: {
+              userId: user.id
+            }
+          }
+        },
+        orderBy: {
+          position: 'asc'
+        }
+      }
+    },
+    orderBy: {
+      position: 'asc'
+    }
+  })
+  // what is type of chapters?
+  // type chapterType = typeof chapters;
 
   return (
     <div className='relative h-full'>
@@ -28,7 +53,7 @@ const DashBoardLayout = async ({
       {/* <Header /> */}
       {/* <AdminTabs />  */}
       <div className='flex'>
-        <ChapterBar chapters={chapters} courseId={params.courseId} />
+        <ChapterBar chapters={chapters} courseId={params.courseId} userId={user.id} />
         <main className='w-full'>
           {children}
         </main>

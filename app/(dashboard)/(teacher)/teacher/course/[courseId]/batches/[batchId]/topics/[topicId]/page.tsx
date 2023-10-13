@@ -1,7 +1,7 @@
 import { auth } from "@clerk/nextjs";
 import { redirect } from "next/navigation";
 import Link from "next/link";
-import { ArrowLeft, Eye, LayoutDashboard, Video } from "lucide-react";
+import { ArrowLeft, Eye, FileIcon, LayoutDashboard, Video } from "lucide-react";
 
 import { db } from "@/lib/db";
 import { IconBadge } from "@/components/icon-badge";
@@ -12,6 +12,7 @@ import { TopicDescriptionForm } from "./_components/topic-description-form";
 import { TopicAccessForm } from "./_components/topic-access-form";
 import { TopicVideoForm } from "./_components/topic-video-form";
 import { TopicActions } from "./_components/topic-actions";
+import { AttachmentForm } from "./_components/attachment-form";
 
 const topicIdPage = async ({
   params
@@ -32,9 +33,17 @@ const topicIdPage = async ({
       muxData: true,
     },
   });
+  const topicWithAttachments = await db.topic.findUnique({
+    where: {
+      id: params.topicId,
+    },
+    include: {
+      attachments: true,
+    },
+  });
 
 
-  if (!topic) {
+  if (!topic || !topicWithAttachments) {
     return redirect("/")
   }
 
@@ -121,6 +130,18 @@ const topicIdPage = async ({
                 topicId={params.topicId}
               />
             </div> */}
+            <div>
+              <div className="flex items-center gap-x-2">
+                <IconBadge icon={FileIcon} />
+                <h2 className="text-xl">
+                  Resources & Attachments
+                </h2>
+              </div>
+              <AttachmentForm
+                initialData={topicWithAttachments}
+                topicId={topic.id}
+              />
+            </div>
           </div>
           <div>
             <div className="flex items-center gap-x-2">
@@ -135,6 +156,7 @@ const topicIdPage = async ({
               batchId={params.batchId}
             />
           </div>
+          
         </div>
       </div>
     </>

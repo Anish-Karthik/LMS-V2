@@ -1,9 +1,11 @@
 "use server"
 
 import Mux from "@mux/mux-node"
+import { Attachment, Topic } from "@prisma/client"
 
 import { db } from "../db"
 import { getBatchById } from "./batch.action"
+import { isUserPurchasedCourse } from "./user.actions"
 
 const { Video } = new Mux(
   process.env.MUX_TOKEN_ID!,
@@ -104,7 +106,6 @@ export const deleteTopic = async (topicId: string) => {
         id: topicId,
       },
     })
-
   } catch (error: any) {
     console.error(error)
     throw new Error("Topic deletion failed: ", error.message)
@@ -234,5 +235,211 @@ export const getTopicById = async (topicId: string) => {
   } catch (error: any) {
     console.error(error)
     throw new Error("Topic not found: ", error.message)
+  }
+}
+
+export const getTopicAttachments = async (topicId: string) => {
+  try {
+    const attachments = await db.attachment.findMany({
+      where: {
+        topicId: topicId,
+      },
+    })
+
+    return attachments
+  } catch (error: any) {
+    console.error(error)
+    throw new Error("Topic attachments not found: ", error.message)
+  }
+}
+
+export const getPublishedTopicsById = async (topicId: string) => {
+  try {
+    const topic = await db.topic.findUnique({
+      where: {
+        id: topicId,
+        isPublished: true,
+      },
+    })
+    if (!topic) {
+      throw new Error("Topic not found")
+    }
+
+    return topic
+  } catch (error: any) {
+    console.error(error)
+    throw new Error("Topic not found: ", error.message)
+  }
+}
+
+export const getDetailedTopicClient = async ({
+  courseId,
+  topicId,
+  userId,
+}: {
+  courseId: string
+  topicId: string
+  userId: string
+}) => {
+  try {
+    const purchase = await isUserPurchasedCourse(userId, courseId)
+    if (!purchase) {
+      throw new Error("Course not purchased")
+    }
+    
+
+    const topic = await getPublishedTopicsById(topicId)
+    
+
+    const currentChapter = await db.chapter.findUnique({
+      where: {
+        id: topic.chapterId,
+      },
+    })
+    if (!currentChapter) {
+      throw new Error("Chapter not found")
+    }
+
+    if (!topic) {
+      throw new Error("Topic not found")
+    }
+    const batch = await getBatchById(currentChapter.batchId)
+
+    let muxData = null
+    let attachments: Attachment[] = []
+    let nextTopic: Topic | null = null
+
+    muxData = await db.muxData.findUnique({
+      where: {
+        topicId: topicId,
+      },
+    })
+
+    nextTopic = await db.topic.findFirst({
+      where: {
+        chapterId: topic.chapterId,
+        position: {
+          gt: topic?.position,
+        },
+      },
+      orderBy: {
+        position: "asc",
+      },
+    })
+
+    if (!nextTopic) {
+      // get next chapter's first topic
+      const nextChapter = await db.chapter.findFirst({
+        where: {
+          batchId: currentChapter?.batchId,
+          position: {
+            gt: currentChapter?.position,
+          },
+        },
+        include: {
+          topics: {
+            orderBy: {
+              position: "asc",
+            },
+          },
+        },
+        orderBy: {
+          position: "asc",
+        },
+      })
+      if (nextChapter) {
+        nextTopic = nextChapter.topics[0]
+      }
+    }
+
+    const userProgressTopic = await db.userProgressTopic.findUnique({
+      where: {
+        userId_topicId: {
+          userId,
+          topicId,
+        },
+      },
+    })
+
+    return {
+      chapter: currentChapter,
+      topic,
+      batch,
+      muxData,
+      attachments,
+      nextTopic,
+      nextTopicType: nextTopic?.type,
+      userProgressTopic,
+      purchase,
+    }
+  } catch (error: any) {
+    console.log("[GET_CHAPTER]", error)
+    return {
+      chapter: null,
+      topic: null,
+      batch: null,
+      muxData: null,
+      attachments: [],
+      nextTopic: null,
+      nextTopicType: null,
+      userProgressTopic: null,
+      purchase: null,
+    }
+  }
+}
+
+export const updateUserProgressTopic = async (userId: string, topicId: string, isCompleted: boolean) => {
+  try {
+    await db.userProgressTopic.upsert({
+      where: {
+        userId_topicId: {
+          userId,
+          topicId,
+        },
+      },
+      update: {
+        isCompleted,
+      },
+      create: {
+        userId,
+        topicId,
+        isCompleted,
+      },
+    });
+  } catch (error: any) {
+    console.error(error)
+    throw new Error("User progress update failed: ", error.message)
+  }
+}
+
+export const addAttachmentToTopic = async (topicId: string, attachmentUrl: string, name="Attachment") => {
+  try {
+    const attachment = await db.attachment.create({
+      data: {
+        topicId,
+        url: attachmentUrl,
+        name: attachmentUrl.split("/").pop() || name,
+      },
+    })
+
+    return attachment;
+  } catch (error: any) {
+    console.error(error)
+    throw new Error("Attachment upload failed: ", error.message)
+  }
+}
+
+export const removeAttachmentFromTopic = async (topicId: string, attachmentId: string) => {
+  try {
+    const deletedAttachment = await db.attachment.delete({
+      where: {
+        id: attachmentId,
+        topicId: topicId,
+      },
+    })
+  }
+  catch (error: any) {
+    console.error(error)
+    throw new Error("Attachment deletion failed: ", error.message)
   }
 }

@@ -94,5 +94,8 @@
   @apply w-full;
 }
 
+input[type="text"] {
+  @apply text-primary;
+}
 
 @import "~@uploadthing/react/styles.css"

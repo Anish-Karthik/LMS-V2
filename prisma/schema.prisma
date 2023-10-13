@@ -81,19 +81,20 @@ model Chapter {
 }
 
 model Topic {
-  id           String      @id @default(auto()) @map("_id") @db.ObjectId
-  title        String
-  description  String?
-  type         String      @default("video")
-  videoUrl     String?
-  muxData      MuxData?
-  chapterId    String      @db.ObjectId
-  chapter      Chapter     @relation(fields: [chapterId], references: [id], onDelete: Cascade)
-  attachment   Attachment?
-  attachmentId String?     @db.ObjectId
-  isPublished  Boolean     @default(false)
-  isFree       Boolean     @default(false)
-  position     Int
+  id                String              @id @default(auto()) @map("_id") @db.ObjectId
+  title             String
+  description       String?
+  type              String              @default("video")
+  videoUrl          String?
+  muxData           MuxData?
+  chapterId         String              @db.ObjectId
+  chapter           Chapter             @relation(fields: [chapterId], references: [id], onDelete: Cascade)
+  attachments       Attachment[]
+  userProgressTopic UserProgressTopic[]
+  attachmentId      String?             @db.ObjectId
+  isPublished       Boolean             @default(false)
+  isFree            Boolean             @default(false)
+  position          Int
 
   @@index([chapterId])
 }
@@ -133,6 +134,22 @@ model UserProgress {
 
   @@unique([userId, chapterId])
   @@index([chapterId])
+}
+
+model UserProgressTopic {
+  id     String @id @default(auto()) @map("_id") @db.ObjectId
+  userId String
+
+  topicId String @db.ObjectId
+  topic   Topic  @relation(fields: [topicId], references: [id], onDelete: Cascade)
+
+  isCompleted Boolean @default(false)
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@unique([userId, topicId])
+  @@index([topicId])
 }
 
 model Purchase {
