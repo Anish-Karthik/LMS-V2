@@ -11,7 +11,7 @@ const RecordingPage = () => {
   const curBatch = 1;
   return (
     <div className='h-full w-full'>
-      here beautiful course description will be showed, Until then just navigate around the tabs
+      here, previously left of chapter will be shown/ Redirected
     </div>
   )
 }

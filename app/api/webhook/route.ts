@@ -33,7 +33,7 @@ export async function POST(req: Request) {
       })
     }
     await purchaseCourse(userId, courseId);
-    redirect("/student/recordings")
+    redirect(`/student/courses/${courseId}/dashboard`)
   } else {
     return new NextResponse(
       `Webhook Error: Unhandled event type ${event.type}`,

@@ -18,10 +18,10 @@ const tags = Array.from({ length: 50 }).map(
   (_, i, a) => `v1.2.123456789123456789-sssssss0-beta.${a.length - i}`
 )
 
-export default function ChapterBar({chapters}: {chapters: (Chapter & {topics: Topic[]})[]}) {
+export default function ChapterBar({chapters, courseId}: {chapters: (Chapter & {topics: Topic[]})[], courseId: string}) {
 
   return (
-    <ScrollArea className="h-[83vh] w-64 rounded-md border">
+    <ScrollArea className="h-[655px] w-64 rounded-md border">
       <br />
       {chapters.map((chapter) => (
         <>
@@ -34,7 +34,7 @@ export default function ChapterBar({chapters}: {chapters: (Chapter & {topics: To
           }>
             <div>
               {chapter.topics.map((topic) =>(
-                <Link href={`/student/recordings/${topic.type}/${topic.id}`} className="flex items-center justify-start gap-2 pl-2 hover:bg-secondary">
+                <Link href={`/student/courses/${courseId}/recordings/${topic.type}/${topic.id}`} className="flex items-center justify-start gap-2 pl-2 hover:bg-secondary">
                   {topic.type === "video" && <VideoIcon className="h-6 w-6"/>}
                   {topic.type === "quiz" && <Quiz className="h-4 w-4"/>}
                   {topic.type === "lab" && <Pen className="h-6 w-6"/>}

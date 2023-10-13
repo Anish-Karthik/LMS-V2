@@ -1,17 +1,19 @@
 // import { chapters } from '@/app/constants';
 import AdminTabs from '@/components/section/recording-section'
-import ChapterBar from '@/components/shared/chapter-bar'
+import ChapterBar from '@/components/shared/chapter-bar';
 import { Header } from '@/components/shared/header';
 import { getChaptersByBatchId } from '@/lib/actions/chapter.action';
 import { getUser } from '@/lib/actions/user.actions';
 import { currentUser } from '@clerk/nextjs';
 import { redirect } from 'next/navigation';
-import React from 'react'
+import React from 'react';
   
 const DashBoardLayout = async ({
-  children,
+  children, 
+  params
 }: {
-  children: React.ReactNode
+  children: React.ReactNode,
+  params: {courseId: string}
 }) => {
   const user = await currentUser();
   const userInfo = await getUser(user?.id || '');
@@ -26,7 +28,7 @@ const DashBoardLayout = async ({
       {/* <Header /> */}
       {/* <AdminTabs />  */}
       <div className='flex'>
-        <ChapterBar chapters={chapters} />
+        <ChapterBar chapters={chapters} courseId={params.courseId} />
         <main className='w-full'>
           {children}
         </main>

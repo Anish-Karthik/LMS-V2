@@ -44,7 +44,7 @@ export const routes: Route[] = [
   {
     label: "Recordings",
     icon: VideoIcon,
-    href: "/student/recordings",
+    href: "/student/courses",
     color: "text-orange-700",
     bgColor: "bg-orange-500/10",
     roles: ["admin", "moderator", "teacher", "student"],

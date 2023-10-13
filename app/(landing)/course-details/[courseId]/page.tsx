@@ -17,7 +17,7 @@ const CourseDetailspage = async ({params}: {params: {courseId: string}}) => {
   if(!userInfo) redirect('/onboarding');
   const isUserTeacher = await isTeacher(user.id)
   const purchased = await isUserPurchasedCourse(user.id, params.courseId);
-  if(purchased) redirect('/student/recordings')
+  if(purchased) redirect(`/student/courses/${params.courseId}/dashboard`)
   
   // if(["teacher", "admin", "moderator"].includes(userInfo.role)) redirect('/teacher');
   return (
