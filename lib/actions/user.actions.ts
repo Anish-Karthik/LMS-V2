@@ -136,9 +136,9 @@ export const purchaseCourse = async (userId: string, courseId: string) => {
         userId,
         userObjId: user.id,
       },
-    });
-    let defaultBatch = await getDefaultBatch(courseId);
-    await addStudentToBatch(defaultBatch.id, purchase.id);
+    })
+    let defaultBatch = await getDefaultBatch(courseId)
+    await addStudentToBatch(defaultBatch.id, purchase.id)
     return purchase
   } catch (e: any) {
     console.error("purchaseCourse", e)

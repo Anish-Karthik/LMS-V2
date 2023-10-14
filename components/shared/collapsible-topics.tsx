@@ -9,21 +9,19 @@ import {
   CollapsibleTrigger,
 } from "@/components/ui/collapsible"
 
-export function CollapsibleTopics({ children, trigger}: { children: React.ReactNode, trigger: React.ReactNode}) {
+export function CollapsibleTopics({
+  children,
+  trigger,
+}: {
+  children: React.ReactNode
+  trigger: React.ReactNode
+}) {
   const [isOpen, setIsOpen] = React.useState(false)
 
   return (
-    <Collapsible
-      open={isOpen}
-      onOpenChange={setIsOpen}
-      className="space-y-2"
-    >
-      <CollapsibleTrigger asChild>
-        {trigger}
-      </CollapsibleTrigger>
-      <CollapsibleContent className="space-y-2">
-        {children}
-      </CollapsibleContent>
+    <Collapsible open={isOpen} onOpenChange={setIsOpen} className="space-y-2">
+      <CollapsibleTrigger asChild>{trigger}</CollapsibleTrigger>
+      <CollapsibleContent className="space-y-2">{children}</CollapsibleContent>
     </Collapsible>
   )
 }

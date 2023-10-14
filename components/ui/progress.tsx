@@ -6,26 +6,24 @@ import { cva, type VariantProps } from "class-variance-authority"
 
 import { cn } from "@/lib/utils"
 
-const progressVariants = cva(
-  "h-full w-full flex-1 bg-primary transition-all",
-  {
-    variants: {
-      variant: {
-        default: "bg-sky-600",
-        success: "bg-emerald-700",
-      },
+const progressVariants = cva("h-full w-full flex-1 bg-primary transition-all", {
+  variants: {
+    variant: {
+      default: "bg-sky-600",
+      success: "bg-emerald-700",
     },
-    defaultVariants: {
-      variant: "default",
-    }
-  }
-)
+  },
+  defaultVariants: {
+    variant: "default",
+  },
+})
 
 export interface ProgressProps
   extends React.HTMLAttributes<HTMLDivElement>,
     VariantProps<typeof progressVariants> {}
 
-type CombinedProgressProps = ProgressProps & React.ComponentPropsWithoutRef<typeof ProgressPrimitive.Root>
+type CombinedProgressProps = ProgressProps &
+  React.ComponentPropsWithoutRef<typeof ProgressPrimitive.Root>
 
 const Progress = React.forwardRef<
   React.ElementRef<typeof ProgressPrimitive.Root>,

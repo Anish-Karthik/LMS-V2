@@ -1,22 +1,27 @@
-import { Approval } from "@mui/icons-material";
+import { type } from "os"
+import { Approval } from "@mui/icons-material"
 import {
+  Book,
   Code2Icon,
   CodeIcon,
+  HomeIcon,
   ImageIcon,
   InfoIcon,
   LayoutDashboardIcon,
   MessageSquareIcon,
   MusicIcon,
+  Newspaper,
   Pen,
   PencilIcon,
   PlusIcon,
   SettingsIcon,
+  Speaker,
+  User,
   VideoIcon,
 } from "lucide-react"
-import { type } from "os"
 
 // give type to routes
-export type Trole = "admin" | "moderator" | "teacher" | "student";
+export type Trole = "admin" | "moderator" | "teacher" | "student"
 export interface Route {
   label: string
   icon: any
@@ -60,27 +65,11 @@ export const routes: Route[] = [
   {
     label: "Course Details",
     icon: Pen,
-    href: "/teacher/course",
+    href: "/teacher/courses",
     color: "text-white-500",
     bgColor: "bg-white-500/10",
     roles: ["admin", "moderator", "teacher"],
   },
-  // {
-  //   label: "Create a new batch",
-  //   icon: PlusIcon,
-  //   href: "/teacher/course/batch",
-  //   color: "text-white-500",
-  //   bgColor: "bg-white-500/10",
-  //   roles: ["admin", "moderator", "teacher"],
-  // },
-  // {
-  //   label: "Edit a batch",
-  //   icon: PencilIcon,
-  //   href: "/teacher/course/batch",
-  //   color: "text-white-500",
-  //   bgColor: "bg-white-500/10",
-  //   roles: ["admin", "moderator", "teacher"],
-  // },
   {
     label: "Approval",
     icon: MessageSquareIcon,
@@ -99,6 +88,112 @@ export const routes: Route[] = [
   },
 ]
 
+export const sidebarLinksTeacher = [
+  {
+    imgUrl: "/assets/home.svg",
+    icon: HomeIcon,
+    route: "/teacher/dashboard",
+    label: "Home",
+  },
+  {
+    imgUrl: "/assets/community.svg",
+    icon: User,
+    route: "/teacher/users",
+    label: "Users",
+  },
+  {
+    imgUrl: "/assets/courses.svg",
+    icon: Book,
+    route: "/teacher/courses",
+    label: "Products",
+  },
+  {
+    imgUrl: "/assets/reply.svg",
+    icon: Speaker,
+    route: "/teacher/announcements",
+    label: "Announcements",
+  },
+  // {
+  //   imgUrl: "/assets/recordings.svg",
+  //   icon: PlayCircle,
+  //   route: "/teacher/recordings",
+  //   label: "Recordings",
+  // },
+  {
+    imgUrl: "/assets/edit.svg",
+    icon: SettingsIcon,
+    route: "/teacher/settings",
+    label: "Settings",
+  },
+]
+export const sidebarLinksTeacherMobile = [
+  {
+    imgUrl: "/assets/community.svg",
+    icon: User,
+    route: "/teacher/users",
+    label: "Users",
+  },
+  {
+    imgUrl: "/assets/courses.svg",
+    icon: Book,
+    route: "/teacher/courses",
+    label: "Products",
+  },
+  {
+    imgUrl: "/assets/home.svg",
+    icon: HomeIcon,
+    route: "/teacher/dashboard",
+    label: "Home",
+  },
+  {
+    imgUrl: "/assets/reply.svg",
+    icon: Newspaper,
+    route: "/teacher/announcements",
+    label: "Announcements",
+  },
+  // {
+  //   imgUrl: "/assets/recordings.svg",
+  //   icon: PlayCircle,
+  //   route: "/teacher/recordings",
+  //   label: "Recordings",
+  // },
+  {
+    imgUrl: "/assets/edit.svg",
+    icon: SettingsIcon,
+    route: "/teacher/settings",
+    label: "Settings",
+  },
+]
+
+export const sidebarLinksStudentMobile = [
+  //   {
+  //   imgUrl: "/assets/home.svg",
+  //   icon: HomeIcon,
+  //   route: "/student/dashboard",
+  //   label: "Home",
+  // },
+  {
+    imgUrl: "/assets/courses.svg",
+    icon: Book,
+    route: "/student/courses",
+    label: "Course",
+  },
+  {
+    imgUrl: "/assets/reply.svg",
+    icon: Newspaper,
+    route: "/student/announcements",
+    label: "Announcements",
+  },
+  {
+    imgUrl: "/assets/edit.svg",
+    icon: SettingsIcon,
+    route: "/student/settings",
+    label: "Settings",
+  },
+]
+
+export type TsideBar = typeof sidebarLinksTeacher
+
 export const communityTabs = [
   { value: "batch 1", label: "batch 1", icon: "/assets/members.svg" },
   { value: "batch 2", label: "batch 2", icon: "/assets/members.svg" },
@@ -107,90 +202,97 @@ export const communityTabs = [
 ]
 
 export const chapters = [
-    {
-      id: 1,
-      title: '1. Introduction',
-      isCompleted: true,
-      subTopics: [
-        {
-          id: 1,
-          title: 'Introduction to the course',
-          type: 'video',
-          videoUrl: 'http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4',
-        },
-        {
-          id: 2,
-          title: 'Introduction to the course',
-          type: 'video',
-          videoUrl: 'http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4',
-        },
-        {
-          id: 3,
-          title: 'Introduction to the course',
-          type: 'video',
-          videoUrl: 'http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4',
-        }
-      ],
-    },      
-    {
-      id: 2,
-      title: '2. What is Trading',
-      isCompleted: false,
-      subTopics: [
-        {
-          id: 1,
-          title: 'Introduction to trading',
-          type: 'video',
-          videoUrl: 'http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4',
-        },
-        {
-          id: 2,
-          title: 'Why trading is important',
-          type: 'video',
-          videoUrl: 'http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4',
-        },
-        {
-          id: 3,
-          title: 'Knowledge check 2.1',
-          type: "quiz",
-          quiz: [
-            {
-              question: "What is use of trading?",
-              options: [ "Earn", "Lose", "Nothing"]
-            }
-          ]
-        }, 
-      ]
-    },
-    {
-      id: 3,
-      title: '3. Why Trade',
-      isCompleted: false,
-      subTopics: [
-        {
-          id: 1,
-          title: 'Introduction to trading',
-          type: 'video',
-          videoUrl: 'http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4',
-        },
-        {
-          id: 2,
-          title: 'Why trading is important',
-          type: 'lab',
-          videoUrl: 'http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4',
-        },
-        {
-          id: 3,
-          title: 'Knowledge check 2.1',
-          type: "assignment",
-          quiz: [
-            {
-              question: "What is use of trading?",
-              options: [ "Earn", "Lose", "Nothing"]
-            }
-          ]
-        }
-      ]
-    }
-  ];
-export type Tchapters = typeof chapters;
+  {
+    id: 1,
+    title: "1. Introduction",
+    isCompleted: true,
+    subTopics: [
+      {
+        id: 1,
+        title: "Introduction to the course",
+        type: "video",
+        videoUrl:
+          "http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4",
+      },
+      {
+        id: 2,
+        title: "Introduction to the course",
+        type: "video",
+        videoUrl:
+          "http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4",
+      },
+      {
+        id: 3,
+        title: "Introduction to the course",
+        type: "video",
+        videoUrl:
+          "http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4",
+      },
+    ],
+  },
+  {
+    id: 2,
+    title: "2. What is Trading",
+    isCompleted: false,
+    subTopics: [
+      {
+        id: 1,
+        title: "Introduction to trading",
+        type: "video",
+        videoUrl:
+          "http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4",
+      },
+      {
+        id: 2,
+        title: "Why trading is important",
+        type: "video",
+        videoUrl:
+          "http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4",
+      },
+      {
+        id: 3,
+        title: "Knowledge check 2.1",
+        type: "quiz",
+        quiz: [
+          {
+            question: "What is use of trading?",
+            options: ["Earn", "Lose", "Nothing"],
+          },
+        ],
+      },
+    ],
+  },
+  {
+    id: 3,
+    title: "3. Why Trade",
+    isCompleted: false,
+    subTopics: [
+      {
+        id: 1,
+        title: "Introduction to trading",
+        type: "video",
+        videoUrl:
+          "http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4",
+      },
+      {
+        id: 2,
+        title: "Why trading is important",
+        type: "lab",
+        videoUrl:
+          "http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4",
+      },
+      {
+        id: 3,
+        title: "Knowledge check 2.1",
+        type: "assignment",
+        quiz: [
+          {
+            question: "What is use of trading?",
+            options: ["Earn", "Lose", "Nothing"],
+          },
+        ],
+      },
+    ],
+  },
+]
+export type Tchapters = typeof chapters

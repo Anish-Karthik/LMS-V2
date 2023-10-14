@@ -1,0 +1,51 @@
+"use client"
+
+import React from "react"
+import Image from "next/image"
+import Link from "next/link"
+import { usePathname, useRouter } from "next/navigation"
+import { useAuth } from "@clerk/nextjs"
+
+import { sidebarLinksTeacher, sidebarLinksTeacherMobile } from "@/app/constants"
+
+function MobileNav() {
+  // const { userId } = useAuth()
+  // const router = useRouter()
+  const pathname = usePathname()
+  return (
+    <section className="bottombar">
+      <div className="bottombar_container">
+        {sidebarLinksTeacherMobile.map((link, ind) => {
+          const isActive = pathname.includes(link.route.toLowerCase())
+
+          // if(link.route === '/profile') link.route = `/profile/${userId}`
+
+          return (
+            <div key={ind}>
+              <Link
+                href={link.route}
+                key={link.label}
+                className={`bottombar_link ${
+                  isActive && "bg-primary-foreground"
+                }`}
+              >
+                {/* <Image
+                  src={link.imgUrl}
+                  alt={link.label}
+                  width={24}
+                  height={24}
+                /> */}
+                <link.icon />
+                <p className="text-light-1 text-subtle-medium max-sm:hidden">
+                  {link.label.split(" ")[0]}
+                </p>
+              </Link>
+            </div>
+          )
+        })}
+      </div>
+    </section>
+  )
+}
+
+export default MobileNav

@@ -1,27 +1,27 @@
-"use client";
+"use client"
 
-import axios from "axios";
-import MuxPlayer from "@mux/mux-player-react";
-import { useState } from "react";
-import { toast } from "react-hot-toast";
-import { useRouter } from "next/navigation";
-import { Loader2, Lock } from "lucide-react";
+import { useState } from "react"
+import { useRouter } from "next/navigation"
+import MuxPlayer from "@mux/mux-player-react"
+import axios from "axios"
+import { Loader2, Lock } from "lucide-react"
+import { toast } from "react-hot-toast"
 
-import { cn } from "@/lib/utils";
-import { useConfettiStore } from "@/hooks/use-confetti-store";
-import { updateUserProgressTopic } from "@/lib/actions/topic.actions";
+import { updateUserProgressTopic } from "@/lib/actions/topic.actions"
+import { cn } from "@/lib/utils"
+import { useConfettiStore } from "@/hooks/use-confetti-store"
 
 interface VideoPlayerProps {
-  userId: string;
-  playbackId: string;
-  courseId: string;
-  topicId: string;
-  nextTopicId?: string;
-  nextTopicType?: string;
-  isLocked: boolean;
-  completeOnEnd: boolean;
-  title: string;
-};
+  userId: string
+  playbackId: string
+  courseId: string
+  topicId: string
+  nextTopicId?: string
+  nextTopicType?: string
+  isLocked: boolean
+  completeOnEnd: boolean
+  title: string
+}
 
 export const VideoPlayer = ({
   userId,
@@ -34,9 +34,9 @@ export const VideoPlayer = ({
   completeOnEnd,
   title,
 }: VideoPlayerProps) => {
-  const [isReady, setIsReady] = useState(false);
-  const router = useRouter();
-  const confetti = useConfettiStore();
+  const [isReady, setIsReady] = useState(false)
+  const router = useRouter()
+  const confetti = useConfettiStore()
 
   const onEnd = async () => {
     try {
@@ -46,21 +46,23 @@ export const VideoPlayer = ({
         // });
 
         // write server actions
-        await updateUserProgressTopic(userId, topicId, true);
+        await updateUserProgressTopic(userId, topicId, true)
 
         if (!nextTopicId) {
-          confetti.onOpen();
+          confetti.onOpen()
         }
 
-        toast.success("Progress updated");
-        router.refresh();
+        toast.success("Progress updated")
+        router.refresh()
 
         if (nextTopicId && nextTopicType) {
-          router.push(`/courses/${courseId}/recordings/${nextTopicType}/${nextTopicId}`)
+          router.push(
+            `/courses/${courseId}/recordings/${nextTopicType}/${nextTopicId}`
+          )
         }
       }
     } catch {
-      toast.error("Something went wrong");
+      toast.error("Something went wrong")
     }
   }
 
@@ -74,17 +76,13 @@ export const VideoPlayer = ({
       {isLocked && (
         <div className="absolute inset-0 flex flex-col items-center justify-center gap-y-2 bg-slate-800 text-secondary">
           <Lock className="h-8 w-8" />
-          <p className="text-sm">
-            This topic is locked
-          </p>
+          <p className="text-sm">This topic is locked</p>
         </div>
       )}
       {!isLocked && (
         <MuxPlayer
           title={title}
-          className={cn(
-            !isReady && "hidden"
-          )}
+          className={cn(!isReady && "hidden")}
           onCanPlay={() => setIsReady(true)}
           onEnded={onEnd}
           autoPlay

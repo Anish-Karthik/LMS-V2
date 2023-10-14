@@ -129,15 +129,16 @@ export const getDefaultBatch = async (courseId: string) => {
         batches: true,
       },
     })
-    let res:string;
+    let res: string
     if (!course) throw new Error("Course not found")
-    if(!course.batches.length) res = (await createBatch({ name: "unassigned", courseId })).id;
+    if (!course.batches.length)
+      res = (await createBatch({ name: "unassigned", courseId })).id
     else res = course.batches[0].id
-    const ans = await getBatchById(res);
-    if(!ans) throw new Error("Batch not found")
-    return ans;
+    const ans = await getBatchById(res)
+    if (!ans) throw new Error("Batch not found")
+    return ans
   } catch (e: any) {
     console.error(e)
-    throw new Error(e.message || "Course not found");
+    throw new Error(e.message || "Course not found")
   }
 }

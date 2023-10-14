@@ -286,10 +286,8 @@ export const getDetailedTopicClient = async ({
     if (!purchase) {
       throw new Error("Course not purchased")
     }
-    
 
     const topic = await getPublishedTopicsById(topicId)
-    
 
     const currentChapter = await db.chapter.findUnique({
       where: {
@@ -388,7 +386,11 @@ export const getDetailedTopicClient = async ({
   }
 }
 
-export const updateUserProgressTopic = async (userId: string, topicId: string, isCompleted: boolean) => {
+export const updateUserProgressTopic = async (
+  userId: string,
+  topicId: string,
+  isCompleted: boolean
+) => {
   try {
     await db.userProgressTopic.upsert({
       where: {
@@ -405,14 +407,18 @@ export const updateUserProgressTopic = async (userId: string, topicId: string, i
         topicId,
         isCompleted,
       },
-    });
+    })
   } catch (error: any) {
     console.error(error)
     throw new Error("User progress update failed: ", error.message)
   }
 }
 
-export const addAttachmentToTopic = async (topicId: string, attachmentUrl: string, name="Attachment") => {
+export const addAttachmentToTopic = async (
+  topicId: string,
+  attachmentUrl: string,
+  name = "Attachment"
+) => {
   try {
     const attachment = await db.attachment.create({
       data: {
@@ -422,14 +428,17 @@ export const addAttachmentToTopic = async (topicId: string, attachmentUrl: strin
       },
     })
 
-    return attachment;
+    return attachment
   } catch (error: any) {
     console.error(error)
     throw new Error("Attachment upload failed: ", error.message)
   }
 }
 
-export const removeAttachmentFromTopic = async (topicId: string, attachmentId: string) => {
+export const removeAttachmentFromTopic = async (
+  topicId: string,
+  attachmentId: string
+) => {
   try {
     const deletedAttachment = await db.attachment.delete({
       where: {
@@ -437,8 +446,7 @@ export const removeAttachmentFromTopic = async (topicId: string, attachmentId: s
         topicId: topicId,
       },
     })
-  }
-  catch (error: any) {
+  } catch (error: any) {
     console.error(error)
     throw new Error("Attachment deletion failed: ", error.message)
   }

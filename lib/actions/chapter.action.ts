@@ -51,7 +51,6 @@ export const getChapterById = async (chapterId: string) => {
       include: {
         topics: true,
       },
-
     })
     if (!chapter) throw new Error("Chapter not found")
     return chapter
@@ -61,8 +60,8 @@ export const getChapterById = async (chapterId: string) => {
   }
 }
 
-export const getChaptersByBatchId = async(batchId: string) => {
-  try { 
+export const getChaptersByBatchId = async (batchId: string) => {
+  try {
     return await db.chapter.findMany({
       where: {
         batchId,
@@ -70,15 +69,15 @@ export const getChaptersByBatchId = async(batchId: string) => {
       include: {
         topics: {
           orderBy: {
-            position: "asc"
-          }
-        }
+            position: "asc",
+          },
+        },
       },
       orderBy: {
-        position: "asc"
-      }
+        position: "asc",
+      },
     })
-  } catch(error) {
+  } catch (error) {
     console.error(error)
     throw new Error("Chapter reorder failed")
   }
@@ -94,9 +93,8 @@ export const reorderChapters = async (
         where: { id: item.id },
         data: { position: item.position },
       })
-    
     }
-    return {sucess: true};
+    return { sucess: true }
   } catch (error) {
     console.error(error)
     throw new Error("Chapter reorder failed")

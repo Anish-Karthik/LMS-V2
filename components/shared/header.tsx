@@ -1,5 +1,5 @@
 import Link from "next/link"
-import { UserButton } from "@clerk/nextjs";
+import { UserButton } from "@clerk/nextjs"
 
 import { siteConfig } from "@/config/site"
 import { buttonVariants } from "@/components/ui/button"
@@ -25,7 +25,7 @@ export function Header() {
                   variant: "ghost",
                 })}
               >
-                <UserButton afterSignOutUrl="/"/>
+                <UserButton afterSignOutUrl="/" />
               </div>
             </Link>
           </nav>

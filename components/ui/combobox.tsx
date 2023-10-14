@@ -19,16 +19,12 @@ import {
 } from "@/components/ui/popover"
 
 interface ComboboxProps {
-  options: { label: string; value: string }[];
-  value?: string;
-  onChange: (value: string) => void;
-};
+  options: { label: string; value: string }[]
+  value?: string
+  onChange: (value: string) => void
+}
 
-export const Combobox = ({
-  options,
-  value,
-  onChange
-}: ComboboxProps) => {
+export const Combobox = ({ options, value, onChange }: ComboboxProps) => {
   const [open, setOpen] = React.useState(false)
 
   return (

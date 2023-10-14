@@ -1,33 +1,35 @@
-import { auth } from "@clerk/nextjs";
-import { redirect } from "next/navigation";
-import { File } from "lucide-react";
+import Link from "next/link"
+import { redirect } from "next/navigation"
+import { auth } from "@clerk/nextjs"
+import { File } from "lucide-react"
 
+import { getDetailedTopicClient } from "@/lib/actions/topic.actions"
+import { getUser } from "@/lib/actions/user.actions"
+import { Separator } from "@/components/ui/separator"
 // import { gettopic } from "@/actions/get-topic";
-import { Banner } from "@/components/banner";
-import { Separator } from "@/components/ui/separator";
-import { Preview } from "@/components/preview";
+import { Banner } from "@/components/banner"
+import { Preview } from "@/components/preview"
 
-import { VideoPlayer } from "../../_components/video-player";
-import { ChapterProgressButton } from "../../_components/chapter-progress-button";
-import Link from "next/link";
-import { getDetailedTopicClient } from "@/lib/actions/topic.actions";
-import { getUser } from "@/lib/actions/user.actions";
+import { ChapterProgressButton } from "../../_components/chapter-progress-button"
+import { VideoPlayer } from "../../_components/video-player"
 
 const TopicIdPage = async ({
-  params
+  params,
 }: {
   params: { courseId: string; topicId: string }
 }) => {
-  const { userId } = auth();
-  const userInfo = await getUser(userId || "");
-  
+  const { userId } = auth()
+  const userInfo = await getUser(userId || "")
+
   if (!userId || !userInfo) {
-    return redirect("/");
-  } 
-  const userPurchaseInfoForThisCourse = userInfo.purchases.find(purchase => purchase.courseId === params.courseId);
+    return redirect("/")
+  }
+  const userPurchaseInfoForThisCourse = userInfo.purchases.find(
+    (purchase) => purchase.courseId === params.courseId
+  )
 
   if (!userPurchaseInfoForThisCourse) {
-    return redirect("/");
+    return redirect("/")
   }
   const {
     topic,
@@ -42,33 +44,36 @@ const TopicIdPage = async ({
     userId,
     topicId: params.topicId,
     courseId: params.courseId,
-  });
+  })
 
   if (!topic || !batch || !chapter) {
-    return <>
-      <h1>Topic not found{JSON.stringify(topic)}</h1>
-      <h1>Batch not found{JSON.stringify(batch)}</h1>
-      <h1>Chapter not found{JSON.stringify(chapter)}</h1>
-    </>
+    return (
+      <>
+        <h1>Topic not found{JSON.stringify(topic)}</h1>
+        <h1>Batch not found{JSON.stringify(batch)}</h1>
+        <h1>Chapter not found{JSON.stringify(chapter)}</h1>
+      </>
+    )
   }
-  console.log(userPurchaseInfoForThisCourse.batchId, batch.id);
+  console.log(userPurchaseInfoForThisCourse.batchId, batch.id)
   if (userPurchaseInfoForThisCourse.batchId !== batch.id) {
-    return <>
-      <h1>Batch mismatch, u are not authorized to access this batch content, contact your mentor</h1>
-    </>
+    return (
+      <>
+        <h1>
+          Batch mismatch, u are not authorized to access this batch content,
+          contact your mentor
+        </h1>
+      </>
+    )
   }
 
+  const isLocked = false //!topic.isFree && !purchase;
+  const completeOnEnd = !!purchase && !userProgressTopic?.isCompleted
 
-  const isLocked = false; //!topic.isFree && !purchase;
-  const completeOnEnd = !!purchase && !userProgressTopic?.isCompleted;
-
-  return ( 
+  return (
     <div>
       {userProgressTopic?.isCompleted && (
-        <Banner
-          variant="success"
-          label="You already completed this topic."
-        />
+        <Banner variant="success" label="You already completed this topic." />
       )}
       {isLocked && (
         <Banner
@@ -91,10 +96,8 @@ const TopicIdPage = async ({
         </div>
         <div>
           <div className="flex flex-col items-center justify-between p-4 md:flex-row">
-            <h2 className="mb-2 text-2xl font-semibold">
-              {topic.title}
-            </h2>
-            
+            <h2 className="mb-2 text-2xl font-semibold">{topic.title}</h2>
+
             <ChapterProgressButton
               chapterId={chapter.id}
               topicId={params.topicId}
@@ -112,16 +115,14 @@ const TopicIdPage = async ({
               <Separator />
               <div className="p-4">
                 {attachments.map((attachment) => (
-                  <Link 
+                  <Link
                     href={attachment.url}
                     target="_blank"
                     key={attachment.id}
                     className="flex w-full items-center rounded-md border bg-sky-200 p-3 text-sky-700 hover:underline"
                   >
                     <File />
-                    <p className="line-clamp-1">
-                      {attachment.name}
-                    </p>
+                    <p className="line-clamp-1">{attachment.name}</p>
                   </Link>
                 ))}
               </div>
@@ -130,7 +131,7 @@ const TopicIdPage = async ({
         </div>
       </div>
     </div>
-  );
+  )
 }
 
-export default TopicIdPage;
+export default TopicIdPage

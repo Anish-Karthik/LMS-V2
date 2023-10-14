@@ -46,7 +46,7 @@ export const getBatchById = async (batchId: string, courseId?: string) => {
               orderBy: {
                 position: "asc",
               },
-            }
+            },
           },
           orderBy: {
             position: "asc",
@@ -69,7 +69,7 @@ export const getBatches = async (courseId: string) => {
     return batches
   } catch (e: any) {
     console.error(e)
-    throw new Error("Batches not found",e.message)
+    throw new Error("Batches not found", e.message)
   }
 }
 export const deleteBatch = async (courseId: string, batchId: string) => {

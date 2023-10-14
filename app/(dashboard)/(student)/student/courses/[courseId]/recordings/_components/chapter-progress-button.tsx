@@ -1,22 +1,22 @@
-"use client";
+"use client"
 
-import axios from "axios";
-import { CheckCircle, XCircle } from "lucide-react";
-import { useRouter } from "next/navigation";
-import { useState } from "react";
-import toast from "react-hot-toast";
+import { useState } from "react"
+import { useRouter } from "next/navigation"
+import axios from "axios"
+import { CheckCircle, XCircle } from "lucide-react"
+import toast from "react-hot-toast"
 
-import { Button } from "@/components/ui/button";
-import { useConfettiStore } from "@/hooks/use-confetti-store";
+import { useConfettiStore } from "@/hooks/use-confetti-store"
+import { Button } from "@/components/ui/button"
 
 interface ChapterProgressButtonProps {
-  chapterId: string;
-  topicId: string;
-  courseId: string;
-  isCompleted?: boolean;
-  nextTopicId?: string;
-  nextTopicType?: string;
-};
+  chapterId: string
+  topicId: string
+  courseId: string
+  isCompleted?: boolean
+  nextTopicId?: string
+  nextTopicType?: string
+}
 
 export const ChapterProgressButton = ({
   chapterId,
@@ -26,32 +26,34 @@ export const ChapterProgressButton = ({
   nextTopicId,
   nextTopicType,
 }: ChapterProgressButtonProps) => {
-  const router = useRouter();
-  const confetti = useConfettiStore();
-  const [isLoading, setIsLoading] = useState(false);
+  const router = useRouter()
+  const confetti = useConfettiStore()
+  const [isLoading, setIsLoading] = useState(false)
 
   const onClick = async () => {
     try {
-      setIsLoading(true);
+      setIsLoading(true)
 
       // await axios.put(`/api/courses/${courseId}/chapters/${chapterId}/progress`, {
       //   isCompleted: !isCompleted
       // });
 
       if (!isCompleted && !nextTopicId) {
-        confetti.onOpen();
+        confetti.onOpen()
       }
 
       if (!isCompleted && nextTopicId && nextTopicType) {
-        router.push(`/courses/${courseId}/recordings/${nextTopicType}/${nextTopicId}`);
+        router.push(
+          `/courses/${courseId}/recordings/${nextTopicType}/${nextTopicId}`
+        )
       }
 
-      toast.success("Progress updated");
-      router.refresh();
+      toast.success("Progress updated")
+      router.refresh()
     } catch {
-      toast.error("Something went wrong");
+      toast.error("Something went wrong")
     } finally {
-      setIsLoading(false);
+      setIsLoading(false)
     }
   }
 

@@ -1,6 +1,6 @@
-"use server";
+"use server"
 
-import { db } from "../db";
+import { db } from "../db"
 
 export const isUserStripeCustomer = async (userId: string) => {
   try {
@@ -8,26 +8,29 @@ export const isUserStripeCustomer = async (userId: string) => {
       where: {
         userId,
       },
-    });
-    return !!stripeCustomer;
+    })
+    return !!stripeCustomer
   } catch (e) {
-    console.log(e);
-    return false;
+    console.log(e)
+    return false
   }
 }
 
-export const createStripeCustomer = async (userId: string, stripeCustomerId: string) => {
+export const createStripeCustomer = async (
+  userId: string,
+  stripeCustomerId: string
+) => {
   try {
     const stripeCustomer = await db.stripeCustomer.create({
       data: {
         userId,
         stripeCustomerId,
       },
-    });
-    return stripeCustomer;
+    })
+    return stripeCustomer
   } catch (e: any) {
-    console.error(e);
-    throw new Error("Stripe customer creation failed", e.message);
+    console.error(e)
+    throw new Error("Stripe customer creation failed", e.message)
   }
 }
 
@@ -37,8 +40,8 @@ export const getStripeCustomer = async (userId: string) => {
       where: {
         userId,
       },
-    });
-    return stripeCustomer;
+    })
+    return stripeCustomer
   } catch (e: any) {
     console.error(e)
     throw new Error(e.message)

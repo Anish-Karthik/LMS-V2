@@ -48,6 +48,10 @@ module.exports = withUt({
           foreground: "hsl(var(--card-foreground))",
         },
       },
+      screens: {
+        xs: "400px",
+        "2xs": "280px",
+      },
       borderRadius: {
         lg: `var(--radius)`,
         md: `calc(var(--radius) - 2px)`,

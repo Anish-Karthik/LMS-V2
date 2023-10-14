@@ -1,24 +1,26 @@
 "use client"
-import { useAuth } from '@clerk/nextjs';
-import Link from 'next/link';
-import TypewriterComponent from 'typewriter-effect';
-import { Button } from '@/components/ui/button';
+
+import Link from "next/link"
+import { useAuth } from "@clerk/nextjs"
+import TypewriterComponent from "typewriter-effect"
+
+import { Button } from "@/components/ui/button"
 
 export const LandingHero = () => {
-  const { isSignedIn } = useAuth();
+  const { isSignedIn } = useAuth()
 
   return (
-    <div className=' font-bold py-36 text-center space-y-5'>
-      <div className='text-4xl sm:text-5xl md:text-6xl lg:text-7xl xl:text-7xl'>
+    <div className=" space-y-5 py-36 text-center font-bold">
+      <div className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl xl:text-7xl">
         <h1>The Best Trading Course for</h1>
-        <div className='text-transparent bg-clip-text bg-gradient-to-r from-purple-400 to-pink-600 py-2'>
+        <div className="bg-gradient-to-r from-purple-400 to-pink-600 bg-clip-text py-2 text-transparent">
           <TypewriterComponent
             options={{
               strings: [
                 "Anyone who wants to learn trading",
                 "Becoming a successful trader",
                 "Making money online",
-                "Trade with confidence"
+                "Trade with confidence",
               ],
               autoStart: true,
               loop: true,
@@ -26,18 +28,18 @@ export const LandingHero = () => {
           />
         </div>
       </div>
-      <div className='text-sm md:text-xl font-light text-zinc-400'>
-        Learn how to trade with our step-by-step video tutorials and live webinars.
+      <div className="text-sm font-light text-zinc-400 md:text-xl">
+        Learn how to trade with our step-by-step video tutorials and live
+        webinars.
       </div>
       <div>
         <Link href={isSignedIn ? "/course-details" : "/sign-up"}>
-          <Button className='md:text-lg p-4 md:p-6 rounded-full font-semibold'>
+          <Button className="rounded-full p-4 font-semibold md:p-6 md:text-lg">
             Start Learning
           </Button>
         </Link>
       </div>
-      <div className='text-zinc-400 text-xs md:text-sm font-normal'>
-      </div>
+      <div className="text-xs font-normal text-zinc-400 md:text-sm"></div>
     </div>
   )
 }

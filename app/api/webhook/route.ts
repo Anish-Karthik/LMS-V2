@@ -1,17 +1,17 @@
 import { headers } from "next/headers"
+import { redirect } from "next/navigation"
 import { NextResponse } from "next/server"
 import Stripe from "stripe"
 
 import { purchaseCourse } from "@/lib/actions/user.actions"
 import { stripe } from "@/lib/stripe"
-import { redirect } from "next/navigation"
 
 export async function POST(req: Request) {
   const body = await req.text()
   const signature = headers().get("Stripe-Signature") as string
 
   let event: Stripe.Event
-  
+
   try {
     event = stripe.webhooks.constructEvent(
       body,
@@ -32,7 +32,7 @@ export async function POST(req: Request) {
         status: 400,
       })
     }
-    await purchaseCourse(userId, courseId);
+    await purchaseCourse(userId, courseId)
     redirect(`/student/courses/${courseId}/dashboard`)
   } else {
     return new NextResponse(

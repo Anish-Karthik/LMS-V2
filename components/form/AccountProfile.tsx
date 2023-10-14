@@ -1,19 +1,26 @@
-"use client";
-import React, { useState, useEffect } from 'react'
-import { Button } from "@/components/ui/button"
-import { useForm } from 'react-hook-form';
-import { zodResolver } from '@hookform/resolvers/zod';
-import { z } from 'zod';
-import { Form } from "@/components/ui/form"
-import { isBase64Image } from '@/lib/utils';
-import { useUploadThing } from '@/lib/uploadthing';
-import { createUser } from '@/lib/actions/user.actions';
-import { useRouter, usePathname } from 'next/navigation';
-import { CustomInputField, CustomProfilePhoto, CustomTextArea, SelectUserMode } from '../form-fields';
-import toast from 'react-hot-toast';
-import { useAuth } from '@clerk/nextjs';
-import { User } from '@clerk/nextjs/dist/types/server';
+"use client"
 
+import React, { useEffect, useState } from "react"
+import { usePathname, useRouter } from "next/navigation"
+import { useAuth } from "@clerk/nextjs"
+import { User } from "@clerk/nextjs/dist/types/server"
+import { zodResolver } from "@hookform/resolvers/zod"
+import { useForm } from "react-hook-form"
+import toast from "react-hot-toast"
+import { z } from "zod"
+
+import { createUser } from "@/lib/actions/user.actions"
+import { useUploadThing } from "@/lib/uploadthing"
+import { isBase64Image } from "@/lib/utils"
+import { Button } from "@/components/ui/button"
+import { Form } from "@/components/ui/form"
+
+import {
+  CustomInputField,
+  CustomProfilePhoto,
+  CustomTextArea,
+  SelectUserMode,
+} from "../form-fields"
 
 const UserValidation = z.object({
   image: z.string().url(),
@@ -21,59 +28,60 @@ const UserValidation = z.object({
   email: z.string().email(),
   phoneNo: z.string().min(10).max(10),
   role: z.string().min(3).max(30),
-});
-
+})
 
 const AccountProfile = ({ user }: { user: User }) => {
+  const [isSubmitting, setIsSubmitting] = useState(false)
+  const [files, setFiles] = useState<File[]>([])
+  const { startUpload } = useUploadThing("media")
+  const router = useRouter()
+  const pathname = usePathname()
 
-  const [isSubmitting, setIsSubmitting] = useState(false);
-  const [files, setFiles] = useState<File[]>([]);
-  const { startUpload } = useUploadThing("media");
-  const router = useRouter();
-  const pathname = usePathname();
-  
   const form = useForm({
     resolver: zodResolver(UserValidation),
     defaultValues: {
-      image: user.imageUrl || '',
-      name: user.firstName || '',
-      email: user.emailAddresses[0].emailAddress || '',
-      phoneNo: user.phoneNumbers[0]?.phoneNumber || '',
-      role: user.publicMetadata.roles ||"student",
-    }
-  });
+      image: user.imageUrl || "",
+      name: user.firstName || "",
+      email: user.emailAddresses[0].emailAddress || "",
+      phoneNo: user.phoneNumbers[0]?.phoneNumber || "",
+      role: "student",
+    },
+  })
 
-  function handleImageChange(e: React.ChangeEvent<HTMLInputElement>, onChange: (value: string) => void) {
-    e.preventDefault();
-    const fileReader = new FileReader();
+  function handleImageChange(
+    e: React.ChangeEvent<HTMLInputElement>,
+    onChange: (value: string) => void
+  ) {
+    e.preventDefault()
+    const fileReader = new FileReader()
 
     if (e.target?.files && e.target.files.length > 0) {
-      const file = e.target?.files[0];
-      setFiles(Array.from(e.target.files));
+      const file = e.target?.files[0]
+      setFiles(Array.from(e.target.files))
 
-      if (!file.type.includes('image')) return;
+      if (!file.type.includes("image")) return
 
       fileReader.onload = async (event) => {
-        const imageDataUrl = event.target?.result?.toString() || '';
-        onChange(imageDataUrl);
+        const imageDataUrl = event.target?.result?.toString() || ""
+        onChange(imageDataUrl)
       }
 
-      fileReader.readAsDataURL(file);
+      fileReader.readAsDataURL(file)
     }
   }
 
   async function onSubmit(values: z.infer<typeof UserValidation>) {
-    setIsSubmitting(true);
-      try {
-        const blob = values.image;
+    setIsSubmitting(true)
+    try {
+      const blob = values.image
 
-      const hasImageChanged = isBase64Image(blob);
+      const hasImageChanged = isBase64Image(blob)
 
       if (hasImageChanged) {
-        const imgRes = await startUpload(files);
-        
+        const imgRes = await startUpload(files)
+
         if (imgRes && imgRes[0].url) {
-          values.image = imgRes[0].url;
+          values.image = imgRes[0].url
         }
       }
 
@@ -84,35 +92,42 @@ const AccountProfile = ({ user }: { user: User }) => {
         image: values.image,
         phoneNo: values.phoneNo,
         role: values.role,
-      });
+      })
 
-      if (pathname === '/profile/edit') {
-        router.back();
+      if (pathname === "/profile/edit") {
+        router.back()
       } else {
-        router.push('/');
+        router.push("/")
       }
-      toast.success('Profile Updated Successfully');
+      toast.success("Profile Updated Successfully")
     } catch (error: any) {
-      console.log(error);
-      toast.error(error.message);
-      setIsSubmitting(false);
+      console.log(error)
+      toast.error(error.message)
+      setIsSubmitting(false)
     }
   }
 
   return (
     <Form {...form}>
-      {/* @ts-ignore */}
-      <form onSubmit={form.handleSubmit(onSubmit)} className="flex flex-col justify-start gap-10">
-        <CustomProfilePhoto form={form} handleImageChange={handleImageChange} name='image' />
-        <CustomInputField form={form} name='name' />
-        <CustomInputField form={form} name='email' />
-        <CustomInputField form={form} name='phoneNo' />
-        <SelectUserMode form={form} name='role' />
-        <Button type="submit" className='' disabled={isSubmitting}>{"Complete Profile"}</Button>
+      <form
+        onSubmit={form.handleSubmit(onSubmit)}
+        className="flex flex-col justify-start gap-10"
+      >
+        <CustomProfilePhoto
+          form={form}
+          handleImageChange={handleImageChange}
+          name="image"
+        />
+        <CustomInputField form={form} name="name" />
+        <CustomInputField form={form} name="email" />
+        <CustomInputField form={form} name="phoneNo" />
+        <SelectUserMode form={form} name="role" />
+        <Button type="submit" className="" disabled={isSubmitting}>
+          {"Complete Profile"}
+        </Button>
       </form>
     </Form>
   )
 }
 
 export default AccountProfile
-
