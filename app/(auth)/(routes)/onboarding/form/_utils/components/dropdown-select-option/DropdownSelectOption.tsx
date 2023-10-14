@@ -27,7 +27,7 @@ export function DropdownSelectOption({
       {children}
       {isSelected && (
         <Image
-          src="/check-small.svg"
+          src="/assets/check-small.svg"
           alt="check small"
           width={30}
           height={30}

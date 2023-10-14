@@ -11,6 +11,7 @@ import { sidebarLinksStudentMobile } from "@/app/constants"
 
 import { MainNav } from "./_components/main-nav"
 import MobileNav from "./_components/mobile-nav"
+import CurrentPathNavigator from "./_components/current-pathname"
 
 const DashBoardLayout = async ({ children }: { children: React.ReactNode }) => {
   const user = await currentUser()
@@ -28,7 +29,7 @@ const DashBoardLayout = async ({ children }: { children: React.ReactNode }) => {
           <div className="flex h-16 items-center px-4">
             {/* <TeamSwitcher /> */}
             <Image
-              src={"/assets/images/logo.png"}
+              src={"/images/logo.png"}
               alt="Alfaq"
               width={50}
               height={50}
@@ -42,7 +43,7 @@ const DashBoardLayout = async ({ children }: { children: React.ReactNode }) => {
           </div>
         </div>
         <main>
-          {/* <CurrentPathNavigator /> */}
+          <CurrentPathNavigator />
           <div>{children}</div>
         </main>
         <MobileNav />

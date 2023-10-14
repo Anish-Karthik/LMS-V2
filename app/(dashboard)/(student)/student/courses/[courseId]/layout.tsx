@@ -15,7 +15,7 @@ const DashBoardLayout = async ({
 }) => {
   const user = await currentUser()
   if (!user) redirect("/sign-in")
-  if (!params.courseId) redirect("/dashboard/student/courses")
+  if (!params.courseId) redirect("/student/courses")
   const purchased = await isUserPurchasedCourse(user.id, params.courseId)
   if (!purchased) redirect("/course-details/" + params.courseId)
 

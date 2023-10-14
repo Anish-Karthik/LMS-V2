@@ -20,7 +20,7 @@ export function QuestionNumHeading({
       <span>
         {questionNum}
         <Image
-          src="./right-arrow.svg"
+          src="/right-arrow.svg"
           alt="right arrow"
           width={16}
           height={16}

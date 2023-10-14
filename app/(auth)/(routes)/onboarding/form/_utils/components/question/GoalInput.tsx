@@ -112,7 +112,7 @@ export function GoalInput() {
         >
           OK{" "}
           <Image
-            src="/check-small.svg"
+            src="/assets/check-small.svg"
             alt="check small"
             width={34}
             height={34}

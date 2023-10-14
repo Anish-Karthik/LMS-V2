@@ -94,7 +94,7 @@ const UsersList = ({
       switchBatch(currentBatch.id, defaultBatch.id, reorderedItem.id)
     }
   }
-
+  if (defaultBatch.purchases.length || currentBatch.purchases.length)
   return (
     // create a code to drap and drop purchases from and to the default batch and the current batch
 
@@ -203,6 +203,11 @@ const UsersList = ({
         </Droppable>
       </div>
     </DragDropContext>
+  ) 
+  return (
+    <div className="flex h-64 items-center justify-center">
+      <p className="text-xl text-slate-500">No purchases found in unassigned batch and current batch</p>
+    </div>
   )
 }
 
