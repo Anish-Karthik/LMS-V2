@@ -46,9 +46,8 @@ export default function RootLayout({ children }: RootLayoutProps) {
           <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
             <ConfettiProvider />
             <ToastProvider />
-            <div className="relative flex min-h-screen flex-col">
-              {/* <SiteHeader /> */}
-              <div className="flex-1">{children}</div>
+            <div className="relative flex min-h-screen flex-col ">
+              {/* <SiteHeader /> */}{children}
             </div>
             <TailwindIndicator />
           </ThemeProvider>

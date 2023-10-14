@@ -1,0 +1,7 @@
+.question-box__para {
+  color: var(--para-text-color);
+  @apply text-lg md:text-xl lg:text-2xl xl:text-3xl;
+  font-weight: unset;
+  line-height: 1.4em;
+  margin-top: 12px;
+}

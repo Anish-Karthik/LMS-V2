@@ -34,6 +34,21 @@
     --ring: 215 20.2% 65.1%;
 
     --radius: 0.5rem;
+
+    --body-background-color: #000;
+    --btn-text-color: #fff;
+
+    --dropdown-background-color: rgba(255, 255, 255, 0.1);
+
+    --error-background-color: rgb(247, 230, 230);
+    --error-text-color: rgb(175, 4, 4);
+
+    --para-text-color: rgba(255, 255, 255, 0.7);
+    --placeholder-color: rgba(255, 255, 255, 0.3);
+
+    --primary-color: rgb(0, 119, 255);
+    --primary-light-color: rgb(38, 139, 255);
+    --primary-dark-color: rgb(0, 107, 230);
   }
 
   .dark {
