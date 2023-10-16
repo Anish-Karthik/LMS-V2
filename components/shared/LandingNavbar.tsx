@@ -4,7 +4,7 @@ import React from "react"
 import { Montserrat } from "next/font/google"
 import Image from "next/image"
 import Link from "next/link"
-import { useAuth } from "@clerk/nextjs"
+import { UserButton, useAuth } from "@clerk/nextjs"
 
 import { cn } from "@/lib/utils"
 import { Button } from "@/components/ui/button"
@@ -37,6 +37,7 @@ const LandingNavbar = () => {
             Get Started
           </Button>
         </Link>
+        {isSignedIn && <UserButton />}
       </div>
     </nav>
   )

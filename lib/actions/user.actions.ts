@@ -312,12 +312,20 @@ export const getUsersWhoHaveRoles = async ({
       skip: skipAmount,
       take: pageSize,
     })
+    if (role === "admin") {
+      return { users: admins }
+    }
+    if (role === "teacher") {
+      return { users: teachers }
+    }
+    if (role === "student") {
+      return { users: students }
+    }
+    if (role === "notEnrolled") {
+      return { users: notEnrolleds }
+    }
 
     return {
-      notEnrolleds,
-      students,
-      teachers,
-      admins,
       users: [...students, ...teachers, ...admins, ...notEnrolleds],
     }
   } catch (err: any) {

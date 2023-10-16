@@ -28,13 +28,6 @@ const page = async ({
     searchText: searchParams.searchText,
   })
   // console.log(result);
-  const role: Trole = (
-    ["admin", "teacher", "student", "user", "notEnrolled"].includes(
-      searchParams.role
-    )
-      ? searchParams.role + "s"
-      : "users"
-  ) as Trole
 
   const user = await currentUser()
   const userInfo = await getUser(user!.id)
@@ -52,8 +45,7 @@ const page = async ({
           <p className="no-result">No users</p>
         ) : (
           <>
-            {/* @ts-ignore */}
-            {result?.[role].map((person) => (
+            {result.users.map((person) => (
               <UserCard key={person.id} user={person} viewer={userInfo!} />
             ))}
           </>

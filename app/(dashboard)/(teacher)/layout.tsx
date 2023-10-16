@@ -48,7 +48,6 @@ const DashBoardLayout = async ({
               <ThemeToggle />
               <UserButton afterSignOutUrl="/" />
             </div>
-            ss
           </div>
         </div>
         <main>
