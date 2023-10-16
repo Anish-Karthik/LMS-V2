@@ -1,0 +1,132 @@
+"use client"
+
+import { useState } from "react"
+import { useRouter } from "next/navigation"
+import { zodResolver } from "@hookform/resolvers/zod"
+import { Announcement, Attachment, Batch, Chapter, Course } from "@prisma/client"
+import axios from "axios"
+import { Loader2, PlusCircle } from "lucide-react"
+import { useForm } from "react-hook-form"
+import toast from "react-hot-toast"
+import * as z from "zod"
+
+import { createBatch } from "@/lib/actions/batch.action"
+import { cn } from "@/lib/utils"
+import { Button } from "@/components/ui/button"
+import {
+  Form,
+  FormControl,
+  FormField,
+  FormItem,
+  FormMessage,
+} from "@/components/ui/form"
+import { Input } from "@/components/ui/input"
+
+import { AnnouncementsList } from "./announcements-list"
+import { createAnnouncement } from "@/lib/actions/announcement.action"
+
+interface AnnouncementsFormProps {
+  initialData: (Announcement & { attachments?: Attachment[]})[]
+}
+
+const formSchema = z.object({
+  title: z.string().min(1),
+})
+
+export const AnnouncementsForm = ({ initialData }: AnnouncementsFormProps) => {
+  const [isCreating, setIsCreating] = useState(false)
+  const [isUpdating, setIsUpdating] = useState(false)
+
+  const toggleCreating = () => {
+    setIsCreating((current) => !current)
+  }
+
+  const router = useRouter()
+
+  const form = useForm<z.infer<typeof formSchema>>({
+    resolver: zodResolver(formSchema),
+    defaultValues: {
+      title: "",
+    },
+  })
+
+  const { isSubmitting, isValid } = form.formState
+
+  const onSubmit = async (values: z.infer<typeof formSchema>) => {
+    try {
+      await createAnnouncement(values.title)
+
+      toast.success("Announcement created")
+      toggleCreating()
+      router.refresh()
+    } catch (error: any) {
+      toast.error("Something went wrong", error.message)
+    }
+  }
+  console.log(initialData)
+
+
+  return (
+    <div className="relative mt-6 rounded-md border bg-secondary p-4">
+      {isUpdating && (
+        <div className="rounded-m absolute right-0 top-0 flex h-full w-full items-center justify-center bg-slate-500/20">
+          <Loader2 className="h-6 w-6 animate-spin text-sky-700" />
+        </div>
+      )}
+      <div className="flex items-center justify-between font-medium">
+        Announcements
+        <Button onClick={toggleCreating} variant="ghost">
+          {isCreating ? (
+            <>Cancel</>
+          ) : (
+            <>
+              <PlusCircle className="mr-2 h-4 w-4" />
+              Add a Announcements
+            </>
+          )}
+        </Button>
+      </div>
+      {isCreating && (
+        <Form {...form}>
+          <form
+            onSubmit={form.handleSubmit(onSubmit)}
+            className="mt-4 space-y-4"
+          >
+            <FormField
+              control={form.control}
+              name="title"
+              render={({ field }) => (
+                <FormItem>
+                  <FormControl>
+                    <Input
+                      disabled={isSubmitting}
+                      placeholder="e.g. 'Introduction to the course'"
+                      {...field}
+                    />
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+            <Button disabled={!isValid || isSubmitting} type="submit">
+              Create
+            </Button>
+          </form>
+        </Form>
+      )}
+      {!isCreating && (
+        <div
+          className={cn(
+            "mt-2 text-sm",
+            !initialData.length && "italic text-slate-500"
+          )}
+        >
+          {!initialData.length && "No batches"}
+          <AnnouncementsList
+            items={initialData}
+          />
+        </div>
+      )}
+    </div>
+  )
+}

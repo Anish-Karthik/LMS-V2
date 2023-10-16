@@ -19,6 +19,8 @@ export default function Home() {
   const { percent } = useQuestions()
 
   return (
+    <QuestionsProvider>
+    <SharedStatesProvider>
     <div className="html !text-sm">
       <Head>
         <title>Alfaq</title>
@@ -37,12 +39,12 @@ export default function Home() {
         />
       </header>
       <main className={classNames(styles.main, questrialFont.className)}>
-        <QuestionsProvider>
-          <SharedStatesProvider>
+        
             <MainContent />
-          </SharedStatesProvider>
-        </QuestionsProvider>
+          
       </main>
     </div>
+    </SharedStatesProvider>
+    </QuestionsProvider>
   )
 }

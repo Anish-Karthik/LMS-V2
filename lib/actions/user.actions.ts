@@ -25,7 +25,7 @@ export const isTeacherOrHigher = async (userId: string | null) => {
     if (!userId) throw new Error("Unauthorized user")
     const user = await db.user.findFirst({
       where: {
-        id: userId,
+        userId: userId,
       },
     })
     if (!user) throw new Error("User not found")

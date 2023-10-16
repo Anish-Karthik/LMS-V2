@@ -8,19 +8,21 @@ datasource db {
 }
 
 model User {
-  id        String     @id @default(auto()) @map("_id") @db.ObjectId
-  phoneNo   String?    @unique
-  userId    String     @unique
-  email     String?    @unique
-  name      String
-  image     String?
-  createdAt DateTime   @default(now())
-  updatedAt DateTime   @updatedAt
-  role      String     @default("user") // student, admin, user, teacher
+  id       String  @id @default(auto()) @map("_id") @db.ObjectId
+  phoneNo  String? @unique
+  userId   String  @unique
+  email    String? @unique
+  name     String
+  image    String?
+  role     String  @default("user") // student, admin, user, teacher
+  isBanned Boolean @default(false)
+
   purchases Purchase[]
   teacher   Teacher?
   admin     Admin?
-  isBanned Boolean    @default(false)
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
   // @@index([userId])
 }
 
@@ -31,13 +33,14 @@ model Purchase {
   courseId String @db.ObjectId
   course   Course @relation(fields: [courseId], references: [id], onDelete: Cascade)
 
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt()
-  Batch     Batch?   @relation(fields: [batchId], references: [id])
-  batchId   String?  @db.ObjectId
+  batchId String? @db.ObjectId
+  Batch   Batch?  @relation(fields: [batchId], references: [id])
 
   userObjId String @db.ObjectId
   user      User   @relation(fields: [userObjId], references: [id])
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt()
 
   @@unique([userId, courseId])
   @@index([courseId])
@@ -66,77 +69,117 @@ model Teacher {
 }
 
 model Course {
-  id          String     @id @default(auto()) @map("_id") @db.ObjectId
-  title       String
-  description String?
-  imageUrl    String?
-  price       Float?
+  id            String         @id @default(auto()) @map("_id") @db.ObjectId
+  title         String
+  description   String?
+  imageUrl      String?
+  price         Float?
   // isPublished Boolean @default(false)
-  batches     Batch[]
-  updatedAt   DateTime   @updatedAt
-  Purchase    Purchase[]
-  teacherIds  String[]   @db.ObjectId
-  teachers    Teacher[]  @relation(fields: [teacherIds], references: [id])
+  batches       Batch[]
+  announcements Announcement[]
+  Purchase      Purchase[]
+
+  teacherIds String[]  @db.ObjectId
+  teachers   Teacher[] @relation(fields: [teacherIds], references: [id])
+
+  updatedAt DateTime @updatedAt
+  createdAt DateTime @default(now())
 }
 
 model Batch {
-  id          String       @id @default(auto()) @map("_id") @db.ObjectId
-  createdAt   DateTime     @default(now())
-  updatedAt   DateTime     @updatedAt
-  name        String
-  courseId    String       @db.ObjectId
-  course      Course       @relation(fields: [courseId], references: [id], onDelete: Cascade)
+  id        String   @id @default(auto()) @map("_id") @db.ObjectId
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  name      String
+
+  courseId String @db.ObjectId
+  course   Course @relation(fields: [courseId], references: [id], onDelete: Cascade)
+
   chapters    Chapter[]
   attachments Attachment[]
   purchases   Purchase[]
-  teacherIds  String[]     @db.ObjectId
-  teachers    Teacher[]    @relation(fields: [teacherIds], references: [id])
+
+  teacherIds    String[]       @db.ObjectId
+  teachers      Teacher[]      @relation(fields: [teacherIds], references: [id])
+  announcements Announcement[]
 }
 
 model Chapter {
-  id           String         @id @default(auto()) @map("_id") @db.ObjectId
-  title        String
-  description  String?
-  position     Int
-  userProgress UserProgress[]
-  batchId      String         @db.ObjectId
-  batch        Batch          @relation(fields: [batchId], references: [id], onDelete: Cascade)
+  id          String  @id @default(auto()) @map("_id") @db.ObjectId
+  title       String
+  description String?
+  position    Int
+
   topics       Topic[]
-  createdAt    DateTime       @default(now())
-  updatedAt    DateTime       @updatedAt
+  userProgress UserProgress[]
+
+  batchId String @db.ObjectId
+  batch   Batch  @relation(fields: [batchId], references: [id], onDelete: Cascade)
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
 
   @@index([batchId])
 }
 
 model Topic {
-  id                String              @id @default(auto()) @map("_id") @db.ObjectId
-  title             String
-  description       String?
-  type              String              @default("video")
-  videoUrl          String?
-  muxData           MuxData?
-  chapterId         String              @db.ObjectId
-  chapter           Chapter             @relation(fields: [chapterId], references: [id], onDelete: Cascade)
+  id          String  @id @default(auto()) @map("_id") @db.ObjectId
+  title       String
+  position    Int
+  description String?
+  videoUrl    String?
+  type        String  @default("video")
+  isPublished Boolean @default(false)
+  isFree      Boolean @default(false)
+
+  muxData MuxData?
+
+  chapterId String  @db.ObjectId
+  chapter   Chapter @relation(fields: [chapterId], references: [id], onDelete: Cascade)
+
+  attachmentIds     String?             @db.ObjectId
   attachments       Attachment[]
   userProgressTopic UserProgressTopic[]
-  attachmentId      String?             @db.ObjectId
-  isPublished       Boolean             @default(false)
-  isFree            Boolean             @default(false)
-  position          Int
 
   @@index([chapterId])
 }
 
-model Attachment {
-  id        String   @id @default(auto()) @map("_id") @db.ObjectId
-  name      String
-  url       String
-  topic     Topic    @relation(fields: [topicId], references: [id])
-  topicId   String   @unique @db.ObjectId
+model Announcement {
+  id          String  @id @default(auto()) @map("_id") @db.ObjectId
+  title       String
+  description String?
+  isPublished Boolean @default(false)
+
+  attachments Attachment[]
+
+  batchId String? @db.ObjectId
+  batch   Batch?  @relation(fields: [batchId], references: [id])
+
+  courseId String? @db.ObjectId
+  course   Course? @relation(fields: [courseId], references: [id])
+
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
-  Batch     Batch?   @relation(fields: [batchId], references: [id])
-  batchId   String?  @db.ObjectId
+}
+
+model Attachment {
+  id   String @id @default(auto()) @map("_id") @db.ObjectId
+  name String
+  url  String
+
+  topicId String? @db.ObjectId
+  topic   Topic?  @relation(fields: [topicId], references: [id])
+
+  batchId String? @db.ObjectId
+  Batch   Batch?  @relation(fields: [batchId], references: [id])
+
+  announcementId String?       @db.ObjectId
+  announcement   Announcement? @relation(fields: [announcementId], references: [id])
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  @@index([id, topicId])
+  @@index([id, announcementId])
 }
 
 model MuxData {
@@ -149,13 +192,12 @@ model MuxData {
 }
 
 model UserProgress {
-  id     String @id @default(auto()) @map("_id") @db.ObjectId
-  userId String
+  id          String  @id @default(auto()) @map("_id") @db.ObjectId
+  userId      String
+  isCompleted Boolean @default(false)
 
   chapterId String  @db.ObjectId
   chapter   Chapter @relation(fields: [chapterId], references: [id], onDelete: Cascade)
-
-  isCompleted Boolean @default(false)
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
@@ -165,13 +207,12 @@ model UserProgress {
 }
 
 model UserProgressTopic {
-  id     String @id @default(auto()) @map("_id") @db.ObjectId
-  userId String
+  id          String  @id @default(auto()) @map("_id") @db.ObjectId
+  userId      String
+  isCompleted Boolean @default(false)
 
   topicId String @db.ObjectId
   topic   Topic  @relation(fields: [topicId], references: [id], onDelete: Cascade)
-
-  isCompleted Boolean @default(false)
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
