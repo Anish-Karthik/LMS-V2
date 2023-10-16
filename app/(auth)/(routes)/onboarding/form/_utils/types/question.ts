@@ -1,11 +1,11 @@
-import { Dispatch, SetStateAction } from "react";
+import { Dispatch, SetStateAction } from "react"
 
 export type QuestionProps = {
-  readonly inView: boolean;
-  readonly inViewSlide: "up" | "down" | "";
-  readonly outView: boolean;
-  readonly outViewSlide: "up" | "down" | "";
-  readonly isRendered?: boolean;
+  readonly inView: boolean
+  readonly inViewSlide: "up" | "down" | ""
+  readonly outView: boolean
+  readonly outViewSlide: "up" | "down" | ""
+  readonly isRendered?: boolean
   readonly type:
     | "intro"
     | "firstName"
@@ -13,10 +13,10 @@ export type QuestionProps = {
     | "industry"
     | "role"
     | "goal"
-    | "email";
-};
+    | "email"
+}
 
 export type IndustriesProps = {
-  readonly showIndustriesList: boolean;
-  readonly setShowIndustriesList: Dispatch<SetStateAction<boolean>>;
-};
+  readonly showIndustriesList: boolean
+  readonly setShowIndustriesList: Dispatch<SetStateAction<boolean>>
+}

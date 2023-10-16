@@ -1,29 +1,31 @@
-"use client";
-import { useSharedStates } from "./../../contexts";
-import { useHandleKeypress, useHandleScroll } from "./../../hooks";
-import { useEffect } from "react";
-import { Question } from "../index";
+"use client"
+
+import { useEffect } from "react"
+
+import { Question } from "../index"
+import { useSharedStates } from "./../../contexts"
+import { useHandleKeypress, useHandleScroll } from "./../../hooks"
 
 export function MainContent() {
-  const { questionNum, setShowIndustriesList } = useSharedStates();
-  const { prev, now } = questionNum;
+  const { questionNum, setShowIndustriesList } = useSharedStates()
+  const { prev, now } = questionNum
 
-  useHandleKeypress();
-  useHandleScroll();
+  useHandleKeypress()
+  useHandleScroll()
 
   useEffect(() => {
     function handleClick() {
-      setShowIndustriesList(false);
+      setShowIndustriesList(false)
     }
 
-    document.addEventListener("click", handleClick);
+    document.addEventListener("click", handleClick)
 
     return function () {
-      document.removeEventListener("click", handleClick);
-    };
+      document.removeEventListener("click", handleClick)
+    }
 
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+  }, [])
 
   return (
     <section>
@@ -98,5 +100,5 @@ export function MainContent() {
         )}
       </div>
     </section>
-  );
+  )
 }

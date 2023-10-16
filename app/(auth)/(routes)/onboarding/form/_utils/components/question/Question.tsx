@@ -1,5 +1,7 @@
-import { QuestionProps } from "./../../types";
-import classNames from "classnames";
+import classNames from "classnames"
+
+import { QuestionProps } from "./../../types"
+import styles from "./Question.module.css"
 import {
   EmailInput,
   FirstNameInput,
@@ -8,8 +10,7 @@ import {
   Intro,
   LastNameInput,
   RoleInput,
-} from "./index";
-import styles from "./Question.module.css";
+} from "./index"
 
 export function Question({
   inView,
@@ -39,5 +40,5 @@ export function Question({
       {type === "goal" && <GoalInput />}
       {type === "email" && <EmailInput />}
     </div>
-  );
+  )
 }

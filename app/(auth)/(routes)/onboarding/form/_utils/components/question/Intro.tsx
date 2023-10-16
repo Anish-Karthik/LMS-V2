@@ -1,8 +1,8 @@
-import { useSharedStates } from "./../../contexts";
-import { BtnContainer, QuestionBoxHeading, QuestionBoxPara } from "../index";
+import { BtnContainer, QuestionBoxHeading, QuestionBoxPara } from "../index"
+import { useSharedStates } from "./../../contexts"
 
 export function Intro() {
-  const { handleOkClick } = useSharedStates();
+  const { handleOkClick } = useSharedStates()
 
   return (
     <>
@@ -22,5 +22,5 @@ export function Intro() {
         I agree
       </BtnContainer>
     </>
-  );
+  )
 }

@@ -1,13 +1,14 @@
-import { QuestionBoxHeading } from "../index";
-import classNames from "classnames";
-import styles from "./QuestionNumHeading.module.css";
-import Image from "next/image";
-import { ReactNode } from "react";
+import { ReactNode } from "react"
+import Image from "next/image"
+import classNames from "classnames"
+
+import { QuestionBoxHeading } from "../index"
+import styles from "./QuestionNumHeading.module.css"
 
 type QuestionNumHeadingProps = {
-  readonly children: ReactNode;
-  readonly questionNum: number;
-};
+  readonly children: ReactNode
+  readonly questionNum: number
+}
 
 export function QuestionNumHeading({
   children,
@@ -28,5 +29,5 @@ export function QuestionNumHeading({
       </span>
       {children}
     </QuestionBoxHeading>
-  );
+  )
 }

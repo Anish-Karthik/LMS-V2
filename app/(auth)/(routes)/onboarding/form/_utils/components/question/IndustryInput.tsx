@@ -1,14 +1,15 @@
+import Image from "next/image"
+import classNames from "classnames"
+
 import {
   BtnContainer,
   Error,
   QuestionBoxPara,
   QuestionInputIndustries,
   QuestionNumHeading,
-} from "../index";
-import classNames from "classnames";
-import styles from "./Question.module.css";
-import Image from "next/image";
-import { useSharedStates } from "./../../contexts";
+} from "../index"
+import { useSharedStates } from "./../../contexts"
+import styles from "./Question.module.css"
 
 export function IndustryInput() {
   const {
@@ -17,8 +18,8 @@ export function IndustryInput() {
     setErrorMsg,
     errorMsg: error,
     handleOkClick,
-  } = useSharedStates();
-  const errorMsg = error.industry ?? "";
+  } = useSharedStates()
+  const errorMsg = error.industry ?? ""
 
   return (
     <>
@@ -54,5 +55,5 @@ export function IndustryInput() {
         </BtnContainer>
       )}
     </>
-  );
+  )
 }

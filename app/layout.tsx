@@ -5,12 +5,12 @@ import { ClerkProvider } from "@clerk/nextjs"
 import { siteConfig } from "@/config/site"
 import { fontSans } from "@/lib/fonts"
 import { cn } from "@/lib/utils"
+import { Toaster } from "@/components/ui/toaster"
 import { ConfettiProvider } from "@/components/providers/confetti-provider"
 import { ToastProvider } from "@/components/providers/toaster-provider"
 import { SiteHeader } from "@/components/site-header"
 import { TailwindIndicator } from "@/components/tailwind-indicator"
 import { ThemeProvider } from "@/components/theme-provider"
-import { Toaster } from "@/components/ui/toaster"
 
 export const metadata: Metadata = {
   title: {
@@ -49,7 +49,8 @@ export default function RootLayout({ children }: RootLayoutProps) {
             <ToastProvider />
             <Toaster />
             <div className="relative flex min-h-screen flex-col ">
-              {/* <SiteHeader /> */}{children}
+              {/* <SiteHeader /> */}
+              {children}
             </div>
             <TailwindIndicator />
           </ThemeProvider>

@@ -1,24 +1,25 @@
-import { useQuestions, useSharedStates } from "./../../contexts";
-import { getGoals } from "./../../utils";
-import { useMemo } from "react";
+import { useMemo } from "react"
+import Image from "next/image"
+import classNames from "classnames"
+
 import {
   BtnContainer,
   DropdownSelect,
   DropdownSelectOption,
   Error,
   QuestionNumHeading,
-} from "../index";
-import classNames from "classnames";
-import styles from "./Question.module.css";
-import Image from "next/image";
-import { REMOVE_GOAL, SET_GOALS } from "./../../reducers";
+} from "../index"
+import { useQuestions, useSharedStates } from "./../../contexts"
+import { REMOVE_GOAL, SET_GOALS } from "./../../reducers"
+import { getGoals } from "./../../utils"
+import styles from "./Question.module.css"
 
 export function GoalInput() {
-  const { errorMsg: error, setErrorMsg, handleOkClick } = useSharedStates();
-  const { state, dispatch } = useQuestions();
+  const { errorMsg: error, setErrorMsg, handleOkClick } = useSharedStates()
+  const { state, dispatch } = useQuestions()
 
-  const errorMsg = error.goals ?? "";
-  const { firstName, role, goals } = state;
+  const errorMsg = error.goals ?? ""
+  const { firstName, role, goals } = state
 
   const goalsOptions = useMemo(
     () =>
@@ -26,27 +27,27 @@ export function GoalInput() {
         role.toLowerCase().includes("founder") ? "FOUNDER" : "NON_FOUNDER"
       ),
     [role]
-  );
+  )
 
   function handleDropdownOptionClick(_goal: string) {
     setErrorMsg &&
       setErrorMsg((prevValue) => {
-        delete prevValue.goals;
-        return prevValue;
-      });
+        delete prevValue.goals
+        return prevValue
+      })
 
     if (goals.includes(_goal)) {
-      dispatch({ type: REMOVE_GOAL, payload: _goal });
+      dispatch({ type: REMOVE_GOAL, payload: _goal })
     } else {
-      dispatch({ type: SET_GOALS, payload: _goal });
+      dispatch({ type: SET_GOALS, payload: _goal })
 
       if (goals.length === 1) {
-        setTimeout(() => handleOkClick(), 600);
+        setTimeout(() => handleOkClick(), 600)
       }
     }
   }
 
-  const chooseNum = 2 - goals.length;
+  const chooseNum = 2 - goals.length
 
   return (
     <>
@@ -73,18 +74,15 @@ export function GoalInput() {
       >
         <div>
           {Object.keys(goalsOptions).map((goalKey) => {
-            const _goal = goalsOptions[goalKey];
-            const isSelected = goals.includes(_goal);
+            const _goal = goalsOptions[goalKey]
+            const isSelected = goals.includes(_goal)
 
             return (
               <DropdownSelectOption
                 key={goalKey}
-                className={classNames(
-                  styles["role-option"],
-                  {
-                    [styles["not-selected"]]: !isSelected && goals.length === 2,
-                  }
-                )}
+                className={classNames(styles["role-option"], {
+                  [styles["not-selected"]]: !isSelected && goals.length === 2,
+                })}
                 onClick={() => handleDropdownOptionClick(_goal)}
                 isSelected={isSelected}
               >
@@ -97,7 +95,7 @@ export function GoalInput() {
                 </span>
                 <span className={styles["goal"]}>{_goal}</span>
               </DropdownSelectOption>
-            );
+            )
           })}
         </div>
       </DropdownSelect>
@@ -120,5 +118,5 @@ export function GoalInput() {
         </BtnContainer>
       )}
     </>
-  );
+  )
 }

@@ -1,33 +1,34 @@
+import { ChangeEventHandler } from "react"
+import Image from "next/image"
+import classNames from "classnames"
+
 import {
   BtnContainer,
   Error,
   QuestionInputText,
   QuestionNumHeading,
-} from "../index";
-import classNames from "classnames";
-import styles from "./Question.module.css";
-import Image from "next/image";
-import { ChangeEventHandler } from "react";
-import { SET_FIRST_NAME } from "./../../reducers";
-import { useQuestions, useSharedStates } from "./../../contexts";
+} from "../index"
+import { useQuestions, useSharedStates } from "./../../contexts"
+import { SET_FIRST_NAME } from "./../../reducers"
+import styles from "./Question.module.css"
 
 export function FirstNameInput() {
-  const { errorMsg: error, setErrorMsg, handleOkClick } = useSharedStates();
-  const { state, dispatch } = useQuestions();
+  const { errorMsg: error, setErrorMsg, handleOkClick } = useSharedStates()
+  const { state, dispatch } = useQuestions()
 
-  const errorMsg = error.firstName ?? "";
-  const { firstName } = state;
+  const errorMsg = error.firstName ?? ""
+  const { firstName } = state
 
   const handleInputChange: ChangeEventHandler<HTMLInputElement> = (event) => {
     errorMsg &&
       setErrorMsg &&
       setErrorMsg((prevValue) => {
-        delete prevValue.firstName;
-        return prevValue;
-      });
+        delete prevValue.firstName
+        return prevValue
+      })
 
-    dispatch({ type: SET_FIRST_NAME, payload: event.target.value });
-  };
+    dispatch({ type: SET_FIRST_NAME, payload: event.target.value })
+  }
 
   return (
     <>
@@ -59,5 +60,5 @@ export function FirstNameInput() {
         </BtnContainer>
       )}
     </>
-  );
+  )
 }

@@ -1,14 +1,15 @@
-import Image from "next/image";
-import { MouseEventHandler, ReactNode } from "react";
-import classNames from "classnames";
-import styles from "./DropdownSelectOption.module.css";
+import { MouseEventHandler, ReactNode } from "react"
+import Image from "next/image"
+import classNames from "classnames"
+
+import styles from "./DropdownSelectOption.module.css"
 
 type DropdownSelectOptionProps = {
-  readonly isSelected?: boolean;
-  readonly onClick?: MouseEventHandler;
-  readonly className?: string;
-  readonly children: ReactNode;
-};
+  readonly isSelected?: boolean
+  readonly onClick?: MouseEventHandler
+  readonly className?: string
+  readonly children: ReactNode
+}
 
 export function DropdownSelectOption({
   isSelected,
@@ -34,5 +35,5 @@ export function DropdownSelectOption({
         />
       )}
     </span>
-  );
+  )
 }

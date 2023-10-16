@@ -27,7 +27,6 @@ const CourseDetailspage = async ({
   const purchased = await isUserPurchasedCourse(user.id, params.courseId)
   if (purchased) redirect(`/student/courses/${params.courseId}/dashboard`)
 
-
   // if(["teacher", "admin", "moderator"].includes(userInfo.role)) redirect('/teacher');
   return (
     <div>
@@ -38,16 +37,17 @@ const CourseDetailspage = async ({
           courseId={courseDetails?.id!}
         />
       )}
-      {userInfo.role === "teacher" || userInfo.role==="admin" &&
-        (isUserTeacher || userInfo.role==="admin"  ? (
-          <Link href={"/teacher"}>
-            <Button>{userInfo.role} dashboard</Button>
-          </Link>
-        ) : (
-          <Link href={"/verify"}>
-            <Button>Verify</Button>
-          </Link>
-        ))}
+      {userInfo.role === "teacher" ||
+        (userInfo.role === "admin" &&
+          (isUserTeacher || userInfo.role === "admin" ? (
+            <Link href={"/teacher"}>
+              <Button>{userInfo.role} dashboard</Button>
+            </Link>
+          ) : (
+            <Link href={"/verify"}>
+              <Button>Verify</Button>
+            </Link>
+          )))}
     </div>
   )
 }

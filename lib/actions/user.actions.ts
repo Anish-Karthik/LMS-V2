@@ -1,6 +1,6 @@
 "use server"
 
-import { User } from "@prisma/client"
+import { Purchase, User } from "@prisma/client"
 
 import { db } from "../db"
 import { addStudentToBatch, createBatch } from "./batch.action"
@@ -143,5 +143,312 @@ export const purchaseCourse = async (userId: string, courseId: string) => {
   } catch (e: any) {
     console.error("purchaseCourse", e)
     throw new Error(e.message || "Unauthorized user")
+  }
+}
+
+export const getUsersWhoHaveRoles = async ({
+  courseId,
+  batchId,
+  searchText,
+  role,
+  pageNumber = 1,
+  pageSize = 20,
+  sortBy = "asc",
+}: {
+  courseId?: string
+  batchId?: string
+  searchText?: string
+  role?: string
+  pageNumber?: number
+  pageSize?: number
+  sortBy?: "asc" | "desc"
+}) => {
+  try {
+    const skipAmount = (pageNumber - 1) * pageSize
+
+    const students = (
+      await db.user.findMany({
+        where: {
+          OR: [
+            {
+              name: {
+                contains: searchText || "",
+                mode: "insensitive",
+              },
+            },
+            {
+              email: {
+                contains: searchText || "",
+                mode: "insensitive",
+              },
+            },
+            {
+              phoneNo: {
+                contains: searchText || "",
+              },
+            },
+          ],
+          role: "student",
+        },
+        include: {
+          purchases: true,
+        },
+        orderBy: {
+          name: sortBy,
+        },
+        skip: skipAmount,
+        take: pageSize,
+      })
+    ).filter((student) => student.purchases.length > 0)
+
+    const teacherIds = (
+      await db.teacher.findMany({
+        select: {
+          userId: true,
+        },
+      })
+    ).map((teacher) => teacher.userId)
+
+    const teachers = await db.user.findMany({
+      where: {
+        OR: [
+          {
+            name: {
+              contains: searchText || "",
+              mode: "insensitive",
+            },
+          },
+          {
+            email: {
+              contains: searchText || "",
+              mode: "insensitive",
+            },
+          },
+          {
+            phoneNo: {
+              contains: searchText || "",
+            },
+          },
+        ],
+        userId: {
+          in: teacherIds,
+        },
+      },
+      orderBy: {
+        name: sortBy,
+      },
+      skip: skipAmount,
+      take: pageSize,
+    })
+
+    const adminIds = (
+      await db.admin.findMany({
+        select: {
+          userId: true,
+        },
+      })
+    ).map((admin) => admin.userId)
+
+    const admins = await db.user.findMany({
+      where: {
+        OR: [
+          {
+            name: {
+              contains: searchText || "",
+              mode: "insensitive",
+            },
+          },
+          {
+            email: {
+              contains: searchText || "",
+              mode: "insensitive",
+            },
+          },
+          {
+            phoneNo: {
+              contains: searchText || "",
+            },
+          },
+        ],
+        userId: {
+          in: adminIds,
+        },
+      },
+      orderBy: {
+        name: sortBy,
+      },
+      skip: skipAmount,
+      take: pageSize,
+    })
+
+    const notEnrolleds = await db.user.findMany({
+      where: {
+        OR: [
+          {
+            name: {
+              contains: searchText || "",
+              mode: "insensitive",
+            },
+          },
+          {
+            email: {
+              contains: searchText || "",
+              mode: "insensitive",
+            },
+          },
+          {
+            phoneNo: {
+              contains: searchText || "",
+            },
+          },
+        ],
+        role: {
+          notIn: ["admin", "teacher", "student"],
+        },
+      },
+      orderBy: {
+        name: sortBy,
+      },
+      skip: skipAmount,
+      take: pageSize,
+    })
+
+    return {
+      notEnrolleds,
+      students,
+      teachers,
+      admins,
+      users: [...students, ...teachers, ...admins, ...notEnrolleds],
+    }
+  } catch (err: any) {
+    console.error(err)
+    throw new Error(err.message)
+  }
+}
+
+export const banUser = async (userId: string) => {
+  try {
+    const user = await db.user.update({
+      where: {
+        userId,
+      },
+      data: {
+        isBanned: true,
+      },
+    })
+  } catch (err: any) {
+    console.error(err)
+    throw new Error(err.message)
+  }
+}
+
+export const unBanUser = async (userId: string) => {
+  try {
+    const user = await db.user.update({
+      where: {
+        userId,
+      },
+      data: {
+        isBanned: false,
+      },
+    })
+  } catch (err: any) {
+    console.error(err)
+    throw new Error(err.message)
+  }
+}
+
+export const toTeacher = async (userId: string) => {
+  try {
+    const user = (await getUser(userId))!
+    await db.user.update({
+      where: {
+        userId,
+      },
+      data: {
+        role: "teacher",
+      },
+    })
+    await db.teacher.upsert({
+      where: {
+        userId,
+      },
+      update: {},
+      create: {
+        userId,
+        userObjId: user.id,
+      },
+    })
+    if (user.role === "admin")
+      await db.admin.delete({
+        where: {
+          userId,
+        },
+      })
+  } catch (err: any) {
+    console.error(err)
+    throw new Error(err.message)
+  }
+}
+
+export const toAdmin = async (userId: string) => {
+  try {
+    const user = (await getUser(userId))!
+    await db.user.update({
+      where: {
+        userId,
+      },
+      data: {
+        role: "admin",
+      },
+    })
+    await db.admin.upsert({
+      where: {
+        userId,
+      },
+      update: {},
+      create: {
+        userId,
+        userObjId: user.id,
+      },
+    })
+    if (user.role === "teacher")
+      await db.teacher.delete({
+        where: {
+          userId,
+        },
+      })
+  } catch (err: any) {
+    console.error(err)
+    throw new Error(err.message)
+  }
+}
+
+export const toUser = async (userId: string) => {
+  try {
+    const user = (await getUser(userId))!
+    await db.user.update({
+      where: {
+        userId,
+      },
+      data: {
+        role: "user",
+      },
+    })
+    if (user.role === "teacher")
+      await db.teacher.delete({
+        where: {
+          userId,
+        },
+      })
+    if (user.role === "admin")
+      await db.admin.delete({
+        where: {
+          userId,
+        },
+      })
+  } catch (err: any) {
+    console.error(err)
+    throw new Error(err.message)
   }
 }

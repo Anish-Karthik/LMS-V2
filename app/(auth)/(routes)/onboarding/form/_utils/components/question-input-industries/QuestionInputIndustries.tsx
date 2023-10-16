@@ -1,13 +1,5 @@
-"use client";
-import {
-  DropdownSelect,
-  DropdownSelectOption,
-  QuestionInputText,
-} from "../index";
-import styles from "./QuestionInputIndustries.module.css";
-import classNames from "classnames";
-import Image from "next/image";
-import { useIndustries } from "./../../hooks";
+"use client"
+
 import {
   ChangeEvent,
   Dispatch,
@@ -16,48 +8,59 @@ import {
   useEffect,
   useRef,
   useState,
-} from "react";
-import { SET_INDUSTRY } from "./../../reducers";
-import { useQuestions, useSharedStates } from "./../../contexts";
-import { IndustriesProps, ObjectType } from "./../../types";
-import { Button } from "@/components/ui/button";
+} from "react"
+import Image from "next/image"
+import classNames from "classnames"
+
+import { Button } from "@/components/ui/button"
+
+import {
+  DropdownSelect,
+  DropdownSelectOption,
+  QuestionInputText,
+} from "../index"
+import { useQuestions, useSharedStates } from "./../../contexts"
+import { useIndustries } from "./../../hooks"
+import { SET_INDUSTRY } from "./../../reducers"
+import { IndustriesProps, ObjectType } from "./../../types"
+import styles from "./QuestionInputIndustries.module.css"
 
 type QuestionInputIndustriesProps = IndustriesProps & {
-  readonly setErrorMsg: Dispatch<SetStateAction<ObjectType>> | undefined;
-};
+  readonly setErrorMsg: Dispatch<SetStateAction<ObjectType>> | undefined
+}
 
 export function QuestionInputIndustries({
   showIndustriesList,
   setShowIndustriesList,
   setErrorMsg,
 }: QuestionInputIndustriesProps) {
-  const { industries } = useIndustries();
-  const { state, dispatch } = useQuestions();
-  const { handleOkClick } = useSharedStates();
+  const { industries } = useIndustries()
+  const { state, dispatch } = useQuestions()
+  const { handleOkClick } = useSharedStates()
 
-  const { industry } = state;
-  const inputTextRef = useRef<HTMLInputElement>(null);
-  const [localIndustry, setLocalIndustry] = useState(industry);
-  const [optionClicked, setOptionClicked] = useState(false);
-  const [filterIndustries, setFilteredIndustries] = useState<string[]>([]);
+  const { industry } = state
+  const inputTextRef = useRef<HTMLInputElement>(null)
+  const [localIndustry, setLocalIndustry] = useState(industry)
+  const [optionClicked, setOptionClicked] = useState(false)
+  const [filterIndustries, setFilteredIndustries] = useState<string[]>([])
 
   useEffect(() => {
     if (optionClicked) {
-      return;
+      return
     }
 
     setFilteredIndustries(
       industries.filter((_industry) =>
         _industry.toLowerCase().includes(localIndustry.toLowerCase())
       )
-    );
-  }, [industries, localIndustry, optionClicked]);
+    )
+  }, [industries, localIndustry, optionClicked])
 
   useEffect(() => {
     setTimeout(() => {
-      inputTextRef.current?.focus();
-    }, 500);
-  }, []);
+      inputTextRef.current?.focus()
+    }, 500)
+  }, [])
 
   useEffect(() => {
     if (
@@ -69,65 +72,65 @@ export function QuestionInputIndustries({
         setErrorMsg((prevValue) => ({
           ...prevValue,
           industry: "No suggestions found",
-        }));
+        }))
     } else {
       setErrorMsg &&
         setErrorMsg((prevValue) => {
-          delete prevValue.industry;
-          return prevValue;
-        });
+          delete prevValue.industry
+          return prevValue
+        })
     }
-  }, [filterIndustries.length, industry, localIndustry, setErrorMsg]);
+  }, [filterIndustries.length, industry, localIndustry, setErrorMsg])
 
   function handleDropdownClick(event: MouseEvent) {
-    event.stopPropagation();
-    setShowIndustriesList(true);
+    event.stopPropagation()
+    setShowIndustriesList(true)
   }
 
   function handleInputChange(event: ChangeEvent) {
-    const typedValue = (event.target as HTMLInputElement).value;
-    dispatch({ type: SET_INDUSTRY, payload: "" });
+    const typedValue = (event.target as HTMLInputElement).value
+    dispatch({ type: SET_INDUSTRY, payload: "" })
 
     if (typedValue) {
-      setShowIndustriesList(true);
+      setShowIndustriesList(true)
     } else {
-      setShowIndustriesList(false);
+      setShowIndustriesList(false)
     }
 
-    setLocalIndustry(typedValue);
+    setLocalIndustry(typedValue)
   }
 
   function handleUpArrowClick(event: MouseEvent) {
     if (showIndustriesList) {
-      event.stopPropagation();
-      setShowIndustriesList(false);
+      event.stopPropagation()
+      setShowIndustriesList(false)
     }
   }
 
   function handleCrossBtnClick(event: MouseEvent) {
-    event.stopPropagation();
-    setLocalIndustry("");
-    setShowIndustriesList(false);
-    dispatch({ type: SET_INDUSTRY, payload: "" });
-    inputTextRef.current?.focus();
+    event.stopPropagation()
+    setLocalIndustry("")
+    setShowIndustriesList(false)
+    dispatch({ type: SET_INDUSTRY, payload: "" })
+    inputTextRef.current?.focus()
   }
 
   function handleDropdownOptionClick(_industry: string) {
-    setLocalIndustry(_industry);
-    setOptionClicked(true);
+    setLocalIndustry(_industry)
+    setOptionClicked(true)
 
     setTimeout(function () {
       setErrorMsg &&
         setErrorMsg((prevValue) => {
-          delete prevValue.industry;
-          return prevValue;
-        });
+          delete prevValue.industry
+          return prevValue
+        })
 
-      setOptionClicked(false);
-      dispatch({ type: SET_INDUSTRY, payload: _industry });
-      setShowIndustriesList(false);
-      setTimeout(() => handleOkClick(), 600);
-    }, 500);
+      setOptionClicked(false)
+      dispatch({ type: SET_INDUSTRY, payload: _industry })
+      setShowIndustriesList(false)
+      setTimeout(() => handleOkClick(), 600)
+    }, 500)
   }
 
   return (
@@ -171,9 +174,9 @@ export function QuestionInputIndustries({
             >
               {_industry}
             </DropdownSelectOption>
-          );
+          )
         })}
       </DropdownSelect>
     </div>
-  );
+  )
 }

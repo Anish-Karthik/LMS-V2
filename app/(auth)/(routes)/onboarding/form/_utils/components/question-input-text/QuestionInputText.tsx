@@ -1,35 +1,37 @@
-"use client";
-import { questrialFont } from "./../../utils";
+"use client"
+
 import {
   ChangeEventHandler,
   ForwardedRef,
   forwardRef,
   useEffect,
   useRef,
-} from "react";
-import styles from "./QuestionInputText.module.css";
-import classNames from "classnames";
+} from "react"
+import classNames from "classnames"
+
+import { questrialFont } from "./../../utils"
+import styles from "./QuestionInputText.module.css"
 
 type QuestionInputTextProps = {
-  readonly placeholder?: string;
-  readonly className?: string;
-  readonly value?: string;
-  readonly onChange?: ChangeEventHandler<HTMLInputElement>;
-  readonly type?: string;
-};
+  readonly placeholder?: string
+  readonly className?: string
+  readonly value?: string
+  readonly onChange?: ChangeEventHandler<HTMLInputElement>
+  readonly type?: string
+}
 
 const QuestionInputText = forwardRef(
   (
     { placeholder, className, value, onChange, type }: QuestionInputTextProps,
     passedRef: ForwardedRef<HTMLInputElement>
   ) => {
-    const inputTextRef = useRef<HTMLInputElement>(null);
+    const inputTextRef = useRef<HTMLInputElement>(null)
 
     useEffect(() => {
       setTimeout(() => {
-        inputTextRef.current?.focus();
-      }, 500);
-    }, []);
+        inputTextRef.current?.focus()
+      }, 500)
+    }, [])
 
     return (
       <input
@@ -44,10 +46,10 @@ const QuestionInputText = forwardRef(
         value={value}
         onChange={onChange}
       />
-    );
+    )
   }
-);
+)
 
-QuestionInputText.displayName = "QuestionInputText";
+QuestionInputText.displayName = "QuestionInputText"
 
-export { QuestionInputText };
+export { QuestionInputText }

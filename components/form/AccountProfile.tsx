@@ -27,7 +27,6 @@ const UserValidation = z.object({
   name: z.string().min(3).max(30),
   email: z.string().email(),
   phoneNo: z.string().min(10).max(10),
-  role: z.string().min(3).max(30),
 })
 
 const AccountProfile = ({ user }: { user: User }) => {
@@ -44,7 +43,6 @@ const AccountProfile = ({ user }: { user: User }) => {
       name: user.firstName || "",
       email: user.emailAddresses[0].emailAddress || "",
       phoneNo: user.phoneNumbers[0]?.phoneNumber || "",
-      role: "student",
     },
   })
 
@@ -91,7 +89,7 @@ const AccountProfile = ({ user }: { user: User }) => {
         email: values.email,
         image: values.image,
         phoneNo: values.phoneNo,
-        role: values.role,
+        role: "user",
       })
 
       if (pathname === "/profile/edit") {
@@ -121,7 +119,6 @@ const AccountProfile = ({ user }: { user: User }) => {
         <CustomInputField form={form} name="name" />
         <CustomInputField form={form} name="email" />
         <CustomInputField form={form} name="phoneNo" />
-        <SelectUserMode form={form} name="role" />
         <Button type="submit" className="" disabled={isSubmitting}>
           {"Complete Profile"}
         </Button>

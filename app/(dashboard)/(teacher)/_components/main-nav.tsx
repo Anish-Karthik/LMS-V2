@@ -14,7 +14,7 @@ export function MainNav({
   return (
     <nav
       className={cn(
-        "hidden items-center space-x-4 sm:flex lg:space-x-6",
+        "hidden items-center space-x-4 md:flex lg:space-x-6",
         className
       )}
       {...props}

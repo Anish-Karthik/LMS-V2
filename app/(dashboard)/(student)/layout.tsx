@@ -9,9 +9,9 @@ import { Header } from "@/components/shared/header"
 import { ThemeToggle } from "@/components/theme-toggle"
 import { sidebarLinksStudentMobile } from "@/app/constants"
 
+import CurrentPathNavigator from "./_components/current-pathname"
 import { MainNav } from "./_components/main-nav"
 import MobileNav from "./_components/mobile-nav"
-import CurrentPathNavigator from "./_components/current-pathname"
 
 const DashBoardLayout = async ({ children }: { children: React.ReactNode }) => {
   const user = await currentUser()

@@ -1,33 +1,34 @@
-import { SET_LAST_NAME } from "./../../reducers";
-import { ChangeEventHandler } from "react";
+import { ChangeEventHandler } from "react"
+import Image from "next/image"
+import classNames from "classnames"
+
 import {
   BtnContainer,
   Error,
   QuestionInputText,
   QuestionNumHeading,
-} from "../index";
-import classNames from "classnames";
-import styles from "./Question.module.css";
-import Image from "next/image";
-import { useQuestions, useSharedStates } from "./../../contexts";
+} from "../index"
+import { useQuestions, useSharedStates } from "./../../contexts"
+import { SET_LAST_NAME } from "./../../reducers"
+import styles from "./Question.module.css"
 
 export function LastNameInput() {
-  const { errorMsg: error, setErrorMsg, handleOkClick } = useSharedStates();
-  const { state, dispatch } = useQuestions();
+  const { errorMsg: error, setErrorMsg, handleOkClick } = useSharedStates()
+  const { state, dispatch } = useQuestions()
 
-  const errorMsg = error.lastName ?? "";
-  const { firstName, lastName } = state;
+  const errorMsg = error.lastName ?? ""
+  const { firstName, lastName } = state
 
   const handleInputChange: ChangeEventHandler<HTMLInputElement> = (event) => {
     errorMsg &&
       setErrorMsg &&
       setErrorMsg((prevValue) => {
-        delete prevValue.lastName;
-        return prevValue;
-      });
+        delete prevValue.lastName
+        return prevValue
+      })
 
-    dispatch({ type: SET_LAST_NAME, payload: event.target.value });
-  };
+    dispatch({ type: SET_LAST_NAME, payload: event.target.value })
+  }
 
   return (
     <>
@@ -59,5 +60,5 @@ export function LastNameInput() {
         </BtnContainer>
       )}
     </>
-  );
+  )
 }

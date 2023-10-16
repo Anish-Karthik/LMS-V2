@@ -22,14 +22,15 @@ const DashBoardLayout = async ({
   children: React.ReactNode
 }) => {
   const user = await currentUser()
-  if (!user) redirect("/sign-in")
+  if (!user) redirect("/")
   const userInfo = await getUser(user.id)
-  if (!userInfo) redirect("/sign-in")
-  if (userInfo.role === "student") redirect("/")
+  if (!userInfo) redirect("/")
+  if (userInfo.role === "student") redirect("/student/courses")
+  if (userInfo.role === "user") redirect("/")
   // form an object where
 
   return (
-    <div className="relative h-full">
+    <div className="relative h-full pb-16 sm:pb-32 md:pb-2">
       {/* desktop view */}
       <div className=" flex-col md:flex">
         <div className="border-b">
@@ -47,6 +48,7 @@ const DashBoardLayout = async ({
               <ThemeToggle />
               <UserButton afterSignOutUrl="/" />
             </div>
+            ss
           </div>
         </div>
         <main>

@@ -1,8 +1,8 @@
-import styles from "./ProgressBar.module.css";
+import styles from "./ProgressBar.module.css"
 
 type ProgressBarProps = {
-  readonly width?: number;
-};
+  readonly width?: number
+}
 
 export function ProgressBar({ width }: ProgressBarProps) {
   return (
@@ -12,5 +12,5 @@ export function ProgressBar({ width }: ProgressBarProps) {
         style={{ width: `${width ?? 0}%` }}
       />
     </div>
-  );
+  )
 }

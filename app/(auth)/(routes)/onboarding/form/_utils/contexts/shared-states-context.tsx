@@ -1,7 +1,11 @@
+import { ReactNode, createContext, useContext, useState } from "react"
 
-import { TOTAL_QUESTIONS } from "./../constants";
-import { ObjectType, QuestionNumType, SharedStatesContextType } from "./../types";
-import { createContext, ReactNode, useContext, useState } from "react";
+import { TOTAL_QUESTIONS } from "./../constants"
+import {
+  ObjectType,
+  QuestionNumType,
+  SharedStatesContextType,
+} from "./../types"
 
 const SharedStatesContext = createContext<SharedStatesContextType>({
   questionNum: { prev: null, now: 0 },
@@ -12,27 +16,27 @@ const SharedStatesContext = createContext<SharedStatesContextType>({
   setShowIndustriesList: () => {},
   handleQuestionNumUpdate: () => {},
   handleOkClick: () => {},
-});
+})
 
 type SharedStatesProviderType = {
-  readonly children: ReactNode;
-};
+  readonly children: ReactNode
+}
 
 export function SharedStatesProvider({ children }: SharedStatesProviderType) {
   const [questionNum, setQuestionNum] = useState<QuestionNumType>({
     prev: null,
     now: 0,
-  });
+  })
 
-  const [errorMsg, setErrorMsg] = useState<ObjectType>({});
-  const [showIndustriesList, setShowIndustriesList] = useState(false);
+  const [errorMsg, setErrorMsg] = useState<ObjectType>({})
+  const [showIndustriesList, setShowIndustriesList] = useState(false)
 
   function handleQuestionNumUpdate() {
     setQuestionNum((prevValue) =>
       prevValue.now + 1 >= TOTAL_QUESTIONS + 1
         ? { ...prevValue }
         : { prev: prevValue.now, now: prevValue.now + 1 }
-    );
+    )
   }
 
   function handleOkClick() {
@@ -40,7 +44,7 @@ export function SharedStatesProvider({ children }: SharedStatesProviderType) {
       new KeyboardEvent("keypress", {
         key: "Enter",
       })
-    );
+    )
   }
 
   const value = {
@@ -52,21 +56,21 @@ export function SharedStatesProvider({ children }: SharedStatesProviderType) {
     setShowIndustriesList,
     handleQuestionNumUpdate,
     handleOkClick,
-  };
+  }
 
   return (
     <SharedStatesContext.Provider value={value}>
       {children}
     </SharedStatesContext.Provider>
-  );
+  )
 }
 
 export function useSharedStates(): SharedStatesContextType {
-  const context = useContext(SharedStatesContext);
+  const context = useContext(SharedStatesContext)
 
   if (context) {
-    return context;
+    return context
   }
 
-  throw new Error("useSharedStates must be use inside SharedStatesProvider");
+  throw new Error("useSharedStates must be use inside SharedStatesProvider")
 }

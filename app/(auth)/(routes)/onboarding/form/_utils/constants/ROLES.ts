@@ -1,4 +1,4 @@
-import { ObjectType } from "./../types";
+import { ObjectType } from "./../types"
 
 export const ROLES: ObjectType = {
   A: "Founder or CXO",
@@ -6,4 +6,4 @@ export const ROLES: ObjectType = {
   C: "Marketing team",
   D: "VC",
   E: "Other",
-};
+}

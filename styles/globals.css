@@ -125,4 +125,18 @@ input[type="text"] {
   @apply relative flex flex-col items-center gap-2 rounded-lg p-2 sm:flex-1 sm:px-2 sm:py-2.5;
 }
 
+  /* User card */
+.user-card {
+  @apply flex flex-col justify-between gap-4 rounded-xl bg-secondary p-4 sm:flex-row sm:items-center;
+}
+
+.user-card_avatar {
+  @apply flex flex-1 items-start justify-start gap-3 sm:items-center;
+}
+
+.user-card_btn {
+  @apply h-auto min-w-[74px] rounded-lg text-[12px] !important;
+}
+
+
 @import "~@uploadthing/react/styles.css"

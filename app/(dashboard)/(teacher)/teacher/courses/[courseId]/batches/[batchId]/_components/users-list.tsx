@@ -95,118 +95,120 @@ const UsersList = ({
     }
   }
   if (defaultBatch.purchases.length || currentBatch.purchases.length)
-  return (
-    // create a code to drap and drop purchases from and to the default batch and the current batch
+    return (
+      // create a code to drap and drop purchases from and to the default batch and the current batch
 
-    // on left side, show the default batch
-    // on right side, show the current batch
-    // show the purchases in both batches
-    <DragDropContext onDragEnd={onDragEnd}>
-      <div className="grid grid-cols-2 gap-x-2">
-        <Droppable droppableId="default">
-          {(provided) => (
-            <div
-              {...provided.droppableProps}
-              ref={provided.innerRef}
-              className="border-2 border-secondary"
-            >
-              {purchasesDefault.map((purchase, index) => (
-                <Draggable
-                  key={purchase.id}
-                  draggableId={purchase.id}
-                  index={index}
-                >
-                  {(provided) => (
-                    <div
-                      ref={provided.innerRef}
-                      {...provided.draggableProps}
-                      {...provided.dragHandleProps}
-                      className={cn(
-                        "flex items-center justify-between gap-x-2 rounded-md bg-slate-500/20 p-2",
-                        "hover:bg-slate-500/40",
-                        "transition-colors duration-200",
-                        "cursor-move"
-                      )}
-                    >
-                      <div className="flex items-center gap-x-2">
-                        <GripVertical className="h-5 w-5 text-sky-700" />
+      // on left side, show the default batch
+      // on right side, show the current batch
+      // show the purchases in both batches
+      <DragDropContext onDragEnd={onDragEnd}>
+        <div className="grid grid-cols-2 gap-x-2">
+          <Droppable droppableId="default">
+            {(provided) => (
+              <div
+                {...provided.droppableProps}
+                ref={provided.innerRef}
+                className="border-2 border-secondary"
+              >
+                {purchasesDefault.map((purchase, index) => (
+                  <Draggable
+                    key={purchase.id}
+                    draggableId={purchase.id}
+                    index={index}
+                  >
+                    {(provided) => (
+                      <div
+                        ref={provided.innerRef}
+                        {...provided.draggableProps}
+                        {...provided.dragHandleProps}
+                        className={cn(
+                          "flex items-center justify-between gap-x-2 rounded-md bg-slate-500/20 p-2",
+                          "hover:bg-slate-500/40",
+                          "transition-colors duration-200",
+                          "cursor-move"
+                        )}
+                      >
+                        <div className="flex items-center gap-x-2">
+                          <GripVertical className="h-5 w-5 text-sky-700" />
+                          <div>
+                            <h3 className="text-sm font-semibold">
+                              {purchase.user.name}
+                            </h3>
+                            <p className="text-xs text-slate-500">
+                              {purchase.user.email}
+                            </p>
+                          </div>
+                        </div>
                         <div>
-                          <h3 className="text-sm font-semibold">
-                            {purchase.user.name}
-                          </h3>
-                          <p className="text-xs text-slate-500">
-                            {purchase.user.email}
-                          </p>
+                          <Button variant="default" className="px-2 py-1">
+                            View
+                          </Button>
                         </div>
                       </div>
-                      <div>
-                        <Button variant="default" className="px-2 py-1">
-                          View
-                        </Button>
-                      </div>
-                    </div>
-                  )}
-                </Draggable>
-              ))}
-              {provided.placeholder}
-            </div>
-          )}
-        </Droppable>
-        <Droppable droppableId="current">
-          {(provided) => (
-            <div
-              {...provided.droppableProps}
-              ref={provided.innerRef}
-              className="border-2 border-secondary"
-            >
-              {purchasesCurrent.map((purchase, index) => (
-                <Draggable
-                  key={purchase.id}
-                  draggableId={purchase.id}
-                  index={index}
-                >
-                  {(provided) => (
-                    <div
-                      ref={provided.innerRef}
-                      {...provided.draggableProps}
-                      {...provided.dragHandleProps}
-                      className={cn(
-                        "flex items-center justify-between gap-x-2 rounded-md bg-sky-500/20 p-2",
-                        "hover:bg-sky-500/40",
-                        "transition-colors duration-200",
-                        "cursor-move"
-                      )}
-                    >
-                      <div className="flex items-center gap-x-2">
-                        <GripVertical className="h-5 w-5 text-sky-700" />
+                    )}
+                  </Draggable>
+                ))}
+                {provided.placeholder}
+              </div>
+            )}
+          </Droppable>
+          <Droppable droppableId="current">
+            {(provided) => (
+              <div
+                {...provided.droppableProps}
+                ref={provided.innerRef}
+                className="border-2 border-secondary"
+              >
+                {purchasesCurrent.map((purchase, index) => (
+                  <Draggable
+                    key={purchase.id}
+                    draggableId={purchase.id}
+                    index={index}
+                  >
+                    {(provided) => (
+                      <div
+                        ref={provided.innerRef}
+                        {...provided.draggableProps}
+                        {...provided.dragHandleProps}
+                        className={cn(
+                          "flex items-center justify-between gap-x-2 rounded-md bg-sky-500/20 p-2",
+                          "hover:bg-sky-500/40",
+                          "transition-colors duration-200",
+                          "cursor-move"
+                        )}
+                      >
+                        <div className="flex items-center gap-x-2">
+                          <GripVertical className="h-5 w-5 text-sky-700" />
+                          <div>
+                            <h3 className="text-sm font-semibold">
+                              {purchase.user.name}
+                            </h3>
+                            <p className="text-xs text-slate-500">
+                              {purchase.user.email}
+                            </p>
+                          </div>
+                        </div>
                         <div>
-                          <h3 className="text-sm font-semibold">
-                            {purchase.user.name}
-                          </h3>
-                          <p className="text-xs text-slate-500">
-                            {purchase.user.email}
-                          </p>
+                          <Button variant="default" className="px-2 py-1">
+                            View
+                          </Button>
                         </div>
                       </div>
-                      <div>
-                        <Button variant="default" className="px-2 py-1">
-                          View
-                        </Button>
-                      </div>
-                    </div>
-                  )}
-                </Draggable>
-              ))}
-              {provided.placeholder}
-            </div>
-          )}
-        </Droppable>
-      </div>
-    </DragDropContext>
-  ) 
+                    )}
+                  </Draggable>
+                ))}
+                {provided.placeholder}
+              </div>
+            )}
+          </Droppable>
+        </div>
+      </DragDropContext>
+    )
   return (
     <div className="flex h-64 items-center justify-center">
-      <p className="text-xl text-slate-500">No purchases found in unassigned batch and current batch</p>
+      <p className="text-xl text-slate-500">
+        No purchases found in unassigned batch and current batch
+      </p>
     </div>
   )
 }

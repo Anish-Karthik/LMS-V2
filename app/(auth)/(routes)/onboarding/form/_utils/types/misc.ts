@@ -1,3 +1,3 @@
 export type ObjectType = {
-  [key: string]: string;
-};
+  [key: string]: string
+}

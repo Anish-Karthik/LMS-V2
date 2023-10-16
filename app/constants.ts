@@ -43,7 +43,7 @@ export const routes: Route[] = [
     icon: InfoIcon,
     color: "text-violet-500",
     bgColor: "bg-violet-500/10",
-    href: "/teacher/annoucements",
+    href: "/teacher/announcements",
     roles: ["admin", "moderator", "teacher", "student"],
   },
   {

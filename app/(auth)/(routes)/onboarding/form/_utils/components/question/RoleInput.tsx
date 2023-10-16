@@ -1,3 +1,6 @@
+import Image from "next/image"
+import classNames from "classnames"
+
 import {
   BtnContainer,
   DropdownSelect,
@@ -5,33 +8,31 @@ import {
   Error,
   QuestionBoxPara,
   QuestionNumHeading,
-} from "../index";
-import classNames from "classnames";
-import styles from "./Question.module.css";
-import Image from "next/image";
-import { useQuestions, useSharedStates } from "./../../contexts";
-import { ROLES } from "./../../constants";
-import { SET_ROLE } from "./../../reducers";
+} from "../index"
+import { ROLES } from "./../../constants"
+import { useQuestions, useSharedStates } from "./../../contexts"
+import { SET_ROLE } from "./../../reducers"
+import styles from "./Question.module.css"
 
 export function RoleInput() {
-  const { errorMsg: error, setErrorMsg, handleOkClick } = useSharedStates();
-  const { state, dispatch } = useQuestions();
+  const { errorMsg: error, setErrorMsg, handleOkClick } = useSharedStates()
+  const { state, dispatch } = useQuestions()
 
-  const errorMsg = error.role ?? "";
-  const { role } = state;
+  const errorMsg = error.role ?? ""
+  const { role } = state
 
   function handleDropdownOptionClick(_role: string) {
     setErrorMsg &&
       setErrorMsg((prevValue) => {
-        delete prevValue.role;
-        return prevValue;
-      });
+        delete prevValue.role
+        return prevValue
+      })
 
     if (_role === role) {
-      dispatch({ type: SET_ROLE, payload: "" });
+      dispatch({ type: SET_ROLE, payload: "" })
     } else {
-      dispatch({ type: SET_ROLE, payload: _role });
-      setTimeout(() => handleOkClick(), 600);
+      dispatch({ type: SET_ROLE, payload: _role })
+      setTimeout(() => handleOkClick(), 600)
     }
   }
 
@@ -48,7 +49,7 @@ export function RoleInput() {
       <DropdownSelect className={styles["role-dropdown"]}>
         <div>
           {Object.keys(ROLES).map((roleKey) => {
-            const _role = ROLES[roleKey];
+            const _role = ROLES[roleKey]
 
             return (
               <DropdownSelectOption
@@ -66,7 +67,7 @@ export function RoleInput() {
                 </span>
                 {_role}
               </DropdownSelectOption>
-            );
+            )
           })}
         </div>
       </DropdownSelect>
@@ -89,5 +90,5 @@ export function RoleInput() {
         </BtnContainer>
       )}
     </>
-  );
+  )
 }

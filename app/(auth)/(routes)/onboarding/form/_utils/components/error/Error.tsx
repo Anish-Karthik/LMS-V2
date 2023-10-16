@@ -1,9 +1,10 @@
-import styles from "./Error.module.css";
-import Image from "next/image";
+import Image from "next/image"
+
+import styles from "./Error.module.css"
 
 type ErrorProps = {
-  readonly message: string;
-};
+  readonly message: string
+}
 
 export function Error({ message }: ErrorProps) {
   return (
@@ -11,5 +12,5 @@ export function Error({ message }: ErrorProps) {
       <Image src="/error.svg" alt="error" width={18} height={18} />
       {message}
     </div>
-  );
+  )
 }
