@@ -1,33 +1,32 @@
+import React from "react"
+import Link from "next/link"
+import { Course } from "@prisma/client"
+import { ArrowLeft, FileIcon, LayoutDashboard } from "lucide-react"
 
-import { Banner } from '@/components/banner'
-import { IconBadge } from '@/components/icon-badge'
-import { getAnnouncementByid } from '@/lib/actions/announcement.action'
-import { getBatches } from '@/lib/actions/batch.action'
-import { getCourses } from '@/lib/actions/course.actions'
-import { FileIcon, LayoutDashboard } from 'lucide-react'
-import Link from 'next/link'
-import React from 'react'
-import CurrentPathNavigator from '../../../_components/current-pathname'
+import { getAnnouncementByid } from "@/lib/actions/announcement.action"
+import { getBatches } from "@/lib/actions/batch.action"
+import { getCourses } from "@/lib/actions/course.actions"
+import { Banner } from "@/components/banner"
+import { IconBadge } from "@/components/icon-badge"
 
-
-import { ArrowLeft } from 'lucide-react'
-import { AnnouncementDescriptionForm } from '../_components/topic-description-form'
-import { AnnouncementTitleForm } from '../_components/topic-title-form'
-import { AttachmentForm } from '../_components/attachment-form'
-import { AnnouncementActions } from '../_components/topic-actions'
-
+import CurrentPathNavigator from "../../../_components/current-pathname"
+import AnnouncementType from "../_components/announcement-type"
+import { AttachmentForm } from "../_components/attachment-form"
+import { AnnouncementActions } from "../_components/topic-actions"
+import { AnnouncementDescriptionForm } from "../_components/topic-description-form"
+import { AnnouncementTitleForm } from "../_components/topic-title-form"
 
 const CreateAnnoucement = async ({
   params,
   searchParams,
-}:{
-  params: { announcementId: string },
-  searchParams: { [key: string]: string },
+}: {
+  params: { announcementId: string }
+  searchParams: { [key: string]: string }
 }) => {
-
-  const announcement = await getAnnouncementByid(params.announcementId);
-  const course = (await getCourses())![0];
-  const batches = await getBatches(searchParams.courseId || course.id);
+  const announcement = await getAnnouncementByid(params.announcementId)
+  const courses = await getCourses()
+  const course = courses![0]
+  const batches = await getBatches(searchParams.courseId || course.id)
 
   const requiredFields = [announcement.title, announcement.description]
 
@@ -81,31 +80,31 @@ const CreateAnnoucement = async ({
                 <IconBadge icon={LayoutDashboard} />
                 <h2 className="text-xl">Create your Annoucement</h2>
               </div>
-              <AnnouncementTitleForm
-                initialData={announcement}
-              />
-              <AnnouncementDescriptionForm
-                initialData={announcement}
-              />
+              <AnnouncementTitleForm initialData={announcement} />
+              <AnnouncementDescriptionForm initialData={announcement} />
             </div>
           </div>
-          <div className='space-y-4'>
+          <div className="space-y-4">
             <div>
               <div className="flex items-center gap-x-2">
                 <IconBadge icon={FileIcon} />
-                <h2 className="text-xl">Resources & Attachments {"(Optional)"}</h2>
+                <h2 className="text-xl">
+                  Resources & Attachments {"(Optional)"}
+                </h2>
               </div>
-              <AttachmentForm
-                initialData={announcement}
-              />
+              <AttachmentForm initialData={announcement} />
             </div>
             <div>
               <div className="flex items-center gap-x-2">
                 <IconBadge icon={FileIcon} />
-                <h2 className="text-xl">Resources & Attachments {"(Optional)"}</h2>
+                <h2 className="text-xl">
+                  Select Announcement Type {"(Republish to Make changes)"}
+                </h2>
               </div>
-              <AttachmentForm
-                initialData={announcement}
+              <AnnouncementType
+                type={searchParams.type}
+                batches={batches}
+                courses={courses as Course[]}
               />
             </div>
           </div>

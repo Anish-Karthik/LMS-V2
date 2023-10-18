@@ -20,31 +20,32 @@ export default function Home() {
 
   return (
     <QuestionsProvider>
-    <SharedStatesProvider>
-    <div className="html !text-sm">
-      <Head>
-        <title>Alfaq</title>
-        <meta name="viewport" content="width=device-width, initial-scale=1" />
-        <meta name="description" content="user onBoarding form" />
-        <link rel="icon" href="/favicon.ico" />
-      </Head>
-      <header className={styles.header}>
-        <ProgressBar width={percent} />
-        <Image
-          src="/images/logo.png"
-          alt="GrowthX logo"
-          width={96}
-          height={24}
-          className={"hidden"}
-        />
-      </header>
-      <main className={classNames(styles.main, questrialFont.className)}>
-        
+      <SharedStatesProvider>
+        <div className="html !text-sm">
+          <Head>
+            <title>Alfaq</title>
+            <meta
+              name="viewport"
+              content="width=device-width, initial-scale=1"
+            />
+            <meta name="description" content="user onBoarding form" />
+            <link rel="icon" href="/favicon.ico" />
+          </Head>
+          <header className={styles.header}>
+            <ProgressBar width={percent} />
+            <Image
+              src="/images/logo.png"
+              alt="GrowthX logo"
+              width={96}
+              height={24}
+              className={"hidden"}
+            />
+          </header>
+          <main className={classNames(styles.main, questrialFont.className)}>
             <MainContent />
-          
-      </main>
-    </div>
-    </SharedStatesProvider>
+          </main>
+        </div>
+      </SharedStatesProvider>
     </QuestionsProvider>
   )
 }

@@ -3,13 +3,20 @@
 import { useState } from "react"
 import { useRouter } from "next/navigation"
 import { zodResolver } from "@hookform/resolvers/zod"
-import { Announcement, Attachment, Batch, Chapter, Course } from "@prisma/client"
+import {
+  Announcement,
+  Attachment,
+  Batch,
+  Chapter,
+  Course,
+} from "@prisma/client"
 import axios from "axios"
 import { Loader2, PlusCircle } from "lucide-react"
 import { useForm } from "react-hook-form"
 import toast from "react-hot-toast"
 import * as z from "zod"
 
+import { createAnnouncement } from "@/lib/actions/announcement.action"
 import { createBatch } from "@/lib/actions/batch.action"
 import { cn } from "@/lib/utils"
 import { Button } from "@/components/ui/button"
@@ -23,10 +30,9 @@ import {
 import { Input } from "@/components/ui/input"
 
 import { AnnouncementsList } from "./announcements-list"
-import { createAnnouncement } from "@/lib/actions/announcement.action"
 
 interface AnnouncementsFormProps {
-  initialData: (Announcement & { attachments?: Attachment[]})[]
+  initialData: (Announcement & { attachments?: Attachment[] })[]
 }
 
 const formSchema = z.object({
@@ -64,7 +70,6 @@ export const AnnouncementsForm = ({ initialData }: AnnouncementsFormProps) => {
     }
   }
   console.log(initialData)
-
 
   return (
     <div className="relative mt-6 rounded-md border bg-secondary p-4">
@@ -122,9 +127,7 @@ export const AnnouncementsForm = ({ initialData }: AnnouncementsFormProps) => {
           )}
         >
           {!initialData.length && "No batches"}
-          <AnnouncementsList
-            items={initialData}
-          />
+          <AnnouncementsList items={initialData} />
         </div>
       )}
     </div>

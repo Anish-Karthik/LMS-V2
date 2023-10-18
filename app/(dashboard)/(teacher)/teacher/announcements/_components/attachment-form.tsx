@@ -10,9 +10,12 @@ import { File, ImageIcon, Loader2, Pencil, PlusCircle, X } from "lucide-react"
 import toast from "react-hot-toast"
 import * as z from "zod"
 
+import {
+  addAttachmentToAnnouncement,
+  removeAttachmentFromAnnouncement,
+} from "@/lib/actions/announcement.action"
 import { Button } from "@/components/ui/button"
 import { FileUpload } from "@/components/file-upload"
-import { addAttachmentToAnnouncement, removeAttachmentFromAnnouncement } from "@/lib/actions/announcement.action"
 
 interface AttachmentFormProps {
   initialData: Announcement & { attachments: Attachment[] }
@@ -22,9 +25,7 @@ const formSchema = z.object({
   url: z.string().min(1),
 })
 
-export const AttachmentForm = ({
-  initialData,
-}: AttachmentFormProps) => {
+export const AttachmentForm = ({ initialData }: AttachmentFormProps) => {
   const [isEditing, setIsEditing] = useState(false)
   const [deletingId, setDeletingId] = useState<string | null>(null)
 

@@ -10,6 +10,7 @@ import { useForm } from "react-hook-form"
 import toast from "react-hot-toast"
 import * as z from "zod"
 
+import { updateAnnouncement } from "@/lib/actions/announcement.action"
 import { cn } from "@/lib/utils"
 import { Button } from "@/components/ui/button"
 import {
@@ -21,10 +22,9 @@ import {
 } from "@/components/ui/form"
 import { Editor } from "@/components/editor"
 import { Preview } from "@/components/preview"
-import { updateAnnouncement } from "@/lib/actions/announcement.action"
 
 interface AnnouncementDescriptionFormProps {
-  initialData: Announcement & { attachments: Attachment[] };
+  initialData: Announcement & { attachments: Attachment[] }
 }
 
 const formSchema = z.object({
@@ -51,7 +51,10 @@ export const AnnouncementDescriptionForm = ({
 
   const onSubmit = async (values: z.infer<typeof formSchema>) => {
     try {
-      await updateAnnouncement({ id: initialData?.id, description: values.description });
+      await updateAnnouncement({
+        id: initialData?.id,
+        description: values.description,
+      })
       toast.success("Topic updated")
       toggleEdit()
       router.refresh()

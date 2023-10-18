@@ -3,12 +3,14 @@
 import { useState } from "react"
 import { useRouter } from "next/navigation"
 import { zodResolver } from "@hookform/resolvers/zod"
+import { Announcement, Attachment } from "@prisma/client"
 import axios from "axios"
 import { Pencil } from "lucide-react"
 import { useForm } from "react-hook-form"
 import toast from "react-hot-toast"
 import * as z from "zod"
 
+import { updateAnnouncement } from "@/lib/actions/announcement.action"
 import { updateTopic } from "@/lib/actions/topic.actions"
 import { Button } from "@/components/ui/button"
 import {
@@ -19,8 +21,6 @@ import {
   FormMessage,
 } from "@/components/ui/form"
 import { Input } from "@/components/ui/input"
-import { Announcement, Attachment } from "@prisma/client"
-import { updateAnnouncement } from "@/lib/actions/announcement.action"
 
 interface AnnouncementTitleFormProps {
   initialData: Announcement & { attachments: Attachment[] }
@@ -43,14 +43,14 @@ export const AnnouncementTitleForm = ({
     resolver: zodResolver(formSchema),
     defaultValues: {
       title: initialData.title || "",
-    }
+    },
   })
 
   const { isSubmitting, isValid } = form.formState
 
   const onSubmit = async (values: z.infer<typeof formSchema>) => {
     try {
-      await updateAnnouncement({ id: initialData.id, title: values.title });
+      await updateAnnouncement({ id: initialData.id, title: values.title })
       toast.success("Topic updated")
       toggleEdit()
       router.refresh()

@@ -7,13 +7,17 @@ import { Trash } from "lucide-react"
 import toast from "react-hot-toast"
 
 import {
+  deleteAnnouncement,
+  publishAnnouncement,
+  unpublishAnnouncement,
+} from "@/lib/actions/announcement.action"
+import {
   deleteTopic,
   publishTopic,
   unpublishTopic,
 } from "@/lib/actions/topic.actions"
 import { Button } from "@/components/ui/button"
 import { ConfirmModal } from "@/components/modals/confirm-modal"
-import { deleteAnnouncement, publishAnnouncement, unpublishAnnouncement } from "@/lib/actions/announcement.action"
 
 interface AnnouncementActionsProps {
   disabled: boolean

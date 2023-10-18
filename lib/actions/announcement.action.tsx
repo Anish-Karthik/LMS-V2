@@ -1,9 +1,8 @@
-"use server";
+"use server"
 
-import { db } from "../db";
+import { db } from "../db"
 
-
-export const getAnnouncementByid = async (id: string) => { 
+export const getAnnouncementByid = async (id: string) => {
   try {
     const announcement = await db.announcement.findUnique({
       where: { id },
@@ -16,8 +15,8 @@ export const getAnnouncementByid = async (id: string) => {
     }
     return announcement
   } catch (error: any) {
-    console.error(error);
-    throw new Error("Announcement not found", error.message);
+    console.error(error)
+    throw new Error("Announcement not found", error.message)
   }
 }
 
@@ -30,7 +29,7 @@ export const getAnnouncements = async () => {
     })
     return announcements
   } catch (error: any) {
-    console.error(error);
+    console.error(error)
     throw new Error("Announcements not found", error.message)
   }
 }
@@ -42,8 +41,8 @@ export const createAnnouncement = async (title: string) => {
     })
     return announcement
   } catch (error: any) {
-    console.error(error);
-    throw new Error("Announcement not created", error.message);
+    console.error(error)
+    throw new Error("Announcement not created", error.message)
   }
 }
 
@@ -63,7 +62,7 @@ export const updateAnnouncement = async ({
     })
     return announcement
   } catch (error: any) {
-    console.error(error);
+    console.error(error)
     throw new Error("Announcement not updated", error.message)
   }
 }
@@ -75,12 +74,16 @@ export const deleteAnnouncement = async (id: string) => {
     })
     return announcement
   } catch (error: any) {
-    console.error(error);
+    console.error(error)
     throw new Error("Announcement not deleted", error.message)
   }
 }
 
-export const publishAnnouncement = async (id: string, batchId?: string, courseId?: string) => {
+export const publishAnnouncement = async (
+  id: string,
+  batchId?: string,
+  courseId?: string
+) => {
   try {
     const announcement = await db.announcement.update({
       where: { id },
@@ -88,7 +91,7 @@ export const publishAnnouncement = async (id: string, batchId?: string, courseId
     })
     return announcement
   } catch (error: any) {
-    console.error(error);
+    console.error(error)
     throw new Error("Announcement not published", error.message)
   }
 }
@@ -97,11 +100,11 @@ export const unpublishAnnouncement = async (id: string) => {
   try {
     const announcement = await db.announcement.update({
       where: { id },
-      data: { isPublished: false},
+      data: { isPublished: false },
     })
     return announcement
   } catch (error: any) {
-    console.error(error);
+    console.error(error)
     throw new Error("Announcement not unpublished", error.message)
   }
 }
@@ -109,7 +112,7 @@ export const unpublishAnnouncement = async (id: string) => {
 export const addAttachmentToAnnouncement = async (
   announcementId: string,
   attachmentUrl: string,
-  name="Attachment",
+  name = "Attachment"
 ) => {
   try {
     const attachment = await db.attachment.create({
@@ -132,7 +135,7 @@ export const removeAttachmentFromAnnouncement = async (
   attachmentId: string
 ) => {
   try {
-      await db.attachment.delete({
+    await db.attachment.delete({
       where: {
         id: attachmentId,
         announcementId: announcementId,

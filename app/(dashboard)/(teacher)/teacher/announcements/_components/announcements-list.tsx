@@ -2,6 +2,7 @@
 
 import { useEffect, useState } from "react"
 import Link from "next/link"
+import { useRouter } from "next/navigation"
 import {
   DragDropContext,
   Draggable,
@@ -11,25 +12,21 @@ import {
 import { Announcement, Attachment, Batch, Chapter } from "@prisma/client"
 import { DeleteIcon, GripVertical, Pencil, TrashIcon } from "lucide-react"
 
+import { deleteAnnouncement } from "@/lib/actions/announcement.action"
 import { deleteBatch } from "@/lib/actions/batch.action"
 import { cn } from "@/lib/utils"
 import { Badge } from "@/components/ui/badge"
 import { Button } from "@/components/ui/button"
-import { deleteAnnouncement } from "@/lib/actions/announcement.action"
-import { useRouter } from "next/navigation"
 
 interface AnnouncementsListProps {
-  items: (Announcement & { attachments?: Attachment[]})[]
+  items: (Announcement & { attachments?: Attachment[] })[]
 }
 
-export const AnnouncementsList = ({
-  items,
-}: AnnouncementsListProps) => {
+export const AnnouncementsList = ({ items }: AnnouncementsListProps) => {
   const [isMounted, setIsMounted] = useState(false)
   const [batches, setBatches] = useState(items)
   const router = useRouter()
 
-  
   const onEdit = (id: string) => {
     console.log(id)
     // router.push(`/teacher/announcements/${id}/edit`)
@@ -69,9 +66,7 @@ export const AnnouncementsList = ({
           <div className="ml-auto flex items-center gap-x-2 pr-2"></div>
           {announcement.title !== "unassigned" && (
             <div>
-              <Link
-                href={`/teacher/announcements/${announcement.id}`}
-              >
+              <Link href={`/teacher/announcements/${announcement.id}`}>
                 <Button variant={"ghost"}>
                   <Pencil className="h-5 w-5" />
                 </Button>
