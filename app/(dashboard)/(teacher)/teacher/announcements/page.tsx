@@ -16,19 +16,22 @@ import AnnouncementPage from "@/components/shared/announcement-page"
 import CurrentPathNavigator from "../../_components/current-pathname"
 import { AnnouncementsForm } from "./_components/announcements-form"
 import { AnnouncementsList } from "./_components/announcements-list"
+import { getCourses } from "@/lib/actions/course.actions"
+import { getAllBatches, getBatches } from "@/lib/actions/batch.action"
+import { Course } from "@prisma/client"
 
 const page = async () => {
   const announcements = await getAnnouncements()
   const user = await currentUser()
   const userInfo = await getUser(user!.id)
   const generalAnnouncements = announcements.filter(
-    (a) => a.courseId === null && a.batchId === null
+    (a) => a.courseId === null && a.batchId === null && a.isPublished
   )
   const batchAnnouncements = announcements.filter(
-    (a) => a.courseId !== null && a.batchId !== null
+    (a) => a.courseId !== null && a.batchId !== null && a.isPublished
   )
   const courseAnnouncements = announcements.filter(
-    (a) => a.courseId !== null && a.batchId === null
+    (a) => a.courseId !== null && a.batchId === null && a.isPublished
   )
   const announcementTabs = [
     {
@@ -50,6 +53,8 @@ const page = async () => {
       data: courseAnnouncements,
     },
   ]
+  const courses = await getCourses();
+  const batches = await getAllBatches();
 
   return (
     <div>
@@ -82,6 +87,9 @@ const page = async () => {
           <TabsContent value={tab.value} className="w-full">
             <CurrentPathNavigator />
             <AnnouncementPage
+              type={tab.value}
+              courses={courses as Course[]}
+              batches={batches}
               announcements={tab.data}
               viewerRole={userInfo!.role}
             />

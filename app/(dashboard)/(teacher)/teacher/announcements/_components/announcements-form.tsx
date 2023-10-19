@@ -1,7 +1,8 @@
 "use client"
 
-import { useState } from "react"
-import { useRouter } from "next/navigation"
+import { useEffect, useState } from "react"
+import { usePathname, useRouter, useSearchParams } from "next/navigation"
+import qs from "query-string"
 import { zodResolver } from "@hookform/resolvers/zod"
 import {
   Announcement,
@@ -42,12 +43,24 @@ const formSchema = z.object({
 export const AnnouncementsForm = ({ initialData }: AnnouncementsFormProps) => {
   const [isCreating, setIsCreating] = useState(false)
   const [isUpdating, setIsUpdating] = useState(false)
-
-  const toggleCreating = () => {
-    setIsCreating((current) => !current)
-  }
-
   const router = useRouter()
+  const searchParams = useSearchParams()
+  const pathname = usePathname()
+  useEffect(() => {
+    // clear search params
+    const url = qs.stringifyUrl(
+      {
+        url: pathname,
+        query: {
+          type: "",
+          courseId: "",
+          batchId: "",
+        },
+      },
+      { skipEmptyString: true, skipNull: true }
+    )
+    router.push(url)
+  }, [pathname, router, searchParams])
 
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
@@ -58,16 +71,21 @@ export const AnnouncementsForm = ({ initialData }: AnnouncementsFormProps) => {
 
   const { isSubmitting, isValid } = form.formState
 
+  const toggleCreating = () => {
+    setIsCreating((current) => !current)
+  }
+
   const onSubmit = async (values: z.infer<typeof formSchema>) => {
     try {
+      setIsUpdating(true)
       await createAnnouncement(values.title)
-
       toast.success("Announcement created")
       toggleCreating()
       router.refresh()
     } catch (error: any) {
       toast.error("Something went wrong", error.message)
     }
+    setIsUpdating(false)
   }
 
   return (

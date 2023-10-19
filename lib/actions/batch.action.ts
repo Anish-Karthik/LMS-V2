@@ -72,6 +72,17 @@ export const getBatches = async (courseId: string) => {
     throw new Error("Batches not found", e.message)
   }
 }
+
+export const getAllBatches = async () => {
+  try {
+    const batches = await db.batch.findMany()
+    return batches
+  } catch (e: any) {
+    console.error(e)
+    throw new Error("Batches not found", e.message)
+  }
+}
+
 export const deleteBatch = async (courseId: string, batchId: string) => {
   try {
     const course = await getCourseById(courseId)

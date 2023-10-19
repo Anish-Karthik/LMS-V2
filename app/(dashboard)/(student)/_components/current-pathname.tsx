@@ -6,7 +6,10 @@ import { useParams, usePathname } from "next/navigation"
 
 import { cn } from "@/lib/utils"
 
-const CurrentPathNavigator = () => {
+const CurrentPathNavigator = ({
+  className,
+  ...props
+}: React.HTMLAttributes<HTMLElement>) => {
   const pathname = usePathname()
   const pathArr = pathname.split("/")
   const params = useParams()
@@ -18,7 +21,12 @@ const CurrentPathNavigator = () => {
   })
 
   return (
-    <div className="flex-start ml-6 mt-4 flex w-fit rounded-sm bg-secondary p-1">
+    <div 
+      className={cn(
+        "flex-start ml-6 mt-4 flex w-fit rounded-sm bg-secondary p-1",
+        className
+      )}
+    >
       {pathArr.map((path, index) => {
         if (path === "") return null
         // check if path matches with any params if then return params name

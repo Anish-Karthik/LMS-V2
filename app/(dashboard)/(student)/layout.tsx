@@ -43,7 +43,7 @@ const DashBoardLayout = async ({ children }: { children: React.ReactNode }) => {
           </div>
         </div>
         <main>
-          <CurrentPathNavigator />
+          {/* <CurrentPathNavigator /> */}
           <div>{children}</div>
         </main>
         <MobileNav />
