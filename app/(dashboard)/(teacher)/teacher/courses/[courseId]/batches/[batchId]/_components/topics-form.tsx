@@ -1,23 +1,14 @@
 "use client"
 
-import { get } from "http"
 import { useState } from "react"
 import { usePathname, useRouter } from "next/navigation"
 import { zodResolver } from "@hookform/resolvers/zod"
-import { positions } from "@mui/system"
-import { Batch, Chapter, Course, Topic } from "@prisma/client"
-import axios from "axios"
+import { Topic } from "@prisma/client"
 import { Loader2, PlusCircle } from "lucide-react"
 import { useForm } from "react-hook-form"
 import toast from "react-hot-toast"
 import * as z from "zod"
 
-import {
-  createChapter,
-  editChapter,
-  getChapterById,
-  reorderChapters,
-} from "@/lib/actions/chapter.action"
 import { createTopic, reorderTopics } from "@/lib/actions/topic.actions"
 import { cn } from "@/lib/utils"
 import { Button } from "@/components/ui/button"
@@ -30,7 +21,6 @@ import {
 } from "@/components/ui/form"
 import { Input } from "@/components/ui/input"
 
-import { ChaptersList } from "./chapters-list"
 import { TopicsList } from "./topics-list"
 
 interface TopicsFormProps {

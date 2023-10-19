@@ -63,10 +63,6 @@ export const updateAnnouncement = async ({
   batchId?: string
 }) => {
   try {
-    const values = {
-      courseId: courseId || null,
-      batchId: batchId || null,
-    }
     if (type === "course") {
       return await db.announcement.update({
         where: { id },
@@ -108,10 +104,16 @@ export const publishAnnouncement = async (
   courseId?: string
 ) => {
   try {
-    const announcement = await getAnnouncementByid(id);
+    const announcement = await getAnnouncementByid(id)
     const values = {
-      createdAt: formatDate(announcement.createdAt) == formatDate(announcement.updatedAt) ? new Date(): announcement.createdAt,
-      updatedAt: formatDate(announcement.createdAt) == formatDate(announcement.updatedAt) ? new Date(): undefined,
+      createdAt:
+        formatDate(announcement.createdAt) == formatDate(announcement.updatedAt)
+          ? new Date()
+          : announcement.createdAt,
+      updatedAt:
+        formatDate(announcement.createdAt) == formatDate(announcement.updatedAt)
+          ? new Date()
+          : undefined,
     }
     return await db.announcement.update({
       where: { id },

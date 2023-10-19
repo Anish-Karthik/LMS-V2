@@ -132,24 +132,33 @@ model Topic {
   isPublished Boolean @default(false)
   isFree      Boolean @default(false)
 
-  muxData MuxData?
-
   chapterId String  @db.ObjectId
   chapter   Chapter @relation(fields: [chapterId], references: [id], onDelete: Cascade)
 
   attachmentIds     String?             @db.ObjectId
   attachments       Attachment[]
   userProgressTopic UserProgressTopic[]
+  videoData         VideoData?
 
   @@index([chapterId])
 }
+
+model VideoData {
+  id      String @id @default(auto()) @map("_id") @db.ObjectId
+  url     String
+  topic   Topic  @relation(fields: [topicId], references: [id])
+  topicId String @unique @db.ObjectId
+  @@index([id, topicId])
+}
+
+
 
 model Announcement {
   id          String  @id @default(auto()) @map("_id") @db.ObjectId
   title       String
   description String?
   isPublished Boolean @default(false)
-  type String @default("general")
+  type        String  @default("general")
 
   attachments Attachment[]
 
@@ -179,17 +188,9 @@ model Attachment {
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
+
   @@index([id, topicId])
   @@index([id, announcementId])
-}
-
-model MuxData {
-  id         String  @id @default(auto()) @map("_id") @db.ObjectId
-  assetId    String
-  playbackId String?
-
-  topicId String @unique @db.ObjectId
-  topic   Topic  @relation(fields: [topicId], references: [id], onDelete: Cascade)
 }
 
 model UserProgress {

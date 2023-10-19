@@ -3,10 +3,11 @@ import Link from "next/link"
 import { Announcement, Attachment } from "@prisma/client"
 import { File, Pencil } from "lucide-react"
 
+import { formatDate } from "@/lib/format"
+
 import { Preview } from "../preview"
 import { Button } from "../ui/button"
 import { Separator } from "../ui/separator"
-import { formatDate } from "@/lib/format"
 
 const AnnouncementCard = ({
   announcement,
@@ -16,14 +17,20 @@ const AnnouncementCard = ({
   viewerRole: string
 }) => {
   return (
-    <div className="bg-secondary rounded-md">
+    <div className="rounded-md bg-secondary">
       <div className="max-sh-fit -mb-4">
-        <p className="p-4 rounded-sm text-slate-600 text-xs max-sh-fit">
+        <p className="max-sh-fit rounded-sm p-4 text-xs text-slate-600">
           {/* date */}
           {formatDate(announcement.updatedAt)}
-          {!(formatDate(announcement.updatedAt) === formatDate(announcement.createdAt) && announcement.updatedAt.getHours() === announcement.createdAt.getHours()  && announcement.updatedAt.getMinutes() === announcement.createdAt.getMinutes()) && " (edited)"}
+          {!(
+            formatDate(announcement.updatedAt) ===
+              formatDate(announcement.createdAt) &&
+            announcement.updatedAt.getHours() ===
+              announcement.createdAt.getHours() &&
+            announcement.updatedAt.getMinutes() ===
+              announcement.createdAt.getMinutes()
+          ) && " (edited)"}
         </p>
-
       </div>
       <div className="flex flex-col items-center justify-between px-4 sm:flex-row">
         <h2 className="mb-2 text-2xl font-semibold">{announcement.title}</h2>

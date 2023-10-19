@@ -1,6 +1,6 @@
 "use client"
 
-import React, { useEffect } from "react"
+import React from "react"
 import Link from "next/link"
 import { useParams, usePathname } from "next/navigation"
 
@@ -21,7 +21,7 @@ const CurrentPathNavigator = ({
   })
 
   return (
-    <div 
+    <div
       className={cn(
         "flex-start ml-6 mt-4 flex w-fit rounded-sm bg-secondary p-1",
         className

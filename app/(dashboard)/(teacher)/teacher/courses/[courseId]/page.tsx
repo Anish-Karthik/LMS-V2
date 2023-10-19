@@ -1,11 +1,4 @@
-import React from "react"
-import {
-  DollarSign,
-  File,
-  IndianRupee,
-  LayoutDashboardIcon,
-  ListChecksIcon,
-} from "lucide-react"
+import { IndianRupee, LayoutDashboardIcon, ListChecksIcon } from "lucide-react"
 
 import { getCourseById } from "@/lib/actions/course.actions"
 import { IconBadge } from "@/components/icon-badge"

@@ -1,8 +1,5 @@
 "use server"
 
-import { currentUser } from "@clerk/nextjs"
-import { Batch, Course } from "@prisma/client"
-
 import { db } from "../db"
 import { createBatch, getBatchById } from "./batch.action"
 

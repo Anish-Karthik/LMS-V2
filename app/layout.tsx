@@ -1,4 +1,5 @@
 import "@/styles/globals.css"
+import React from "react"
 import { Metadata } from "next"
 import { ClerkProvider } from "@clerk/nextjs"
 
@@ -6,9 +7,9 @@ import { siteConfig } from "@/config/site"
 import { fontSans } from "@/lib/fonts"
 import { cn } from "@/lib/utils"
 import { Toaster } from "@/components/ui/toaster"
+import { CloudinaryContext } from "@/components/providers/cloudinary-context"
 import { ConfettiProvider } from "@/components/providers/confetti-provider"
 import { ToastProvider } from "@/components/providers/toaster-provider"
-import { SiteHeader } from "@/components/site-header"
 import { TailwindIndicator } from "@/components/tailwind-indicator"
 import { ThemeProvider } from "@/components/theme-provider"
 
@@ -48,10 +49,12 @@ export default function RootLayout({ children }: RootLayoutProps) {
             <ConfettiProvider />
             <ToastProvider />
             <Toaster />
-            <div className="relative flex min-h-screen flex-col ">
-              {/* <SiteHeader /> */}
-              {children}
-            </div>
+            <CloudinaryContext>
+              <div className="relative flex min-h-screen flex-col ">
+                {/* <SiteHeader /> */}
+                {children}
+              </div>
+            </CloudinaryContext>
             <TailwindIndicator />
           </ThemeProvider>
         </body>

@@ -8,12 +8,11 @@ import {
   DropResult,
   Droppable,
 } from "@hello-pangea/dnd"
-import { Batch, Chapter } from "@prisma/client"
-import { DeleteIcon, GripVertical, Pencil, TrashIcon } from "lucide-react"
+import { Batch } from "@prisma/client"
+import { GripVertical, Pencil, TrashIcon } from "lucide-react"
 
 import { deleteBatch } from "@/lib/actions/batch.action"
 import { cn } from "@/lib/utils"
-import { Badge } from "@/components/ui/badge"
 import { Button } from "@/components/ui/button"
 
 interface BatchesListProps {

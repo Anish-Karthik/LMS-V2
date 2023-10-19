@@ -1,12 +1,9 @@
 "use client"
 
-import React from "react"
-import Image from "next/image"
 import Link from "next/link"
-import { usePathname, useRouter } from "next/navigation"
-import { useAuth } from "@clerk/nextjs"
+import { usePathname } from "next/navigation"
 
-import { sidebarLinksTeacher, sidebarLinksTeacherMobile } from "@/app/constants"
+import { sidebarLinksTeacherMobile } from "@/app/constants"
 
 function MobileNav() {
   // const { userId } = useAuth()

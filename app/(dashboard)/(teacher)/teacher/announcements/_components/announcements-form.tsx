@@ -2,23 +2,15 @@
 
 import { useEffect, useState } from "react"
 import { usePathname, useRouter, useSearchParams } from "next/navigation"
-import qs from "query-string"
 import { zodResolver } from "@hookform/resolvers/zod"
-import {
-  Announcement,
-  Attachment,
-  Batch,
-  Chapter,
-  Course,
-} from "@prisma/client"
-import axios from "axios"
+import { Announcement, Attachment } from "@prisma/client"
 import { Loader2, PlusCircle } from "lucide-react"
+import qs from "query-string"
 import { useForm } from "react-hook-form"
 import toast from "react-hot-toast"
 import * as z from "zod"
 
 import { createAnnouncement } from "@/lib/actions/announcement.action"
-import { createBatch } from "@/lib/actions/batch.action"
 import { cn } from "@/lib/utils"
 import { Button } from "@/components/ui/button"
 import {

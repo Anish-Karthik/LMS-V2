@@ -1,12 +1,9 @@
 "use client"
 
-import { get } from "http"
 import { useState } from "react"
 import { useRouter } from "next/navigation"
 import { zodResolver } from "@hookform/resolvers/zod"
-import { positions } from "@mui/system"
-import { Batch, Chapter, Course, Topic } from "@prisma/client"
-import axios from "axios"
+import { Chapter, Topic } from "@prisma/client"
 import { Loader2, PlusCircle } from "lucide-react"
 import { useForm } from "react-hook-form"
 import toast from "react-hot-toast"

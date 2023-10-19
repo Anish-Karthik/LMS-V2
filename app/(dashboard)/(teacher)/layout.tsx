@@ -1,15 +1,10 @@
 import React from "react"
 import Image from "next/image"
 import { redirect } from "next/navigation"
-import { UserButton, clerkClient, currentUser } from "@clerk/nextjs"
+import { UserButton, currentUser } from "@clerk/nextjs"
 
 import { getUser } from "@/lib/actions/user.actions"
 import { ThemeToggle } from "@/components/theme-toggle"
-import {
-  Trole,
-  sidebarLinksTeacher,
-  sidebarLinksTeacherMobile,
-} from "@/app/constants"
 
 import { MainNav } from "./_components/main-nav"
 import MobileNav from "./_components/mobile-nav"

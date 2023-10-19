@@ -2,17 +2,13 @@
 
 import { useEffect, useState } from "react"
 import { usePathname, useRouter, useSearchParams } from "next/navigation"
-import { Pencil, Search } from "lucide-react"
 import qs from "query-string"
 
 import "@/components/ui/checkbox"
 import { Announcement, Batch, Course } from "@prisma/client"
 import { toast } from "react-hot-toast"
 
-import { updateAnnouncement } from "@/lib/actions/announcement.action"
 import { cn } from "@/lib/utils"
-import { useDebounce } from "@/hooks/use-debounce"
-import { Button } from "@/components/ui/button"
 import {
   Select,
   SelectContent,
@@ -50,7 +46,7 @@ const AnnouncementCategory = ({
   batches,
   isStudent = false,
 }: {
-  type: string;
+  type: string
   courses: Course[]
   batches: Batch[]
   isStudent?: boolean
@@ -62,9 +58,9 @@ const AnnouncementCategory = ({
   const router = useRouter()
   const pathname = usePathname()
   useEffect(() => {
-    if(type === "general") {
-      router.push(pathname.split('?')[0])
-      return;
+    if (type === "general") {
+      router.push(pathname.split("?")[0])
+      return
     }
     const url = qs.stringifyUrl(
       {
@@ -75,7 +71,9 @@ const AnnouncementCategory = ({
             ? course || searchParams.get("courseId")
             : "",
           batchId:
-            type === "batch" && !isStudent ? batch || searchParams.get("batchId") : "",
+            type === "batch" && !isStudent
+              ? batch || searchParams.get("batchId")
+              : "",
         },
       },
       { skipEmptyString: true, skipNull: true }
@@ -83,8 +81,7 @@ const AnnouncementCategory = ({
 
     router.push(url)
   }, [type, router, pathname, searchParams, course, batch, isStudent])
-  useEffect(() => {
-  }, [])
+  useEffect(() => {}, [])
 
   return (
     <div
@@ -92,21 +89,16 @@ const AnnouncementCategory = ({
         "flex w-full flex-wrap justify-start gap-2 pl-2 xs:flex-nowrap"
       )}
     >
-    
-      {(type === "course" || type === "batch") &&
-          <CustomSelectItems
-            setValue={setCourse}
-            value={course}
-            items={courses}
-          />
-      }
-      {type === "batch" && !isStudent &&
+      {(type === "course" || type === "batch") && (
         <CustomSelectItems
-          setValue={setBatch}
-          value={batch}
-          items={batches}
+          setValue={setCourse}
+          value={course}
+          items={courses}
         />
-      }
+      )}
+      {type === "batch" && !isStudent && (
+        <CustomSelectItems setValue={setBatch} value={batch} items={batches} />
+      )}
     </div>
   )
 }

@@ -2,9 +2,7 @@ import React from "react"
 import { redirect } from "next/navigation"
 import { currentUser } from "@clerk/nextjs"
 
-import { getCourses } from "@/lib/actions/course.actions"
 import { isUserPurchasedCourse } from "@/lib/actions/user.actions"
-import { Header } from "@/components/shared/header"
 
 const DashBoardLayout = async ({
   children,

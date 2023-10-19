@@ -1,20 +1,17 @@
 "use client"
 
 import { useEffect, useState } from "react"
-import { usePathname, useRouter } from "next/navigation"
+import { usePathname } from "next/navigation"
 import {
   DragDropContext,
   Draggable,
   DropResult,
   Droppable,
 } from "@hello-pangea/dnd"
-import { Chapter, Topic } from "@prisma/client"
-import { GripVertical, Loader2, Pencil, PlusCircle } from "lucide-react"
-import { toast } from "react-hot-toast"
+import { Topic } from "@prisma/client"
+import { GripVertical, Pencil } from "lucide-react"
 
 import { cn } from "@/lib/utils"
-import { Button } from "@/components/ui/button"
-import { Input } from "@/components/ui/input"
 
 interface TopicsListProps {
   items: Topic[]

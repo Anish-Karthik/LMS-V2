@@ -1,20 +1,11 @@
 "use client"
 
-import React from "react"
-import Image from "next/image"
 import Link from "next/link"
-import { usePathname, useRouter } from "next/navigation"
-import { useAuth } from "@clerk/nextjs"
+import { usePathname } from "next/navigation"
 
-import {
-  sidebarLinksStudentMobile,
-  sidebarLinksTeacher,
-  sidebarLinksTeacherMobile,
-} from "@/app/constants"
+import { sidebarLinksStudentMobile } from "@/app/constants"
 
 function MobileNav() {
-  // const { userId } = useAuth()
-  // const router = useRouter()
   const pathname = usePathname()
   return (
     <section className="bottombar">

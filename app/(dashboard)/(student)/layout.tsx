@@ -5,11 +5,8 @@ import { UserButton, currentUser } from "@clerk/nextjs"
 
 import { getCourses } from "@/lib/actions/course.actions"
 import { isUserPurchasedCourse } from "@/lib/actions/user.actions"
-import { Header } from "@/components/shared/header"
 import { ThemeToggle } from "@/components/theme-toggle"
-import { sidebarLinksStudentMobile } from "@/app/constants"
 
-import CurrentPathNavigator from "./_components/current-pathname"
 import { MainNav } from "./_components/main-nav"
 import MobileNav from "./_components/mobile-nav"
 

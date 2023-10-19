@@ -1,14 +1,11 @@
 "use client"
 
+import React from "react"
 import Link from "next/link"
 import { usePathname } from "next/navigation"
 
 import { cn } from "@/lib/utils"
-import {
-  TsideBar,
-  sidebarLinksStudentMobile,
-  sidebarLinksTeacher,
-} from "@/app/constants"
+import { sidebarLinksStudentMobile } from "@/app/constants"
 
 export function MainNav({
   className,

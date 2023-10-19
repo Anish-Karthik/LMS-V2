@@ -1,16 +1,12 @@
 // import { chapters } from '@/app/constants';
 
-import { type } from "os"
 import React from "react"
 import { redirect } from "next/navigation"
 import { currentUser } from "@clerk/nextjs"
 
-import { getChaptersByBatchId } from "@/lib/actions/chapter.action"
 import { getUser } from "@/lib/actions/user.actions"
 import { db } from "@/lib/db"
-import AdminTabs from "@/components/section/recording-section"
 import ChapterBar from "@/components/shared/chapter-bar"
-import { Header } from "@/components/shared/header"
 
 const DashBoardLayout = async ({
   children,

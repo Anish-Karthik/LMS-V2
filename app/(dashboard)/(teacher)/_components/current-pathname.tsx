@@ -1,12 +1,9 @@
 "use client"
 
-import React, { useEffect } from "react"
+import React from "react"
 import Link from "next/link"
 import { useParams, usePathname } from "next/navigation"
 
-import { getBatchById } from "@/lib/actions/batch.action"
-import { getCourseById } from "@/lib/actions/course.actions"
-import { getTopicById } from "@/lib/actions/topic.actions"
 import { cn } from "@/lib/utils"
 
 const CurrentPathNavigator = ({

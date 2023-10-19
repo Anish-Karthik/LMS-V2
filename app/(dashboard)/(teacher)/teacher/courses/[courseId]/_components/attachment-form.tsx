@@ -1,11 +1,10 @@
 "use client"
 
 import { useState } from "react"
-import Image from "next/image"
 import { useRouter } from "next/navigation"
 import { Attachment, Course } from "@prisma/client"
 import axios from "axios"
-import { File, ImageIcon, Loader2, Pencil, PlusCircle, X } from "lucide-react"
+import { File, Loader2, PlusCircle, X } from "lucide-react"
 import toast from "react-hot-toast"
 import * as z from "zod"
 

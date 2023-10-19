@@ -1,8 +1,7 @@
 "use client"
 
-import React, { useEffect, useState } from "react"
+import React, { useState } from "react"
 import { usePathname, useRouter } from "next/navigation"
-import { useAuth } from "@clerk/nextjs"
 import { User } from "@clerk/nextjs/dist/types/server"
 import { zodResolver } from "@hookform/resolvers/zod"
 import { useForm } from "react-hook-form"
@@ -15,12 +14,7 @@ import { isBase64Image } from "@/lib/utils"
 import { Button } from "@/components/ui/button"
 import { Form } from "@/components/ui/form"
 
-import {
-  CustomInputField,
-  CustomProfilePhoto,
-  CustomTextArea,
-  SelectUserMode,
-} from "../form-fields"
+import { CustomInputField, CustomProfilePhoto } from "../form-fields"
 
 const UserValidation = z.object({
   image: z.string().url(),

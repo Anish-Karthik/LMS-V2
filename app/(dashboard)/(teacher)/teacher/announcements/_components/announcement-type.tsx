@@ -2,7 +2,7 @@
 
 import { useEffect, useState } from "react"
 import { usePathname, useRouter, useSearchParams } from "next/navigation"
-import { Pencil, Search } from "lucide-react"
+import { Pencil } from "lucide-react"
 import qs from "query-string"
 
 import "@/components/ui/checkbox"
@@ -11,7 +11,6 @@ import { toast } from "react-hot-toast"
 
 import { updateAnnouncement } from "@/lib/actions/announcement.action"
 import { cn } from "@/lib/utils"
-import { useDebounce } from "@/hooks/use-debounce"
 import { Button } from "@/components/ui/button"
 import {
   Select,
@@ -35,16 +34,16 @@ const announcementTypes = [
     name: "Batch",
   },
 ]
-export type AnnouncementType = "general" | "course" | "batch"
+export type TAnnouncementType = "general" | "course" | "batch"
 export function getCurrentAnnouncementType(
   announcement: Announcement
-): AnnouncementType {
+): TAnnouncementType {
   if (announcement.batchId) return "batch"
   if (announcement.courseId) return "course"
   return "general"
 }
 
-const AnnouncementType = ({
+export const AnnouncementType = ({
   announcement,
   courses,
   batches,

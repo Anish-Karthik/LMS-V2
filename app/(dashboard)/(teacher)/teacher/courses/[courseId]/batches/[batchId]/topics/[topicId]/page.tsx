@@ -1,7 +1,7 @@
 import Link from "next/link"
 import { redirect } from "next/navigation"
 import { auth } from "@clerk/nextjs"
-import { ArrowLeft, Eye, FileIcon, LayoutDashboard, Video } from "lucide-react"
+import { ArrowLeft, FileIcon, LayoutDashboard, Video } from "lucide-react"
 
 import { db } from "@/lib/db"
 import { Banner } from "@/components/banner"
@@ -9,7 +9,6 @@ import { IconBadge } from "@/components/icon-badge"
 import CurrentPathNavigator from "@/app/(dashboard)/(teacher)/_components/current-pathname"
 
 import { AttachmentForm } from "./_components/attachment-form"
-import { TopicAccessForm } from "./_components/topic-access-form"
 import { TopicActions } from "./_components/topic-actions"
 import { TopicDescriptionForm } from "./_components/topic-description-form"
 import { TopicTitleForm } from "./_components/topic-title-form"
@@ -31,7 +30,7 @@ const topicIdPage = async ({
       id: params.topicId,
     },
     include: {
-      muxData: true,
+      videoData: true,
     },
   })
   const topicWithAttachments = await db.topic.findUnique({

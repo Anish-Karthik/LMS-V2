@@ -2,7 +2,6 @@
 
 import { useState } from "react"
 import { useRouter } from "next/navigation"
-import axios from "axios"
 import { CheckCircle, XCircle } from "lucide-react"
 import toast from "react-hot-toast"
 
@@ -19,8 +18,8 @@ interface ChapterProgressButtonProps {
 }
 
 export const ChapterProgressButton = ({
-  chapterId,
-  topicId,
+  // chapterId,
+  // topicId,
   courseId,
   isCompleted,
   nextTopicId,

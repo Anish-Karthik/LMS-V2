@@ -1,7 +1,5 @@
 "use server"
 
-import { Chapter } from "@prisma/client"
-
 import { db } from "../db"
 
 export const createChapter = async (batchId: string, title: string) => {

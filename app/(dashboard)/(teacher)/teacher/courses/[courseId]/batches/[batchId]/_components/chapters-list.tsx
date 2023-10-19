@@ -1,7 +1,6 @@
 "use client"
 
 import { useEffect, useState } from "react"
-import Link from "next/link"
 import { usePathname, useRouter } from "next/navigation"
 import {
   DragDropContext,
@@ -12,7 +11,7 @@ import {
 import { zodResolver } from "@hookform/resolvers/zod"
 import { ArrowDropDownCircle } from "@mui/icons-material"
 import { Chapter, Topic } from "@prisma/client"
-import { GripVertical, Loader2, Pencil, PlusCircle } from "lucide-react"
+import { GripVertical, Pencil, PlusCircle } from "lucide-react"
 import { useForm } from "react-hook-form"
 import { toast } from "react-hot-toast"
 import * as z from "zod"

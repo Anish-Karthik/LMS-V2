@@ -4,7 +4,6 @@ import { useState } from "react"
 import { useRouter } from "next/navigation"
 import { zodResolver } from "@hookform/resolvers/zod"
 import { Topic } from "@prisma/client"
-import axios from "axios"
 import { Pencil } from "lucide-react"
 import { useForm } from "react-hook-form"
 import toast from "react-hot-toast"
@@ -19,10 +18,7 @@ import {
   FormDescription,
   FormField,
   FormItem,
-  FormMessage,
 } from "@/components/ui/form"
-import { Editor } from "@/components/editor"
-import { Preview } from "@/components/preview"
 
 interface TopicAccessFormProps {
   initialData: Topic

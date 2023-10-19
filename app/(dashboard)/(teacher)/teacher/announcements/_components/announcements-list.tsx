@@ -2,20 +2,11 @@
 
 import { useEffect, useState } from "react"
 import Link from "next/link"
-import { useRouter } from "next/navigation"
-import {
-  DragDropContext,
-  Draggable,
-  DropResult,
-  Droppable,
-} from "@hello-pangea/dnd"
-import { Announcement, Attachment, Batch, Chapter } from "@prisma/client"
-import { DeleteIcon, GripVertical, Pencil, TrashIcon } from "lucide-react"
+import { Announcement, Attachment } from "@prisma/client"
+import { Pencil, TrashIcon } from "lucide-react"
 
 import { deleteAnnouncement } from "@/lib/actions/announcement.action"
-import { deleteBatch } from "@/lib/actions/batch.action"
 import { cn } from "@/lib/utils"
-import { Badge } from "@/components/ui/badge"
 import { Button } from "@/components/ui/button"
 
 interface AnnouncementsListProps {
@@ -25,12 +16,6 @@ interface AnnouncementsListProps {
 export const AnnouncementsList = ({ items }: AnnouncementsListProps) => {
   const [isMounted, setIsMounted] = useState(false)
   const [batches, setBatches] = useState(items)
-  const router = useRouter()
-
-  const onEdit = (id: string) => {
-    console.log(id)
-    // router.push(`/teacher/announcements/${id}/edit`)
-  }
 
   useEffect(() => {
     setIsMounted(true)
@@ -54,7 +39,9 @@ export const AnnouncementsList = ({ items }: AnnouncementsListProps) => {
           )}
         >
           <div className="max-xs:max-w-[160px] sm:max-w-[60vw]">
-            <p className="overflow-hidden overflow-ellipsis pl-2">{announcement.title}</p>
+            <p className="overflow-hidden text-ellipsis pl-2">
+              {announcement.title}
+            </p>
           </div>
 
           <div className="flex items-center justify-normal">

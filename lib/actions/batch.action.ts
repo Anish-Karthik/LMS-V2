@@ -1,8 +1,5 @@
 "use server"
 
-import { Batch, Purchase } from "@prisma/client"
-import { string } from "zod"
-
 import { db } from "../db"
 import { addBatchToCourse, getCourseById } from "./course.actions"
 

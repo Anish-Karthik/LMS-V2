@@ -7,7 +7,6 @@ import { getBatchById, swapUserBatch } from "@/lib/actions/batch.action"
 import { getChaptersByBatchId } from "@/lib/actions/chapter.action"
 import { getDefaultBatch } from "@/lib/actions/course.actions"
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
-import UserCard from "@/components/card/user-card"
 import { IconBadge } from "@/components/icon-badge"
 import CurrentPathNavigator from "@/app/(dashboard)/(teacher)/_components/current-pathname"
 

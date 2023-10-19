@@ -6,10 +6,8 @@ import { getCourseById } from "@/lib/actions/course.actions"
 import {
   createStripeCustomer,
   getStripeCustomer,
-  isUserStripeCustomer,
 } from "@/lib/actions/stripe.action"
 import { isUserPurchasedCourse } from "@/lib/actions/user.actions"
-import { db } from "@/lib/db"
 import { stripe } from "@/lib/stripe"
 
 export async function POST(

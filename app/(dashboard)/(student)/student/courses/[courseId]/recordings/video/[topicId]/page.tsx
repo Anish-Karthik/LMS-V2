@@ -35,7 +35,7 @@ const TopicIdPage = async ({
     topic,
     chapter,
     batch,
-    muxData,
+    videoData,
     attachments,
     nextTopic,
     userProgressTopic,
@@ -89,7 +89,7 @@ const TopicIdPage = async ({
             title={topic.title}
             courseId={params.courseId}
             nextTopicId={nextTopic?.id}
-            playbackId={muxData?.playbackId!}
+            playbackId={videoData?.url!}
             isLocked={isLocked}
             completeOnEnd={completeOnEnd}
           />

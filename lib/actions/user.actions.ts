@@ -1,10 +1,8 @@
 "use server"
 
-import { Purchase, User } from "@prisma/client"
-
 import { db } from "../db"
-import { addStudentToBatch, createBatch } from "./batch.action"
-import { addBatchToCourse, getDefaultBatch } from "./course.actions"
+import { addStudentToBatch } from "./batch.action"
+import { getDefaultBatch } from "./course.actions"
 
 export const isTeacher = async (userId: string | null) => {
   try {

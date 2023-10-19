@@ -1,12 +1,11 @@
 "use client"
 
 import { useState } from "react"
-import { redirect, useRouter } from "next/navigation"
+import { useRouter } from "next/navigation"
 import { useAuth } from "@clerk/nextjs"
 import axios from "axios"
 import toast from "react-hot-toast"
 
-import { purchaseCourse } from "@/lib/actions/user.actions"
 import { formatPrice } from "@/lib/format"
 import { Button } from "@/components/ui/button"
 

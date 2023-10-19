@@ -3,7 +3,6 @@
 import { useState } from "react"
 import { useRouter } from "next/navigation"
 import { zodResolver } from "@hookform/resolvers/zod"
-import axios from "axios"
 import { Pencil } from "lucide-react"
 import { useForm } from "react-hook-form"
 import toast from "react-hot-toast"

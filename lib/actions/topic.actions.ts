@@ -1,16 +1,10 @@
 "use server"
 
-import Mux from "@mux/mux-node"
 import { Attachment, Topic } from "@prisma/client"
 
 import { db } from "../db"
 import { getBatchById } from "./batch.action"
 import { isUserPurchasedCourse } from "./user.actions"
-
-const { Video } = new Mux(
-  process.env.MUX_TOKEN_ID!,
-  process.env.MUX_TOKEN_SECRET!
-)
 
 export const createTopic = async (chapterId: string, title: string) => {
   try {
@@ -85,23 +79,22 @@ export const deleteTopic = async (topicId: string) => {
     }
 
     if (topic.videoUrl) {
-      const existingMuxData = await db.muxData.findFirst({
+      const existingVideo = await db.videoData.findFirst({
         where: {
           topicId: topicId,
         },
       })
 
-      if (existingMuxData) {
-        await Video.Assets.del(existingMuxData.assetId)
-        await db.muxData.delete({
+      if (existingVideo) {
+        db.videoData.delete({
           where: {
-            id: existingMuxData.id,
+            id: existingVideo.id,
           },
         })
       }
     }
 
-    const deletedTopic = await db.topic.delete({
+    await db.topic.delete({
       where: {
         id: topicId,
       },
@@ -150,32 +143,23 @@ export const updateTopic = async ({
     })
 
     if (videoUrl) {
-      const existingMuxData = await db.muxData.findFirst({
+      const existingVideo = await db.videoData.findFirst({
         where: {
           topicId: topicId,
         },
       })
 
-      if (existingMuxData) {
-        await Video.Assets.del(existingMuxData.assetId)
-        await db.muxData.delete({
+      if (existingVideo) {
+        db.videoData.delete({
           where: {
-            id: existingMuxData.id,
+            id: existingVideo.id,
           },
         })
       }
-
-      const asset = await Video.Assets.create({
-        input: videoUrl,
-        playback_policy: "public",
-        test: false,
-      })
-
-      await db.muxData.create({
+      await db.videoData.create({
         data: {
           topicId: topicId,
-          assetId: asset.id,
-          playbackId: asset.playback_ids?.[0]?.id,
+          url: videoUrl,
         },
       })
     }
@@ -303,11 +287,11 @@ export const getDetailedTopicClient = async ({
     }
     const batch = await getBatchById(currentChapter.batchId)
 
-    let muxData = null
+    let videoData = null
     let attachments: Attachment[] = []
     let nextTopic: Topic | null = null
 
-    muxData = await db.muxData.findUnique({
+    videoData = await db.videoData.findUnique({
       where: {
         topicId: topicId,
       },
@@ -363,7 +347,7 @@ export const getDetailedTopicClient = async ({
       chapter: currentChapter,
       topic,
       batch,
-      muxData,
+      videoData,
       attachments,
       nextTopic,
       nextTopicType: nextTopic?.type,
@@ -376,7 +360,7 @@ export const getDetailedTopicClient = async ({
       chapter: null,
       topic: null,
       batch: null,
-      muxData: null,
+      videoData: null,
       attachments: [],
       nextTopic: null,
       nextTopicType: null,

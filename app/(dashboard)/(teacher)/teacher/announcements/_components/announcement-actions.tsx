@@ -2,7 +2,6 @@
 
 import { useState } from "react"
 import { useRouter } from "next/navigation"
-import axios from "axios"
 import { Trash } from "lucide-react"
 import toast from "react-hot-toast"
 
@@ -11,11 +10,6 @@ import {
   publishAnnouncement,
   unpublishAnnouncement,
 } from "@/lib/actions/announcement.action"
-import {
-  deleteTopic,
-  publishTopic,
-  unpublishTopic,
-} from "@/lib/actions/topic.actions"
 import { Button } from "@/components/ui/button"
 import { ConfirmModal } from "@/components/modals/confirm-modal"
 

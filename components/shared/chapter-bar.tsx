@@ -1,38 +1,24 @@
 "use client"
 
-import * as React from "react"
 import Link from "next/link"
 import { useParams } from "next/navigation"
-import { ArrowDropDownCircle, Quiz } from "@mui/icons-material"
+import { ArrowDropDownCircle } from "@mui/icons-material"
 import { Chapter, Topic, UserProgressTopic } from "@prisma/client"
 import {
   CheckCircle,
-  ChevronsUpDown,
-  ExpandIcon,
   FileQuestion,
-  GrabIcon,
   HelpCircle,
   LucideIcon,
   Pen,
   PlayCircle,
-  Plus,
-  Video,
-  VideoIcon,
-  X,
 } from "lucide-react"
 
 import { cn } from "@/lib/utils"
 import { ScrollArea } from "@/components/ui/scroll-area"
 import { Separator } from "@/components/ui/separator"
-import { Tchapters } from "@/app/constants"
 
 import { CircleProgress } from "../chapter-progress-circle"
-import { CourseProgress } from "../course-progress"
 import { CollapsibleTopics } from "./collapsible-topics"
-
-const tags = Array.from({ length: 50 }).map(
-  (_, i, a) => `v1.2.123456789123456789-sssssss0-beta.${a.length - i}`
-)
 
 export default function ChapterBar({
   chapters,

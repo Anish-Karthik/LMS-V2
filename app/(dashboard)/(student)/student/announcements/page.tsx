@@ -1,22 +1,19 @@
-import Image from "next/image"
-import { redirect } from "next/navigation"
 import { currentUser } from "@clerk/nextjs"
 import {
-  CreateOutlined,
   NotificationAddOutlined,
   NotificationAddSharp,
   NotificationImportant,
 } from "@mui/icons-material"
+import { Course } from "@prisma/client"
 
 import { getAnnouncements } from "@/lib/actions/announcement.action"
+import { getAllBatches } from "@/lib/actions/batch.action"
+import { getCourses } from "@/lib/actions/course.actions"
 import { getUser } from "@/lib/actions/user.actions"
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
 import AnnouncementPage from "@/components/shared/announcement-page"
 
 import CurrentPathNavigator from "../../_components/current-pathname"
-import { getCourses } from "@/lib/actions/course.actions"
-import { getAllBatches, getBatches } from "@/lib/actions/batch.action"
-import { Course } from "@prisma/client"
 
 const page = async () => {
   const announcements = await getAnnouncements()
@@ -27,7 +24,11 @@ const page = async () => {
     (a) => a.courseId === null && a.batchId === null && a.isPublished
   )
   const batchAnnouncements = announcements.filter(
-    (a) => a.courseId !== null && a.batchId !== null && userInfo?.purchases.map((p) => p.batchId === a.batchId)  && a.isPublished
+    (a) =>
+      a.courseId !== null &&
+      a.batchId !== null &&
+      userInfo?.purchases.map((p) => p.batchId === a.batchId) &&
+      a.isPublished
   )
   const courseAnnouncements = announcements.filter(
     (a) => a.courseId !== null && a.batchId === null && a.isPublished
@@ -52,8 +53,8 @@ const page = async () => {
       data: courseAnnouncements,
     },
   ]
-  const courses = await getCourses();
-  const batches = await getAllBatches();
+  const courses = await getCourses()
+  const batches = await getAllBatches()
 
   return (
     <div>

@@ -1,19 +1,11 @@
-import { type } from "os"
-import { Approval } from "@mui/icons-material"
 import {
   Book,
-  Code2Icon,
-  CodeIcon,
   HomeIcon,
-  ImageIcon,
   InfoIcon,
-  LayoutDashboardIcon,
   MessageSquareIcon,
   MusicIcon,
   Newspaper,
   Pen,
-  PencilIcon,
-  PlusIcon,
   SettingsIcon,
   Speaker,
   User,

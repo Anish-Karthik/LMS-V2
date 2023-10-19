@@ -2,13 +2,11 @@
 
 import { useState } from "react"
 import { useRouter } from "next/navigation"
-import MuxPlayer from "@mux/mux-player-react"
-import axios from "axios"
 import { Loader2, Lock } from "lucide-react"
 import { toast } from "react-hot-toast"
+import ReactPlayer from "react-player"
 
 import { updateUserProgressTopic } from "@/lib/actions/topic.actions"
-import { cn } from "@/lib/utils"
 import { useConfettiStore } from "@/hooks/use-confetti-store"
 
 interface VideoPlayerProps {
@@ -41,11 +39,6 @@ export const VideoPlayer = ({
   const onEnd = async () => {
     try {
       if (completeOnEnd) {
-        // await axios.put(`/api/courses/${courseId}/chapters/${chapterId}/progress`, {
-        //   isCompleted: true,
-        // });
-
-        // write server actions
         await updateUserProgressTopic(userId, topicId, true)
 
         if (!nextTopicId) {
@@ -80,13 +73,13 @@ export const VideoPlayer = ({
         </div>
       )}
       {!isLocked && (
-        <MuxPlayer
-          title={title}
-          className={cn(!isReady && "hidden")}
-          onCanPlay={() => setIsReady(true)}
+        <ReactPlayer
+          url={playbackId}
           onEnded={onEnd}
-          autoPlay
-          playbackId={playbackId}
+          width="100%"
+          height="100%"
+          onReady={() => setIsReady(true)}
+          controls
         />
       )}
     </div>
