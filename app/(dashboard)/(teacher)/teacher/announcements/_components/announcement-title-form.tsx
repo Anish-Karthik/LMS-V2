@@ -11,7 +11,6 @@ import toast from "react-hot-toast"
 import * as z from "zod"
 
 import { updateAnnouncement } from "@/lib/actions/announcement.action"
-import { updateTopic } from "@/lib/actions/topic.actions"
 import { Button } from "@/components/ui/button"
 import {
   Form,
@@ -51,7 +50,7 @@ export const AnnouncementTitleForm = ({
   const onSubmit = async (values: z.infer<typeof formSchema>) => {
     try {
       await updateAnnouncement({ id: initialData.id, title: values.title })
-      toast.success("Topic updated")
+      toast.success("Announcement updated")
       toggleEdit()
       router.refresh()
     } catch {
@@ -62,7 +61,7 @@ export const AnnouncementTitleForm = ({
   return (
     <div className="mt-6 rounded-md border bg-secondary p-4">
       <div className="flex items-center justify-between font-medium">
-        Topic title
+        Announcement title
         <Button onClick={toggleEdit} variant="ghost">
           {isEditing ? (
             <>Cancel</>

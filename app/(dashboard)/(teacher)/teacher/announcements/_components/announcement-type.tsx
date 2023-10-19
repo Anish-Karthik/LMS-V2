@@ -2,14 +2,17 @@
 
 import { useEffect, useState } from "react"
 import { usePathname, useRouter, useSearchParams } from "next/navigation"
-import { Search } from "lucide-react"
+import { Pencil, Search } from "lucide-react"
 import qs from "query-string"
 
 import "@/components/ui/checkbox"
-import { Batch, Course } from "@prisma/client"
+import { Announcement, Batch, Course } from "@prisma/client"
 import { toast } from "react-hot-toast"
 
+import { updateAnnouncement } from "@/lib/actions/announcement.action"
+import { cn } from "@/lib/utils"
 import { useDebounce } from "@/hooks/use-debounce"
+import { Button } from "@/components/ui/button"
 import {
   Select,
   SelectContent,
@@ -18,17 +21,45 @@ import {
   SelectValue,
 } from "@/components/ui/select"
 
+const announcementTypes = [
+  {
+    id: "general",
+    name: "General",
+  },
+  {
+    id: "course",
+    name: "Course",
+  },
+  {
+    id: "batch",
+    name: "Batch",
+  },
+]
+export type AnnouncementType = "general" | "course" | "batch"
+export function getCurrentAnnouncementType(
+  announcement: Announcement
+): AnnouncementType {
+  if (announcement.batchId) return "batch"
+  if (announcement.courseId) return "course"
+  return "general"
+}
+
 const AnnouncementType = ({
-  type,
+  announcement,
   courses,
   batches,
 }: {
-  type: string
+  announcement: Announcement
   courses: Course[]
   batches: Batch[]
 }) => {
-  const [value, setValue] = useState(type || "")
-  const debouncedValue = useDebounce(value)
+  const [value, setValue] = useState<string>(
+    getCurrentAnnouncementType(announcement)
+  )
+  const [batch, setBatch] = useState(announcement.batchId || "")
+  const [course, setCourse] = useState(announcement.courseId || "")
+  const [isEditing, setIsEditing] = useState(false)
+  const [isSubmitting, setIsSubmitting] = useState(false)
 
   const searchParams = useSearchParams()
   const router = useRouter()
@@ -39,128 +70,142 @@ const AnnouncementType = ({
       {
         url: pathname,
         query: {
-          type: debouncedValue,
-          courseId: searchParams.get("courseId"),
-          batchId: searchParams.get("batchId"),
+          type: value,
+          courseId: ["course", "batch"].includes(value)
+            ? course || searchParams.get("courseId")
+            : "",
+          batchId:
+            value === "batch" ? batch || searchParams.get("batchId") : "",
         },
       },
       { skipEmptyString: true, skipNull: true }
     )
 
     router.push(url)
-  }, [debouncedValue, router, pathname, type])
+  }, [value, router, pathname, searchParams, course, batch])
 
-  const handleChange = (val: string) => {
-    setValue(val)
-    toast.success(`Filtering by ${value}`)
+  const toggleEdit = () => setIsEditing((current) => !current)
+  const onSubmit = async () => {
+    setIsSubmitting(true)
+    try {
+      await updateAnnouncement({
+        id: announcement.id,
+        courseId: course,
+        batchId: batch,
+        type: value,
+      })
+      toast.success("Announcement type updated")
+      toggleEdit()
+      router.refresh()
+    } catch {
+      toast.error("Something went wrong")
+    } finally {
+      setIsSubmitting(false)
+    }
   }
+
   return (
-    <div className="mt-5 flex w-full flex-wrap justify-between gap-2 md:flex-nowrap">
-      <Select onValueChange={handleChange} defaultValue={"general"}>
-        <SelectTrigger className="">
-          <SelectValue placeholder="Announcement Type" className="w-full " />
-        </SelectTrigger>
-        <SelectContent className="w-full ">
-          <SelectItem value="general">General</SelectItem>
-          <SelectItem value="course">Course</SelectItem>
-          <SelectItem value="batch">Batch</SelectItem>
-        </SelectContent>
-      </Select>
-      {(value === "course" || value === "batch") && (
-        <CourseCustomSelect items={courses} type={value} />
+    <div className="mt-5 flex flex-col gap-2 rounded-md border bg-secondary p-5">
+      <div className="-mt-3 flex items-center justify-between font-medium">
+        Announcement type
+        <Button onClick={toggleEdit} variant="ghost">
+          {isEditing ? (
+            <>Cancel</>
+          ) : (
+            <>
+              <Pencil className="mr-2 h-4 w-4" />
+              Edit type
+            </>
+          )}
+        </Button>
+      </div>
+      <div
+        className={cn(
+          "flex w-full flex-wrap gap-2 xs:flex-nowrap",
+          isEditing ? "justify-between" : "justify-start pl-2"
+        )}
+      >
+        {isEditing ? (
+          <CustomSelectItems
+            setValue={setValue}
+            value={value}
+            items={announcementTypes}
+            disabled={isSubmitting}
+          />
+        ) : (
+          <span className="md:text-md rounded-md bg-primary-foreground p-2 text-sm font-medium max-xs:min-w-full">
+            {value}
+          </span>
+        )}
+        {(value === "course" || value === "batch") &&
+          (isEditing ? (
+            <CustomSelectItems
+              setValue={setCourse}
+              value={course}
+              items={courses}
+              disabled={isSubmitting}
+            />
+          ) : (
+            <span className="md:text-md rounded-md bg-primary-foreground p-2 text-sm font-medium max-xs:min-w-full">
+              {courses.find((c) => c.id === course)?.title}
+            </span>
+          ))}
+        {value === "batch" &&
+          (isEditing ? (
+            <CustomSelectItems
+              setValue={setBatch}
+              value={batch}
+              items={batches}
+              disabled={isSubmitting}
+            />
+          ) : (
+            <span className="md:text-md rounded-md bg-primary-foreground p-2 text-sm font-medium max-xs:min-w-full">
+              {batches.find((b) => b.id === batch)?.name}
+            </span>
+          ))}
+      </div>
+      {isEditing && (
+        <div className="flex items-center gap-x-2">
+          <Button disabled={isSubmitting} onClick={onSubmit}>
+            <span className="md:text-md text-sm font-medium">Save</span>
+          </Button>
+        </div>
       )}
-      {value === "batch" && <BatchCustomSelect items={batches} type={value} />}
     </div>
   )
 }
 
 export default AnnouncementType
 
-function CourseCustomSelect({
+function CustomSelectItems({
+  setValue,
+  value,
   items,
-  type,
+  disabled,
 }: {
-  type: string
-  items: Course[]
+  setValue: (val: string) => void
+  value: string
+  items: any[]
+  disabled?: boolean
 }) {
-  const [value, setValue] = useState(items[0].id)
-  const debouncedValue = useDebounce(value)
-  const searchParams = useSearchParams()
-  const router = useRouter()
-  const pathname = usePathname()
-
-  useEffect(() => {
-    const url = qs.stringifyUrl(
-      {
-        url: pathname,
-        query: {
-          type: type,
-          courseId: debouncedValue,
-          batchId: type === "batch" && searchParams.get("batchId"),
-        },
-      },
-      { skipEmptyString: true, skipNull: true }
-    )
-
-    router.push(url)
-  }, [debouncedValue, router, pathname, type, searchParams])
-
   const handleChange = (val: string) => {
     setValue(val)
     toast.success(`Filtering by ${value}`)
   }
+
   return (
-    <Select onValueChange={handleChange} defaultValue={value}>
+    <Select
+      onValueChange={handleChange}
+      defaultValue={value}
+      disabled={disabled}
+    >
       <SelectTrigger className="">
         <SelectValue placeholder="Announcement Type" className="w-full " />
       </SelectTrigger>
       <SelectContent className="w-full ">
         {items.map((item) => (
           <SelectItem value={item.id.toString()}>
-            {item.title.toString() as string}
-          </SelectItem>
-        ))}
-      </SelectContent>
-    </Select>
-  )
-}
-
-function BatchCustomSelect({ items, type }: { type: string; items: Batch[] }) {
-  const [value, setValue] = useState(items[0].id)
-  const debouncedValue = useDebounce(value)
-  const searchParams = useSearchParams()
-  const router = useRouter()
-  const pathname = usePathname()
-
-  useEffect(() => {
-    const url = qs.stringifyUrl(
-      {
-        url: pathname,
-        query: {
-          type: type,
-          batchId: debouncedValue,
-          courseId: type === "batch" && searchParams.get("courseId"),
-        },
-      },
-      { skipEmptyString: true, skipNull: true }
-    )
-    console.log(url)
-    router.push(url)
-  }, [value, debouncedValue, router, pathname, type])
-
-  const handleChange = (val: string) => {
-    setValue(val)
-    toast.success(`Filtering by ${value}`)
-  }
-  return (
-    <Select onValueChange={handleChange} defaultValue={value}>
-      <SelectTrigger className="">
-        <SelectValue placeholder="Announcement Type" className="w-full " />
-      </SelectTrigger>
-      <SelectContent className="w-full ">
-        {items.map((item) => (
-          <SelectItem value={item.id.toString()}>
-            {item.name.toString() as string}
+            {item?.title?.toString() || item.name.toString()}
           </SelectItem>
         ))}
       </SelectContent>

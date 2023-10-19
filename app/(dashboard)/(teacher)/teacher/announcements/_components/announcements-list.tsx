@@ -43,38 +43,41 @@ export const AnnouncementsList = ({ items }: AnnouncementsListProps) => {
   if (!isMounted) {
     return null
   }
-  console.log(batches)
 
   return (
     <div>
       {batches.map((announcement, index) => (
         <div
           className={cn(
-            "mb-4 flex items-center gap-x-2 rounded-md border border-slate-200 bg-slate-200 text-sm text-slate-700",
+            "mb-4 flex items-center justify-between gap-x-2 rounded-md border border-slate-200 bg-slate-200 text-sm text-slate-700",
             announcement && "border-sky-200 bg-sky-100 text-sky-700"
           )}
         >
-          <div
-            className={cn(
-              "rounded-l-md border-r border-r-slate-200 px-2 py-3 transition hover:bg-slate-300",
-              announcement && "border-r-sky-200 hover:bg-sky-200"
-            )}
-          >
-            <GripVertical className="h-5 w-5" />
+          <div className="max-xs:max-w-[160px] sm:max-w-[60vw]">
+            <p className="overflow-hidden overflow-ellipsis pl-2">{announcement.title}</p>
           </div>
-          {announcement.title}
-          <div className="ml-auto flex items-center gap-x-2 pr-2"></div>
-          {announcement.title !== "unassigned" && (
-            <div>
+
+          <div className="flex items-center justify-normal">
+            <div className="ml-auto flex items-center gap-2 pr-2 max-xs:flex-col max-xs:py-1">
+              <span className="rounded-sm bg-slate-500 p-1 text-xs text-primary">
+                {announcement.courseId && announcement.batchId
+                  ? "Batch"
+                  : announcement.courseId
+                  ? "Course"
+                  : "General"}
+              </span>
+              {announcement.isPublished ? (
+                <span className="text-xs text-green-500">Published</span>
+              ) : (
+                <span className="text-xs text-slate-500">Unpublished</span>
+              )}
+            </div>
+            <div className="ml-auto flex items-center gap-2 pr-2 max-xs:flex-col max-xs:py-1">
               <Link href={`/teacher/announcements/${announcement.id}`}>
                 <Button variant={"ghost"}>
                   <Pencil className="h-5 w-5" />
                 </Button>
               </Link>
-            </div>
-          )}
-          {announcement.title !== "unassigned" && (
-            <div>
               <Button
                 variant={"destructive"}
                 onClick={async () => {
@@ -84,7 +87,7 @@ export const AnnouncementsList = ({ items }: AnnouncementsListProps) => {
                 <TrashIcon className="h-5 w-5" />
               </Button>
             </div>
-          )}
+          </div>
         </div>
       ))}
     </div>

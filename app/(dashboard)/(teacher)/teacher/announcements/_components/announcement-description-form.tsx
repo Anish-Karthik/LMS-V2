@@ -3,7 +3,7 @@
 import { useState } from "react"
 import { useRouter } from "next/navigation"
 import { zodResolver } from "@hookform/resolvers/zod"
-import { Announcement, Attachment, Topic } from "@prisma/client"
+import { Announcement, Attachment } from "@prisma/client"
 import axios from "axios"
 import { Pencil } from "lucide-react"
 import { useForm } from "react-hook-form"
@@ -55,7 +55,7 @@ export const AnnouncementDescriptionForm = ({
         id: initialData?.id,
         description: values.description,
       })
-      toast.success("Topic updated")
+      toast.success("Announcement updated")
       toggleEdit()
       router.refresh()
     } catch {
@@ -66,7 +66,7 @@ export const AnnouncementDescriptionForm = ({
   return (
     <div className="mt-6 rounded-md border bg-secondary p-4">
       <div className="flex items-center justify-between font-medium">
-        Topic description
+        Announcement description
         <Button onClick={toggleEdit} variant="ghost">
           {isEditing ? (
             <>Cancel</>

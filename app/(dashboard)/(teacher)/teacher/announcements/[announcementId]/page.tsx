@@ -1,7 +1,7 @@
 import React from "react"
 import Link from "next/link"
 import { Course } from "@prisma/client"
-import { ArrowLeft, FileIcon, LayoutDashboard } from "lucide-react"
+import { AlertCircle, ArrowLeft, FileIcon, LayoutDashboard } from "lucide-react"
 
 import { getAnnouncementByid } from "@/lib/actions/announcement.action"
 import { getBatches } from "@/lib/actions/batch.action"
@@ -10,11 +10,11 @@ import { Banner } from "@/components/banner"
 import { IconBadge } from "@/components/icon-badge"
 
 import CurrentPathNavigator from "../../../_components/current-pathname"
+import { AnnouncementActions } from "../_components/announcement-actions"
+import { AnnouncementDescriptionForm } from "../_components/announcement-description-form"
+import { AnnouncementTitleForm } from "../_components/announcement-title-form"
 import AnnouncementType from "../_components/announcement-type"
 import { AttachmentForm } from "../_components/attachment-form"
-import { AnnouncementActions } from "../_components/topic-actions"
-import { AnnouncementDescriptionForm } from "../_components/topic-description-form"
-import { AnnouncementTitleForm } from "../_components/topic-title-form"
 
 const CreateAnnoucement = async ({
   params,
@@ -28,7 +28,11 @@ const CreateAnnoucement = async ({
   const course = courses![0]
   const batches = await getBatches(searchParams.courseId || course.id)
 
-  const requiredFields = [announcement.title, announcement.description]
+  const requiredFields = [
+    announcement.title,
+    announcement.description,
+    announcement.type,
+  ]
 
   const totalFields = requiredFields.length
   const completedFields = requiredFields.filter(Boolean).length
@@ -56,7 +60,7 @@ const CreateAnnoucement = async ({
               <ArrowLeft className="mr-2 h-4 w-4" />
               Back to Annoucements
             </Link>
-            <div className="flex w-full items-center justify-between">
+            <div className="flex w-full items-center justify-between gap-2 max-xs:flex-wrap">
               <div className="flex flex-col gap-y-2">
                 <h1 className="text-2xl font-medium">announcement Creation</h1>
                 <span className="text-sm text-slate-700">
@@ -87,25 +91,24 @@ const CreateAnnoucement = async ({
           <div className="space-y-4">
             <div>
               <div className="flex items-center gap-x-2">
+                <IconBadge icon={AlertCircle} />
+                <h2 className="text-xl">Set Announcement Type</h2>
+              </div>
+              <AnnouncementType
+                announcement={announcement}
+                batches={batches}
+                courses={courses as Course[]}
+              />
+            </div>
+
+            <div>
+              <div className="flex items-center gap-x-2">
                 <IconBadge icon={FileIcon} />
                 <h2 className="text-xl">
                   Resources & Attachments {"(Optional)"}
                 </h2>
               </div>
               <AttachmentForm initialData={announcement} />
-            </div>
-            <div>
-              <div className="flex items-center gap-x-2">
-                <IconBadge icon={FileIcon} />
-                <h2 className="text-xl">
-                  Select Announcement Type {"(Republish to Make changes)"}
-                </h2>
-              </div>
-              <AnnouncementType
-                type={searchParams.type}
-                batches={batches}
-                courses={courses as Course[]}
-              />
             </div>
           </div>
         </div>

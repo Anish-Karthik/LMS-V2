@@ -149,6 +149,7 @@ model Announcement {
   title       String
   description String?
   isPublished Boolean @default(false)
+  type String @default("general")
 
   attachments Attachment[]
 

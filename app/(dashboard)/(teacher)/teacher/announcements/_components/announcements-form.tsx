@@ -69,7 +69,6 @@ export const AnnouncementsForm = ({ initialData }: AnnouncementsFormProps) => {
       toast.error("Something went wrong", error.message)
     }
   }
-  console.log(initialData)
 
   return (
     <div className="relative mt-6 rounded-md border bg-secondary p-4">

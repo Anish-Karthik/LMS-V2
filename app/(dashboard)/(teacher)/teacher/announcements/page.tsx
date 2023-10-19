@@ -1,5 +1,6 @@
 import Image from "next/image"
 import { redirect } from "next/navigation"
+import { currentUser } from "@clerk/nextjs"
 import {
   CreateOutlined,
   NotificationAddOutlined,
@@ -8,7 +9,9 @@ import {
 } from "@mui/icons-material"
 
 import { getAnnouncements } from "@/lib/actions/announcement.action"
+import { getUser } from "@/lib/actions/user.actions"
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
+import AnnouncementPage from "@/components/shared/announcement-page"
 
 import CurrentPathNavigator from "../../_components/current-pathname"
 import { AnnouncementsForm } from "./_components/announcements-form"
@@ -16,11 +19,13 @@ import { AnnouncementsList } from "./_components/announcements-list"
 
 const page = async () => {
   const announcements = await getAnnouncements()
+  const user = await currentUser()
+  const userInfo = await getUser(user!.id)
   const generalAnnouncements = announcements.filter(
     (a) => a.courseId === null && a.batchId === null
   )
   const batchAnnouncements = announcements.filter(
-    (a) => a.courseId === null && a.batchId !== null
+    (a) => a.courseId !== null && a.batchId !== null
   )
   const courseAnnouncements = announcements.filter(
     (a) => a.courseId !== null && a.batchId === null
@@ -76,7 +81,11 @@ const page = async () => {
         {announcementTabs.map((tab) => (
           <TabsContent value={tab.value} className="w-full">
             <CurrentPathNavigator />
-            <AnnouncementsList items={tab.data} />
+            <AnnouncementPage
+              announcements={tab.data}
+              viewerRole={userInfo!.role}
+            />
+            {/* <AnnouncementsList items={tab.data} /> */}
           </TabsContent>
         ))}
       </Tabs>
