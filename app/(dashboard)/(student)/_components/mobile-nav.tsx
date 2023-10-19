@@ -8,7 +8,7 @@ import { sidebarLinksStudentMobile } from "@/app/constants"
 function MobileNav() {
   const pathname = usePathname()
   return (
-    <section className="bottombar">
+    <section className="bottombar sm:hidden">
       <div className="bottombar_container">
         {sidebarLinksStudentMobile.map((link, ind) => {
           const isActive = pathname.includes(link.route.toLowerCase())

@@ -34,7 +34,7 @@ export default function ChapterBar({
   const params = useParams()
 
   return (
-    <ScrollArea className="h-[655px] w-64 rounded-md border">
+    <ScrollArea className="hidden w-64 rounded-md border md:block">
       <div className=" mb-2 border-b p-2 font-bold">
         <h2>Chapters</h2>
       </div>
@@ -62,15 +62,19 @@ export default function ChapterBar({
                   className="flex cursor-pointer items-center justify-between px-3"
                 >
                   <div className="flex items-center justify-start gap-1">
-                    <CircleProgress
-                      value={percentage}
-                      variant={
-                        completedPublishedTopics === totalPublishedTopics
-                          ? "success"
-                          : "default"
-                      }
-                      size="sm"
-                    />
+                    {completedPublishedTopics === totalPublishedTopics ? (
+                      <CheckCircle className="text-green-400" />
+                    ) : (
+                      <CircleProgress
+                        value={percentage}
+                        variant={
+                          completedPublishedTopics === totalPublishedTopics
+                            ? "success"
+                            : "default"
+                        }
+                        size="sm"
+                      />
+                    )}
                     <p className="text-sm">{chapter.title}</p>
                   </div>
                   <ArrowDropDownCircle className="cursor-pointer text-sky-700 transition hover:opacity-75" />
@@ -93,8 +97,11 @@ export default function ChapterBar({
                     : notCompleteIcon.get(topic.type)!
                   return (
                     <Link
-                      href={`/student/courses/${courseId}/recordings/${topic.type}/${topic.id}`}
-                      className="flex items-center justify-start gap-2 pl-5 hover:bg-secondary"
+                      href={`/student/courses/${courseId}/${topic.type}/${topic.id}`}
+                      className={cn(
+                        "flex items-center justify-start gap-2 pl-5 hover:bg-secondary",
+                        params.topicId === topic.id && "bg-secondary"
+                      )}
                     >
                       <Icon
                         size={22}

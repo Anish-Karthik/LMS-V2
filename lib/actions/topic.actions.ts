@@ -300,6 +300,7 @@ export const getDetailedTopicClient = async ({
     nextTopic = await db.topic.findFirst({
       where: {
         chapterId: topic.chapterId,
+        isPublished: true,
         position: {
           gt: topic?.position,
         },
@@ -330,7 +331,15 @@ export const getDetailedTopicClient = async ({
         },
       })
       if (nextChapter) {
-        nextTopic = nextChapter.topics[0]
+        nextTopic = await db.topic.findFirst({
+          where: {
+            chapterId: nextChapter.id,
+            isPublished: true,
+          },
+          orderBy: {
+            position: "asc",
+          },
+        })
       }
     }
 

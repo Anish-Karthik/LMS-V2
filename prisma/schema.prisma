@@ -151,8 +151,6 @@ model VideoData {
   @@index([id, topicId])
 }
 
-
-
 model Announcement {
   id          String  @id @default(auto()) @map("_id") @db.ObjectId
   title       String

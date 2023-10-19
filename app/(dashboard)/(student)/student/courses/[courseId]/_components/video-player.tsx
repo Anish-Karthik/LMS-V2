@@ -1,6 +1,6 @@
 "use client"
 
-import { useState } from "react"
+import { useEffect, useState } from "react"
 import { useRouter } from "next/navigation"
 import { Loader2, Lock } from "lucide-react"
 import { toast } from "react-hot-toast"
@@ -16,6 +16,7 @@ interface VideoPlayerProps {
   topicId: string
   nextTopicId?: string
   nextTopicType?: string
+  isCompleted?: boolean
   isLocked: boolean
   completeOnEnd: boolean
   title: string
@@ -29,28 +30,36 @@ export const VideoPlayer = ({
   nextTopicId,
   nextTopicType,
   isLocked = false,
+  isCompleted = false,
   completeOnEnd,
   title,
 }: VideoPlayerProps) => {
   const [isReady, setIsReady] = useState(false)
   const router = useRouter()
   const confetti = useConfettiStore()
+  const [isMounted, setIsMounted] = useState(false)
+  useEffect(() => {
+    setIsMounted(true)
+  }, [])
+  if (!isMounted) return null
 
   const onEnd = async () => {
     try {
       if (completeOnEnd) {
-        await updateUserProgressTopic(userId, topicId, true)
+        if (!isCompleted) await updateUserProgressTopic(userId, topicId, true)
 
         if (!nextTopicId) {
           confetti.onOpen()
         }
-
+        console.log("----------------------------")
+        console.log(topicId, nextTopicId, completeOnEnd, nextTopicType)
+        console.log("----------------------------")
         toast.success("Progress updated")
         router.refresh()
 
         if (nextTopicId && nextTopicType) {
           router.push(
-            `/courses/${courseId}/recordings/${nextTopicType}/${nextTopicId}`
+            `/student/courses/${courseId}/${nextTopicType}/${nextTopicId}`
           )
         }
       }

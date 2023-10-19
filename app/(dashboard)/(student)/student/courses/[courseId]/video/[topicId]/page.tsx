@@ -6,7 +6,6 @@ import { File } from "lucide-react"
 import { getDetailedTopicClient } from "@/lib/actions/topic.actions"
 import { getUser } from "@/lib/actions/user.actions"
 import { Separator } from "@/components/ui/separator"
-// import { gettopic } from "@/actions/get-topic";
 import { Banner } from "@/components/banner"
 import { Preview } from "@/components/preview"
 
@@ -45,7 +44,9 @@ const TopicIdPage = async ({
     topicId: params.topicId,
     courseId: params.courseId,
   })
-
+  console.log("*************************************")
+  console.log(nextTopic?.id, params.topicId, nextTopic?.type)
+  console.log("*************************************")
   if (!topic || !batch || !chapter) {
     return (
       <>
@@ -68,7 +69,7 @@ const TopicIdPage = async ({
   }
 
   const isLocked = false //!topic.isFree && !purchase;
-  const completeOnEnd = !!purchase && !userProgressTopic?.isCompleted
+  const completeOnEnd = !!purchase && !!userProgressTopic?.isCompleted
 
   return (
     <div>
@@ -89,8 +90,10 @@ const TopicIdPage = async ({
             title={topic.title}
             courseId={params.courseId}
             nextTopicId={nextTopic?.id}
+            nextTopicType={nextTopic?.type}
             playbackId={videoData?.url!}
             isLocked={isLocked}
+            isCompleted={!!userProgressTopic?.isCompleted}
             completeOnEnd={completeOnEnd}
           />
         </div>
@@ -99,10 +102,12 @@ const TopicIdPage = async ({
             <h2 className="mb-2 text-2xl font-semibold">{topic.title}</h2>
 
             <ChapterProgressButton
+              userId={userId}
               chapterId={chapter.id}
               topicId={params.topicId}
               courseId={params.courseId}
               nextTopicId={nextTopic?.id}
+              nextTopicType={nextTopic?.type}
               isCompleted={!!userProgressTopic?.isCompleted}
             />
           </div>

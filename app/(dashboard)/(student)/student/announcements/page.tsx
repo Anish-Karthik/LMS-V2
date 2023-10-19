@@ -27,7 +27,7 @@ const page = async () => {
     (a) =>
       a.courseId !== null &&
       a.batchId !== null &&
-      userInfo?.purchases.map((p) => p.batchId === a.batchId) &&
+      userInfo!.purchases.find((p) => p.batchId === a.batchId) &&
       a.isPublished
   )
   const courseAnnouncements = announcements.filter(
