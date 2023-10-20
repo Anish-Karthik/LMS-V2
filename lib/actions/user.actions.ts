@@ -133,6 +133,7 @@ export const purchaseCourse = async (userId: string, courseId: string) => {
         courseId,
         userId,
         userObjId: user.id,
+        // TODO: Add amountPaid after discount
       },
     })
     let defaultBatch = await getDefaultBatch(courseId)

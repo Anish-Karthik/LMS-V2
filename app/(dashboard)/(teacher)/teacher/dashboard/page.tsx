@@ -13,13 +13,29 @@ import CurrentPathNavigator from "../../_components/current-pathname"
 import { CalendarDateRangePicker } from "./_components/date-range-picker"
 import { Overview } from "./_components/overview"
 import { RecentSales } from "./_components/recent-sales"
+import PromoPage from "./_components/promo-page"
+import { db } from "@/lib/db"
+import { currentUser } from "@clerk/nextjs"
+import { redirect } from "next/navigation"
 
 export const metadata: Metadata = {
   title: "Dashboard",
   description: "Example dashboard app built using the components.",
 }
 
-export default function DashboardPage() {
+export default async function DashboardPage() {
+  const promos = await db.promo.findMany({
+    where: {
+      type: "promo",
+    },
+  })
+  const user = await currentUser();
+  const userInfo = await db.user.findUnique({
+    where: {
+      userId: user?.id
+    }
+  })
+  if (!userInfo || !user) redirect('/sign-in')
   return (
     <>
       <CurrentPathNavigator />
@@ -156,13 +172,7 @@ export default function DashboardPage() {
             </CardContent>
           </Card>
           <Card className="col-span-3 max-w-[90vw] 2xs:max-w-[80vw]">
-            <CardHeader>
-              <CardTitle>Recent Sales</CardTitle>
-              <CardDescription>You made 265 sales this month.</CardDescription>
-            </CardHeader>
-            <CardContent>
-              <RecentSales />
-            </CardContent>
+            <PromoPage initialData={promos} userRole={userInfo.role} />
           </Card>
         </div>
         {/* </TabsContent>

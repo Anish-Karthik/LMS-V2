@@ -1,81 +1,28 @@
-import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
+"use client"
+import { Promo } from "@prisma/client";
+import { ScrollArea } from "@/components/ui/scroll-area";
+import { PromoCard } from "./promo-card";
 
-export function RecentSales() {
+export function RecentSales({
+  promos,
+  userRole,
+}: {
+  userRole: string;
+  promos: Promo[]
+}) {
   return (
-    <div className="space-y-8">
-      <div className="flex items-center">
-        <Avatar className="h-9 w-9">
-          <AvatarImage src="/avatars/01.png" alt="Avatar" />
-          <AvatarFallback>OM</AvatarFallback>
-        </Avatar>
-        <div className="ml-4 space-y-1">
-          <p className="text-sm font-medium leading-none">Olivia Martin</p>
-          <p className="text-xs text-muted-foreground ">
-            olivia.martin@email.com
-          </p>
-        </div>
-        <div className="sm:text-md ml-auto font-medium 2xs:hidden 2xs:text-xs sm:block sm:text-sm">
-          +$1,999.00
+    <ScrollArea>
+      <div className="lg:max-h-80">
+        <div className="flex flex-col items-center gap-2">
+          {promos.map((promo) => (
+            <PromoCard promo={promo} userRole={userRole} />
+          ))}
         </div>
       </div>
-      <div className="flex items-center">
-        <Avatar className="flex h-9 w-9 items-center justify-center space-y-0 border">
-          <AvatarImage src="/avatars/02.png" alt="Avatar" />
-          <AvatarFallback>JL</AvatarFallback>
-        </Avatar>
-        <div className="ml-4 space-y-1">
-          <p className="text-sm font-medium leading-none">Jackson Lee</p>
-          <p className="text-xs text-muted-foreground ">
-            jackson.lee@email.com
-          </p>
-        </div>
-        <div className="sm:text-md ml-auto font-medium 2xs:hidden 2xs:text-xs sm:block sm:text-sm">
-          +$39.00
-        </div>
-      </div>
-      <div className="flex items-center">
-        <Avatar className="h-9 w-9">
-          <AvatarImage src="/avatars/03.png" alt="Avatar" />
-          <AvatarFallback>IN</AvatarFallback>
-        </Avatar>
-        <div className="ml-4 space-y-1">
-          <p className="text-sm font-medium leading-none">Isabella Nguyen</p>
-          <p className="text-xs text-muted-foreground ">
-            isabella.nguyen@email.com
-          </p>
-        </div>
-        <div className="sm:text-md ml-auto font-medium 2xs:hidden 2xs:text-xs sm:block sm:text-sm">
-          +$299.00
-        </div>
-      </div>
-      <div className="flex items-center">
-        <Avatar className="h-9 w-9">
-          <AvatarImage src="/avatars/04.png" alt="Avatar" />
-          <AvatarFallback>WK</AvatarFallback>
-        </Avatar>
-        <div className="ml-4 space-y-1">
-          <p className="text-sm font-medium leading-none">William Kim</p>
-          <p className="text-xs text-muted-foreground ">will@email.com</p>
-        </div>
-        <div className="sm:text-md ml-auto font-medium 2xs:hidden 2xs:text-xs sm:block sm:text-sm">
-          +$99.00
-        </div>
-      </div>
-      <div className="flex items-center">
-        <Avatar className="h-9 w-9">
-          <AvatarImage src="/avatars/05.png" alt="Avatar" />
-          <AvatarFallback>SD</AvatarFallback>
-        </Avatar>
-        <div className="ml-4 space-y-1">
-          <p className="text-sm font-medium leading-none">Sofia Davis</p>
-          <p className="text-xs text-muted-foreground ">
-            sofia.davis@email.com
-          </p>
-        </div>
-        <div className="sm:text-md ml-auto font-medium 2xs:hidden 2xs:text-xs sm:block sm:text-sm">
-          +$39.00
-        </div>
-      </div>
-    </div>
+    </ScrollArea>
   )
 }
+
+
+
+

@@ -89,7 +89,7 @@ const AccountProfile = ({ user }: { user: User }) => {
       if (pathname === "/profile/edit") {
         router.back()
       } else {
-        router.push("/")
+        router.push("/purchase")
       }
       toast.success("Profile Updated Successfully")
     } catch (error: any) {

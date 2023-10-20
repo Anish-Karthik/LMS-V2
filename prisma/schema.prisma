@@ -7,28 +7,53 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
-model User {
-  id       String  @id @default(auto()) @map("_id") @db.ObjectId
-  phoneNo  String? @unique
-  userId   String  @unique
-  email    String? @unique
-  name     String
-  image    String?
-  role     String  @default("user") // student, admin, user, teacher
-  isBanned Boolean @default(false)
+model Promo {
+  id       String @id @default(auto()) @map("_id") @db.ObjectId()
+  code     String @unique
+  discount Float
+  count    Int    @default(0)
 
+  userObjId    String @db.ObjectId()
+  user         User   @relation(fields: [userObjId], references: [id])
+  type         String @default("promo")
+  amountToUser Float  @default(0)
+
+  expiresAt DateTime?
+  createdAt DateTime  @default(now())
+  updatedAt DateTime  @updatedAt
+
+  @@index([id, code, userObjId])
+}
+
+model User {
+  id        String    @id @default(auto()) @map("_id") @db.ObjectId
+  userId    String    @unique
+  phoneNo   String?   @unique
+  email     String?   @unique
+  username  String?   
+  name      String
+  image     String?
+  dob       DateTime?
+  onBoarded Boolean   @default(false)
+  role      String    @default("user") // student, admin, user, teacher
+  isBanned  Boolean   @default(false)
+
+  promos    Promo[]
   purchases Purchase[]
   teacher   Teacher?
   admin     Admin?
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
-  // @@index([userId])
+  @@index([userId, username])
+  @@index([userId, phoneNo])
+  @@index([userId, email])
 }
 
 model Purchase {
-  id     String @id @default(auto()) @map("_id") @db.ObjectId
-  userId String
+  id         String @id @default(auto()) @map("_id") @db.ObjectId
+  userId     String
+  // amountPaid Float
 
   courseId String @db.ObjectId
   course   Course @relation(fields: [courseId], references: [id], onDelete: Cascade)
@@ -148,6 +173,7 @@ model VideoData {
   url     String
   topic   Topic  @relation(fields: [topicId], references: [id])
   topicId String @unique @db.ObjectId
+
   @@index([id, topicId])
 }
 
