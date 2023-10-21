@@ -1,5 +1,6 @@
 import { NextResponse } from "next/server"
 import { currentUser } from "@clerk/nextjs"
+import { Promo } from "@prisma/client"
 import Stripe from "stripe"
 
 import { getCourseById } from "@/lib/actions/course.actions"
@@ -16,7 +17,11 @@ export async function POST(
 ) {
   try {
     const user = await currentUser()
-
+    const body = await req.json()
+    const { price, promo } = body
+    console.log("price", price)
+    console.log("promo", promo)
+    console.log("user", user)
     if (!user || !user.id || !user.emailAddresses?.[0]?.emailAddress) {
       return new NextResponse("Unauthorized", { status: 401 })
     }
@@ -42,7 +47,7 @@ export async function POST(
             name: course.title,
             description: course.description!,
           },
-          unit_amount: Math.round(course.price! * 100),
+          unit_amount: Math.round((price || course.price!) * 100),
         },
       },
     ]
@@ -63,10 +68,11 @@ export async function POST(
       line_items,
       mode: "payment",
       success_url: `${process.env.NEXT_PUBLIC_APP_URL}/student/announcements?success=1&courseId=${course.id}`,
-      cancel_url: `${process.env.NEXT_PUBLIC_APP_URL}/course-details/${course.id}/?canceled=1`,
+      cancel_url: `${process.env.NEXT_PUBLIC_APP_URL}/purchase/${course.id}/?canceled=1`,
       metadata: {
         courseId: course.id,
         userId: user.id,
+        promoCode: (promo as Promo)?.code,
       },
     })
 

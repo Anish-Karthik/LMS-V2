@@ -41,7 +41,7 @@ export const createUser = async ({
   phoneNo,
   name,
   image,
-  role = "student",
+  role = "user",
 }: {
   userId: string
   email: string
@@ -52,7 +52,8 @@ export const createUser = async ({
 }) => {
   try {
     if (!userId) throw new Error("Unauthorized user")
-    if (!["student", "teacher"].includes(role)) throw new Error("Invalid role")
+    if (["student", "teacher", "admin"].includes(role))
+      throw new Error("Invalid role")
     const user = await db.user.findFirst({
       where: {
         userId: userId,
@@ -67,6 +68,9 @@ export const createUser = async ({
         phoneNo,
         image,
         name,
+        isBanned: false,
+        referralBonus: 0,
+        referralCount: 0,
       },
     })
     return true
@@ -122,25 +126,35 @@ export const purchaseCourse = async (userId: string, courseId: string) => {
       courseId
     )
     const user = await getUser(userId)
+    console.log("user", user)
     if (!courseId || !userId || !user) throw new Error("Invalid data")
 
     const isPurchased = await isUserPurchasedCourse(userId, courseId)
 
     if (isPurchased) throw new Error("Already purchased")
-
     const purchase = await db.purchase.create({
       data: {
         courseId,
         userId,
         userObjId: user.id,
-        // TODO: Add amountPaid after discount
+      },
+    })
+    // FIXBUG: user role is not updated
+    await db.user.update({
+      where: {
+        userId,
+      },
+      data: {
+        role: "student",
       },
     })
     let defaultBatch = await getDefaultBatch(courseId)
+    console.log("defaultBatch", defaultBatch)
     await addStudentToBatch(defaultBatch.id, purchase.id)
     return purchase
   } catch (e: any) {
-    console.error("purchaseCourse", e)
+    console.log("purchaseCourse", e.message)
+    console.error("purchaseCourse", e.message)
     throw new Error(e.message || "Unauthorized user")
   }
 }

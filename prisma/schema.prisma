@@ -26,17 +26,18 @@ model Promo {
 }
 
 model User {
-  id        String    @id @default(auto()) @map("_id") @db.ObjectId
-  userId    String    @unique
-  phoneNo   String?   @unique
-  email     String?   @unique
-  username  String?   
-  name      String
-  image     String?
-  dob       DateTime?
-  onBoarded Boolean   @default(false)
-  role      String    @default("user") // student, admin, user, teacher
-  isBanned  Boolean   @default(false)
+  id            String    @id @default(auto()) @map("_id") @db.ObjectId
+  userId        String    @unique
+  phoneNo       String?   @unique
+  email         String?   @unique
+  username      String?
+  name          String
+  image         String?
+  dob           DateTime?
+  role          String    
+  isBanned      Boolean  
+  referralCount Int       
+  referralBonus Int       
 
   promos    Promo[]
   purchases Purchase[]
@@ -45,14 +46,15 @@ model User {
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
+
   @@index([userId, username])
   @@index([userId, phoneNo])
   @@index([userId, email])
 }
 
 model Purchase {
-  id         String @id @default(auto()) @map("_id") @db.ObjectId
-  userId     String
+  id     String @id @default(auto()) @map("_id") @db.ObjectId
+  userId String
   // amountPaid Float
 
   courseId String @db.ObjectId

@@ -3,6 +3,7 @@ import { redirect } from "next/navigation"
 import { NextResponse } from "next/server"
 import Stripe from "stripe"
 
+import { afterReferral } from "@/lib/actions/promo.action"
 import { purchaseCourse } from "@/lib/actions/user.actions"
 import { stripe } from "@/lib/stripe"
 
@@ -25,6 +26,7 @@ export async function POST(req: Request) {
   const session = event.data.object as Stripe.Checkout.Session
   const userId = session?.metadata?.userId
   const courseId = session?.metadata?.courseId
+  const promoCode = session?.metadata?.promoCode
 
   if (event.type === "checkout.session.completed") {
     if (!userId || !courseId) {
@@ -33,7 +35,13 @@ export async function POST(req: Request) {
       })
     }
     await purchaseCourse(userId, courseId)
-    redirect(`/student/courses/${courseId}/dashboard`)
+    console.log("purchaseCourse", userId, courseId)
+    if (promoCode) {
+      console.log("afterReferral from route", promoCode)
+      await afterReferral(promoCode)
+    }
+    console.log("******", promoCode)
+    redirect(`/student/courses/${courseId}`)
   } else {
     return new NextResponse(
       `Webhook Error: Unhandled event type ${event.type}`,

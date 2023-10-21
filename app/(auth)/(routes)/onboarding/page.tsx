@@ -2,14 +2,21 @@ import { redirect } from "next/navigation"
 import { currentUser } from "@clerk/nextjs"
 
 import { getUser } from "@/lib/actions/user.actions"
+import { db } from "@/lib/db"
 import AccountProfile from "@/components/form/AccountProfile"
 
 async function Page() {
   const user = await currentUser()
-  if (!user) return null // to avoid typescript warnings
-  // check if user has onboarded
+  if (!user) redirect("/sigin")
   const userInfo = await getUser(user.id)
-  if (userInfo) redirect("/course-details")
+  const courses = await db.course.findMany()
+  if (!courses) redirect("/create-course")
+  const course = courses[0]
+  if (userInfo && userInfo.role === "student")
+    redirect("/student/announcements")
+  if (userInfo && (userInfo.role === "teacher" || userInfo.role === "admin"))
+    redirect("/teacher/dashboard")
+  if (userInfo) redirect(`/purchase/${course.id}`)
 
   return (
     <main className="mx-auto flex max-w-3xl flex-col justify-start px-10 py-20">
@@ -19,7 +26,7 @@ async function Page() {
       </p>
 
       <section className="mt-9 bg-secondary p-10">
-        <AccountProfile user={user} />
+        <AccountProfile user={user} route={`/purchase/${course.id}`} />
       </section>
     </main>
   )

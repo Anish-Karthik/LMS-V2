@@ -1,5 +1,8 @@
 import { Metadata } from "next"
+import { redirect } from "next/navigation"
+import { currentUser } from "@clerk/nextjs"
 
+import { db } from "@/lib/db"
 import { Button } from "@/components/ui/button"
 import {
   Card,
@@ -12,11 +15,8 @@ import {
 import CurrentPathNavigator from "../../_components/current-pathname"
 import { CalendarDateRangePicker } from "./_components/date-range-picker"
 import { Overview } from "./_components/overview"
-import { RecentSales } from "./_components/recent-sales"
 import PromoPage from "./_components/promo-page"
-import { db } from "@/lib/db"
-import { currentUser } from "@clerk/nextjs"
-import { redirect } from "next/navigation"
+import { RecentSales } from "./_components/recent-sales"
 
 export const metadata: Metadata = {
   title: "Dashboard",
@@ -29,13 +29,13 @@ export default async function DashboardPage() {
       type: "promo",
     },
   })
-  const user = await currentUser();
+  const user = await currentUser()
   const userInfo = await db.user.findUnique({
     where: {
-      userId: user?.id
-    }
+      userId: user?.id,
+    },
   })
-  if (!userInfo || !user) redirect('/sign-in')
+  if (!userInfo || !user) redirect("/sign-in")
   return (
     <>
       <CurrentPathNavigator />

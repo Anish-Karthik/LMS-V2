@@ -3,6 +3,7 @@
 import { useState } from "react"
 import { useRouter } from "next/navigation"
 import { useAuth } from "@clerk/nextjs"
+import { Promo } from "@prisma/client"
 import axios from "axios"
 import toast from "react-hot-toast"
 
@@ -12,11 +13,13 @@ import { Button } from "@/components/ui/button"
 interface CourseEnrollButtonProps {
   price: number
   courseId: string
+  promo: Promo | undefined
 }
 
 export const CourseEnrollButton = ({
   price,
   courseId,
+  promo,
 }: CourseEnrollButtonProps) => {
   const [isLoading, setIsLoading] = useState(false)
   const router = useRouter()
@@ -26,7 +29,11 @@ export const CourseEnrollButton = ({
     try {
       setIsLoading(true)
 
-      const response = await axios.post(`/api/courses/${courseId}/checkout`)
+      const response = await axios.post(`/api/courses/${courseId}/checkout`, {
+        userId,
+        price,
+        promo: promo || null,
+      })
 
       window.location.assign(response.data.url)
     } catch (error: any) {

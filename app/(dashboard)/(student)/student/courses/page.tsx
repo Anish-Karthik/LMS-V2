@@ -11,7 +11,7 @@ const page = async () => {
   const courses = await getCourses()
   if (!courses || !courses.length) return <div>No Courses found</div>
   const purchased = await isUserPurchasedCourse(user.id, courses[0].id)
-  if (!purchased) redirect("/course-details/" + courses[0].id)
+  if (!purchased) redirect("/purchase/" + courses[0].id)
   redirect(`/student/courses/${courses[0].id}/`)
   return <>This will not been seen</>
 }

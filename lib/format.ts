@@ -12,9 +12,9 @@ export const formatDate = (date: Date) => {
 }
 
 export const randomString = (size: number) => {
-  const characters = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
+  const characters = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789"
   const randomChars = [...Array(size)].map(
     (_) => characters[Math.floor(Math.random() * characters.length)]
-  );
-  return randomChars.join("");
+  )
+  return randomChars.join("")
 }

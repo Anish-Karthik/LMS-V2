@@ -44,7 +44,7 @@ const DashBoardLayout = async ({
       position: "asc",
     },
   })
-  if (!purchased) redirect("/course-details/" + params.courseId)
+  if (!purchased) redirect("/purchase/" + params.courseId)
 
   return (
     <div className="relative h-full">

@@ -1,10 +1,10 @@
 "use client"
 
-import React from "react"
 import { Montserrat } from "next/font/google"
 import Image from "next/image"
 import Link from "next/link"
-import { UserButton, useAuth } from "@clerk/nextjs"
+import { UserButton } from "@clerk/nextjs"
+import { Course } from "@prisma/client"
 
 import { cn } from "@/lib/utils"
 import { Button } from "@/components/ui/button"
@@ -16,9 +16,13 @@ const font = Montserrat({
   subsets: ["latin"],
 })
 
-const LandingNavbar = () => {
-  const { isSignedIn } = useAuth()
-
+const LandingNavbar = ({
+  courses,
+  route,
+}: {
+  courses: Course[]
+  route?: string
+}) => {
   return (
     <nav className="flex items-center justify-between bg-transparent p-4">
       <Link href="/" className="flex items-center">
@@ -32,12 +36,12 @@ const LandingNavbar = () => {
 
       <div className="flex items-center">
         <ThemeToggle />
-        <Link href={isSignedIn ? "/course-details" : "/sign-up"}>
+        <Link href={route ?? `/purchase/${courses[0].id}`}>
           <Button variant="outline" className="rounded-full">
             Get Started
           </Button>
         </Link>
-        {isSignedIn && <UserButton />}
+        {<UserButton />}
       </div>
     </nav>
   )

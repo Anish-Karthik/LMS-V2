@@ -1,13 +1,16 @@
 "use client"
-import { Promo } from "@prisma/client";
-import { ScrollArea } from "@/components/ui/scroll-area";
-import { PromoCard } from "./promo-card";
+
+import { Promo } from "@prisma/client"
+
+import { ScrollArea } from "@/components/ui/scroll-area"
+
+import { PromoCard } from "./promo-card"
 
 export function RecentSales({
   promos,
   userRole,
 }: {
-  userRole: string;
+  userRole: string
   promos: Promo[]
 }) {
   return (
@@ -22,7 +25,3 @@ export function RecentSales({
     </ScrollArea>
   )
 }
-
-
-
-

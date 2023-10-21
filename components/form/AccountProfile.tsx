@@ -23,7 +23,7 @@ const UserValidation = z.object({
   phoneNo: z.string().min(10).max(10),
 })
 
-const AccountProfile = ({ user }: { user: User }) => {
+const AccountProfile = ({ user, route }: { user: User; route: string }) => {
   const [isSubmitting, setIsSubmitting] = useState(false)
   const [files, setFiles] = useState<File[]>([])
   const { startUpload } = useUploadThing("media")
@@ -86,10 +86,10 @@ const AccountProfile = ({ user }: { user: User }) => {
         role: "user",
       })
 
-      if (pathname === "/profile/edit") {
+      if (pathname.includes("/profile/edit")) {
         router.back()
       } else {
-        router.push("/purchase")
+        router.push(route)
       }
       toast.success("Profile Updated Successfully")
     } catch (error: any) {

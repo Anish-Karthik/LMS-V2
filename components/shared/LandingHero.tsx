@@ -1,14 +1,18 @@
 "use client"
 
 import Link from "next/link"
-import { useAuth } from "@clerk/nextjs"
+import { Course } from "@prisma/client"
 import TypewriterComponent from "typewriter-effect"
 
 import { Button } from "@/components/ui/button"
 
-export const LandingHero = () => {
-  const { isSignedIn } = useAuth()
-
+export const LandingHero = ({
+  courses,
+  route,
+}: {
+  courses: Course[]
+  route?: string
+}) => {
   return (
     <div className=" space-y-5 py-36 text-center font-bold">
       <div className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl xl:text-7xl">
@@ -33,7 +37,7 @@ export const LandingHero = () => {
         webinars.
       </div>
       <div>
-        <Link href={isSignedIn ? "/course-details" : "/sign-up"}>
+        <Link href={route ?? `/purchase/${courses[0].id}`}>
           <Button className="rounded-full p-4 font-semibold md:p-6 md:text-lg">
             Start Learning
           </Button>

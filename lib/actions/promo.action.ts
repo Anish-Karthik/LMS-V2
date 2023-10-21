@@ -1,6 +1,6 @@
-"use server";
+"use server"
 
-import { db } from "../db";
+import { db } from "../db"
 
 export const createOrUpdatePromo = async ({
   id,
@@ -10,26 +10,25 @@ export const createOrUpdatePromo = async ({
   userId,
   referralBonus = 100,
 }: {
-  id?: string;
-  code: string;
-  discount: number;
-  expiresAt?: Date;
-  userId: string;
-  referralBonus?: number;
+  id?: string
+  code: string
+  discount: number
+  expiresAt?: Date
+  userId: string
+  referralBonus?: number
 }) => {
   try {
     const userInfo = await db.user.findUnique({
       where: { userId },
-    });
+    })
     if (!userInfo) {
-      throw new Error("User not found");
+      throw new Error("User not found")
     }
-
 
     if (id) {
       const promo = await db.promo.findUnique({
         where: { id },
-      });
+      })
       if (promo) {
         return db.promo.update({
           where: { id: promo.id },
@@ -38,7 +37,7 @@ export const createOrUpdatePromo = async ({
             discount,
             expiresAt,
           },
-        });
+        })
       }
     }
 
@@ -47,13 +46,13 @@ export const createOrUpdatePromo = async ({
         code,
         discount,
         expiresAt,
-        amountToUser: userInfo.role === 'student'? referralBonus: 0,
+        amountToUser: userInfo.role === "student" ? referralBonus : 0,
         userObjId: userInfo.id,
       },
-    });
+    })
   } catch (error: any) {
-    console.error(error.message);
-    throw new Error(error.message);
+    console.error(error.message)
+    throw new Error(error.message)
   }
 }
 
@@ -61,9 +60,91 @@ export const isUniquePromoCode = async (code: string) => {
   try {
     const promo = await db.promo.findUnique({
       where: { code },
-    });
-    return !!(!promo);
+    })
+    return !!!promo
   } catch (error: any) {
-    throw new Error(error);
+    console.error(error.message)
+    throw new Error(error)
+  }
+}
+
+export const isValidPromoCode = async (code: string) => {
+  try {
+    const promo = await db.promo.findUnique({
+      where: { code },
+    })
+    if (!promo) {
+      return false
+    }
+    return true
+  } catch (error: any) {
+    console.error(error.message)
+    throw new Error(error)
+  }
+}
+
+export const isPromoExpired = async (code: string) => {
+  try {
+    const promo = await db.promo.findUnique({
+      where: { code },
+    })
+    if (!promo) {
+      return false
+    }
+    if (promo.expiresAt && promo.expiresAt < new Date()) {
+      return true
+    }
+    return false
+  } catch (error: any) {
+    console.error(error.message)
+    throw new Error(error)
+  }
+}
+
+export const getPromoByCode = async (code: string) => {
+  try {
+    const promo = await db.promo.findUnique({
+      where: { code },
+    })
+    if (!promo) {
+      throw new Error("Promo not found")
+    }
+    return promo
+  } catch (error: any) {
+    console.error(error.message)
+    throw new Error(error)
+  }
+}
+
+export const afterReferral = async (promoCode: string) => {
+  try {
+    console.log(`afterReferral`, promoCode)
+    // FIXBUG: notworking
+    const promo = await db.promo.update({
+      where: {
+        code: promoCode,
+      },
+      data: {
+        count: {
+          increment: 1,
+        },
+        user: {
+          update: {
+            referralCount: {
+              increment: 1,
+            },
+            referralBonus: {
+              increment: 100,
+            },
+          },
+        },
+      },
+      include: {
+        user: true,
+      },
+    })
+    console.log(`afterReferral`, promo)
+  } catch (error: any) {
+    console.log(error.message)
   }
 }
