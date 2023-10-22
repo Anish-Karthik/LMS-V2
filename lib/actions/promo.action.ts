@@ -136,7 +136,6 @@ export const afterReferral = async (promoCode: string) => {
         id: promo.userObjId,
       },
       data: {
-        name: "Anish Promo",
         // FIXBUG: notworking
         referralBonus: {
           increment: Number(promo.amountToUser),

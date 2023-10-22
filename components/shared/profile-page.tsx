@@ -1,7 +1,7 @@
 "use client"
 
-import { Promo, User } from "@prisma/client"
 import { useState } from "react"
+import { Promo, User } from "@prisma/client"
 
 import ProfileComponent from "./profile-component"
 import { ProfileForm } from "./profile-form"

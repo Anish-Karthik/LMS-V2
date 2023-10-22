@@ -1,215 +1,281 @@
 "use client"
 
 import { useEffect, useState } from "react"
-import {
-  DragDropContext,
-  Draggable,
-  DropResult,
-  Droppable,
-} from "@hello-pangea/dnd"
+import { DropResult } from "@hello-pangea/dnd"
 import { Batch, Purchase, User } from "@prisma/client"
-import { GripVertical } from "lucide-react"
+// replace with your button component library
+import cn from "classnames"
+import { ListChecks } from "lucide-react"
 
-import { cn } from "@/lib/utils"
+import { ComplexBatch } from "@/types/nav"
+import {
+  swapUserBatch,
+  switchManyUserBatches,
+} from "@/lib/actions/batch.action"
 import { Button } from "@/components/ui/button"
+import { Input } from "@/components/ui/input"
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+} from "@/components/ui/select"
 
 interface UsersListProps {
-  defaultBatch: Batch & { purchases: (Purchase & { user: User })[] }
-  currentBatch: Batch & { purchases: (Purchase & { user: User })[] }
+  allBatches: ComplexBatch[]
+  defaultBatch: ComplexBatch
+  currentBatch: ComplexBatch
   switchBatch: (
     prevbatchId: string,
     newbatchId: string,
     swappedPurchaseId: string
   ) => void
 }
-
 const UsersList = ({
   defaultBatch,
   currentBatch,
   switchBatch,
+  allBatches,
 }: UsersListProps) => {
-  const [isMounted, setIsMounted] = useState(false)
-  const [purchasesDefault, setPurchasesDefault] = useState(
-    defaultBatch.purchases
-  )
-  const [purchasesCurrent, setPurchasesCurrent] = useState(
-    currentBatch.purchases
-  )
+  const [leftBatch, setLeftBatch] = useState<ComplexBatch>(defaultBatch)
+  const [rightBatch, setRightBatch] = useState<ComplexBatch>(currentBatch)
+  const [selectedLeftPurchases, setSelectedLeftPurchases] = useState<
+    Purchase[]
+  >([])
+  const [selectedRightPurchases, setSelectedRightPurchases] = useState<
+    Purchase[]
+  >([])
+  const [isUpdating, setIsUpdating] = useState(false)
 
-  useEffect(() => {
-    setIsMounted(true)
-  }, [])
-
-  useEffect(() => {
-    setPurchasesDefault(defaultBatch.purchases)
-  }, [defaultBatch])
-
-  useEffect(() => {
-    setPurchasesCurrent(currentBatch.purchases)
-  }, [currentBatch])
-  if (!isMounted) {
-    return null
-  }
-  const switchItem = (
-    source: Purchase[],
-    destination: Purchase[],
-    result: DropResult
-  ) => {
-    const items = Array.from(source)
-    const [reorderedItem] = items.splice(result.source.index, 1)
-    destination.splice(result!.destination!.index, 0, reorderedItem)
-  }
-
-  // no reordering and postioning of purchases
-  const onDragEnd = async (result: DropResult) => {
-    if (!result.destination) return
-    if (result.source.droppableId === result.destination.droppableId) return
-
-    if (result.source.droppableId === "default") {
-      // move data from default list to current list
-      // switchItem(purchasesDefault, purchasesCurrent, result);
-      const items = Array.from(purchasesDefault)
-      const [reorderedItem] = items.splice(result.source.index, 1)
-      setPurchasesDefault(items)
-
-      // add data to current list
-      const itemsCurrent = Array.from(purchasesCurrent)
-      itemsCurrent.push(reorderedItem)
-      setPurchasesCurrent(itemsCurrent)
-
-      // update database
-      switchBatch(defaultBatch.id, currentBatch.id, reorderedItem.id)
-    } else {
-      // move data from current list to default list
-      const items = Array.from(purchasesCurrent)
-      const [reorderedItem] = items.splice(result.source.index, 1)
-      setPurchasesCurrent(items)
-
-      // add data to default list
-      const itemsDefault = Array.from(purchasesDefault)
-      itemsDefault.push(reorderedItem)
-      setPurchasesDefault(itemsDefault)
-
-      // update database
-      switchBatch(currentBatch.id, defaultBatch.id, reorderedItem.id)
-    }
-  }
-  if (defaultBatch.purchases.length || currentBatch.purchases.length)
-    return (
-      // create a code to drap and drop purchases from and to the default batch and the current batch
-
-      // on left side, show the default batch
-      // on right side, show the current batch
-      // show the purchases in both batches
-      <DragDropContext onDragEnd={onDragEnd}>
-        <div className="grid grid-cols-2 gap-x-2">
-          <Droppable droppableId="default">
-            {(provided) => (
-              <div
-                {...provided.droppableProps}
-                ref={provided.innerRef}
-                className="border-2 border-secondary"
-              >
-                {purchasesDefault.map((purchase, index) => (
-                  <Draggable
-                    key={purchase.id}
-                    draggableId={purchase.id}
-                    index={index}
-                  >
-                    {(provided) => (
-                      <div
-                        ref={provided.innerRef}
-                        {...provided.draggableProps}
-                        {...provided.dragHandleProps}
-                        className={cn(
-                          "flex items-center justify-between gap-x-2 rounded-md bg-slate-500/20 p-2",
-                          "hover:bg-slate-500/40",
-                          "transition-colors duration-200",
-                          "cursor-move"
-                        )}
-                      >
-                        <div className="flex items-center gap-x-2">
-                          <GripVertical className="h-5 w-5 text-sky-700" />
-                          <div>
-                            <h3 className="text-sm font-semibold">
-                              {purchase.user.name}
-                            </h3>
-                            <p className="text-xs text-slate-500">
-                              {purchase.user.email}
-                            </p>
-                          </div>
-                        </div>
-                        <div>
-                          <Button variant="default" className="px-2 py-1">
-                            View
-                          </Button>
-                        </div>
-                      </div>
-                    )}
-                  </Draggable>
-                ))}
-                {provided.placeholder}
-              </div>
-            )}
-          </Droppable>
-          <Droppable droppableId="current">
-            {(provided) => (
-              <div
-                {...provided.droppableProps}
-                ref={provided.innerRef}
-                className="border-2 border-secondary"
-              >
-                {purchasesCurrent.map((purchase, index) => (
-                  <Draggable
-                    key={purchase.id}
-                    draggableId={purchase.id}
-                    index={index}
-                  >
-                    {(provided) => (
-                      <div
-                        ref={provided.innerRef}
-                        {...provided.draggableProps}
-                        {...provided.dragHandleProps}
-                        className={cn(
-                          "flex items-center justify-between gap-x-2 rounded-md bg-sky-500/20 p-2",
-                          "hover:bg-sky-500/40",
-                          "transition-colors duration-200",
-                          "cursor-move"
-                        )}
-                      >
-                        <div className="flex items-center gap-x-2">
-                          <GripVertical className="h-5 w-5 text-sky-700" />
-                          <div>
-                            <h3 className="text-sm font-semibold">
-                              {purchase.user.name}
-                            </h3>
-                            <p className="text-xs text-slate-500">
-                              {purchase.user.email}
-                            </p>
-                          </div>
-                        </div>
-                        <div>
-                          <Button variant="default" className="px-2 py-1">
-                            View
-                          </Button>
-                        </div>
-                      </div>
-                    )}
-                  </Draggable>
-                ))}
-                {provided.placeholder}
-              </div>
-            )}
-          </Droppable>
-        </div>
-      </DragDropContext>
+  const handleSelectRight = (batch: Batch, purchase: Purchase) => {
+    const newSelectedRightPurchases = [...selectedRightPurchases]
+    const index = newSelectedRightPurchases.findIndex(
+      (p) => p.id === purchase.id
     )
+    if (index === -1) {
+      newSelectedRightPurchases.push(purchase)
+    } else {
+      newSelectedRightPurchases.splice(index, 1)
+    }
+    setSelectedRightPurchases(newSelectedRightPurchases)
+  }
+
+  const handleSelectLeft = (batch: Batch, purchase: Purchase) => {
+    const newSelectedLeftPurchases = [...selectedLeftPurchases]
+    const index = newSelectedLeftPurchases.findIndex(
+      (p) => p.id === purchase.id
+    )
+    if (index === -1) {
+      newSelectedLeftPurchases.push(purchase)
+    } else {
+      newSelectedLeftPurchases.splice(index, 1)
+    }
+    setSelectedLeftPurchases(newSelectedLeftPurchases)
+  }
+
+  const handleMoveRight = async () => {
+    setIsUpdating(true)
+    const { batch1, batch2 } = await switchManyUserBatches(
+      leftBatch.id,
+      rightBatch.id,
+      selectedLeftPurchases.map((p) => p.id)
+    )
+
+    setLeftBatch(batch1)
+    setRightBatch(batch2)
+    setSelectedLeftPurchases([])
+    setIsUpdating(false)
+  }
+
+  const handleMoveLeft = async () => {
+    setIsUpdating(true)
+    const { batch1, batch2 } = await switchManyUserBatches(
+      rightBatch.id,
+      leftBatch.id,
+      selectedRightPurchases.map((p) => p.id)
+    )
+    setLeftBatch(batch2)
+    setRightBatch(batch1)
+    setSelectedRightPurchases([])
+    setIsUpdating(false)
+  }
+
   return (
-    <div className="flex h-64 items-center justify-center">
-      <p className="text-xl text-slate-500">
-        No purchases found in unassigned batch and current batch
-      </p>
-    </div>
+    <>
+      <div className="mt-3 grid grid-cols-1 gap-x-2 sm:grid-cols-2">
+        <div className="relative border-2 border-secondary">
+          {isUpdating && (
+            <div className="absolute inset-0 flex items-center justify-center bg-slate-500/50">
+              <div className="h-12 w-12 animate-spin rounded-full border-y-2 border-gray-100"></div>
+            </div>
+          )}
+
+          <div className="flex items-center justify-between gap-x-2 rounded-md bg-slate-500/20 p-2">
+            {/* <h3 className="text-sm font-semibold">Unassigned Batch</h3> */}
+            <Select
+              value={leftBatch.id}
+              onValueChange={(value) => {
+                const batch = allBatches.find((b) => b.id === value)
+                setLeftBatch(batch!)
+              }}
+            >
+              <SelectTrigger className="relative flex items-center gap-x-2">
+                <h3 className="text-sm font-semibold">{leftBatch.name}</h3>
+                <ListChecks
+                  size={20}
+                  className="absolute right-3 z-50 bg-background"
+                />
+              </SelectTrigger>
+              <SelectContent>
+                {allBatches.map(
+                  (batch) =>
+                    rightBatch.id != batch.id && (
+                      <SelectItem key={batch.id} value={batch.id}>
+                        {batch.name}
+                      </SelectItem>
+                    )
+                )}
+              </SelectContent>
+            </Select>
+          </div>
+          {leftBatch.purchases.length ? (
+            <div className="flex flex-col gap-y-2 p-2">
+              {leftBatch.purchases.map((purchase) => (
+                <div
+                  key={purchase.id}
+                  className={cn(
+                    "flex items-center justify-between gap-x-2 rounded-md bg-slate-500/20 p-2",
+                    "hover:bg-slate-500/40",
+                    "transition-colors duration-200",
+                    "cursor-pointer",
+                    selectedLeftPurchases.some((p) => p.id === purchase.id) &&
+                      "bg-slate-500/40"
+                  )}
+                  onClick={() => handleSelectLeft(leftBatch, purchase)}
+                >
+                  <div className="flex items-center gap-x-2">
+                    <Input
+                      type="checkbox"
+                      checked={selectedLeftPurchases.some(
+                        (p) => p.id === purchase.id
+                      )}
+                      onChange={() => handleSelectLeft(leftBatch, purchase)}
+                    />
+                    <div>
+                      <h3 className="text-sm font-semibold">
+                        {purchase.user.name}
+                      </h3>
+                      <p className="text-xs text-slate-500">
+                        {purchase.user.email}
+                      </p>
+                    </div>
+                  </div>
+                </div>
+              ))}
+            </div>
+          ) : (
+            <div className="p-2">
+              <p className="text-xs text-slate-500">
+                No purchases found in {leftBatch.name} batch
+              </p>
+            </div>
+          )}
+        </div>
+        <div className="relative border-2 border-secondary">
+          {isUpdating && (
+            <div className="absolute inset-0 flex items-center justify-center bg-slate-500/50">
+              <div className="h-12 w-12 animate-spin rounded-full border-y-2 border-sky-500"></div>
+            </div>
+          )}
+          <div className="flex items-center justify-between gap-x-2 rounded-md bg-sky-500/20 p-2">
+            <Select
+              value={rightBatch.id}
+              onValueChange={(value) => {
+                const batch = allBatches.find((b) => b.id === value)
+                setRightBatch(batch!)
+              }}
+            >
+              <SelectTrigger className="relative flex items-center gap-x-2">
+                <h3 className="text-sm font-semibold">{rightBatch.name}</h3>
+                <ListChecks
+                  size={20}
+                  className="absolute right-3 z-50 bg-background"
+                />
+              </SelectTrigger>
+              <SelectContent>
+                {allBatches.map(
+                  (batch) =>
+                    leftBatch.id != batch.id && (
+                      <SelectItem key={batch.id} value={batch.id}>
+                        {batch.name}
+                      </SelectItem>
+                    )
+                )}
+              </SelectContent>
+            </Select>
+          </div>
+          {rightBatch.purchases.length ? (
+            <div className="flex flex-col gap-y-2 p-2">
+              {rightBatch.purchases.map((purchase) => (
+                <div
+                  key={purchase.id}
+                  className={cn(
+                    "flex items-center justify-between gap-x-2 rounded-md bg-sky-500/20 p-2",
+                    "hover:bg-sky-500/40",
+                    "transition-colors duration-200",
+                    "cursor-pointer",
+                    selectedRightPurchases.some((p) => p.id === purchase.id) &&
+                      "bg-sky-500/40"
+                  )}
+                  onClick={() => handleSelectRight(rightBatch, purchase)}
+                >
+                  <div className="flex items-center gap-x-2">
+                    <Input
+                      type="checkbox"
+                      checked={selectedRightPurchases.some(
+                        (p) => p.id === purchase.id
+                      )}
+                      onChange={() => handleSelectRight(rightBatch, purchase)}
+                    />
+                    <div>
+                      <h3 className="text-sm font-semibold">
+                        {purchase.user.name}
+                      </h3>
+                      <p className="text-xs text-slate-500">
+                        {purchase.user.email}
+                      </p>
+                    </div>
+                  </div>
+                </div>
+              ))}
+            </div>
+          ) : (
+            <div className="p-2">
+              <p className="text-xs text-slate-500">
+                No purchases found in {rightBatch.name} batch
+              </p>
+            </div>
+          )}
+        </div>
+      </div>
+      <div className="mt-3 grid grid-cols-1 gap-2 sm:grid-cols-2">
+        <Button
+          variant="default"
+          className="px-2 py-1"
+          onClick={handleMoveRight}
+        >
+          Move to&nbsp;
+          <span className="text-orange-700">{rightBatch.name}</span>
+        </Button>
+        <Button
+          variant="default"
+          className="px-2 py-1"
+          onClick={handleMoveLeft}
+        >
+          Move to&nbsp;<span className="text-sky-700">{leftBatch.name}</span>
+        </Button>
+      </div>
+    </>
   )
 }
 

@@ -1,5 +1,7 @@
 "use client"
 
+import { useEffect, useState } from "react"
+import { redirect, useRouter } from "next/navigation"
 import { useAuth } from "@clerk/nextjs"
 import { zodResolver } from "@hookform/resolvers/zod"
 import { User } from "@prisma/client"
@@ -9,14 +11,15 @@ import {
   ICity,
   ICountry,
   IState,
-  State
+  State,
 } from "country-state-city"
-import { redirect, useRouter } from "next/navigation"
-import { useEffect, useState } from "react"
 import { useForm } from "react-hook-form"
 import * as z from "zod"
 
-import { CustomProfilePhoto } from "@/components/form-fields"
+import { updateUser } from "@/lib/actions/user.actions"
+import { formatDate_YYYYMMDD } from "@/lib/format"
+import { useUploadThing } from "@/lib/uploadthing"
+import { isBase64Image } from "@/lib/utils"
 import { Button } from "@/components/ui/button"
 import {
   Form,
@@ -25,7 +28,7 @@ import {
   FormField,
   FormItem,
   FormLabel,
-  FormMessage
+  FormMessage,
 } from "@/components/ui/form"
 import { Input } from "@/components/ui/input"
 import {
@@ -33,13 +36,10 @@ import {
   SelectContent,
   SelectItem,
   SelectTrigger,
-  SelectValue
+  SelectValue,
 } from "@/components/ui/select"
 import { toast } from "@/components/ui/use-toast"
-import { updateUser } from "@/lib/actions/user.actions"
-import { formatDate_YYYYMMDD } from "@/lib/format"
-import { useUploadThing } from "@/lib/uploadthing"
-import { isBase64Image } from "@/lib/utils"
+import { CustomProfilePhoto } from "@/components/form-fields"
 
 import { CountryStateCityForm } from "./country-state-city-select"
 
@@ -113,6 +113,7 @@ export function ProfileForm({ userInfo }: { userInfo: User }) {
     mode: "onChange",
   })
   useEffect(() => {
+    if (!userInfo.country) return
     const userCountry = Country.getAllCountries().find(
       (c) => c.name === userInfo.country
     )

@@ -1,8 +1,10 @@
 "use server"
 
 import { db } from "../db"
+import { randomString } from "../format"
 import { addStudentToBatch } from "./batch.action"
 import { getDefaultBatch } from "./course.actions"
+import { createOrUpdatePromo, isUniquePromoCode } from "./promo.action"
 
 export const isTeacher = async (userId: string | null) => {
   try {
@@ -84,6 +86,7 @@ export const createUser = async ({
         referralCount: 0,
       },
     })
+
     return true
   } catch (e: any) {
     console.log(e)
@@ -164,7 +167,6 @@ export const isUserPurchasedCourse = async (
   courseId: string
 ) => {
   try {
-    console.log("isUserPurchasedCourse", userId, courseId)
     const purchase = await db.purchase.findUnique({
       where: {
         userId_courseId: {
@@ -207,6 +209,18 @@ export const purchaseCourse = async (userId: string, courseId: string) => {
     let defaultBatch = await getDefaultBatch(courseId)
     console.log("defaultBatch", defaultBatch)
     await addStudentToBatch(defaultBatch.id, purchase.id)
+
+    let promoCode = randomString(12)
+    while (!(await isUniquePromoCode(promoCode))) {
+      promoCode = randomString(12)
+    }
+    await createOrUpdatePromo({
+      userId,
+      code: promoCode,
+      discount: 10,
+      referralBonus: 100,
+      expiresAt: new Date(Date.now() + 1000 * 60 * 60 * 24 * 30),
+    })
     return purchase
   } catch (e: any) {
     console.log("purchaseCourse", e.message)

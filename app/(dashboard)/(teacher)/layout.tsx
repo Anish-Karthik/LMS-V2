@@ -25,7 +25,7 @@ const DashBoardLayout = async ({
   // form an object where
 
   return (
-    <div className="relative h-full pb-16 sm:pb-32 md:pb-2">
+    <div className="relative h-full pb-16 sm:pb-40 md:pb-2">
       {/* desktop view */}
       <div className=" flex-col md:flex">
         <div className="border-b">

@@ -164,6 +164,52 @@ export const swapUserBatch = async (
   }
 }
 
+export const switchManyUserBatches = async (
+  prevBatchId: string,
+  newBatchId: string,
+  purchaseIds: string[]
+) => {
+  try {
+    const batch1 = await db.batch.update({
+      where: { id: prevBatchId },
+      data: {
+        purchases: {
+          disconnect: purchaseIds.map((id) => ({ id })),
+        },
+      },
+      include: {
+        purchases: {
+          include: {
+            user: true,
+          },
+        },
+      },
+    })
+    const batch2 = await db.batch.update({
+      where: { id: newBatchId },
+      data: {
+        purchases: {
+          connect: purchaseIds.map((id) => ({ id })),
+        },
+      },
+      include: {
+        purchases: {
+          include: {
+            user: true,
+          },
+        },
+      },
+    })
+    return {
+      batch1,
+      batch2,
+    }
+  } catch (e: any) {
+    console.error(e)
+    throw new Error("Batch swap failed", e.message)
+  }
+}
+
 // export const addStudentToBatch = async (batchId: string, studentId: string) => {
 //   try {
 //     const batch = await db.batch.update({
