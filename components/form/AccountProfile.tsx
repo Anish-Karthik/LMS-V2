@@ -82,8 +82,7 @@ const AccountProfile = ({ user, route }: { user: User; route: string }) => {
         name: values.name,
         email: values.email,
         image: values.image,
-        phoneNo: values.phoneNo,
-        role: "user",
+        phoneNo: values.phoneNo
       })
 
       if (pathname.includes("/profile/edit")) {

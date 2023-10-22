@@ -34,10 +34,14 @@ model User {
   name          String
   image         String?
   dob           DateTime?
-  role          String    
-  isBanned      Boolean  
-  referralCount Int       
-  referralBonus Int       
+  country       String?
+  city          String?
+  state         String?
+  gender        String?
+  role          String
+  isBanned      Boolean
+  referralCount Int
+  referralBonus Int
 
   promos    Promo[]
   purchases Purchase[]

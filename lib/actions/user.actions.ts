@@ -41,19 +41,25 @@ export const createUser = async ({
   phoneNo,
   name,
   image,
-  role = "user",
+  gender,
+  dob,
+  country,
+  state,
+  city,
 }: {
   userId: string
   email: string
   phoneNo: string
   name: string
   image: string
-  role: string
+  gender?: string
+  dob?: string
+  country?: string
+  state?: string
+  city?: string
 }) => {
   try {
     if (!userId) throw new Error("Unauthorized user")
-    if (["student", "teacher", "admin"].includes(role))
-      throw new Error("Invalid role")
     const user = await db.user.findFirst({
       where: {
         userId: userId,
@@ -63,11 +69,16 @@ export const createUser = async ({
     await db.user.create({
       data: {
         userId,
-        role,
+        role: "user",
         email,
         phoneNo,
         image,
         name,
+        gender,
+        dob,
+        country,
+        state,
+        city,
         isBanned: false,
         referralBonus: 0,
         referralCount: 0,
@@ -77,6 +88,51 @@ export const createUser = async ({
   } catch (e: any) {
     console.log(e)
     throw new Error(e.message || "Unauthorized user")
+  }
+}
+
+const updateUser = async ({
+  userId,
+  phoneNo,
+  name,
+  image,
+  gender,
+  dob,
+  country,
+  state,
+  city,
+}: {
+  userId: string
+  phoneNo: string
+  name: string
+  image: string
+  gender?: string
+  dob?: string
+  country?: string
+  state?: string
+  city?: string
+}) => {
+  try {
+    if (!userId) throw new Error("Unauthorized user")
+    await db.user.update({
+      where: {
+        userId,
+      },
+      data: {
+        phoneNo,
+        image,
+        name,
+        gender,
+        dob,
+        country,
+        state,
+        city,
+      },
+    })
+    return true
+  } catch (err: any) {
+    console.error(err)
+    throw new Error(err.message)
   }
 }
 
