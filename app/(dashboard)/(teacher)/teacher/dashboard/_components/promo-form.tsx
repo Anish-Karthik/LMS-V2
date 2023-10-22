@@ -60,6 +60,7 @@ const formSchemaEdit = z.object({
 })
 
 export function PromoForm({
+  userId,
   id,
   code,
   discount,
@@ -67,6 +68,7 @@ export function PromoForm({
   type = "create",
   setIsCreating,
 }: {
+  userId: string
   id?: string
   code?: string
   discount?: number
@@ -76,7 +78,6 @@ export function PromoForm({
 }) {
   const schema = type == "edit" ? formSchemaEdit : formSchema
   const router = useRouter()
-  const { userId } = useAuth()
   const form = useForm<z.infer<typeof schema>>({
     resolver: zodResolver(schema),
     defaultValues: {

@@ -1,14 +1,22 @@
 "use client"
 
-import { useEffect, useState } from "react"
-import { usePathname, useRouter } from "next/navigation"
+import { useAuth } from "@clerk/nextjs"
 import { zodResolver } from "@hookform/resolvers/zod"
 import { User } from "@prisma/client"
-import { ICity, ICountry, IState } from "country-state-city"
+import {
+  City,
+  Country,
+  ICity,
+  ICountry,
+  IState,
+  State
+} from "country-state-city"
+import { redirect, useRouter } from "next/navigation"
+import { useEffect, useState } from "react"
 import { useForm } from "react-hook-form"
 import * as z from "zod"
 
-import { useUploadThing } from "@/lib/uploadthing"
+import { CustomProfilePhoto } from "@/components/form-fields"
 import { Button } from "@/components/ui/button"
 import {
   Form,
@@ -17,7 +25,7 @@ import {
   FormField,
   FormItem,
   FormLabel,
-  FormMessage,
+  FormMessage
 } from "@/components/ui/form"
 import { Input } from "@/components/ui/input"
 import {
@@ -25,10 +33,13 @@ import {
   SelectContent,
   SelectItem,
   SelectTrigger,
-  SelectValue,
+  SelectValue
 } from "@/components/ui/select"
 import { toast } from "@/components/ui/use-toast"
-import { CustomProfilePhoto } from "@/components/form-fields"
+import { updateUser } from "@/lib/actions/user.actions"
+import { formatDate_YYYYMMDD } from "@/lib/format"
+import { useUploadThing } from "@/lib/uploadthing"
+import { isBase64Image } from "@/lib/utils"
 
 import { CountryStateCityForm } from "./country-state-city-select"
 
@@ -36,12 +47,37 @@ const profileFormSchema = z.object({
   name: z
     .string()
     .min(2, {
-      message: "Username must be at least 2 characters.",
+      message: "Name must be at least 2 characters.",
     })
     .max(30, {
       message: "Username must not be longer than 30 characters.",
     }),
-  dob: z.date(),
+  dob: z
+    .string()
+    .min(1, {
+      message: "Please enter your date of birth",
+    })
+    .refine(
+      (dob) => {
+        if (!dob) return false
+        console.log(dob)
+        const res = new Date(dob)
+        const date = new Date()
+        date.setFullYear(date.getFullYear() - 10)
+        return !(res > date)
+      },
+      { message: "You must be atleast 10 years old" }
+    )
+    .refine(
+      (dob) => {
+        if (!dob) return false
+        const res = new Date(dob)
+        const date = new Date()
+        date.setFullYear(date.getFullYear() - 110)
+        return !(res < date)
+      },
+      { message: "You must be less than 110 years old" }
+    ),
   phoneNo: z.string().min(10).max(10),
   image: z.string().url(),
   city: z.string().min(1, { message: "city name can't be empty" }),
@@ -58,10 +94,12 @@ export function ProfileForm({ userInfo }: { userInfo: User }) {
   const [selectedCity, setSelectedCity] = useState<ICity | null>(null)
   const [files, setFiles] = useState<File[]>([])
   const { startUpload } = useUploadThing("media")
+  const { userId } = useAuth()
+  const router = useRouter()
 
   const defaultValues: Partial<ProfileFormValues> = {
     name: userInfo.name,
-    dob: userInfo.dob || new Date(),
+    dob: formatDate_YYYYMMDD(userInfo.dob || new Date()) || "",
     phoneNo: userInfo.phoneNo || "",
     image: userInfo.image || "",
     city: userInfo.city || "",
@@ -75,6 +113,30 @@ export function ProfileForm({ userInfo }: { userInfo: User }) {
     mode: "onChange",
   })
   useEffect(() => {
+    const userCountry = Country.getAllCountries().find(
+      (c) => c.name === userInfo.country
+    )
+    const userState = State.getStatesOfCountry(userCountry?.isoCode).find(
+      (s) => s.name === userInfo.state
+    )
+    const userCity = City.getCitiesOfState(
+      userCountry?.isoCode || "",
+      userState?.isoCode || ""
+    ).find((c) => c.name === userInfo.city)
+    if (userCountry?.isoCode !== selectedCountry?.isoCode)
+      setSelectedCountry(userCountry || null)
+    if (userState?.isoCode !== selectedState?.isoCode)
+      setSelectedState(userState || null)
+    if (userCity?.name !== selectedCity?.name) setSelectedCity(userCity || null)
+  }, [
+    userInfo.city,
+    userInfo.country,
+    userInfo.state,
+    selectedCountry,
+    selectedState,
+    selectedCity,
+  ])
+  useEffect(() => {
     form.setValue("country", selectedCountry?.name || "")
   }, [form, selectedCountry])
   useEffect(() => {
@@ -83,7 +145,7 @@ export function ProfileForm({ userInfo }: { userInfo: User }) {
   useEffect(() => {
     form.setValue("city", selectedCity?.name || "")
   }, [form, selectedCity])
-
+  console.log(selectedCountry, selectedState, selectedCity)
   function handleImageChange(
     e: React.ChangeEvent<HTMLInputElement>,
     onChange: (value: string) => void
@@ -105,26 +167,57 @@ export function ProfileForm({ userInfo }: { userInfo: User }) {
       fileReader.readAsDataURL(file)
     }
   }
-  function onSubmit(data: ProfileFormValues) {
-    toast({
-      title: "You submitted the following values:",
-      description: (
-        <pre className="mt-2 w-[340px] rounded-md bg-slate-950 p-4">
-          <code className="text-white">
-            {JSON.stringify(
-              {
-                ...data,
-                city: selectedCity?.name,
-                country: selectedCountry?.name,
-                state: selectedState?.name,
-              },
-              null,
-              2
-            )}
-          </code>
-        </pre>
-      ),
-    })
+  if (!userId) redirect("/signin")
+  async function onSubmit(data: ProfileFormValues) {
+    try {
+      const blob = data.image
+
+      const hasImageChanged = isBase64Image(blob)
+
+      if (hasImageChanged) {
+        const imgRes = await startUpload(files)
+
+        if (imgRes && imgRes[0].url) {
+          data.image = imgRes[0].url
+        }
+      }
+      await updateUser({
+        userId: userId!,
+        name: data.name,
+        dob: new Date(data.dob),
+        phoneNo: data.phoneNo,
+        image: data.image,
+        city: data.city,
+        country: data.country,
+        state: data.state,
+      })
+      toast({
+        title: "You submitted the following values:",
+        description: (
+          <pre className="mt-2 w-[340px] rounded-md bg-slate-950 p-4">
+            <code className="text-white">
+              {JSON.stringify(
+                {
+                  ...data,
+                  city: selectedCity?.name,
+                  country: selectedCountry?.name,
+                  state: selectedState?.name,
+                },
+                null,
+                2
+              )}
+            </code>
+          </pre>
+        ),
+      })
+      router.refresh()
+    } catch (err: any) {
+      console.log(err)
+      toast({
+        title: "Error",
+        description: err.message,
+      })
+    }
   }
 
   return (
@@ -140,13 +233,12 @@ export function ProfileForm({ userInfo }: { userInfo: User }) {
           name="name"
           render={({ field }) => (
             <FormItem>
-              <FormLabel>Username</FormLabel>
+              <FormLabel>Name</FormLabel>
               <FormControl>
-                <Input placeholder="Anish" {...field} />
+                <Input placeholder="Your Name" {...field} />
               </FormControl>
               <FormDescription>
-                This is your public display name. It can be your real name or a
-                pseudonym. You can only change this once every 30 days.
+                This is your public display name.
               </FormDescription>
               <FormMessage />
             </FormItem>
@@ -174,6 +266,20 @@ export function ProfileForm({ userInfo }: { userInfo: User }) {
                 </Select>
               </FormControl>
               <FormDescription>Select a gender</FormDescription>
+              <FormMessage />
+            </FormItem>
+          )}
+        />
+        <FormField
+          control={form.control}
+          name="dob"
+          render={({ field }) => (
+            <FormItem>
+              <FormLabel>D.O.B</FormLabel>
+              <FormControl>
+                <Input type={"date"} {...field} />
+              </FormControl>
+              <FormDescription>Please Enter your birth date</FormDescription>
               <FormMessage />
             </FormItem>
           )}

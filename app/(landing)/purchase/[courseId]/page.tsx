@@ -26,7 +26,13 @@ const page = async ({ params }: { params: { courseId: string } }) => {
     redirect("/onboarding")
   }
 
-  return <PurchaseCourseForm courseId={params.courseId} course={course!} />
+  return (
+    <PurchaseCourseForm
+      courseId={params.courseId}
+      course={course!}
+      userId={user.id}
+    />
+  )
 }
 
 export default page

@@ -9,16 +9,21 @@ import { Course } from "@prisma/client"
 import { getAnnouncements } from "@/lib/actions/announcement.action"
 import { getAllBatches } from "@/lib/actions/batch.action"
 import { getCourses } from "@/lib/actions/course.actions"
-import { getUser } from "@/lib/actions/user.actions"
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
-import AnnouncementPage from "@/components/shared/announcement-page"
+import { db } from "@/lib/db"
 
-import CurrentPathNavigator from "../../_components/current-pathname"
+import AnnouncementTabs from "../../_components/announcement-tabs"
 
 const page = async () => {
   const announcements = await getAnnouncements()
   const user = await currentUser()
-  const userInfo = await getUser(user!.id)
+  const userInfo = (await db.user.findUnique({
+    where: {
+      userId: user!.id,
+    },
+    include: {
+      purchases: true,
+    },
+  }))!
 
   const generalAnnouncements = announcements.filter(
     (a) => a.courseId === null && a.batchId === null && a.isPublished
@@ -58,36 +63,12 @@ const page = async () => {
 
   return (
     <div>
-      <Tabs defaultValue="general" className="w-full">
-        <TabsList className="tab">
-          {announcementTabs.map((tab) => (
-            <TabsTrigger value={tab.value} className="tab">
-              <tab.icon width={24} height={24} />
-              <p className="max-sm:hidden">{tab.label}</p>
-              {tab.data.length > 0 && (
-                <p className="ml-1 rounded-sm px-2 py-1 !text-xs">
-                  {tab.data.length}
-                </p>
-              )}
-            </TabsTrigger>
-          ))}
-        </TabsList>
-        {/* TODO: good list like ojn that of course recording */}
-        {announcementTabs.map((tab) => (
-          <TabsContent value={tab.value} className="w-full">
-            <CurrentPathNavigator />
-            <AnnouncementPage
-              isStudent={userInfo?.role === "student"}
-              type={tab.value}
-              courses={courses as Course[]}
-              batches={batches}
-              announcements={tab.data}
-              viewerRole={userInfo!.role}
-            />
-            {/* <AnnouncementsList items={tab.data} /> */}
-          </TabsContent>
-        ))}
-      </Tabs>
+      <AnnouncementTabs
+        announcementTabs={announcementTabs}
+        userRole={userInfo.role}
+        courses={courses as Course[]}
+        batches={batches}
+      />
     </div>
   )
 }

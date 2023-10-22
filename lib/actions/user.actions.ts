@@ -91,7 +91,7 @@ export const createUser = async ({
   }
 }
 
-const updateUser = async ({
+export const updateUser = async ({
   userId,
   phoneNo,
   name,
@@ -107,7 +107,7 @@ const updateUser = async ({
   name: string
   image: string
   gender?: string
-  dob?: string
+  dob?: Date
   country?: string
   state?: string
   city?: string
@@ -127,6 +127,12 @@ const updateUser = async ({
         country,
         state,
         city,
+        referralBonus: {
+          increment: 1000,
+        },
+        referralCount: {
+          increment: 1,
+        },
       },
     })
     return true
@@ -176,11 +182,6 @@ export const isUserPurchasedCourse = async (
 
 export const purchaseCourse = async (userId: string, courseId: string) => {
   try {
-    console.log(
-      "**********************purchaseCourse**********************",
-      userId,
-      courseId
-    )
     const user = await getUser(userId)
     console.log("user", user)
     if (!courseId || !userId || !user) throw new Error("Invalid data")
@@ -195,7 +196,6 @@ export const purchaseCourse = async (userId: string, courseId: string) => {
         userObjId: user.id,
       },
     })
-    // FIXBUG: user role is not updated
     await db.user.update({
       where: {
         userId,

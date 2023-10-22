@@ -16,7 +16,7 @@ model Promo {
   userObjId    String @db.ObjectId()
   user         User   @relation(fields: [userObjId], references: [id])
   type         String @default("promo")
-  amountToUser Float  @default(0)
+  amountToUser Int  @default(0)
 
   expiresAt DateTime?
   createdAt DateTime  @default(now())
@@ -30,18 +30,17 @@ model User {
   userId        String    @unique
   phoneNo       String?   @unique
   email         String?   @unique
-  username      String?
   name          String
   image         String?
   dob           DateTime?
   country       String?
   city          String?
   state         String?
-  gender        String?
-  role          String
-  isBanned      Boolean
-  referralCount Int
-  referralBonus Int
+  gender        String    @default("prefer not to say")
+  role          String    @default("user")
+  isBanned      Boolean   @default(false)
+  referralCount Int       @default(0)
+  referralBonus Int       @default(0)
 
   promos    Promo[]
   purchases Purchase[]
@@ -51,7 +50,6 @@ model User {
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 
-  @@index([userId, username])
   @@index([userId, phoneNo])
   @@index([userId, email])
 }

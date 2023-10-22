@@ -1,7 +1,6 @@
 import { currentUser } from "@clerk/nextjs"
 
 import { db } from "@/lib/db"
-import { Separator } from "@/components/ui/separator"
 
 import ProfilePage from "./components/profile-page"
 

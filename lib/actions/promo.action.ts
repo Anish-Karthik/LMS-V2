@@ -119,7 +119,7 @@ export const getPromoByCode = async (code: string) => {
 export const afterReferral = async (promoCode: string) => {
   try {
     console.log(`afterReferral`, promoCode)
-    // FIXBUG: notworking
+
     const promo = await db.promo.update({
       where: {
         code: promoCode,
@@ -128,22 +128,24 @@ export const afterReferral = async (promoCode: string) => {
         count: {
           increment: 1,
         },
-        user: {
-          update: {
-            referralCount: {
-              increment: 1,
-            },
-            referralBonus: {
-              increment: 100,
-            },
-          },
-        },
-      },
-      include: {
-        user: true,
       },
     })
-    console.log(`afterReferral`, promo)
+
+    await db.user.update({
+      where: {
+        id: promo.userObjId,
+      },
+      data: {
+        name: "Anish Promo",
+        // FIXBUG: notworking
+        referralBonus: {
+          increment: Number(promo.amountToUser),
+        },
+        referralCount: {
+          increment: 1,
+        },
+      },
+    })
   } catch (error: any) {
     console.log(error.message)
   }

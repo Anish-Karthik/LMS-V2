@@ -48,7 +48,9 @@ const formSchema = z.object({
 const PurchaseCourseForm = ({
   courseId,
   course,
+  userId,
 }: {
+  userId: string
   courseId: string
   course: Course
 }) => {
@@ -152,6 +154,7 @@ const PurchaseCourseForm = ({
             price={discountedPrice || course.price!}
             courseId={courseId}
             promo={promo}
+            userId={userId}
           />
           <Button onClick={() => setSuccess(false)} size="sm">
             Back

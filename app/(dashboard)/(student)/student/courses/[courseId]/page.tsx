@@ -55,12 +55,25 @@ const RecordingPage = async ({ params }: { params: { courseId: string } }) => {
         },
       },
     })
-  )?.purchases[0]?.Batch?.chapters[0].topics[0]
+  )?.purchases[0]?.Batch?.chapters[0]?.topics[0]
   console.log(firstTopic)
-  redirect(
-    `/student/courses/${params.courseId}/${firstTopic!.type}/${firstTopic!.id}`
+  if (firstTopic)
+    redirect(
+      `/student/courses/${params.courseId}/${firstTopic!.type}/${
+        firstTopic!.id
+      }`
+    )
+  return (
+    <div className="my-auto flex h-screen flex-col items-center justify-center">
+      {/* no videos yet */}
+      <div>
+        <h1 className="text-xl">
+          No videos yet. Please contact your instructor to add videos to this
+          course.
+        </h1>
+      </div>
+    </div>
   )
-  return <div className="h-full w-full"></div>
 }
 
 export default RecordingPage

@@ -172,7 +172,11 @@ export default async function DashboardPage() {
             </CardContent>
           </Card>
           <Card className="col-span-3 max-w-[90vw] 2xs:max-w-[80vw]">
-            <PromoPage initialData={promos} userRole={userInfo.role} />
+            <PromoPage
+              initialData={promos}
+              userRole={userInfo.role}
+              userId={user.id}
+            />
           </Card>
         </div>
         {/* </TabsContent>

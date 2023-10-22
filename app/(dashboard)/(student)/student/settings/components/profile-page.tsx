@@ -1,7 +1,7 @@
 "use client"
 
-import { useState } from "react"
 import { Promo, User } from "@prisma/client"
+import { useState } from "react"
 
 import ProfileComponent from "./profile-component"
 import { ProfileForm } from "./profile-form"
@@ -13,7 +13,7 @@ const ProfilePage = ({
   userInfo: User
   promo: Promo | null
 }) => {
-  const [isEditing, setIsEditing] = useState(true)
+  const [isEditing, setIsEditing] = useState(false)
 
   return (
     <div className="flex flex-col">

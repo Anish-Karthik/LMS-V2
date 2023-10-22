@@ -15,7 +15,9 @@ import { RecentSales } from "./recent-sales"
 const PromoPage = ({
   initialData,
   userRole,
+  userId,
 }: {
+  userId: string
   userRole: string
   initialData: Promo[]
 }) => {
@@ -24,8 +26,8 @@ const PromoPage = ({
     setIsCreating((current) => !current)
   }
 
-  const { userId } = useAuth()
-  if (!userId) return redirect("/sign-up")
+  // const { userId } = useAuth()
+  // if (!userId) return redirect("/sign-up")
 
   return (
     <div>
@@ -43,7 +45,9 @@ const PromoPage = ({
         </Button>
       </CardHeader>
       <CardContent>
-        {isCreating && <PromoForm setIsCreating={setIsCreating} />}
+        {isCreating && (
+          <PromoForm setIsCreating={setIsCreating} userId={userId} />
+        )}
         {!isCreating && (
           <RecentSales promos={initialData} userRole={userRole} />
         )}

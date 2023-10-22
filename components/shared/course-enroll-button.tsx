@@ -11,6 +11,7 @@ import { formatPrice } from "@/lib/format"
 import { Button } from "@/components/ui/button"
 
 interface CourseEnrollButtonProps {
+  userId: string
   price: number
   courseId: string
   promo: Promo | undefined
@@ -20,10 +21,10 @@ export const CourseEnrollButton = ({
   price,
   courseId,
   promo,
+  userId,
 }: CourseEnrollButtonProps) => {
   const [isLoading, setIsLoading] = useState(false)
   const router = useRouter()
-  const { userId } = useAuth()
   if (!userId) router.push("/sign-in")
   const onClick = async () => {
     try {
