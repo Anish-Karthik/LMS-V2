@@ -1,6 +1,6 @@
 "use client"
 
-import { useState } from "react"
+import React, { useEffect, useState } from "react"
 import { useRouter } from "next/navigation"
 import { zodResolver } from "@hookform/resolvers/zod"
 import { Batch, Course } from "@prisma/client"
@@ -31,10 +31,10 @@ interface BatchesFormProps {
 const formSchema = z.object({
   name: z.string().min(1),
 })
-
 export const BatchesForm = ({ initialData, courseId }: BatchesFormProps) => {
   const [isCreating, setIsCreating] = useState(false)
   const [isUpdating, setIsUpdating] = useState(false)
+  const [data, setData] = useState(initialData)
 
   const toggleCreating = () => {
     setIsCreating((current) => !current)
@@ -48,6 +48,10 @@ export const BatchesForm = ({ initialData, courseId }: BatchesFormProps) => {
       name: "",
     },
   })
+
+  useEffect(() => {
+    setData(initialData)
+  }, [initialData])
 
   const { isSubmitting, isValid } = form.formState
 
@@ -121,14 +125,14 @@ export const BatchesForm = ({ initialData, courseId }: BatchesFormProps) => {
         <div
           className={cn(
             "mt-2 text-sm",
-            !initialData.batches.length && "italic text-slate-500"
+            !data.batches.length && "italic text-slate-500"
           )}
         >
-          {!initialData.batches.length && "No batches"}
+          {!data.batches.length && "No batches"}
           <BatchesList
             onEdit={onEdit}
             onReorder={() => {}}
-            items={initialData.batches || []}
+            items={data.batches || []}
             courseId={courseId}
           />
         </div>

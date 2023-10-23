@@ -21,9 +21,6 @@ const RecordingPage = async ({ params }: { params: { courseId: string } }) => {
           },
           select: {
             Batch: {
-              where: {
-                courseId: params.courseId,
-              },
               select: {
                 chapters: {
                   where: {

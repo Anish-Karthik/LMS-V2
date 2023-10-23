@@ -4,7 +4,6 @@ import { Attachment, Topic } from "@prisma/client"
 
 import { db } from "../db"
 import { getBatchById } from "./batch.action"
-import { isUserPurchasedCourse } from "./user.actions"
 
 export const createTopic = async (chapterId: string, title: string) => {
   try {
@@ -266,11 +265,31 @@ export const getDetailedTopicClient = async ({
   userId: string
 }) => {
   try {
-    const purchase = await isUserPurchasedCourse(userId, courseId)
-    if (!purchase) {
+    // find to which batch the topic belongs to
+    const purchase = await db.topic.findUnique({
+      where: {
+        id: topicId,
+      },
+      select: {
+        chapter: {
+          select: {
+            batch: {
+              include: {
+                purchases: {
+                  where: {
+                    userId: userId,
+                  },
+                },
+              },
+            },
+          },
+        },
+      },
+    })
+
+    if (!purchase || !purchase.chapter?.batch?.purchases) {
       throw new Error("Course not purchased")
     }
-
     const topic = await getPublishedTopicsById(topicId)
 
     const currentChapter = await db.chapter.findUnique({

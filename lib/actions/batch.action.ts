@@ -1,12 +1,18 @@
 "use server"
 
 import { db } from "../db"
-import { addBatchToCourse, getCourseById } from "./course.actions"
+import {
+  addBatchToCourse,
+  getCourseById,
+  getDefaultBatch,
+} from "./course.actions"
 
 export const createBatch = async ({
   name,
   courseId,
+  isCurrent = false,
 }: {
+  isCurrent?: boolean
   name: string
   courseId: string
 }) => {
@@ -15,6 +21,7 @@ export const createBatch = async ({
       data: {
         name,
         courseId,
+        isCurrent,
       },
     })
     await addBatchToCourse(batch.id, courseId)
@@ -226,3 +233,41 @@ export const switchManyUserBatches = async (
 //     return null;
 //   }
 // }
+
+export const updateBatch = async ({
+  batchId,
+  name,
+  isCurrent,
+  isClosed,
+  courseId,
+}: {
+  batchId: string
+  courseId: string
+  name?: string
+  isCurrent?: boolean
+  isClosed?: boolean
+}) => {
+  try {
+    const updateData: any = { name, isCurrent, isClosed }
+    if (isCurrent === true) {
+      updateData.isClosed = false
+      await db.batch.updateMany({
+        where: { courseId },
+        data: { isCurrent: false },
+      })
+    }
+    if (isClosed === true) {
+      updateData.isCurrent = false
+    }
+    const res = await db.batch.update({
+      where: { courseId, id: batchId },
+      data: updateData,
+    })
+    await getDefaultBatch(courseId)
+
+    return res
+  } catch (e: any) {
+    console.error(e)
+    throw new Error(e.message)
+  }
+}

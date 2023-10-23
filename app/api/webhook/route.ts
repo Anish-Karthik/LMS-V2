@@ -3,6 +3,7 @@ import { redirect } from "next/navigation"
 import { NextResponse } from "next/server"
 import Stripe from "stripe"
 
+import { getDefaultBatch } from "@/lib/actions/course.actions"
 import { afterReferral } from "@/lib/actions/promo.action"
 import { purchaseCourse } from "@/lib/actions/user.actions"
 import { stripe } from "@/lib/stripe"
@@ -34,7 +35,8 @@ export async function POST(req: Request) {
         status: 400,
       })
     }
-    await purchaseCourse(userId, courseId)
+    const defaultBatch = await getDefaultBatch(courseId)
+    await purchaseCourse(userId, courseId, defaultBatch.id)
     console.log("purchaseCourse", userId, courseId)
     if (promoCode) {
       console.log("afterReferral from route", promoCode)

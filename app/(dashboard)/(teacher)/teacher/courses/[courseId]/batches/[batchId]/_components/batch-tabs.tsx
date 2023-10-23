@@ -1,8 +1,7 @@
 "use client"
 
-import React from "react"
 import Image from "next/image"
-import { Batch, Chapter, Purchase, Topic, User } from "@prisma/client"
+import { Chapter, Topic } from "@prisma/client"
 import { ListChecks } from "lucide-react"
 
 import { ComplexBatch } from "@/types/nav"
@@ -11,6 +10,7 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
 import { IconBadge } from "@/components/icon-badge"
 import CurrentPathNavigator from "@/app/(dashboard)/(teacher)/_components/current-pathname"
 
+import BatchEditForm from "./batch-edit-form"
 import { ChaptersForm } from "./chapters-form"
 import UsersList from "./users-list"
 
@@ -56,30 +56,28 @@ const BatchTabs = ({
       <TabsContent
         key={batchTabs[0].label}
         value={batchTabs[0].value}
-        className="mx-auto w-full max-w-4xl px-2"
+        className="mx-auto w-full px-2"
       >
         <div>
           <CurrentPathNavigator className="-ml-0 mb-2" />
-          <div className="mt-2 flex items-center gap-x-2">
-            <IconBadge icon={ListChecks} />
-            <h2 className="text-xl">Course chapters</h2>
+          <div className="grid grid-cols-1 gap-2 md:grid-cols-2">
+            <div>
+              <BatchEditForm batch={currentBatch} courseId={courseId} />
+            </div>
+            <div>
+              <div className="mt-2 flex items-center gap-x-2">
+                <IconBadge icon={ListChecks} />
+                <h2 className="text-xl">Course chapters</h2>
+              </div>
+              <ChaptersForm
+                initialData={initialData}
+                batchId={batchId}
+                courseId={courseId}
+              />
+            </div>
           </div>
-          <ChaptersForm
-            initialData={initialData}
-            batchId={batchId}
-            courseId={courseId}
-          />
         </div>
       </TabsContent>
-      {/* <TabsContent
-        key={batchTabs[1].label}
-        value={batchTabs[1].value}
-        className="mx-auto w-full max-w-3xl px-2"
-      >
-        <div>
-          <CurrentPathNavigator />
-        </div>
-      </TabsContent> */}
       <TabsContent
         key={batchTabs[1].label}
         value={batchTabs[1].value}

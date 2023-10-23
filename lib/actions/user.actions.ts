@@ -167,12 +167,10 @@ export const isUserPurchasedCourse = async (
   courseId: string
 ) => {
   try {
-    const purchase = await db.purchase.findUnique({
+    const purchase = await db.purchase.findFirst({
       where: {
-        userId_courseId: {
-          userId,
-          courseId,
-        },
+        userId,
+        courseId,
       },
     })
     return !!purchase
@@ -182,20 +180,33 @@ export const isUserPurchasedCourse = async (
   }
 }
 
-export const purchaseCourse = async (userId: string, courseId: string) => {
+export const purchaseCourse = async (
+  userId: string,
+  courseId: string,
+  batchId: string
+) => {
   try {
     const user = await getUser(userId)
     console.log("user", user)
     if (!courseId || !userId || !user) throw new Error("Invalid data")
-
-    const isPurchased = await isUserPurchasedCourse(userId, courseId)
+    const isPurchased = !!(await db.purchase.findUnique({
+      where: {
+        userId_courseId: {
+          userId,
+          courseId,
+        },
+        batchId,
+      },
+    }))
 
     if (isPurchased) throw new Error("Already purchased")
+    let defaultBatch = await getDefaultBatch(courseId)
     const purchase = await db.purchase.create({
       data: {
         courseId,
         userId,
         userObjId: user.id,
+        batchId: defaultBatch.id,
       },
     })
     await db.user.update({
@@ -206,7 +217,7 @@ export const purchaseCourse = async (userId: string, courseId: string) => {
         role: "student",
       },
     })
-    let defaultBatch = await getDefaultBatch(courseId)
+
     console.log("defaultBatch", defaultBatch)
     await addStudentToBatch(defaultBatch.id, purchase.id)
 

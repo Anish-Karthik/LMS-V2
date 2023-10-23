@@ -1,17 +1,13 @@
 "use client"
 
-import { useEffect, useState } from "react"
-import { DropResult } from "@hello-pangea/dnd"
-import { Batch, Purchase, User } from "@prisma/client"
+import { useState } from "react"
+import { Batch, Purchase } from "@prisma/client"
 // replace with your button component library
 import cn from "classnames"
 import { ListChecks } from "lucide-react"
 
 import { ComplexBatch } from "@/types/nav"
-import {
-  swapUserBatch,
-  switchManyUserBatches,
-} from "@/lib/actions/batch.action"
+import { switchManyUserBatches } from "@/lib/actions/batch.action"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import {
@@ -111,7 +107,6 @@ const UsersList = ({
           )}
 
           <div className="flex items-center justify-between gap-x-2 rounded-md bg-slate-500/20 p-2">
-            {/* <h3 className="text-sm font-semibold">Unassigned Batch</h3> */}
             <Select
               value={leftBatch.id}
               onValueChange={(value) => {
