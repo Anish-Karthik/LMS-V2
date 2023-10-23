@@ -5,7 +5,7 @@ import Link from "next/link"
 import { Announcement, Attachment } from "@prisma/client"
 import { Pencil, TrashIcon } from "lucide-react"
 
-import { deleteAnnouncement } from "@/lib/actions/announcement.action"
+import { deleteAnnouncement } from "@/lib/actions/server/announcement.server.action"
 import { cn } from "@/lib/utils"
 import { Button } from "@/components/ui/button"
 

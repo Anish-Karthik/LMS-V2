@@ -12,9 +12,9 @@ import * as z from "zod"
 import {
   createChapter,
   editChapter,
-  getChapterById,
+  getChapterByIdClient,
   reorderChapters,
-} from "@/lib/actions/chapter.action"
+} from "@/lib/actions/server/chapter.server.action"
 import { cn } from "@/lib/utils"
 import { Button } from "@/components/ui/button"
 import {
@@ -106,7 +106,7 @@ export const ChaptersForm = ({
 
   const onEdit = async (id: string) => {
     // router.push(`/teacher/courses/${courseId}/${batchId}/chapters/${id}`);
-    const tmpTitle = (await getChapterById(id)).title
+    const tmpTitle = (await getChapterByIdClient(id)).title
     setEditIdTitle(tmpTitle)
     setIsEditing(true)
     setEditId(id)

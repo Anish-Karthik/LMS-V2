@@ -8,7 +8,7 @@ import { useForm } from "react-hook-form"
 import toast from "react-hot-toast"
 import { z } from "zod"
 
-import { createUser } from "@/lib/actions/user.actions"
+import { createUser } from "@/lib/actions/server/user.server.action"
 import { useUploadThing } from "@/lib/uploadthing"
 import { isBase64Image } from "@/lib/utils"
 import { Button } from "@/components/ui/button"

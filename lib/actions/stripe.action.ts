@@ -1,5 +1,3 @@
-"use server"
-
 import { db } from "../db"
 
 export const isUserStripeCustomer = async (userId: string) => {

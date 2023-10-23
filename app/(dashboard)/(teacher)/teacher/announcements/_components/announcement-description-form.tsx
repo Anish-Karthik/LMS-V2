@@ -9,7 +9,7 @@ import { useForm } from "react-hook-form"
 import toast from "react-hot-toast"
 import * as z from "zod"
 
-import { updateAnnouncement } from "@/lib/actions/announcement.action"
+import { updateAnnouncement } from "@/lib/actions/server/announcement.server.action"
 import { cn } from "@/lib/utils"
 import { Button } from "@/components/ui/button"
 import {

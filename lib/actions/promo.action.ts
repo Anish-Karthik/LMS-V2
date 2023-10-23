@@ -1,6 +1,13 @@
-"use server"
-
 import { db } from "../db"
+
+export type CreateOrUpdatePromoProps = {
+  id?: string
+  code: string
+  discount: number
+  expiresAt?: Date
+  userId: string
+  referralBonus?: number
+}
 
 export const createOrUpdatePromo = async ({
   id,
@@ -9,14 +16,7 @@ export const createOrUpdatePromo = async ({
   expiresAt,
   userId,
   referralBonus = 100,
-}: {
-  id?: string
-  code: string
-  discount: number
-  expiresAt?: Date
-  userId: string
-  referralBonus?: number
-}) => {
+}: CreateOrUpdatePromoProps) => {
   try {
     const userInfo = await db.user.findUnique({
       where: { userId },
@@ -62,39 +62,6 @@ export const isUniquePromoCode = async (code: string) => {
       where: { code },
     })
     return !!!promo
-  } catch (error: any) {
-    console.error(error.message)
-    throw new Error(error)
-  }
-}
-
-export const isValidPromoCode = async (code: string) => {
-  try {
-    const promo = await db.promo.findUnique({
-      where: { code },
-    })
-    if (!promo) {
-      return false
-    }
-    return true
-  } catch (error: any) {
-    console.error(error.message)
-    throw new Error(error)
-  }
-}
-
-export const isPromoExpired = async (code: string) => {
-  try {
-    const promo = await db.promo.findUnique({
-      where: { code },
-    })
-    if (!promo) {
-      return false
-    }
-    if (promo.expiresAt && promo.expiresAt < new Date()) {
-      return true
-    }
-    return false
   } catch (error: any) {
     console.error(error.message)
     throw new Error(error)

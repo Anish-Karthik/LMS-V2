@@ -9,7 +9,7 @@ import {
   deleteTopic,
   publishTopic,
   unpublishTopic,
-} from "@/lib/actions/topic.actions"
+} from "@/lib/actions/server/topic.server.action"
 import { Button } from "@/components/ui/button"
 import { ConfirmModal } from "@/components/modals/confirm-modal"
 

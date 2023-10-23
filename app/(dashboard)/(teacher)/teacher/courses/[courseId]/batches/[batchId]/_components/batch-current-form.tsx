@@ -9,7 +9,7 @@ import toast from "react-hot-toast"
 import * as z from "zod"
 
 import { ComplexBatch } from "@/types/nav"
-import { updateBatch } from "@/lib/actions/batch.action"
+import { updateBatch } from "@/lib/actions/server/batch.server.action"
 import { Button } from "@/components/ui/button"
 import {
   Form,
@@ -68,7 +68,7 @@ export const BatchCurrentForm = ({
   return (
     <div className="relative mt-6 rounded-md border bg-secondary p-4">
       {isSubmitting && (
-        <div className="absolute inset-0 flex items-center justify-center bg-black bg-opacity-50">
+        <div className="absolute inset-0 flex items-center justify-center bg-black/50">
           <div className="flex items-center gap-x-2 rounded-md bg-slate-300 px-4 py-2">
             <div className="h-4 w-4 animate-spin rounded-full border-b-2 border-white"></div>
             <p className="text-sm">Updating...</p>

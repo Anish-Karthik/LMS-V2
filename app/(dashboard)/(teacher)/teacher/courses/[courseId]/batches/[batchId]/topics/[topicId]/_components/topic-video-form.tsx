@@ -9,7 +9,7 @@ import toast from "react-hot-toast"
 import ReactPlayer from "react-player"
 import * as z from "zod"
 
-import { updateTopic } from "@/lib/actions/topic.actions"
+import { updateTopic } from "@/lib/actions/server/topic.server.action"
 import { Button } from "@/components/ui/button"
 
 interface TopicVideoFormProps {

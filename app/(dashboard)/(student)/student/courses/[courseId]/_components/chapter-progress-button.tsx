@@ -5,7 +5,7 @@ import { useRouter } from "next/navigation"
 import { CheckCircle, XCircle } from "lucide-react"
 import toast from "react-hot-toast"
 
-import { updateUserProgressTopic } from "@/lib/actions/topic.actions"
+import { updateUserProgressTopic } from "@/lib/actions/server/topic.server.action"
 import { useConfettiStore } from "@/hooks/use-confetti-store"
 import { Button } from "@/components/ui/button"
 

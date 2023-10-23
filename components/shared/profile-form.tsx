@@ -16,7 +16,7 @@ import {
 import { useForm } from "react-hook-form"
 import * as z from "zod"
 
-import { updateUser } from "@/lib/actions/user.actions"
+import { updateUser } from "@/lib/actions/server/user.server.action"
 import { formatDate_YYYYMMDD } from "@/lib/format"
 import { useUploadThing } from "@/lib/uploadthing"
 import { isBase64Image } from "@/lib/utils"

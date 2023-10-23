@@ -8,7 +8,7 @@ import {
   toTeacher,
   toUser,
   unBanUser,
-} from "@/lib/actions/user.actions"
+} from "@/lib/actions/server/user.server.action"
 import { Button } from "@/components/ui/button"
 
 import JoinOrLeave from "./join-or-leave"

@@ -7,7 +7,7 @@ import cn from "classnames"
 import { ListChecks } from "lucide-react"
 
 import { ComplexBatch } from "@/types/nav"
-import { switchManyUserBatches } from "@/lib/actions/batch.action"
+import { switchManyUserBatches } from "@/lib/actions/server/batch.server.action"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import {

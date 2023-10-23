@@ -52,7 +52,7 @@ export default function MobileChapterBar({
   return (
     <Sheet>
       <SheetTrigger asChild>
-        <div className="fixed -left-6 top-[50%] z-40 w-fit rounded-sm bg-slate-100 bg-opacity-30 p-3 opacity-40 transition-all ease-in-out hover:-left-2 hover:bg-opacity-40 hover:opacity-70 md:hidden">
+        <div className="fixed -left-6 top-[50%] z-40 w-fit rounded-sm bg-slate-100/30 p-3 opacity-40 transition-all ease-in-out hover:-left-2 hover:bg-slate-100/40 hover:opacity-70 md:hidden">
           <ArrowBigRightIcon
             width={30}
             height={30}

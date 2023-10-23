@@ -9,7 +9,7 @@ import {
   deleteAnnouncement,
   publishAnnouncement,
   unpublishAnnouncement,
-} from "@/lib/actions/announcement.action"
+} from "@/lib/actions/server/announcement.server.action"
 import { Button } from "@/components/ui/button"
 import { ConfirmModal } from "@/components/modals/confirm-modal"
 

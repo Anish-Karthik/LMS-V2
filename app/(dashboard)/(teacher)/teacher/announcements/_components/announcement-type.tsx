@@ -9,7 +9,7 @@ import "@/components/ui/checkbox"
 import { Announcement, Batch, Course } from "@prisma/client"
 import { toast } from "react-hot-toast"
 
-import { updateAnnouncement } from "@/lib/actions/announcement.action"
+import { updateAnnouncement } from "@/lib/actions/server/announcement.server.action"
 import { cn } from "@/lib/utils"
 import { Button } from "@/components/ui/button"
 import {

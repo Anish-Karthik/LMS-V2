@@ -11,7 +11,7 @@ import * as z from "zod"
 import {
   addAttachmentToAnnouncement,
   removeAttachmentFromAnnouncement,
-} from "@/lib/actions/announcement.action"
+} from "@/lib/actions/server/announcement.server.action"
 import { Button } from "@/components/ui/button"
 import { FileUpload } from "@/components/file-upload"
 

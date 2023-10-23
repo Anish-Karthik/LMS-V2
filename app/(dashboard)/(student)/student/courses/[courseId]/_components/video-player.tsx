@@ -6,7 +6,7 @@ import { Loader2, Lock } from "lucide-react"
 import { toast } from "react-hot-toast"
 import ReactPlayer from "react-player"
 
-import { updateUserProgressTopic } from "@/lib/actions/topic.actions"
+import { updateUserProgressTopic } from "@/lib/actions/server/topic.server.action"
 import { useConfettiStore } from "@/hooks/use-confetti-store"
 
 interface VideoPlayerProps {

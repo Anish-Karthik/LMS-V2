@@ -8,7 +8,7 @@ import { ImageIcon, Pencil, PlusCircle } from "lucide-react"
 import toast from "react-hot-toast"
 import * as z from "zod"
 
-import { editCourse } from "@/lib/actions/course.actions"
+import { editCourse } from "@/lib/actions/server/course.server.action"
 import { Button } from "@/components/ui/button"
 import { FileUpload } from "@/components/file-upload"
 

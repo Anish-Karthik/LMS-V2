@@ -1,22 +1,18 @@
 "use client"
 
-import React, { useEffect, useState } from "react"
-import { usePathname, useRouter, useSearchParams } from "next/navigation"
+import { useState } from "react"
+import { useRouter } from "next/navigation"
 import { zodResolver } from "@hookform/resolvers/zod"
-import { Announcement, Attachment, Course, Promo } from "@prisma/client"
-import { set } from "date-fns"
-import { Loader2, PlusCircle } from "lucide-react"
-import qs from "query-string"
+import { Course, Promo } from "@prisma/client"
 import { useForm } from "react-hook-form"
 import toast from "react-hot-toast"
 import * as z from "zod"
 
-import { createAnnouncement } from "@/lib/actions/announcement.action"
 import {
-  getPromoByCode,
+  getPromoByCodeClient,
   isPromoExpired,
   isValidPromoCode,
-} from "@/lib/actions/promo.action"
+} from "@/lib/actions/server/promo.server.action"
 import { formatPrice } from "@/lib/format"
 import { cn } from "@/lib/utils"
 import { Button } from "@/components/ui/button"
@@ -59,8 +55,6 @@ const PurchaseCourseForm = ({
   const [value, setValue] = useState("")
   const [promo, setPromo] = useState<Promo>()
   const router = useRouter()
-  const searchParams = useSearchParams()
-  const pathname = usePathname()
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
@@ -77,7 +71,7 @@ const PurchaseCourseForm = ({
     try {
       setIsCreating(true)
       toast.success("Promo Applied Success")
-      const res = await getPromoByCode(values.promo)
+      const res = await getPromoByCodeClient(values.promo)
       setPromo(res)
       // setSuccess(true)
       setValue(values.promo)

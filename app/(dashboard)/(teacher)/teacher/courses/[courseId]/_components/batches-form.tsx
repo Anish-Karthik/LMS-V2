@@ -9,7 +9,7 @@ import { useForm } from "react-hook-form"
 import toast from "react-hot-toast"
 import * as z from "zod"
 
-import { createBatch } from "@/lib/actions/batch.action"
+import { createBatchFromClient } from "@/lib/actions/server/batch.server.action"
 import { cn } from "@/lib/utils"
 import { Button } from "@/components/ui/button"
 import {
@@ -57,7 +57,7 @@ export const BatchesForm = ({ initialData, courseId }: BatchesFormProps) => {
 
   const onSubmit = async (values: z.infer<typeof formSchema>) => {
     try {
-      await createBatch({
+      await createBatchFromClient({
         courseId,
         ...values,
       })

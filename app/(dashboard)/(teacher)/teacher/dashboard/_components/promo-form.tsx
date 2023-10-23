@@ -2,17 +2,15 @@
 "use client"
 
 import { useRouter } from "next/navigation"
-import { useAuth } from "@clerk/nextjs"
 import { zodResolver } from "@hookform/resolvers/zod"
-import { Promo } from "@prisma/client"
 import { useForm } from "react-hook-form"
 import toast from "react-hot-toast"
 import * as z from "zod"
 
 import {
-  createOrUpdatePromo,
-  isUniquePromoCode,
-} from "@/lib/actions/promo.action"
+  createOrUpdatePromoClient,
+  isUniquePromoCodeClient,
+} from "@/lib/actions/server/promo.server.action"
 import { randomString } from "@/lib/format"
 import { Button } from "@/components/ui/button"
 import { Calendar } from "@/components/ui/calendar"
@@ -34,7 +32,7 @@ const formSchema = z.object({
     .toUpperCase()
     .refine(
       async (code) => {
-        return await isUniquePromoCode(code)
+        return await isUniquePromoCodeClient(code)
       },
       { message: "Promo code already exists" }
     ),
@@ -95,7 +93,7 @@ export function PromoForm({
   const onSubmit = async (values: z.infer<typeof formSchema>) => {
     try {
       // TODO: TRPC
-      await createOrUpdatePromo({ ...values, userId })
+      await createOrUpdatePromoClient({ ...values, userId })
       console.log(values)
       toast.success(
         `Promo Code ${type == "edit" ? "updated" : "created"} successfully`
