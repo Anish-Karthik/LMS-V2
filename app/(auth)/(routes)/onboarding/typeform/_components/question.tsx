@@ -1,24 +1,23 @@
 import classNames from "classnames"
 
-import { QuestionProps } from "./../../types"
-import styles from "./Question.module.css"
-import {
-  EmailInput,
-  FirstNameInput,
-  GoalInput,
-  IndustryInput,
-  Intro,
-  LastNameInput,
-  RoleInput,
-} from "./index"
 
+import styles from "@/lib/styles.module.css"
+
+export type QuestionProps = {
+  readonly inView: boolean
+  readonly inViewSlide: "up" | "down" | ""
+  readonly outView: boolean
+  readonly outViewSlide: "up" | "down" | ""
+  readonly isRendered?: boolean
+  children: React.ReactNode
+}
 export function Question({
   inView,
   inViewSlide,
   outView,
   outViewSlide,
   isRendered,
-  type,
+  children,
 }: QuestionProps) {
   return (
     <div
@@ -32,13 +31,7 @@ export function Question({
         [styles["rendered"]]: isRendered,
       })}
     >
-      {type === "intro" && <Intro />}
-      {type === "firstName" && <FirstNameInput />}
-      {type === "lastName" && <LastNameInput />}
-      {type === "industry" && <IndustryInput />}
-      {type === "role" && <RoleInput />}
-      {type === "goal" && <GoalInput />}
-      {type === "email" && <EmailInput />}
+      {children}
     </div>
   )
 }
