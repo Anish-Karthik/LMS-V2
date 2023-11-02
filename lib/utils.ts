@@ -11,38 +11,39 @@ export function isBase64Image(imageData: string) {
 }
 
 export type OnboardingType = {
-  name: string;
-  email: string;
-  phoneNo: string;
-  dob: string;
-  gender: string;
-  country: string;
-  state: string;
-  city: string;
-  employmentStatus: string;
-  howDidHear: string;
-  ICountry: ICountry | null;
-  IState: IState | null;
-  ICity: ICity | null;
+  name: string
+  email: string
+  phoneNo: string
+  dob: string
+  gender: string
+  country: string
+  state: string
+  city: string
+  employmentStatus: string
+  howDidHear: string
+  ICountry: ICountry | null
+  IState: IState | null
+  ICity: ICity | null
+  image: string
+  userId: string
 }
 export type ObjectType = {
   [key: string]: string
 }
 
-
 export function callOnce(fn: () => void, delay: number) {
-  let called = false;
+  let called = false
 
   return function () {
     if (!called) {
-      fn();
-      called = true;
+      fn()
+      called = true
 
       setTimeout(() => {
-        called = false;
-      }, delay+1000);
+        called = false
+      }, delay + 1000)
     }
-  };
+  }
 }
 export const emptyState: IState = {
   name: "None",
@@ -54,7 +55,6 @@ export const emptyCity: ICity = {
   stateCode: "",
   countryCode: "",
 }
-
 
 export const selectClassNames = {
   container: () =>

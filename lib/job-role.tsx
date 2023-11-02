@@ -280,9 +280,6 @@ export const jobRoles = [
   "Youth Counselor",
   "Zookeeper",
   "Zoologist",
-];
+]
 
-
-
-
-export const jobRolesObj = jobRoles.map((role) => ({name: role}))
+export const jobRolesObj = jobRoles.map((role) => ({ name: role }))

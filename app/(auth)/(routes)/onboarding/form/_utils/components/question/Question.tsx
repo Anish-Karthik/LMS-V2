@@ -22,7 +22,7 @@ export function Question({
 }: QuestionProps) {
   return (
     <div
-      className={classNames(styles["question-box"],  {
+      className={classNames(styles["question-box"], {
         [styles["slide-out"]]: outView,
         [styles["slide-in"]]: inView,
         [styles["out-view__up"]]: outViewSlide === "up",

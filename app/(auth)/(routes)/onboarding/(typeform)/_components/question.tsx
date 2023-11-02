@@ -1,6 +1,5 @@
 import classNames from "classnames"
 
-
 import styles from "@/lib/styles.module.css"
 
 export type QuestionProps = {
@@ -21,7 +20,7 @@ export function Question({
 }: QuestionProps) {
   return (
     <div
-      className={classNames(styles["question-box"],  {
+      className={classNames(styles["question-box"], {
         [styles["slide-out"]]: outView,
         [styles["slide-in"]]: inView,
         [styles["out-view__up"]]: outViewSlide === "up",

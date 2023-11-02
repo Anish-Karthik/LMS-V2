@@ -1,4 +1,5 @@
 import { ReactElement, useState } from "react"
+
 export type multiStepHooksType = {
   prev: number
   currentStepIndex: number
@@ -19,19 +20,19 @@ export function useMultistepForm(steps: ReactElement[]) {
   const [prev, setPrev] = useState<number>(-1)
   function next() {
     setPrev(currentStepIndex)
-    setValidCountArr(validCountArr => {
+    setValidCountArr((validCountArr) => {
       const newValidCountArr = [...validCountArr]
       newValidCountArr[currentStepIndex] = 1
       return newValidCountArr
     })
-    setCurrentStepIndex(i => {
+    setCurrentStepIndex((i) => {
       if (i >= steps.length - 1) return i
       return i + 1
     })
   }
 
   function setValidIndex(index: number, flag = 1) {
-    setValidCountArr(validCountArr => {
+    setValidCountArr((validCountArr) => {
       const newValidCountArr = [...validCountArr]
       newValidCountArr[index] = flag
       return newValidCountArr
@@ -39,11 +40,11 @@ export function useMultistepForm(steps: ReactElement[]) {
   }
 
   function getFirstInvalidStep() {
-    return validCountArr.findIndex(i => i === 0)
+    return validCountArr.findIndex((i) => i === 0)
   }
   function back() {
     setPrev(currentStepIndex)
-    setCurrentStepIndex(i => {
+    setCurrentStepIndex((i) => {
       if (i <= 0) return i
       return i - 1
     })

@@ -169,7 +169,7 @@
 }
 
 .form_heading {
-  @apply text-2xl sm:text-3xl sm:py-2 md:text-4xl font-bold text-slate-950 !important;
+  @apply text-2xl sm:text-3xl sm:py-2 md:text-4xl font-bold text-primary !important;
 }
 
 .form_description {

@@ -1,6 +1,9 @@
 import { useEffect, useRef } from "react"
 
-export function useHandleScroll(onScrollDown: () => void, onScrollUp: () => void) {
+export function useHandleScroll(
+  onScrollDown: () => void,
+  onScrollUp: () => void
+) {
   const timerIdRef = useRef<NodeJS.Timeout>()
 
   useEffect(() => {
