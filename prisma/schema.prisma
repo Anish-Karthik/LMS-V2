@@ -161,6 +161,7 @@ model Topic {
   videoUrl    String?
   type        String  @default("video")
   isPublished Boolean @default(false)
+  isNotified  Boolean @default(false)
   isFree      Boolean @default(false)
 
   chapterId String  @db.ObjectId
@@ -188,6 +189,7 @@ model Announcement {
   title       String
   description String?
   isPublished Boolean @default(false)
+  isNotified  Boolean @default(false)
   type        String  @default("general")
 
   attachments Attachment[]

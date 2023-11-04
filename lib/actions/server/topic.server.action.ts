@@ -175,6 +175,7 @@ export const publishTopic = async (topicId: string) => {
       },
       data: {
         isPublished: true,
+        isNotified: false,
       },
     })
 
@@ -193,6 +194,7 @@ export const unpublishTopic = async (topicId: string) => {
       },
       data: {
         isPublished: false,
+        isNotified: false,
       },
     })
 
@@ -266,5 +268,24 @@ export const removeAttachmentFromTopic = async (
   } catch (error: any) {
     console.error(error)
     throw new Error("Attachment deletion failed: ", error.message)
+  }
+}
+
+export const notifyTopic = async (topicId: string) => {
+  try {
+    const topic = await db.topic.update({
+      where: {
+        id: topicId,
+        isPublished: true,
+      },
+      data: {
+        isNotified: true,
+      },
+    })
+    console.log("Topic notified: ", topic)
+    return !!(topic && topic.isNotified && topic.isPublished)
+  } catch (error: any) {
+    console.log(error.message)
+    throw new Error("Topic not found: ", error.message)
   }
 }
