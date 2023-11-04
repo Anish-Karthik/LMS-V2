@@ -6,7 +6,6 @@ import { db } from "@/lib/db"
 import PurchaseCourseForm from "@/components/form/PurchaseCourseForm"
 
 const page = async ({ params }: { params: { courseId: string } }) => {
-  console.log("hi")
   const course = await db.course.findUnique({
     where: {
       id: params.courseId,

@@ -1,5 +1,6 @@
-"use server";
-import nodemailer from "nodemailer";
+"use server"
+
+import nodemailer from "nodemailer"
 
 const sender = nodemailer.createTransport({
   service: "gmail",
@@ -7,18 +8,18 @@ const sender = nodemailer.createTransport({
     user: process.env.MAIL_USER,
     pass: process.env.MAIL_PASS,
   },
-});
+})
 
 export async function sendmail({
   to,
   subject,
-  text = "HI",
+  text,
   html,
 }: {
-  to: string;
-  subject?: string;
-  text?: string;
-  html?: string;
+  to: string[]
+  subject?: string
+  text?: string
+  html?: any
 }) {
   const info = await sender.sendMail({
     from: process.env.MAIL_USER,
@@ -26,6 +27,6 @@ export async function sendmail({
     subject,
     text,
     html,
-  });
-  console.log("Message sent: %s", info.messageId);
+  })
+  console.log("Message sent: %s", info.messageId)
 }

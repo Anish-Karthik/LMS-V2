@@ -3,7 +3,10 @@ import Link from "next/link"
 import { Course } from "@prisma/client"
 import { AlertCircle, ArrowLeft, FileIcon, LayoutDashboard } from "lucide-react"
 
-import { getAnnouncementByid } from "@/lib/actions/announcement.action"
+import {
+  getAnnouncementByid,
+  getEmailsByAnnouncement,
+} from "@/lib/actions/announcement.action"
 import { getBatches } from "@/lib/actions/batch.action"
 import { getCourses } from "@/lib/actions/course.actions"
 import { Banner } from "@/components/banner"
@@ -15,6 +18,7 @@ import { AnnouncementDescriptionForm } from "../_components/announcement-descrip
 import { AnnouncementTitleForm } from "../_components/announcement-title-form"
 import AnnouncementType from "../_components/announcement-type"
 import { AttachmentForm } from "../_components/attachment-form"
+import NotifyAnnouncement from "../_components/notify-announcement"
 
 const CreateAnnoucement = async ({
   params,
@@ -33,6 +37,13 @@ const CreateAnnoucement = async ({
     announcement.description,
     announcement.type,
   ]
+
+  const emails = await getEmailsByAnnouncement({
+    announcementId: params.announcementId,
+    announcementType: announcement.type,
+    courseId: searchParams.courseId,
+    batchId: searchParams.batchId,
+  })
 
   const totalFields = requiredFields.length
   const completedFields = requiredFields.filter(Boolean).length
@@ -67,13 +78,19 @@ const CreateAnnoucement = async ({
                   Complete all fields {completionText}
                 </span>
               </div>
-              <AnnouncementActions
-                disabled={!isComplete}
-                batchId={searchParams.batchId}
-                announcementId={params.announcementId}
-                courseId={searchParams.courseId}
-                isPublished={announcement.isPublished}
-              />
+              <div className="flex gap-2">
+                <NotifyAnnouncement
+                  announcement={announcement}
+                  emails={emails}
+                />
+                <AnnouncementActions
+                  disabled={!isComplete}
+                  batchId={searchParams.batchId}
+                  announcementId={params.announcementId}
+                  courseId={searchParams.courseId}
+                  isPublished={announcement.isPublished}
+                />
+              </div>
             </div>
           </div>
         </div>

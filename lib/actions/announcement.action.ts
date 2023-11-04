@@ -31,3 +31,43 @@ export const getAnnouncements = async () => {
     throw new Error("Announcements not found", error.message)
   }
 }
+
+export const getEmailsByAnnouncement = async ({
+  announcementId,
+  announcementType,
+  courseId,
+  batchId,
+}: {
+  announcementId: string
+  announcementType: string
+  courseId?: string
+  batchId?: string
+}) => {
+  try {
+    if (announcementType === "general") {
+      const emails = await db.user.findMany({
+        select: {
+          email: true,
+        },
+      })
+      return emails.map((email) => email.email!)
+    }
+    const emails = await db.user.findMany({
+      where: {
+        purchases: {
+          some: {
+            batchId: batchId,
+            courseId: courseId,
+          },
+        },
+      },
+      select: {
+        email: true,
+      },
+    })
+    return emails.map((email) => email.email!)
+  } catch (error: any) {
+    console.error(error)
+    throw new Error("Emails not found", error.message)
+  }
+}
