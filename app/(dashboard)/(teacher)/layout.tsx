@@ -37,7 +37,7 @@ const DashBoardLayout = async ({
               width={50}
               height={50}
             />
-            <MainNav className="mx-6" />
+            <MainNav isAdmin={userInfo.role == "admin"} />
             <div className="ml-auto flex items-center space-x-4">
               {/* <Search /> */}
               <ThemeToggle />
@@ -49,7 +49,7 @@ const DashBoardLayout = async ({
           {/* <CurrentPathNavigator /> */}
           <div>{children}</div>
         </main>
-        <MobileNav />
+        <MobileNav isAdmin={userInfo.role == "admin"} />
       </div>
     </div>
   )

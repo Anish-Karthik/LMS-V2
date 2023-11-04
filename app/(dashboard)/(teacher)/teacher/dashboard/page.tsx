@@ -36,6 +36,9 @@ export default async function DashboardPage() {
     },
   })
   if (!userInfo || !user) redirect("/sign-in")
+  if (userInfo.role === "teacher") {
+    redirect("/teacher/announcements")
+  }
   return (
     <>
       <CurrentPathNavigator />

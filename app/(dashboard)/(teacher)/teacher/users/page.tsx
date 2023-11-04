@@ -1,3 +1,4 @@
+import { redirect } from "next/navigation"
 import { currentUser } from "@clerk/nextjs"
 
 import { getUser, getUsersWhoHaveRoles } from "@/lib/actions/user.actions"
@@ -28,6 +29,9 @@ const page = async ({
 
   const user = await currentUser()
   const userInfo = await getUser(user!.id)
+  if (userInfo!.role === "teacher") {
+    redirect("/teacher/announcements")
+  }
   return (
     <div>
       <CurrentPathNavigator />

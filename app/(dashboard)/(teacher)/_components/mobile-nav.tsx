@@ -5,7 +5,7 @@ import { usePathname } from "next/navigation"
 
 import { sidebarLinksTeacherMobile } from "@/app/constants"
 
-function MobileNav() {
+function MobileNav({ isAdmin = false }: { isAdmin?: boolean }) {
   // const { userId } = useAuth()
   // const router = useRouter()
   const pathname = usePathname()
@@ -15,6 +15,7 @@ function MobileNav() {
         {sidebarLinksTeacherMobile.map((link, ind) => {
           const isActive = pathname.includes(link.route.toLowerCase())
 
+          if (isAdmin && !link.role.includes("teacher")) return null
           // if(link.route === '/profile') link.route = `/profile/${userId}`
 
           return (

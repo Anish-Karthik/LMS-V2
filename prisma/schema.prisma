@@ -41,6 +41,7 @@ model User {
   isBanned      Boolean   @default(false)
   referralCount Int       @default(0)
   referralBonus Int       @default(0)
+  isSuperAdmin  Boolean   @default(false)
 
   promos    Promo[]
   purchases Purchase[]

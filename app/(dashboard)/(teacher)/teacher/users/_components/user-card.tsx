@@ -54,7 +54,8 @@ const UserCard = ({ user, viewer }: UserCardProps) => {
         </Link>
 
         {/* Community members view */}
-        {viewer.id !== user.id &&
+        {!user.isSuperAdmin &&
+          viewer.id !== user.id &&
           viewer.role === "admin" &&
           user.role === "student" && (
             // Remove user from community if viewer is moderator
@@ -66,7 +67,8 @@ const UserCard = ({ user, viewer }: UserCardProps) => {
             />
           )}
         {/* teacher promotion */}
-        {viewer.id !== user.id &&
+        {!user.isSuperAdmin &&
+          viewer.id !== user.id &&
           viewer.role === "admin" &&
           user.role !== "student" &&
           user.role !== "admin" && (
@@ -78,7 +80,8 @@ const UserCard = ({ user, viewer }: UserCardProps) => {
               action={user.role === "teacher" ? "toUser" : "toTeacher"}
             />
           )}
-        {viewer.id !== user.id &&
+        {!user.isSuperAdmin &&
+          viewer.id !== user.id &&
           viewer.role === "admin" &&
           user.role !== "student" && (
             // Promote/Demote user to/from moderator if viewer is moderator

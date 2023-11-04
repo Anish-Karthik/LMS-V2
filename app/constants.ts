@@ -71,7 +71,7 @@ export const routes: Route[] = [
     roles: ["admin", "moderator"],
   },
   {
-    label: "Settings",
+    label: "Profile",
     icon: SettingsIcon,
     href: "/teacher/settings",
     color: "text-white-500",
@@ -86,24 +86,28 @@ export const sidebarLinksTeacher = [
     icon: HomeIcon,
     route: "/teacher/dashboard",
     label: "Home",
+    role: ["admin"],
   },
   {
     imgUrl: "/assets/community.svg",
     icon: User,
     route: "/teacher/users",
     label: "Users",
+    role: ["admin"],
   },
   {
     imgUrl: "/assets/courses.svg",
     icon: Book,
     route: "/teacher/courses",
     label: "Products",
+    role: ["teacher", "admin"],
   },
   {
     imgUrl: "/assets/reply.svg",
     icon: Speaker,
     route: "/teacher/announcements",
     label: "Announcements",
+    role: ["teacher", "admin"],
   },
   // {
   //   imgUrl: "/assets/recordings.svg",
@@ -115,7 +119,8 @@ export const sidebarLinksTeacher = [
     imgUrl: "/assets/edit.svg",
     icon: SettingsIcon,
     route: "/teacher/settings",
-    label: "Settings",
+    label: "Profile",
+    role: ["teacher", "admin"],
   },
 ]
 export const sidebarLinksTeacherMobile = [
@@ -124,24 +129,28 @@ export const sidebarLinksTeacherMobile = [
     icon: User,
     route: "/teacher/users",
     label: "Users",
+    role: ["admin"],
   },
   {
     imgUrl: "/assets/courses.svg",
     icon: Book,
     route: "/teacher/courses",
     label: "Products",
+    role: ["admin"],
   },
   {
     imgUrl: "/assets/home.svg",
     icon: HomeIcon,
     route: "/teacher/dashboard",
     label: "Home",
+    role: ["teacher", "admin"],
   },
   {
     imgUrl: "/assets/reply.svg",
     icon: Newspaper,
     route: "/teacher/announcements",
     label: "Announcements",
+    role: ["teacher", "admin"],
   },
   // {
   //   imgUrl: "/assets/recordings.svg",
@@ -153,7 +162,8 @@ export const sidebarLinksTeacherMobile = [
     imgUrl: "/assets/edit.svg",
     icon: SettingsIcon,
     route: "/teacher/settings",
-    label: "Settings",
+    label: "Profile",
+    role: ["teacher", "admin"],
   },
 ]
 
@@ -180,7 +190,7 @@ export const sidebarLinksStudentMobile = [
     imgUrl: "/assets/edit.svg",
     icon: SettingsIcon,
     route: "/student/settings",
-    label: "Settings",
+    label: "Profile",
   },
 ]
 
