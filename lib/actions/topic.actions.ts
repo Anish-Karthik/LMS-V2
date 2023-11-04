@@ -194,3 +194,24 @@ export const getDetailedTopicClient = async ({
     }
   }
 }
+
+export async function getTopicEmails({ batchId }: { batchId: string }) {
+  try {
+    const emails = await db.user.findMany({
+      where: {
+        purchases: {
+          some: {
+            batchId: batchId,
+          },
+        },
+      },
+      select: {
+        email: true,
+      },
+    })
+    return emails.map((email) => email.email!)
+  } catch (err: any) {
+    console.log(err.message)
+    throw new Error("Error getting emails", err)
+  }
+}

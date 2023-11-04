@@ -3,12 +3,14 @@ import { redirect } from "next/navigation"
 import { auth } from "@clerk/nextjs"
 import { ArrowLeft, FileIcon, LayoutDashboard, Video } from "lucide-react"
 
+import { getTopicEmails } from "@/lib/actions/topic.actions"
 import { db } from "@/lib/db"
 import { Banner } from "@/components/banner"
 import { IconBadge } from "@/components/icon-badge"
 import CurrentPathNavigator from "@/app/(dashboard)/(teacher)/_components/current-pathname"
 
 import { AttachmentForm } from "./_components/attachment-form"
+import NotifyTopic from "./_components/notify-topic"
 import { TopicActions } from "./_components/topic-actions"
 import { TopicDescriptionForm } from "./_components/topic-description-form"
 import { TopicTitleForm } from "./_components/topic-title-form"
@@ -54,6 +56,9 @@ const topicIdPage = async ({
   const completionText = `(${completedFields}/${totalFields})`
 
   const isComplete = requiredFields.every(Boolean)
+  const emails = await getTopicEmails({
+    batchId: params.batchId,
+  })
 
   return (
     <>
@@ -81,13 +86,16 @@ const topicIdPage = async ({
                   Complete all fields {completionText}
                 </span>
               </div>
-              <TopicActions
-                disabled={!isComplete}
-                batchId={params.batchId}
-                topicId={params.topicId}
-                courseId={params.courseId}
-                isPublished={topic.isPublished}
-              />
+              <div className="flex gap-2">
+                <NotifyTopic topic={topic} emails={emails} />
+                <TopicActions
+                  disabled={!isComplete}
+                  batchId={params.batchId}
+                  topicId={params.topicId}
+                  courseId={params.courseId}
+                  isPublished={topic.isPublished}
+                />
+              </div>
             </div>
           </div>
         </div>
