@@ -4,6 +4,7 @@ import { useEffect, useState } from "react"
 import { Announcement, Attachment } from "@prisma/client"
 import { toast } from "react-hot-toast"
 
+import { notifyAnnouncement } from "@/lib/actions/server/announcement.server.action"
 import { getAnnouncementDisplay } from "@/lib/mailing/announcement"
 import { sendmail } from "@/lib/mailing/mailer"
 import { callOnce } from "@/lib/utils"
@@ -18,14 +19,19 @@ const NotifyAnnouncement = ({
   announcement: Announcement & { attachments: Attachment[] }
 }) => {
   const [isLoading, setIsLoading] = useState(false)
-  const [isNotified, setIsNotified] = useState(false)
-  const [disabled, setDisabled] = useState(!announcement.isPublished)
+  const [isNotified, setIsNotified] = useState(
+    announcement.isNotified || !announcement.isPublished
+  )
 
   const onNotify = async () => {
     try {
       setIsLoading(true)
       setIsNotified(true)
-      setDisabled(true)
+      const res = await notifyAnnouncement(announcement.id)
+      if (!res) {
+        toast.error("Cant notify announcement")
+        return
+      }
       sendmail({
         to: emails,
         subject: announcement.title,
@@ -39,16 +45,12 @@ const NotifyAnnouncement = ({
     }
   }
   useEffect(() => {
-    setDisabled(!announcement.isPublished)
-  }, [announcement.isPublished, announcement])
+    setIsNotified(announcement.isNotified || !announcement.isPublished)
+  }, [announcement.isNotified, announcement, announcement.isPublished])
   const triggerNotify = callOnce(onNotify, 1000 * 60)
   return (
     <ConfirmModal onConfirm={triggerNotify}>
-      <Button
-        disabled={isNotified || disabled || isLoading}
-        variant="outline"
-        size="sm"
-      >
+      <Button disabled={isNotified || isLoading} variant="outline" size="sm">
         {isNotified ? "Notified" : "Notify"}
       </Button>
     </ConfirmModal>

@@ -87,7 +87,13 @@ export const publishAnnouncement = async (
     }
     return await db.announcement.update({
       where: { id },
-      data: { isPublished: true, courseId, batchId, ...values },
+      data: {
+        isPublished: true,
+        isNotified: false,
+        courseId,
+        batchId,
+        ...values,
+      },
     })
   } catch (error: any) {
     console.error(error)
@@ -101,6 +107,7 @@ export const unpublishAnnouncement = async (id: string) => {
       where: { id },
       data: {
         isPublished: false,
+        isNotified: false,
         courseId: null,
         batchId: null,
       },
@@ -147,5 +154,28 @@ export const removeAttachmentFromAnnouncement = async (
   } catch (error: any) {
     console.error(error)
     throw new Error("Attachment deletion failed: ", error.message)
+  }
+}
+
+export async function notifyAnnouncement(annoucementId: string) {
+  try {
+    const announcement = await db.announcement.update({
+      where: {
+        id: annoucementId,
+        isPublished: true,
+      },
+      data: {
+        isNotified: true,
+      },
+    })
+    console.log("announcement notified: ", announcement)
+    return !!(
+      announcement &&
+      announcement.isNotified &&
+      announcement.isPublished
+    )
+  } catch (error: any) {
+    console.log(error.message)
+    throw new Error("Announcement Error: ", error.message)
   }
 }
