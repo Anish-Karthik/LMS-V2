@@ -56,12 +56,19 @@ export const isUserPurchasedCourse = async (
   }
 }
 
-export const purchaseCourse = async (
-  userId: string,
-  courseId: string,
-  batchId: string
-) => {
+export const purchaseCourse = async ({
+  userId,
+  courseId,
+  batchId,
+  price,
+}: {
+  userId: string
+  courseId: string
+  price: number
+  batchId?: string
+}) => {
   try {
+    // TODO: ADD PRICE to purchase
     const user = await getUser(userId)
     console.log("user", user)
     if (!courseId || !userId || !user) throw new Error("Invalid data")
@@ -79,6 +86,7 @@ export const purchaseCourse = async (
     let defaultBatch = await getDefaultBatch(courseId)
     const purchase = await db.purchase.create({
       data: {
+        price,
         courseId,
         userId,
         userObjId: user.id,

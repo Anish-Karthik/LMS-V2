@@ -26,22 +26,22 @@ model Promo {
 }
 
 model User {
-  id            String    @id @default(auto()) @map("_id") @db.ObjectId
-  userId        String    @unique
-  phoneNo       String?   @unique
-  email         String?   @unique
+  id            String   @id @default(auto()) @map("_id") @db.ObjectId
+  userId        String   @unique
+  phoneNo       String?  @unique
+  email         String   @unique
   name          String
   image         String?
-  dob           DateTime?
-  country       String?
-  city          String?
-  state         String?
-  gender        String    @default("prefer not to say")
-  role          String    @default("user")
-  isBanned      Boolean   @default(false)
-  referralCount Int       @default(0)
-  referralBonus Int       @default(0)
-  isSuperAdmin  Boolean   @default(false)
+  dob           DateTime
+  country       String
+  city          String   @default("None")
+  state         String   @default("None")
+  gender        String   @default("prefer not to say")
+  role          String   @default("user")
+  isBanned      Boolean  @default(false)
+  referralCount Int      @default(0)
+  referralBonus Int      @default(0)
+  isSuperAdmin  Boolean  @default(false)
 
   promos    Promo[]
   purchases Purchase[]
@@ -58,7 +58,7 @@ model User {
 model Purchase {
   id     String @id @default(auto()) @map("_id") @db.ObjectId
   userId String
-  // amountPaid Float
+  price  Float  @default(0)
 
   courseId String @db.ObjectId
   course   Course @relation(fields: [courseId], references: [id], onDelete: Cascade)

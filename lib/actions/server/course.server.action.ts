@@ -4,6 +4,7 @@ import { db } from "@/lib/db"
 
 import { createBatch } from "../batch.action"
 import { addBatchToCourse } from "../course.actions"
+import { purchaseCourse } from "../user.actions"
 
 export const createCourse = async ({
   title,
@@ -68,5 +69,31 @@ export const editCourse = async ({
   } catch (e: any) {
     console.error(e)
     throw new Error(e.message)
+  }
+}
+
+export const performPurchaseAsFree = async ({
+  userId,
+  courseId,
+  batchId,
+  price,
+  promoId,
+}: {
+  userId: string
+  courseId: string
+  price: number
+  batchId?: string
+  promoId?: string
+}) => {
+  try {
+    await db.promo.delete({
+      where: {
+        id: promoId,
+      },
+    })
+    await purchaseCourse({ userId, courseId, batchId, price })
+  } catch (error: any) {
+    console.error(error)
+    throw new Error(error.message)
   }
 }

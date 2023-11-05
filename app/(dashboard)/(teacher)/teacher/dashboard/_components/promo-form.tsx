@@ -36,7 +36,11 @@ const formSchema = z.object({
       },
       { message: "Promo code already exists" }
     ),
-  discount: z.number().min(1).max(100),
+  discount: z
+    .string()
+    .min(1)
+    .max(3)
+    .refine((val) => parseInt(val) <= 100 && parseInt(val) > 0),
   expiresAt: z
     .date()
     .optional()
@@ -48,7 +52,11 @@ const formSchema = z.object({
 const formSchemaEdit = z.object({
   id: z.string().optional(),
   code: z.string().min(6).max(12).toUpperCase(),
-  discount: z.number().min(1).max(100),
+  discount: z
+    .string()
+    .min(1)
+    .max(3)
+    .refine((val) => parseInt(val) <= 100 && parseInt(val) > 0),
   expiresAt: z
     .date()
     .optional()
@@ -81,7 +89,7 @@ export function PromoForm({
     defaultValues: {
       id: id || undefined,
       code: code || randomString(12),
-      discount: discount || 10,
+      discount: discount?.toString() || "10",
       expiresAt: expiresAt || undefined,
     },
   })
@@ -93,7 +101,11 @@ export function PromoForm({
   const onSubmit = async (values: z.infer<typeof formSchema>) => {
     try {
       // TODO: TRPC
-      await createOrUpdatePromoClient({ ...values, userId })
+      await createOrUpdatePromoClient({
+        ...values,
+        userId,
+        discount: parseInt(values.discount),
+      })
       console.log(values)
       toast.success(
         `Promo Code ${type == "edit" ? "updated" : "created"} successfully`
@@ -141,7 +153,7 @@ export function PromoForm({
                 <FormControl>
                   <Input
                     disabled={isSubmitting}
-                    type="number"
+                    type={"number"}
                     placeholder="e.g. 10 for 10%"
                     {...field}
                   />

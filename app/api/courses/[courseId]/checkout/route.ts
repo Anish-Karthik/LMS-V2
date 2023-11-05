@@ -73,6 +73,7 @@ export async function POST(
         courseId: course.id,
         userId: user.id,
         promoCode: (promo as Promo)?.code,
+        price: price || course.price,
       },
     })
 

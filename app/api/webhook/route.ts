@@ -28,6 +28,7 @@ export async function POST(req: Request) {
   const userId = session?.metadata?.userId
   const courseId = session?.metadata?.courseId
   const promoCode = session?.metadata?.promoCode
+  const price = session?.metadata?.price
 
   if (event.type === "checkout.session.completed") {
     if (!userId || !courseId) {
@@ -36,7 +37,12 @@ export async function POST(req: Request) {
       })
     }
     const defaultBatch = await getDefaultBatch(courseId)
-    await purchaseCourse(userId, courseId, defaultBatch.id)
+    await purchaseCourse({
+      userId,
+      courseId,
+      batchId: defaultBatch.id,
+      price: parseInt(price || "0"),
+    })
     console.log("purchaseCourse", userId, courseId)
     if (promoCode) {
       console.log("afterReferral from route", promoCode)

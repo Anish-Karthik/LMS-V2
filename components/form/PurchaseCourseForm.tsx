@@ -145,8 +145,8 @@ const PurchaseCourseForm = ({
       {success && (
         <div className="flex flex-col items-center justify-center gap-2 sm:flex-row">
           <CourseEnrollButton
-            price={discountedPrice || course.price!}
             courseId={courseId}
+            originalPrice={course.price!}
             promo={promo}
             userId={userId}
           />
