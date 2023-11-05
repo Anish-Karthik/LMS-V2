@@ -7,7 +7,7 @@ import { OnboardingType } from "@/lib/utils"
 
 import TypeForm from "./_components/typeform"
 
-const page = async () => {
+const page = async ({ searchParams }: { searchParams: { promo: string } }) => {
   const user = await currentUser()
   if (!user) {
     redirect("/sign-in")
@@ -42,7 +42,7 @@ const page = async () => {
     image: user.imageUrl || "",
     userId: user.id,
   }
-  return <TypeForm initialData={initialData} />
+  return <TypeForm initialData={initialData} promo={searchParams.promo} />
 }
 
 export default page

@@ -1,6 +1,6 @@
 "use client"
 
-import { useState } from "react"
+import { useEffect, useState } from "react"
 import { useRouter } from "next/navigation"
 import { zodResolver } from "@hookform/resolvers/zod"
 import { Course, Promo } from "@prisma/client"
@@ -45,15 +45,17 @@ const PurchaseCourseForm = ({
   courseId,
   course,
   userId,
+  promoObj,
 }: {
   userId: string
   courseId: string
   course: Course
+  promoObj?: Promo
 }) => {
   const [isCreating, setIsCreating] = useState(false)
   const [success, setSuccess] = useState(false)
   const [value, setValue] = useState("")
-  const [promo, setPromo] = useState<Promo>()
+  const [promo, setPromo] = useState<Promo | undefined>(promoObj)
   const router = useRouter()
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
@@ -61,6 +63,16 @@ const PurchaseCourseForm = ({
       promo: value,
     },
   })
+
+  useEffect(() => {
+    if (promoObj) {
+      form.setValue("promo", promoObj.code)
+      form.handleSubmit(onSubmit)
+      // setSuccess(true)
+      setValue(promoObj.code)
+      setPromo(promoObj)
+    }
+  }, [promoObj, form, setValue, form.getValues])
 
   const { isSubmitting, isValid } = form.formState
   const discountedPrice = promo
@@ -118,6 +130,7 @@ const PurchaseCourseForm = ({
                   <FormControl>
                     <Input
                       disabled={isSubmitting}
+                      autoFocus={true}
                       placeholder="e.g. 'Introduction to the course'"
                       {...field}
                     />
@@ -135,7 +148,7 @@ const PurchaseCourseForm = ({
                 type={"button"}
                 onClick={() => setSuccess(true)}
               >
-                Continue {!isValid && "without promo"}
+                Continue {!promoObj && !isValid && "without promo"}
               </Button>
             </div>
           </form>

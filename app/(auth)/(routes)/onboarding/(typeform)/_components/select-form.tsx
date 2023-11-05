@@ -37,6 +37,7 @@ const SelectForm = ({
   data,
   name,
   options,
+  promo,
 }: {
   getHooks: () => multiStepHooksType
   updateFields: (fields: Partial<OnboardingType>) => void
@@ -45,6 +46,7 @@ const SelectForm = ({
   data: OnboardingType
   name: "gender" | "howDidHear"
   options: ObjectType
+  promo?: string
 }) => {
   const {
     steps,
@@ -106,11 +108,11 @@ const SelectForm = ({
         })
         setValidIndex(currentStepIndex)
         toast.success("Form submitted")
-        router.push("/purchase")
+        router.push(`/purchase?promo=${promo}`)
       } catch (error) {
         toast.error("Some Error occurred, try filling again")
         console.log(error)
-        router.push("/onboarding")
+        router.push(`/onboarding?promo=${promo}`)
       }
       // alert("form submitted")
     }

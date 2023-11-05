@@ -41,7 +41,7 @@ const LandingNavbar = ({
             Get Started
           </Button>
         </Link>
-        {<UserButton />}
+        {<UserButton afterSignOutUrl="/" afterSwitchSessionUrl="/" />}
       </div>
     </nav>
   )

@@ -102,44 +102,6 @@ const ProfileComponent = ({
           <p className="text-gray-600">{userInfo.role}</p>
         </div>
       </div>
-      {/* <Separator />
-      <div className="grid grid-cols-3 gap-4">
-        <div className="col-span-1">
-          <p>Referral Count</p>
-        </div>
-        <div className="col-span-2">
-          <p className="text-gray-600">{userInfo.referralCount}</p>
-        </div>
-      </div> */}
-      {/* <Separator />
-      <div className="grid grid-cols-3 gap-4">
-        <div className="col-span-1">
-          <p>Referral Balance</p>
-        </div>
-        <div className="col-span-2">
-          <p className="text-gray-600">{userInfo.referralBonus}</p>
-        </div>
-      </div>
-      <Separator /> */}
-      {/* <div className="grid grid-cols-3 gap-4">
-        <div className="col-span-1">
-          <p>Referral Bonus</p>
-        </div>
-        <div className="col-span-2">
-          <p className="text-gray-600">{formatPrice(100)}</p>
-        </div>
-      </div>
-      <Separator />
-      <div className="grid grid-cols-3 gap-4">
-        <div className="col-span-1">
-          <p>Referral Code</p>
-        </div>
-        <div className="col-span-2">
-          <p className="text-gray-600">{promo?.code}</p>
-        </div>
-      </div> */}
-      {/* <Separator /> */}
-
       <Separator />
     </div>
   )

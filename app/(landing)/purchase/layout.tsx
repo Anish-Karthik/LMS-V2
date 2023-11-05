@@ -7,9 +7,9 @@ import { getUser } from "@/lib/actions/user.actions"
 
 const DashBoardLayout = async ({ children }: { children: React.ReactNode }) => {
   const user = await currentUser()
-  if (!user) redirect("/sign-in")
+  if (!user) redirect(`/sign-in`)
   const userInfo = await getUser(user.id)
-  if (!userInfo) redirect("/onboarding")
+  // if (!userInfo) redirect(`/onboarding?promo=${searchParams?.promo}`)
   const courses = await getCourses()
   if (!courses || !courses.length) return <div>No Courses found</div>
   // Extensiblity: Can show multiple courses if needed

@@ -50,7 +50,6 @@ const ReferralCard = ({
           </div>
         </div>
       </div>
-
       <div className="flex flex-row gap-4">
         <div className="flex flex-col gap-1">
           <p className="text-sm text-[#FAF8F1]">

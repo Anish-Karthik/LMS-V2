@@ -5,7 +5,13 @@ import { currentUser } from "@clerk/nextjs"
 import { db } from "@/lib/db"
 import PurchaseCourseForm from "@/components/form/PurchaseCourseForm"
 
-const page = async ({ params }: { params: { courseId: string } }) => {
+const page = async ({
+  params,
+  searchParams,
+}: {
+  params: { courseId: string }
+  searchParams: { promo: string }
+}) => {
   const course = await db.course.findUnique({
     where: {
       id: params.courseId,
@@ -23,7 +29,16 @@ const page = async ({ params }: { params: { courseId: string } }) => {
     if (userInfo.role === "teacher" || userInfo.role === "admin")
       redirect("/teacher/dashboard")
   } else {
-    redirect("/onboarding")
+    redirect(`/onboarding?promo=${searchParams.promo}`)
+  }
+  let promo = undefined
+  if (searchParams.promo) {
+    promo =
+      (await db.promo.findUnique({
+        where: {
+          code: searchParams.promo,
+        },
+      })) || undefined
   }
 
   return (
@@ -31,6 +46,7 @@ const page = async ({ params }: { params: { courseId: string } }) => {
       courseId={params.courseId}
       course={course!}
       userId={user.id}
+      promoObj={promo}
     />
   )
 }

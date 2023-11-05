@@ -29,7 +29,13 @@ import GenericForm from "./generic-form"
 import SelectForm from "./select-form"
 
 const total = 9
-const TypeForm = ({ initialData }: { initialData: OnboardingType }) => {
+const TypeForm = ({
+  initialData,
+  promo,
+}: {
+  initialData: OnboardingType
+  promo?: string
+}) => {
   const [data, setData] = useState<OnboardingType>(initialData)
   function updateFields(fields: Partial<OnboardingType>) {
     setData((prev) => {
@@ -202,6 +208,7 @@ const TypeForm = ({ initialData }: { initialData: OnboardingType }) => {
       }}
       updateFields={updateFields}
       data={data}
+      promo={promo}
     />,
   ])
   function getHooks(): multiStepHooksType {
