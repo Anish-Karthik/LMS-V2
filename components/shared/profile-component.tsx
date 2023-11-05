@@ -5,6 +5,8 @@ import { Promo, User } from "@prisma/client"
 import { formatPrice } from "@/lib/format"
 import { Separator } from "@/components/ui/separator"
 
+import ReferralCard from "../card/referral-card"
+
 const ProfileComponent = ({
   userInfo,
   promo,
@@ -14,13 +16,19 @@ const ProfileComponent = ({
 }) => {
   return (
     <div className="grid grid-cols-1 gap-8 ">
-      <div className="mx-auto flex items-center justify-center">
+      <div className="mx-auto flex w-full items-center justify-evenly gap-5 max-md:flex-col">
         <Image
           src={userInfo.image!}
           alt="avatar"
           width={200}
           height={200}
           className="rounded-full"
+        />
+        <ReferralCard
+          promo={promo}
+          referralBonus={10}
+          coins={userInfo.referralBonus}
+          referralCount={userInfo.referralCount}
         />
       </div>
       <div className="grid grid-cols-3 gap-4">
@@ -94,7 +102,7 @@ const ProfileComponent = ({
           <p className="text-gray-600">{userInfo.role}</p>
         </div>
       </div>
-      <Separator />
+      {/* <Separator />
       <div className="grid grid-cols-3 gap-4">
         <div className="col-span-1">
           <p>Referral Count</p>
@@ -102,8 +110,8 @@ const ProfileComponent = ({
         <div className="col-span-2">
           <p className="text-gray-600">{userInfo.referralCount}</p>
         </div>
-      </div>
-      <Separator />
+      </div> */}
+      {/* <Separator />
       <div className="grid grid-cols-3 gap-4">
         <div className="col-span-1">
           <p>Referral Balance</p>
@@ -112,8 +120,8 @@ const ProfileComponent = ({
           <p className="text-gray-600">{userInfo.referralBonus}</p>
         </div>
       </div>
-      <Separator />
-      <div className="grid grid-cols-3 gap-4">
+      <Separator /> */}
+      {/* <div className="grid grid-cols-3 gap-4">
         <div className="col-span-1">
           <p>Referral Bonus</p>
         </div>
@@ -129,16 +137,9 @@ const ProfileComponent = ({
         <div className="col-span-2">
           <p className="text-gray-600">{promo?.code}</p>
         </div>
-      </div>
-      <Separator />
-      <div className="grid grid-cols-3 gap-4">
-        <div className="col-span-1">
-          <p>Referral Link</p>
-        </div>
-        <div className="col-span-2">
-          <p className="text-gray-600">{promo?.code}</p>
-        </div>
-      </div>
+      </div> */}
+      {/* <Separator /> */}
+
       <Separator />
     </div>
   )

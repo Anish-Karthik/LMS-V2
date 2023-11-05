@@ -191,7 +191,6 @@ export function ProfileForm({ userInfo }: { userInfo: User }) {
         city: data.city,
         country: data.country,
         state: data.state,
-        
       })
       toast({
         title: "You submitted the following values:",
