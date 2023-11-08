@@ -4,6 +4,20 @@ export const formatPrice = (price: number) => {
     currency: "INR",
   }).format(price)
 }
+export const roundTo = (num: number, precision: number = 2) => {
+  const factor = Math.pow(10, precision)
+  return Math.round(num * factor) / factor
+}
+
+export const formatNumber = (
+  num: number,
+  standard?: "Indian" | "International"
+) => {
+  if (standard === "International") {
+    return new Intl.NumberFormat("en-US").format(num)
+  }
+  return new Intl.NumberFormat("en-IN").format(num)
+}
 
 export const formatDate = (date: Date) => {
   return new Intl.DateTimeFormat("en-US", {

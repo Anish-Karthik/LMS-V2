@@ -9,6 +9,7 @@ import {
   getStripeCustomer,
 } from "@/lib/actions/stripe.action"
 import { isUserPurchasedCourse } from "@/lib/actions/user.actions"
+import { db } from "@/lib/db"
 import { stripe } from "@/lib/stripe"
 
 export async function POST(
@@ -63,6 +64,17 @@ export async function POST(
       stripeCustomer = await createStripeCustomer(user.id, customer.id)
     }
 
+    const referred = promo
+      ? !!(await db.promo.findUnique({
+          where: {
+            code: promo,
+            user: {
+              OR: [{ role: "student" }, { role: "teacher" }],
+            },
+          },
+        }))
+      : false
+
     const session = await stripe.checkout.sessions.create({
       customer: stripeCustomer.stripeCustomerId,
       line_items,
@@ -74,6 +86,7 @@ export async function POST(
         userId: user.id,
         promoCode: (promo as Promo)?.code,
         price: price || course.price,
+        referred: referred.toString(),
       },
     })
 

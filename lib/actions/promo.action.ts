@@ -40,12 +40,44 @@ export const createOrUpdatePromo = async ({
         })
       }
     }
-
+    const STUDENT_REFERRAL_DURATION_MONTHS =
+      parseInt(process.env.STUDENT_REFERRAL_DURATION_MONTHS || "0") || 6
+    const TEACHER_REFERRAL_DURATION_YEARS =
+      parseInt(process.env.TEACHER_REFERRAL_DURATION_YEARS || "0") || 1
+    const STUDENT_REFERRAL_DISCOUNT =
+      parseInt(process.env.STUDENT_REFERRAL_DISCOUNT || "0") || 10
+    const TEACHER_REFERRAL_DISCOUNT =
+      parseInt(process.env.TEACHER_REFERRAL_DISCOUNT || "0") || 15
     return db.promo.create({
       data: {
         code,
-        discount,
-        expiresAt,
+        discount:
+          userInfo.role === "teacher"
+            ? TEACHER_REFERRAL_DISCOUNT
+            : userInfo.role === "student"
+            ? STUDENT_REFERRAL_DISCOUNT
+            : discount,
+        expiresAt:
+          userInfo.role === "student"
+            ? new Date(
+                Date.now() +
+                  1000 * 60 * 60 * 24 * 30 * STUDENT_REFERRAL_DURATION_MONTHS
+              )
+            : userInfo.role === "teacher"
+            ? new Date(
+                Date.now() +
+                  1000 *
+                    60 *
+                    60 *
+                    24 *
+                    30 *
+                    12 *
+                    TEACHER_REFERRAL_DURATION_YEARS
+              )
+            : expiresAt,
+        type: ["student", "teacher"].includes(userInfo.role)
+          ? "referral"
+          : "promo",
         amountToUser: userInfo.role === "student" ? referralBonus : 0,
         userObjId: userInfo.id,
       },

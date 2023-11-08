@@ -61,11 +61,15 @@ export const purchaseCourse = async ({
   courseId,
   batchId,
   price,
+  referred = false,
+  promo = false,
 }: {
   userId: string
   courseId: string
   price: number
   batchId?: string
+  referred: boolean
+  promo: boolean
 }) => {
   try {
     // TODO: ADD PRICE to purchase

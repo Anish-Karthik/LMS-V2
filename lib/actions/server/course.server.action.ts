@@ -78,12 +78,16 @@ export const performPurchaseAsFree = async ({
   batchId,
   price,
   promoId,
+  referred = false,
+  promo = false,
 }: {
   userId: string
   courseId: string
   price: number
   batchId?: string
   promoId?: string
+  referred?: boolean
+  promo?: boolean
 }) => {
   try {
     await db.promo.delete({
@@ -91,7 +95,7 @@ export const performPurchaseAsFree = async ({
         id: promoId,
       },
     })
-    await purchaseCourse({ userId, courseId, batchId, price })
+    await purchaseCourse({ userId, courseId, batchId, price, referred, promo })
   } catch (error: any) {
     console.error(error)
     throw new Error(error.message)
