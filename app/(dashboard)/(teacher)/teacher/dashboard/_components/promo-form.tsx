@@ -171,12 +171,12 @@ export function PromoForm({
             render={({ field }) => (
               <FormItem>
                 <FormControl>
-                  <div>
+                  <div className="">
                     <Calendar
                       mode="single"
                       selected={field.value}
                       onSelect={field.onChange}
-                      className="rounded-md border-gray-300 shadow-sm focus:border-primary focus:ring focus:ring-primary focus:ring-opacity-50"
+                      className="rounded-md border-gray-300 shadow-sm focus:border-primary focus:ring focus:ring-primary focus:ring-opacity-50 max-xs:!-ml-8"
                     />
                     {!field.value ? (
                       <span className="text-xs text-slate-500">

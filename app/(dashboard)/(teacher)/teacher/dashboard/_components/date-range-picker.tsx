@@ -1,8 +1,10 @@
 "use client"
 
-import * as React from "react"
+import React, { useEffect, useState } from "react"
+import { usePathname, useRouter, useSearchParams } from "next/navigation"
 import { CalendarIcon } from "@radix-ui/react-icons"
 import { addDays, format } from "date-fns"
+import qs from "query-string"
 import { DateRange } from "react-day-picker"
 
 import { cn } from "@/lib/utils"
@@ -17,10 +19,25 @@ import {
 export function CalendarDateRangePicker({
   className,
 }: React.HTMLAttributes<HTMLDivElement>) {
-  const [date, setDate] = React.useState<DateRange | undefined>({
-    from: new Date(2023, 0, 20),
-    to: addDays(new Date(2023, 0, 20), 20),
+  const [date, setDate] = useState<DateRange | undefined>({
+    from: new Date(new Date().getFullYear(), 0, 1),
+    to: new Date(),
   })
+  const router = useRouter()
+  const pathname = usePathname()
+  useEffect(() => {
+    const url = qs.stringifyUrl(
+      {
+        url: pathname,
+        query: {
+          from: date?.from?.toDateString().replaceAll(" ", "-"),
+          to: date?.to?.toDateString().replaceAll(" ", "-"),
+        },
+      },
+      { skipEmptyString: true, skipNull: true }
+    )
+    router.push(url)
+  }, [date?.from, date?.to, pathname, router])
 
   return (
     <div className={cn("grid gap-2", className)}>

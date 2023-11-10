@@ -6,11 +6,12 @@ import { Purchase } from "@prisma/client"
 import { KeysWithValsOfType } from "@/types/utils"
 import { db } from "@/lib/db"
 import { formatNumber, formatPrice, roundTo } from "@/lib/format"
+import { mapDateToMonthYear, monthData } from "@/lib/utils"
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 
 import CurrentPathNavigator from "../../_components/current-pathname"
 import { CalendarDateRangePicker } from "./_components/date-range-picker"
-import { Overview } from "./_components/overview"
+import OverviewCard from "./_components/overview-card"
 import PromoPage from "./_components/promo-page"
 
 export const metadata: Metadata = {
@@ -18,8 +19,11 @@ export const metadata: Metadata = {
   description: "Example dashboard app built using the components.",
 }
 const changeInPercent = (current: number, previous: number) => {
+  if (current === previous) return 0
+  if (previous === 0) return 100
+  if (current === 0) return -100
   const change = current - previous
-  return previous ? (change / previous) * 100 : 0
+  return (change / previous) * 100
 }
 const changeInPercentSigned = (current: number, previous: number) => {
   const change = current - previous
@@ -40,36 +44,12 @@ const sumOfPurchases = (
     return acc
   }, 0)
 }
-const mapMonthToName = (month: number) => {
-  switch (month) {
-    case 0:
-      return "Jan"
-    case 1:
-      return "Feb"
-    case 2:
-      return "Mar"
-    case 3:
-      return "Apr"
-    case 4:
-      return "May"
-    case 5:
-      return "Jun"
-    case 6:
-      return "Jul"
-    case 7:
-      return "Aug"
-    case 8:
-      return "Sep"
-    case 9:
-      return "Oct"
-    case 10:
-      return "Nov"
-    default:
-      return "Dec"
-  }
-}
 
-export default async function DashboardPage() {
+export default async function DashboardPage({
+  searchParams,
+}: {
+  searchParams: { from: string; to: string }
+}) {
   const promos = await db.promo.findMany({
     where: {
       type: "promo",
@@ -85,69 +65,104 @@ export default async function DashboardPage() {
   if (userInfo.role === "teacher") {
     redirect("/teacher/announcements")
   }
-  const purchases = await db.purchase.findMany()
+  let startDate = new Date()
+  let endDate = new Date()
+  if (searchParams?.from) {
+    startDate = new Date(searchParams.from)
+  }
+  if (searchParams?.to) {
+    endDate = new Date(searchParams.to)
+  }
 
   const yearlyPurchaseData = await db.purchase.findMany({
     where: {
       createdAt: {
-        gte: new Date(new Date().getFullYear(), 0, 1),
-        lte: new Date(new Date().getFullYear(), 11, 31),
+        gte: startDate,
+        lte: endDate,
       },
     },
   })
+  const purchases = yearlyPurchaseData
   const currentMonthPurchaseData = await db.purchase.findMany({
     where: {
       createdAt: {
-        gte: new Date(new Date().getFullYear(), new Date().getMonth(), 1),
-        lte: new Date(new Date().getFullYear(), new Date().getMonth() + 1, 0),
+        gte: new Date(endDate.getFullYear(), endDate.getMonth(), 1),
+        lte: new Date(endDate.getFullYear(), endDate.getMonth() + 1, 0),
       },
     },
   })
   const previousMonthPurchaseData = await db.purchase.findMany({
     where: {
       createdAt: {
-        gte: new Date(new Date().getFullYear(), new Date().getMonth() - 1, 1),
-        lte: new Date(new Date().getFullYear(), new Date().getMonth(), 0),
+        gte: new Date(endDate.getFullYear(), endDate.getMonth() - 1, 1),
+        lte: new Date(endDate.getFullYear(), endDate.getMonth(), 0),
       },
     },
   })
-  type monthData = {
-    name: ReturnType<typeof mapMonthToName>
-    total: number
-  }
-  const monthlyPurchaseData: monthData[] = yearlyPurchaseData.reduce(
-    (acc: monthData[], purchase) => {
-      const month = purchase.createdAt.getMonth()
-      if (!acc[month]) {
-        acc[month] = {
-          name: mapMonthToName(month),
-          total: 0,
-        }
-      }
-      acc[month].total += purchase.price
-      return acc
-    },
-    []
-  )
-  // replace undefined values with default values of type monthData
-  for (let index = 0; index < 12; index++) {
-    console.log(`monthlyPurchaseData[${index}]`, monthlyPurchaseData[index])
-    if (!monthlyPurchaseData[index]) {
-      monthlyPurchaseData[index] = {
-        name: mapMonthToName(index),
-        total: 0,
-      }
-    }
-  }
 
-  console.log(monthlyPurchaseData)
+  let monthlyPurchaseData: monthData[] = []
+  // iterate through months from startDate to endDate
+  for (
+    let currentDate: Date = startDate;
+    currentDate.getFullYear() < endDate.getFullYear() ||
+    (currentDate.getFullYear() == endDate.getFullYear() &&
+      currentDate.getMonth() <= endDate.getMonth());
+    // increment month if month == 12 , then increment year
+    currentDate.getMonth() == 11
+      ? currentDate.setMonth(0) &&
+        currentDate.setFullYear(currentDate.getFullYear() + 1)
+      : currentDate.setMonth(currentDate.getMonth() + 1)
+  ) {
+    const monthYear = mapDateToMonthYear(currentDate)
+    // if month is not in monthlyPurchaseData, add it
+    if (!monthlyPurchaseData.find((p) => p.name === monthYear)) {
+      monthlyPurchaseData.push({
+        name: monthYear,
+        price: 0,
+        promo: 0,
+        referred: 0,
+        sales: 0,
+      })
+    }
+    // add total of purchases in that month
+    monthlyPurchaseData.forEach((monthData) => {
+      const { name } = monthData
+      const month = new Date(name)
+      const year = month.getFullYear()
+      const monthIndex = month.getMonth()
+
+      const monthPurchases = yearlyPurchaseData.filter((purchase) => {
+        const purchaseMonth = purchase.createdAt.getMonth()
+        const purchaseYear = purchase.createdAt.getFullYear()
+        return purchaseMonth === monthIndex && purchaseYear === year
+      })
+
+      monthData.price = monthPurchases.reduce(
+        (acc, purchase) => acc + purchase.price,
+        0
+      )
+      monthData.promo = monthPurchases.filter(
+        (purchase) => purchase.promo
+      ).length
+      monthData.referred = monthPurchases.filter(
+        (purchase) => purchase.referred
+      ).length
+      monthData.sales = monthPurchases.length
+    })
+  }
   return (
     <>
       <CurrentPathNavigator />
       <div className="flex-1 space-y-4 p-8 pt-6">
         <div className="md:no-wrap flex flex-wrap items-center justify-between space-y-2">
-          <h2 className="text-3xl font-bold tracking-tight">Dashboard</h2>
+          <h2 className="text-3xl font-bold tracking-tight max-md:pl-2">
+            Dashboard
+          </h2>
           <div className="sm:no-wrap flex flex-wrap items-center gap-2 space-x-2 ">
+            {/* display endDate */}
+            <div className="text-sm text-muted-foreground max-md:pl-2">
+              Current Month: {searchParams?.to || ""}
+            </div>
             <CalendarDateRangePicker />
             {/* <Button>Download</Button> */}
           </div>
@@ -289,16 +304,10 @@ export default async function DashboardPage() {
             </CardContent>
           </Card>
         </div>
-        <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-7">
-          <Card className="col-span-4 max-w-[90vw] 2xs:max-w-[80vw]">
-            <CardHeader>
-              <CardTitle>Overview</CardTitle>
-            </CardHeader>
-            <CardContent className="pl-2">
-              <Overview data={monthlyPurchaseData} />
-            </CardContent>
-          </Card>
-          <Card className="col-span-3 max-w-[90vw] 2xs:max-w-[80vw]">
+        <div className="flex flex-col gap-4 md:grid md:grid-cols-2 lg:grid-cols-7">
+          <OverviewCard data={monthlyPurchaseData} />
+
+          <Card className="col-span-3 max-md:!w-full md:!-mr-4  lg:!mr-0">
             <PromoPage
               initialData={promos}
               userRole={userInfo.role}

@@ -43,35 +43,39 @@ export function PromoCard({
           />
         </div>
       ) : (
-        <div className="flex w-full items-center justify-between">
+        <div className="flex w-full items-center justify-between max-xs:flex-col max-xs:items-start">
           <div className="flex items-center gap-4">
             <div className="flex flex-col">
-              <h3 className="text-lg font-medium">{promo.code}</h3>
-              <span className="text-sm text-slate-500">
+              <h3 className="text-lg font-medium max-sm:text-sm">
+                {promo.code}
+              </h3>
+              <span className="text-sm text-slate-500 max-sm:text-xs">
                 {promo.discount}% off
               </span>
             </div>
           </div>
-          <div className="flex items-center gap-1">
+          <div className="flex items-center gap-1 max-xs:!w-full max-xs:justify-between">
             <div className="flex flex-col">
-              <span className="text-sm text-slate-500">
+              <span className="text-sm text-slate-500 max-sm:text-xs">
                 {" "}
                 {promo.expiresAt
                   ? `Valid till ${formatDate(promo.expiresAt)}`
                   : "No expiry"}
               </span>
-              <span className="text-sm text-slate-500">
+              <span className="text-sm text-slate-500 max-sm:text-xs">
                 Used {promo.count} times
               </span>
             </div>
-            <Button variant="ghost">
-              <Copy className="h-4 w-4" onClick={handleCopy} />
-            </Button>
-            {userRole === "admin" && (
-              <Button variant="ghost" onClick={() => setIsCreating(true)}>
-                <Edit className="h-4 w-4" />
+            <div className="flex gap-1">
+              <Button variant="ghost">
+                <Copy className="h-4 w-4" onClick={handleCopy} />
               </Button>
-            )}
+              {userRole === "admin" && (
+                <Button variant="ghost" onClick={() => setIsCreating(true)}>
+                  <Edit className="h-4 w-4" />
+                </Button>
+              )}
+            </div>
           </div>
         </div>
       )}

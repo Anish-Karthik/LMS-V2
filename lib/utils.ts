@@ -71,3 +71,42 @@ export const selectClassNames = {
   indicatorSeparator: () => "bg-slate-800 mr-2 my-2",
   dropdownIndicator: () => "text-slate-800 pr-2",
 }
+
+export const mapDateToMonthYear = (date: Date) => {
+  return `${mapMonthToName(date.getMonth())} ${date.getFullYear()}`
+}
+export const mapMonthToName = (month: number) => {
+  switch (month) {
+    case 0:
+      return "Jan"
+    case 1:
+      return "Feb"
+    case 2:
+      return "Mar"
+    case 3:
+      return "Apr"
+    case 4:
+      return "May"
+    case 5:
+      return "Jun"
+    case 6:
+      return "Jul"
+    case 7:
+      return "Aug"
+    case 8:
+      return "Sep"
+    case 9:
+      return "Oct"
+    case 10:
+      return "Nov"
+    default:
+      return "Dec"
+  }
+}
+export type monthData = {
+  name: ReturnType<typeof mapDateToMonthYear>
+  price: number
+  promo: number
+  referred: number
+  sales: number
+}
