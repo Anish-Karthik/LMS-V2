@@ -1,23 +1,19 @@
-import { Metadata } from "next"
-import { redirect } from "next/navigation"
 import { currentUser } from "@clerk/nextjs"
 import { Purchase } from "@prisma/client"
+import { redirect } from "next/navigation"
 
-import { KeysWithValsOfType } from "@/types/utils"
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { db } from "@/lib/db"
 import { formatNumber, formatPrice, roundTo } from "@/lib/format"
 import { mapDateToMonthYear, monthData } from "@/lib/utils"
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
+import { KeysWithValsOfType } from "@/types/utils"
 
 import CurrentPathNavigator from "../../_components/current-pathname"
 import { CalendarDateRangePicker } from "./_components/date-range-picker"
 import OverviewCard from "./_components/overview-card"
 import PromoPage from "./_components/promo-page"
 
-export const metadata: Metadata = {
-  title: "Dashboard",
-  description: "Example dashboard app built using the components.",
-}
+
 const changeInPercent = (current: number, previous: number) => {
   if (current === previous) return 0
   if (previous === 0) return 100
@@ -50,18 +46,23 @@ export default async function DashboardPage({
 }: {
   searchParams: { from: string; to: string }
 }) {
+
+  const user = await currentUser()  
+  if (!user) {
+    redirect("/sign-in")
+    return <div>Redirecting...</div>
+  }
   const promos = await db.promo.findMany({
     where: {
       type: "promo",
     },
   })
-  const user = await currentUser()
   const userInfo = await db.user.findUnique({
     where: {
-      userId: user?.id,
+      userId: user.id,
     },
   })
-  if (!userInfo || !user) redirect("/sign-in")
+  if (!userInfo ) redirect("/")
   if (userInfo.role === "teacher") {
     redirect("/teacher/announcements")
   }
@@ -151,7 +152,7 @@ export default async function DashboardPage({
     })
   }
   return (
-    <>
+    <div>
       <CurrentPathNavigator />
       <div className="flex-1 space-y-4 p-8 pt-6">
         <div className="md:no-wrap flex flex-wrap items-center justify-between space-y-2">
@@ -167,20 +168,6 @@ export default async function DashboardPage({
             {/* <Button>Download</Button> */}
           </div>
         </div>
-        {/* <Tabs defaultValue="overview" className="space-y-4">
-        <TabsList>
-          <TabsTrigger value="overview">Overview</TabsTrigger>
-          <TabsTrigger value="analytics" disabled>
-            Analytics
-          </TabsTrigger>
-          <TabsTrigger value="reports" disabled>
-            Reports
-          </TabsTrigger>
-          <TabsTrigger value="notifications" disabled>
-            Notifications
-          </TabsTrigger>
-        </TabsList>
-        <TabsContent value="overview" className="space-y-4"> */}
         <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-4">
           <Card>
             <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
@@ -307,17 +294,15 @@ export default async function DashboardPage({
         <div className="flex flex-col gap-4 md:grid md:grid-cols-2 lg:grid-cols-7">
           <OverviewCard data={monthlyPurchaseData} />
 
-          <Card className="col-span-3 max-md:!w-full md:!-mr-4  lg:!mr-0">
+          
             <PromoPage
               initialData={promos}
               userRole={userInfo.role}
               userId={user.id}
             />
-          </Card>
+          
         </div>
-        {/* </TabsContent>
-      </Tabs> */}
       </div>
-    </>
+    </div>
   )
 }

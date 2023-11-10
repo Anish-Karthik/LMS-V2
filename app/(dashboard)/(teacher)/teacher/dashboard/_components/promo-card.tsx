@@ -24,16 +24,12 @@ export function PromoCard({
     navigator.clipboard.writeText(promo.code)
     shadcnToast({ title: `${promo.code} Copied to clipboard` })
   }
-  const { userId } = useAuth()
-  if (!userId) {
-    redirect("/sign-in")
-  }
+
   return (
     <>
       {isCreating ? (
         <div className="w-full rounded-md border-2 border-solid border-secondary p-2">
           <PromoForm
-            userId={userId}
             id={promo.id}
             code={promo.code}
             discount={promo.discount}

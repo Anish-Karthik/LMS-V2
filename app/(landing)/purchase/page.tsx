@@ -9,7 +9,7 @@ const page = async ({ searchParams }: { searchParams: { promo: string } }) => {
   }
   const courseId = courses[0].id
   console.log(searchParams.promo)
-  redirect(`/purchase/${courseId}?promo=${searchParams.promo}`)
+  // redirect(`/purchase/${courseId}?promo=${searchParams.promo}`)
   return <div>page</div>
 }
 

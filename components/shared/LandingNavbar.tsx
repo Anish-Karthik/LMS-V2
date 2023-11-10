@@ -34,7 +34,7 @@ const LandingNavbar = ({
         </div>
       </Link>
 
-      <div className="flex items-center">
+      <div className="flex items-center gap-2">
         <ThemeToggle />
         <Link href={route ?? `/purchase/${courses[0].id}`}>
           <Button variant="outline" className="rounded-full">

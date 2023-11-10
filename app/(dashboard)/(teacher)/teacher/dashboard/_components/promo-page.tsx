@@ -7,7 +7,7 @@ import { Promo } from "@prisma/client"
 import { PlusCircle } from "lucide-react"
 
 import { Button } from "@/components/ui/button"
-import { CardContent, CardHeader, CardTitle } from "@/components/ui/card"
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 
 import { PromoForm } from "./promo-form"
 import { RecentSales } from "./recent-sales"
@@ -30,7 +30,7 @@ const PromoPage = ({
   // if (!userId) return redirect("/sign-up")
 
   return (
-    <div>
+    <Card className="col-span-3 max-md:!w-full md:!-mr-4  lg:!mr-0">
       <CardHeader className="flex flex-row items-center justify-between">
         <CardTitle>Promo Code </CardTitle>
         <Button onClick={toggleCreating} variant="ghost">
@@ -46,13 +46,13 @@ const PromoPage = ({
       </CardHeader>
       <CardContent>
         {isCreating && (
-          <PromoForm setIsCreating={setIsCreating} userId={userId} />
+          <PromoForm setIsCreating={setIsCreating} />
         )}
         {!isCreating && (
           <RecentSales promos={initialData} userRole={userRole} />
         )}
       </CardContent>
-    </div>
+    </Card>
   )
 }
 

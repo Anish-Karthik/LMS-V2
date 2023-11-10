@@ -1,7 +1,7 @@
 /* eslint-disable tailwindcss/migration-from-tailwind-2 */
 "use client"
 
-import { useRouter } from "next/navigation"
+import { redirect, useRouter } from "next/navigation"
 import { zodResolver } from "@hookform/resolvers/zod"
 import { useForm } from "react-hook-form"
 import toast from "react-hot-toast"
@@ -22,6 +22,7 @@ import {
   FormMessage,
 } from "@/components/ui/form"
 import { Input } from "@/components/ui/input"
+import { useAuth } from "@clerk/nextjs"
 
 const formSchema = z.object({
   id: z.string().optional(),
@@ -66,7 +67,6 @@ const formSchemaEdit = z.object({
 })
 
 export function PromoForm({
-  userId,
   id,
   code,
   discount,
@@ -74,14 +74,14 @@ export function PromoForm({
   type = "create",
   setIsCreating,
 }: {
-  userId: string
   id?: string
   code?: string
   discount?: number
   expiresAt?: Date
   type?: "create" | "edit"
   setIsCreating: (val: boolean) => void
-}) {
+}) {  
+  const { userId } = useAuth()  
   const schema = type == "edit" ? formSchemaEdit : formSchema
   const router = useRouter()
   const form = useForm<z.infer<typeof schema>>({
@@ -93,10 +93,12 @@ export function PromoForm({
       expiresAt: expiresAt || undefined,
     },
   })
-
+  if (!userId) {
+    router.push("/sign-in")
+    return null
+  }
   const { isSubmitting, isValid } = form.formState
 
-  if (!userId) return null
 
   const onSubmit = async (values: z.infer<typeof formSchema>) => {
     try {
