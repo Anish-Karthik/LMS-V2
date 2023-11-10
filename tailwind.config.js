@@ -13,12 +13,20 @@ module.exports = withUt({
       },
     },
     extend: {
+      
       colors: {
         border: "hsl(var(--border))",
         input: "hsl(var(--input))",
         ring: "hsl(var(--ring))",
         background: "hsl(var(--background))",
         foreground: "hsl(var(--foreground))",
+        "background-color": 'rgb(var(--background-color) / <alpha-value>)',
+        "text-primary": "rgb(var(--text-primary) / <alpha-value>)",
+        "text-secondary": "rgb(var(--text-secondary) / <alpha-value>)",
+        "primary-color": "rgb(var(--primary-color) / <alpha-value>)",
+        "secondary-color": "rgb(var(--secondary-color) / <alpha-value>)",
+        "tertiary-color": "rgb(var(--tertiary-color) / <alpha-value>)",
+        "quaternary-color": "rgb(var(--quaternary-color) / <alpha-value>)",
         primary: {
           DEFAULT: "hsl(var(--primary))",
           foreground: "hsl(var(--primary-foreground))",

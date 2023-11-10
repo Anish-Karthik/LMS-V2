@@ -2,6 +2,7 @@
 "use client"
 
 import { redirect, useRouter } from "next/navigation"
+import { useAuth } from "@clerk/nextjs"
 import { zodResolver } from "@hookform/resolvers/zod"
 import { useForm } from "react-hook-form"
 import toast from "react-hot-toast"
@@ -22,7 +23,6 @@ import {
   FormMessage,
 } from "@/components/ui/form"
 import { Input } from "@/components/ui/input"
-import { useAuth } from "@clerk/nextjs"
 
 const formSchema = z.object({
   id: z.string().optional(),
@@ -80,8 +80,8 @@ export function PromoForm({
   expiresAt?: Date
   type?: "create" | "edit"
   setIsCreating: (val: boolean) => void
-}) {  
-  const { userId } = useAuth()  
+}) {
+  const { userId } = useAuth()
   const schema = type == "edit" ? formSchemaEdit : formSchema
   const router = useRouter()
   const form = useForm<z.infer<typeof schema>>({
@@ -98,7 +98,6 @@ export function PromoForm({
     return null
   }
   const { isSubmitting, isValid } = form.formState
-
 
   const onSubmit = async (values: z.infer<typeof formSchema>) => {
     try {

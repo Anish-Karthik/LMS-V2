@@ -45,9 +45,7 @@ const PromoPage = ({
         </Button>
       </CardHeader>
       <CardContent>
-        {isCreating && (
-          <PromoForm setIsCreating={setIsCreating} />
-        )}
+        {isCreating && <PromoForm setIsCreating={setIsCreating} />}
         {!isCreating && (
           <RecentSales promos={initialData} userRole={userRole} />
         )}

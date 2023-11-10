@@ -1,18 +1,17 @@
+import { redirect } from "next/navigation"
 import { currentUser } from "@clerk/nextjs"
 import { Purchase } from "@prisma/client"
-import { redirect } from "next/navigation"
 
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
+import { KeysWithValsOfType } from "@/types/utils"
 import { db } from "@/lib/db"
 import { formatNumber, formatPrice, roundTo } from "@/lib/format"
 import { mapDateToMonthYear, monthData } from "@/lib/utils"
-import { KeysWithValsOfType } from "@/types/utils"
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 
 import CurrentPathNavigator from "../../_components/current-pathname"
 import { CalendarDateRangePicker } from "./_components/date-range-picker"
 import OverviewCard from "./_components/overview-card"
 import PromoPage from "./_components/promo-page"
-
 
 const changeInPercent = (current: number, previous: number) => {
   if (current === previous) return 0
@@ -46,8 +45,7 @@ export default async function DashboardPage({
 }: {
   searchParams: { from: string; to: string }
 }) {
-
-  const user = await currentUser()  
+  const user = await currentUser()
   if (!user) {
     redirect("/sign-in")
     return <div>Redirecting...</div>
@@ -62,7 +60,7 @@ export default async function DashboardPage({
       userId: user.id,
     },
   })
-  if (!userInfo ) redirect("/")
+  if (!userInfo) redirect("/")
   if (userInfo.role === "teacher") {
     redirect("/teacher/announcements")
   }
@@ -294,13 +292,11 @@ export default async function DashboardPage({
         <div className="flex flex-col gap-4 md:grid md:grid-cols-2 lg:grid-cols-7">
           <OverviewCard data={monthlyPurchaseData} />
 
-          
-            <PromoPage
-              initialData={promos}
-              userRole={userInfo.role}
-              userId={user.id}
-            />
-          
+          <PromoPage
+            initialData={promos}
+            userRole={userInfo.role}
+            userId={user.id}
+          />
         </div>
       </div>
     </div>
