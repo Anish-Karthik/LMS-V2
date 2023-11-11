@@ -25,7 +25,7 @@ const page = async ({
     },
   })
   if (userInfo) {
-    if (userInfo.role === "student") redirect("/student/announcements")
+    // if (userInfo.role === "student") redirect("/student/announcements")
     if (userInfo.role === "teacher" || userInfo.role === "admin")
       redirect("/teacher/dashboard")
   } else {

@@ -13,8 +13,9 @@ const DashBoardLayout = async ({ children }: { children: React.ReactNode }) => {
   const courses = await getCourses()
   if (!courses || !courses.length) return <div>No Courses found</div>
   // Extensiblity: Can show multiple courses if needed
+  console.log(userInfo?.purchases)
   const isPurchased =
-    !!userInfo?.purchases?.length || userInfo?.role === "student" || false
+    !!userInfo?.purchases?.length && userInfo?.role === "student"
   const isAdmin = ["teacher", "admin"].includes(userInfo?.role || "")
   if (isPurchased) {
     redirect("/student/courses")

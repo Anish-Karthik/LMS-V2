@@ -16,7 +16,7 @@ const DashBoardLayout = async ({ children }: { children: React.ReactNode }) => {
   const courses = await getCourses()
   if (!courses || !courses.length) return <div>No Courses found</div>
   const purchased = await isUserPurchasedCourse(user.id, courses[0].id)
-  if (!purchased) redirect("/purchase/" + courses[0].id)
+  if (!purchased) redirect("/purchase/")
 
   return (
     <div className="relative h-full">

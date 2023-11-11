@@ -2,6 +2,7 @@
 
 import React from "react"
 
+import { cn } from "@/lib/utils"
 import {
   AlertDialog,
   AlertDialogAction,
@@ -18,12 +19,14 @@ interface ConfirmModalProps {
   children: React.ReactNode
   onConfirm: () => void
   publishMail?: boolean
+  typeDelete?: boolean
 }
 
 export const ConfirmModal = ({
   children,
   onConfirm,
   publishMail = false,
+  typeDelete = false,
 }: ConfirmModalProps) => {
   return (
     <AlertDialog>
@@ -39,7 +42,14 @@ export const ConfirmModal = ({
         </AlertDialogHeader>
         <AlertDialogFooter>
           <AlertDialogCancel>Cancel</AlertDialogCancel>
-          <AlertDialogAction onClick={onConfirm}>Continue</AlertDialogAction>
+          <AlertDialogAction
+            className={cn(
+              typeDelete && "bg-red-900 text-text-primary hover:bg-red-600"
+            )}
+            onClick={onConfirm}
+          >
+            {typeDelete ? "Delete" : "Continue"}
+          </AlertDialogAction>
         </AlertDialogFooter>
       </AlertDialogContent>
     </AlertDialog>

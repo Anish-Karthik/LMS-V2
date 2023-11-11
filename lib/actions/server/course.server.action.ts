@@ -95,7 +95,14 @@ export const performPurchaseAsFree = async ({
         id: promoId,
       },
     })
-    await purchaseCourse({ userId, courseId, batchId, price, referred, promo })
+    await purchaseCourse({
+      userId,
+      courseId,
+      batchId,
+      price,
+      referred: false,
+      promo: false,
+    })
   } catch (error: any) {
     console.error(error)
     throw new Error(error.message)

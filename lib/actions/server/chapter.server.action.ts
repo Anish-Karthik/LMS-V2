@@ -62,6 +62,38 @@ export const reorderChapters = async (
   }
 }
 
+export const deleteChapter = async (chapterId: string) => {
+  try {
+    const chapter = await db.chapter.findUnique({
+      where: { id: chapterId },
+    })
+    if (!chapter) {
+      throw new Error("Chapter not found")
+    }
+    await db.chapter.updateMany({
+      where: {
+        batchId: chapter.batchId,
+        position: {
+          gt: chapter.position,
+        },
+      },
+      data: {
+        position: {
+          decrement: 1,
+        },
+      },
+    })
+    await db.chapter.delete({
+      where: { id: chapterId },
+    })
+
+    return { sucess: true }
+  } catch (error) {
+    console.error(error)
+    throw new Error("Chapter deletion failed")
+  }
+}
+
 export const getChapterByIdClient = async (chapterId: string) => {
   return await getChapterById(chapterId)
 }

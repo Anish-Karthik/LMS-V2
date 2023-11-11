@@ -77,8 +77,8 @@ export const TopicActions = ({
       >
         {isPublished ? "Unpublish" : "Publish"}
       </Button>
-      <ConfirmModal onConfirm={onDelete}>
-        <Button size="sm" disabled={isLoading}>
+      <ConfirmModal onConfirm={onDelete} typeDelete>
+        <Button variant={"destructive"} size="sm" disabled={isLoading}>
           <Trash className="h-4 w-4" />
         </Button>
       </ConfirmModal>

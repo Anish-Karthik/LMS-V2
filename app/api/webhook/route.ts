@@ -31,6 +31,7 @@ export async function POST(req: Request) {
   const price = session?.metadata?.price
   const referred = session?.metadata?.referred
 
+  console.log(referred)
   if (event.type === "checkout.session.completed") {
     if (!userId || !courseId) {
       return new NextResponse(`Webhook Error: Missing metadata`, {

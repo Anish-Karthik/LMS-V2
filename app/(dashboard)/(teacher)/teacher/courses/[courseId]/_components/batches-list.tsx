@@ -2,12 +2,6 @@
 
 import { useEffect, useState } from "react"
 import Link from "next/link"
-import {
-  DragDropContext,
-  Draggable,
-  DropResult,
-  Droppable,
-} from "@hello-pangea/dnd"
 import { Batch } from "@prisma/client"
 import { GripVertical, Pencil, TrashIcon } from "lucide-react"
 import { toast } from "react-hot-toast"
@@ -15,6 +9,7 @@ import { toast } from "react-hot-toast"
 import { deleteBatch } from "@/lib/actions/server/batch.server.action"
 import { cn } from "@/lib/utils"
 import { Button } from "@/components/ui/button"
+import { ConfirmModal } from "@/components/modals/confirm-modal"
 
 interface BatchesListProps {
   items: Batch[]
@@ -54,112 +49,69 @@ export const BatchesList = ({
     }
   }
 
-  const onDragEnd = (result: DropResult) => {
-    if (!result.destination) return
-    setIsUpdating(true)
-    const items = Array.from(batches)
-    const [reorderedItem] = items.splice(result.source.index, 1)
-    items.splice(result.destination.index, 0, reorderedItem)
-
-    const startIndex = Math.min(result.source.index, result.destination.index)
-    const endIndex = Math.max(result.source.index, result.destination.index)
-
-    const updatedChapters = items.slice(startIndex, endIndex + 1)
-
-    setBatches(items)
-
-    const bulkUpdateData = updatedChapters.map((chapter) => ({
-      id: chapter.id,
-      position: items.findIndex((item) => item.id === chapter.id),
-    }))
-
-    onReorder(bulkUpdateData)
-    setIsUpdating(false)
-  }
-
   if (!isMounted) {
     return null
   }
 
   return (
-    <DragDropContext onDragEnd={onDragEnd}>
-      <Droppable droppableId="chapters">
-        {(provided) => (
-          <div
-            {...provided.droppableProps}
-            ref={provided.innerRef}
-            className="relative"
-          >
-            {isUpdating && (
-              <div className="absolute inset-0 flex items-center justify-center bg-slate-200/50">
-                <div className="flex items-center gap-x-2 rounded-md bg-slate-300 px-4 py-2">
-                  <div className="h-5 w-5 animate-spin rounded-full border-b-2 border-sky-500"></div>
-                  <span>Updating...</span>
-                </div>
-              </div>
-            )}
-            {batches.map((batch, index) => (
-              <Draggable key={batch.id} draggableId={batch.id} index={index}>
-                {(provided) => (
-                  <div
-                    className={cn(
-                      "mb-4 flex items-center gap-x-2 rounded-md border border-slate-200 bg-slate-200 text-sm text-slate-700",
-                      batch && "border-sky-200 bg-sky-100 text-sky-700"
-                    )}
-                    ref={provided.innerRef}
-                    {...provided.draggableProps}
-                  >
-                    <div
-                      className={cn(
-                        "rounded-l-md border-r border-r-slate-200 px-2 py-3 transition hover:bg-slate-300",
-                        batch && "border-r-sky-200 hover:bg-sky-200"
-                      )}
-                      {...provided.dragHandleProps}
-                    >
-                      <GripVertical className="h-5 w-5" />
-                    </div>
-                    {batch.name}
-                    <div className="ml-auto flex items-center gap-x-2 pr-2">
-                      <div>
-                        {batch.isCurrent && (
-                          <span className="rounded-md bg-slate-300 px-2 py-1 text-xs text-slate-700">
-                            Current
-                          </span>
-                        )}
-                        {batch.isClosed && (
-                          <span className="rounded-md bg-slate-300 px-2 py-1 text-xs text-slate-700">
-                            Closed
-                          </span>
-                        )}
-                      </div>
-                      <div>
-                        <Link
-                          href={`/teacher/courses/${courseId}/batches/${batch.id}`}
-                        >
-                          <Button variant={"ghost"}>
-                            <Pencil className="h-5 w-5" />
-                          </Button>
-                        </Link>
-                      </div>
-                      {!batch.isCurrent && (
-                        <div>
-                          <Button
-                            variant={"destructive"}
-                            onClick={() => handleDelete(courseId, batch.id)}
-                          >
-                            <TrashIcon className="h-5 w-5" />
-                          </Button>
-                        </div>
-                      )}
-                    </div>
-                  </div>
-                )}
-              </Draggable>
-            ))}
-            {provided.placeholder}
+    <div className="relative">
+      {isUpdating && (
+        <div className="absolute inset-0 flex items-center justify-center bg-slate-200/50">
+          <div className="flex items-center gap-x-2 rounded-md bg-slate-300 px-4 py-2">
+            <div className="h-5 w-5 animate-spin rounded-full border-b-2 border-sky-500"></div>
+            <span>Updating...</span>
           </div>
-        )}
-      </Droppable>
-    </DragDropContext>
+        </div>
+      )}
+      {batches.map((batch, index) => (
+        <div
+          className={cn(
+            "mb-4 flex items-center gap-x-2 rounded-md border border-slate-200 bg-slate-200 text-sm text-slate-700",
+            batch && "border-sky-200 bg-sky-100 text-sky-700"
+          )}
+        >
+          <div
+            className={cn(
+              "rounded-l-md border-r border-r-slate-200 px-2 py-3",
+              batch && "border-r-sky-200"
+            )}
+          >
+            <GripVertical className="h-5 w-5" />
+          </div>
+          {batch.name}
+          <div className="ml-auto flex items-center gap-x-2 pr-2">
+            <div>
+              {batch.isCurrent && (
+                <span className="rounded-md bg-slate-300 px-2 py-1 text-xs text-slate-700">
+                  Current
+                </span>
+              )}
+              {batch.isClosed && (
+                <span className="rounded-md bg-slate-300 px-2 py-1 text-xs text-slate-700">
+                  Closed
+                </span>
+              )}
+            </div>
+            <div>
+              <Link href={`/teacher/courses/${courseId}/batches/${batch.id}`}>
+                <Button variant={"ghost"}>
+                  <Pencil className="h-5 w-5" />
+                </Button>
+              </Link>
+            </div>
+            {!batch.isCurrent && (
+              <ConfirmModal
+                onConfirm={() => handleDelete(courseId, batch.id)}
+                typeDelete
+              >
+                <Button variant={"destructive"}>
+                  <TrashIcon className="h-5 w-5" />
+                </Button>
+              </ConfirmModal>
+            )}
+          </div>
+        </div>
+      ))}
+    </div>
   )
 }

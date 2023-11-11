@@ -11,11 +11,12 @@ import {
 import { zodResolver } from "@hookform/resolvers/zod"
 import { ArrowDropDownCircle } from "@mui/icons-material"
 import { Chapter, Topic } from "@prisma/client"
-import { GripVertical, Pencil, PlusCircle } from "lucide-react"
+import { GripVertical, Pencil, PlusCircle, Trash } from "lucide-react"
 import { useForm } from "react-hook-form"
 import { toast } from "react-hot-toast"
 import * as z from "zod"
 
+import { deleteChapter } from "@/lib/actions/server/chapter.server.action"
 import { createTopic } from "@/lib/actions/server/topic.server.action"
 import { cn } from "@/lib/utils"
 import { Button } from "@/components/ui/button"
@@ -27,6 +28,7 @@ import {
   FormMessage,
 } from "@/components/ui/form"
 import { Input } from "@/components/ui/input"
+import { ConfirmModal } from "@/components/modals/confirm-modal"
 import { CollapsibleTopics } from "@/components/shared/collapsible-topics"
 
 import { TopicsForm } from "./topics-form"
@@ -35,15 +37,18 @@ interface ChaptersListProps {
   items: (Chapter & { topics: Topic[] })[]
   onReorder: (updateData: { id: string; position: number }[]) => void
   onEdit: (id: string) => void
+  setIsEditing: (isEditing: boolean) => void
 }
 
 export const ChaptersList = ({
   items,
   onReorder,
   onEdit,
+  setIsEditing,
 }: ChaptersListProps) => {
   const [isMounted, setIsMounted] = useState(false)
   const [chapters, setChapters] = useState(items)
+  const [isLoading, setIsLoading] = useState(false)
   const pathname = usePathname()
   const router = useRouter()
   useEffect(() => {
@@ -74,6 +79,23 @@ export const ChaptersList = ({
     }))
 
     onReorder(bulkUpdateData)
+  }
+
+  const onDelete = async (chapterId: string) => {
+    setIsEditing(true)
+    setIsLoading(true)
+    try {
+      await deleteChapter(chapterId)
+      onReorder(chapters)
+      toast.success("Chapter deleted")
+      router.refresh()
+    } catch (error: any) {
+      toast.error(error.message)
+      toast.error("Something went wrong")
+    } finally {
+      setIsLoading(false)
+      setIsEditing(false)
+    }
   }
 
   if (!isMounted) {
@@ -124,6 +146,18 @@ export const ChaptersList = ({
                             Add a topic
                         </Link> */}
                           <ArrowDropDownCircle className="h-4 w-4 cursor-pointer transition hover:opacity-75" />
+                          <ConfirmModal
+                            onConfirm={() => onDelete(chapter.id)}
+                            typeDelete
+                          >
+                            <Button
+                              variant={"destructive"}
+                              size="sm"
+                              disabled={isLoading}
+                            >
+                              <Trash className="h-4 w-4" />
+                            </Button>
+                          </ConfirmModal>
                         </div>
                       </div>
                     }

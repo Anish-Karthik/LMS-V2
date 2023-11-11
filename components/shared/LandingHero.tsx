@@ -37,7 +37,7 @@ export const LandingHero = ({
         webinars.
       </div>
       <div>
-        <Link href={route ?? `/purchase/${courses[0].id}`}>
+        <Link href={route ?? `/purchase/`}>
           <Button className="rounded-full p-4 font-semibold md:p-6 md:text-lg">
             Start Learning
           </Button>

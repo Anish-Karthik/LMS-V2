@@ -64,17 +64,18 @@ export async function POST(
       stripeCustomer = await createStripeCustomer(user.id, customer.id)
     }
 
-    const referred = promo
-      ? !!(await db.promo.findUnique({
+    const referred =
+      !!(
+        await db.promo.findFirst({
           where: {
-            code: promo,
+            code: promo.code,
             user: {
               OR: [{ role: "student" }, { role: "teacher" }],
             },
           },
-        }))
-      : false
-
+        })
+      )?.code ?? false
+    console.log("referred", referred)
     const session = await stripe.checkout.sessions.create({
       customer: stripeCustomer.stripeCustomerId,
       line_items,

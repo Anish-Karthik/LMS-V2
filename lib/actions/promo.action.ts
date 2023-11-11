@@ -48,7 +48,7 @@ export const createOrUpdatePromo = async ({
       parseInt(process.env.STUDENT_REFERRAL_DISCOUNT || "0") || 10
     const TEACHER_REFERRAL_DISCOUNT =
       parseInt(process.env.TEACHER_REFERRAL_DISCOUNT || "0") || 15
-    return db.promo.create({
+    const promo = await db.promo.create({
       data: {
         code,
         discount:
@@ -82,6 +82,21 @@ export const createOrUpdatePromo = async ({
         userObjId: userInfo.id,
       },
     })
+
+    await db.user.update({
+      where: {
+        userId,
+      },
+      data: {
+        promos: {
+          connect: {
+            id: promo.id,
+          },
+        },
+      },
+    })
+
+    return promo
   } catch (error: any) {
     console.error(error.message)
     throw new Error(error.message)

@@ -72,6 +72,7 @@ export const purchaseCourse = async ({
   promo: boolean
 }) => {
   try {
+    console.log("purchaseCourse", userId, courseId, price, referred, promo)
     // TODO: ADD PRICE to purchase
     const user = await getUser(userId)
     console.log("user", user)

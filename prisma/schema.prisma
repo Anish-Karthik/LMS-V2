@@ -14,7 +14,7 @@ model Promo {
   count    Int    @default(0)
 
   userObjId    String @db.ObjectId()
-  user         User   @relation(fields: [userObjId], references: [id])
+  user         User   @relation(fields: [userObjId], references: [id], onDelete: Cascade)
   type         String @default("promo")
   amountToUser Int    @default(0)
 
@@ -43,7 +43,7 @@ model User {
   referralBonus Int      @default(0)
   isSuperAdmin  Boolean  @default(false)
 
-  promos    Promo[]
+  promos    Promo[] 
   purchases Purchase[]
   teacher   Teacher?
   admin     Admin?
@@ -69,7 +69,7 @@ model Purchase {
   Batch   Batch?  @relation(fields: [batchId], references: [id])
 
   userObjId String @db.ObjectId
-  user      User   @relation(fields: [userObjId], references: [id])
+  user      User   @relation(fields: [userObjId], references: [id], onDelete: Cascade)
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt()

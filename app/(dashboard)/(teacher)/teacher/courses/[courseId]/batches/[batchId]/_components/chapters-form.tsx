@@ -180,6 +180,7 @@ export const ChaptersForm = ({
               onEdit={onEdit}
               onReorder={onReorder}
               items={initialData || []}
+              setIsEditing={setIsEditing}
             />
           )}
         </div>
