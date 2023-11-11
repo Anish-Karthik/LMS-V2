@@ -49,7 +49,7 @@ const UserCard = ({ user, viewer }: UserCardProps) => {
         </div>
       </div>
       <div className="flex justify-start gap-1">
-        <Link href={`teacher/users/profile/${user.id}`} className="h-full">
+        <Link href={`users/profile/${user.id}`} className="h-full">
           <Button className="user-card_btn !h-full">View</Button>
         </Link>
 
