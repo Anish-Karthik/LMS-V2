@@ -43,7 +43,7 @@ model User {
   referralBonus Int      @default(0)
   isSuperAdmin  Boolean  @default(false)
 
-  promos    Promo[] 
+  promos    Promo[]
   purchases Purchase[]
   teacher   Teacher?
   admin     Admin?
@@ -78,11 +78,23 @@ model Purchase {
   @@index([courseId])
 }
 
+model Invite {
+  id        String    @id @default(auto()) @map("_id") @db.ObjectId
+  invite    String    @unique
+  userId    String
+  role      String    @default("teacher")
+  adminId   String    @db.ObjectId
+  expiresAt DateTime?
+  uses      Int       @default(0)
+  admin     Admin     @relation(fields: [adminId], references: [id])
+}
+
 model Admin {
-  id        String @id @default(auto()) @map("_id") @db.ObjectId
-  userId    String @unique
-  userObjId String @unique @db.ObjectId
-  user      User   @relation(fields: [userObjId], references: [id])
+  id        String   @id @default(auto()) @map("_id") @db.ObjectId
+  userId    String   @unique
+  userObjId String   @unique @db.ObjectId
+  user      User     @relation(fields: [userObjId], references: [id])
+  invites   Invite[]
 }
 
 model Teacher {

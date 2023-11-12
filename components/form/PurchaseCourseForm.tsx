@@ -1,6 +1,7 @@
 "use client"
 
 import { useEffect, useState } from "react"
+import dynamic from "next/dynamic"
 import { useRouter } from "next/navigation"
 import { zodResolver } from "@hookform/resolvers/zod"
 import { Course, Promo } from "@prisma/client"
@@ -25,7 +26,10 @@ import {
 } from "@/components/ui/form"
 import { Input } from "@/components/ui/input"
 
-import { CourseEnrollButton } from "../shared/course-enroll-button"
+const CourseEnrollButton = dynamic(
+  () => import("@/components/shared/course-enroll-button"),
+  { ssr: false }
+)
 
 const formSchema = z.object({
   promo: z

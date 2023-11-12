@@ -1,4 +1,5 @@
 import { db } from "../db"
+import { sendmail } from "../mailing/mailer"
 
 export type CreateOrUpdatePromoProps = {
   id?: string
@@ -130,9 +131,13 @@ export const getPromoByCode = async (code: string) => {
   }
 }
 
-export const afterReferral = async (promoCode: string) => {
+export const afterReferral = async (promoCode: string, userId: string) => {
   try {
     console.log(`afterReferral`, promoCode)
+    const userInfo = await db.user.findUnique({ where: { userId } })
+    if (!userInfo) {
+      throw new Error("User not found")
+    }
 
     const promo = await db.promo.update({
       where: {
@@ -145,7 +150,7 @@ export const afterReferral = async (promoCode: string) => {
       },
     })
 
-    await db.user.update({
+    const creatorInfo = await db.user.update({
       where: {
         id: promo.userObjId,
       },
@@ -159,6 +164,24 @@ export const afterReferral = async (promoCode: string) => {
         },
       },
     })
+
+    if (!creatorInfo) {
+      throw new Error("User not found")
+    }
+
+    if (promo.type === "promo") {
+      sendmail({
+        to: [creatorInfo.email],
+        subject: "Promo Code Used",
+        html: `<p>${userInfo.name} with email ${userInfo.email} has used promo code ${promo.code}</p>`,
+      })
+    } else {
+      sendmail({
+        to: [creatorInfo.email],
+        subject: "Referral Used",
+        html: `<p>${userInfo.name} with email ${userInfo.email} has used referral code ${promo.code}</p>`,
+      })
+    }
   } catch (error: any) {
     console.log(error.message)
   }

@@ -1,4 +1,5 @@
 import React from "react"
+import dynamic from "next/dynamic"
 import Link from "next/link"
 import { Course } from "@prisma/client"
 import { AlertCircle, ArrowLeft, FileIcon, LayoutDashboard } from "lucide-react"
@@ -18,7 +19,11 @@ import { AnnouncementDescriptionForm } from "../_components/announcement-descrip
 import { AnnouncementTitleForm } from "../_components/announcement-title-form"
 import AnnouncementType from "../_components/announcement-type"
 import { AttachmentForm } from "../_components/attachment-form"
-import NotifyAnnouncement from "../_components/notify-announcement"
+
+const NotifyAnnouncement = dynamic(
+  () => import("../_components/notify-announcement"),
+  { ssr: false }
+)
 
 const CreateAnnoucement = async ({
   params,

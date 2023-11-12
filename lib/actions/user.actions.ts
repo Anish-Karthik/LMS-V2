@@ -121,6 +121,7 @@ export const purchaseCourse = async ({
       referralBonus: 100,
       expiresAt: new Date(Date.now() + 1000 * 60 * 60 * 24 * 30),
     })
+
     return purchase
   } catch (e: any) {
     console.log("purchaseCourse", e.message)

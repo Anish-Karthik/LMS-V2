@@ -1,3 +1,4 @@
+import dynamic from "next/dynamic"
 import Link from "next/link"
 import { redirect } from "next/navigation"
 import { auth } from "@clerk/nextjs"
@@ -10,11 +11,14 @@ import { IconBadge } from "@/components/icon-badge"
 import CurrentPathNavigator from "@/app/(dashboard)/(teacher)/_components/current-pathname"
 
 import { AttachmentForm } from "./_components/attachment-form"
-import NotifyTopic from "./_components/notify-topic"
 import { TopicActions } from "./_components/topic-actions"
 import { TopicDescriptionForm } from "./_components/topic-description-form"
 import { TopicTitleForm } from "./_components/topic-title-form"
 import { TopicVideoForm } from "./_components/topic-video-form"
+
+const NotifyTopic = dynamic(() => import("./_components/notify-topic"), {
+  ssr: false,
+})
 
 const topicIdPage = async ({
   params,

@@ -1,11 +1,14 @@
 import React from "react"
+import dynamic from "next/dynamic"
 import Image from "next/image"
 import { Promo, User } from "@prisma/client"
 
 import { formatPrice } from "@/lib/format"
 import { Separator } from "@/components/ui/separator"
 
-import ReferralCard from "../card/referral-card"
+const ReferralCard = dynamic(() => import("../card/referral-card"), {
+  ssr: false,
+})
 
 const ProfileComponent = ({
   userInfo,

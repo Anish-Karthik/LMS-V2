@@ -1,9 +1,11 @@
 import Image from "next/image"
 import Link from "next/link"
 import { redirect } from "next/navigation"
-import { UserButton } from "@clerk/nextjs"
+import { UserButton, currentUser } from "@clerk/nextjs"
 
 import { getCourses } from "@/lib/actions/course.actions"
+import { acceptInvite } from "@/lib/actions/invite.action"
+import { db } from "@/lib/db"
 import { cn } from "@/lib/utils"
 import { Button } from "@/components/ui/button"
 import { Banner } from "@/components/banner"
@@ -16,13 +18,22 @@ import ReviewsSection from "@/components/landing/review-section"
 import SyllabusSection from "@/components/landing/syllabus-section"
 import { ThemeToggle } from "@/components/theme-toggle"
 
-const page = async ({ searchParams }: { searchParams: { promo: string } }) => {
+const page = async ({
+  searchParams,
+}: {
+  searchParams: { promo: string; invite: string }
+}) => {
   const courses = await getCourses()
   if (!courses || !courses.length) {
     redirect("/create-course")
   }
+  const user = await currentUser()
   const courseId = courses[0].id
   console.log(searchParams.promo)
+  if (searchParams.invite && user) {
+    await acceptInvite(searchParams.invite, user.id)
+    redirect("teacher/settings")
+  }
   // redirect(`/purchase/${courseId}?promo=${searchParams.promo}`)
   return (
     <div className="w-full">

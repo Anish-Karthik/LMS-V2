@@ -50,7 +50,7 @@ export async function POST(req: Request) {
     console.log("purchaseCourse", userId, courseId)
     if (promoCode) {
       console.log("afterReferral from route", promoCode)
-      await afterReferral(promoCode)
+      await afterReferral(promoCode, userId)
     }
     console.log("******", promoCode)
     redirect(`/student/courses/${courseId}`)

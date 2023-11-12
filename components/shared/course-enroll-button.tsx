@@ -18,7 +18,7 @@ interface CourseEnrollButtonProps {
   originalPrice: number
 }
 
-export const CourseEnrollButton = ({
+const CourseEnrollButton = ({
   courseId,
   promo,
   userId,
@@ -76,3 +76,5 @@ export const CourseEnrollButton = ({
     </Button>
   )
 }
+
+export default CourseEnrollButton

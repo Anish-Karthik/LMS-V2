@@ -1,7 +1,9 @@
+import Link from "next/link"
 import { redirect } from "next/navigation"
 import { currentUser } from "@clerk/nextjs"
 
 import { getUser, getUsersWhoHaveRoles } from "@/lib/actions/user.actions"
+import { Button } from "@/components/ui/button"
 
 import CurrentPathNavigator from "../../_components/current-pathname"
 import CheckInput from "./_components/check-input"
@@ -35,11 +37,18 @@ const page = async ({
   return (
     <div>
       <CurrentPathNavigator />
-      <div className="flex flex-wrap items-center justify-start gap-3 px-6 pt-6 md:mb-0 md:flex-nowrap">
-        <SearchInput />
-        <CheckInput role={searchParams.role} name={"role"} />
-        {/* <CheckInput batchId={searchParams.batchId} name={"batchIds"} /> 
-        <CheckInput courseId={searchParams.courseId} name={"courseIds"} />  */}
+      <div className="flex flex-wrap items-center justify-between gap-3 px-6 pt-6 md:mb-0 md:flex-nowrap">
+        <div className="flex flex-wrap items-center justify-start gap-3 px-6 pt-6 md:mb-0 md:flex-nowrap">
+          <SearchInput />
+          <CheckInput role={searchParams.role} name={"role"} />
+          {/* <CheckInput batchId={searchParams.batchId} name={"batchIds"} /> 
+          <CheckInput courseId={searchParams.courseId} name={"courseIds"} />  */}
+        </div>
+        <div className="px-6 pt-6 md:mb-0">
+          <Link href="/teacher/users/invite">
+            <Button className="!h-full">Invite User</Button>
+          </Link>
+        </div>
       </div>
       <div className="mt-14 grid grid-cols-1 gap-5 p-5">
         {result.users.length === 0 ? (

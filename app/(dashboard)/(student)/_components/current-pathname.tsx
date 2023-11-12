@@ -19,7 +19,7 @@ const CurrentPathNavigator = ({
   paramsNames.forEach((name) => {
     revParams.set(params[name], name)
   })
-  
+
   return (
     <div
       className={cn(

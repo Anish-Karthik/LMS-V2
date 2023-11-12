@@ -9,9 +9,9 @@ import toast from "react-hot-toast"
 import * as z from "zod"
 
 import {
-  createOrUpdatePromoClient,
-  isUniquePromoCodeClient,
-} from "@/lib/actions/server/promo.server.action"
+  createOrUpdateInviteClient,
+  isUniqueInviteClient,
+} from "@/lib/actions/server/invite.server.action"
 import { randomString } from "@/lib/format"
 import { Button } from "@/components/ui/button"
 import { Calendar } from "@/components/ui/calendar"
@@ -23,21 +23,29 @@ import {
   FormMessage,
 } from "@/components/ui/form"
 import { Input } from "@/components/ui/input"
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select"
 
 const formSchema = z.object({
   id: z.string().optional(),
-  code: z
+  invite: z
     .string()
     .min(6)
     .max(12)
     .toUpperCase()
     .refine(
       async (code) => {
-        return await isUniquePromoCodeClient(code)
+        return await isUniqueInviteClient(code)
       },
-      { message: "Promo code already exists" }
+      { message: "Invite code already exists" }
     ),
-  discount: z
+  role: z.enum(["admin", "teacher"]),
+  uses: z
     .string()
     .min(1)
     .max(3)
@@ -50,46 +58,29 @@ const formSchema = z.object({
     }),
 })
 
-const formSchemaEdit = z.object({
-  id: z.string().optional(),
-  code: z.string().min(6).max(12).toUpperCase(),
-  discount: z
-    .string()
-    .min(1)
-    .max(3)
-    .refine((val) => parseInt(val) <= 100 && parseInt(val) > 0),
-  expiresAt: z
-    .date()
-    .optional()
-    .refine((date) => {
-      return !date || date > new Date()
-    }),
-})
-
-export function PromoForm({
+export function InviteForm({
   id,
-  code,
-  discount,
+  invite,
+  uses,
   expiresAt,
   type = "create",
   setIsCreating,
 }: {
   id?: string
-  code?: string
-  discount?: number
+  invite?: string
+  uses?: number
   expiresAt?: Date
   type?: "create" | "edit"
   setIsCreating: (val: boolean) => void
 }) {
   const { userId } = useAuth()
-  const schema = type == "edit" ? formSchemaEdit : formSchema
   const router = useRouter()
-  const form = useForm<z.infer<typeof schema>>({
-    resolver: zodResolver(schema),
+  const form = useForm<z.infer<typeof formSchema>>({
+    resolver: zodResolver(formSchema),
     defaultValues: {
       id: id || undefined,
-      code: code || randomString(12),
-      discount: discount?.toString() || "10",
+      invite: invite || randomString(12),
+      uses: uses?.toString() || "10",
       expiresAt: expiresAt || undefined,
     },
   })
@@ -102,14 +93,14 @@ export function PromoForm({
   const onSubmit = async (values: z.infer<typeof formSchema>) => {
     try {
       // TODO: TRPC
-      await createOrUpdatePromoClient({
+      await createOrUpdateInviteClient({
         ...values,
         userId,
-        discount: parseInt(values.discount),
+        uses: parseInt(values.uses),
       })
       console.log(values)
       toast.success(
-        `Promo Code ${type == "edit" ? "updated" : "created"} successfully`
+        `Invite Code ${type == "edit" ? "updated" : "created"} successfully`
       )
       setIsCreating(false)
       router.refresh()
@@ -129,7 +120,7 @@ export function PromoForm({
           </div>
           <FormField
             control={form.control}
-            name="code"
+            name="invite"
             render={({ field }) => (
               <FormItem>
                 <FormControl>
@@ -145,10 +136,42 @@ export function PromoForm({
           />
         </div>
         <div className="flex flex-col gap-2">
-          <h3>Discount</h3>
+          <h3>role</h3>
           <FormField
             control={form.control}
-            name="discount"
+            name="role"
+            render={({ field }) => (
+              <FormItem>
+                <FormControl>
+                  <Select
+                    disabled={isSubmitting}
+                    {...field}
+                    onValueChange={(val) => {
+                      field.onChange(val)
+                    }}
+                  >
+                    <SelectTrigger>
+                      <SelectValue
+                        placeholder="Teacher"
+                        defaultValue={"teacher"}
+                      />
+                    </SelectTrigger>
+                    <SelectContent>
+                      <SelectItem value="admin">Admin</SelectItem>
+                      <SelectItem value="teacher">Teacher</SelectItem>
+                    </SelectContent>
+                  </Select>
+                </FormControl>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+        </div>
+        <div className="flex flex-col gap-2">
+          <h3>uses</h3>
+          <FormField
+            control={form.control}
+            name="uses"
             render={({ field }) => (
               <FormItem>
                 <FormControl>
