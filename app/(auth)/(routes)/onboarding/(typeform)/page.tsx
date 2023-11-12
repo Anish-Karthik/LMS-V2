@@ -7,7 +7,11 @@ import { OnboardingType } from "@/lib/utils"
 
 import TypeForm from "./_components/typeform"
 
-const page = async ({ searchParams }: { searchParams: { promo: string } }) => {
+const page = async ({
+  searchParams,
+}: {
+  searchParams: { promo: string; invite: string }
+}) => {
   const user = await currentUser()
   if (!user) {
     redirect("/sign-in")

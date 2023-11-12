@@ -1,7 +1,7 @@
 "use client"
 
 import React, { useEffect, useState } from "react"
-import { redirect, useRouter } from "next/navigation"
+import { redirect, useRouter, useSearchParams } from "next/navigation"
 import { useAuth } from "@clerk/nextjs"
 import classNames from "classnames"
 import { Check } from "lucide-react"
@@ -69,6 +69,7 @@ const SelectForm = ({
   const [prevValue, setPrevValue] = useState<number>(prev)
   const [selectedData, setSelectedData] = useState<string>(data[name])
   const router = useRouter()
+  const searchParams = useSearchParams()
   const { isSubmitting, isValid } = form.formState
   useEffect(() => {
     form.setValue(name, selectedData || "")
@@ -91,6 +92,14 @@ const SelectForm = ({
   // handle next
   async function onSubmit(values: z.infer<typeof formSchema>) {
     updateFields({ ...values })
+    const searchParamsPromo = searchParams.get("promo")
+      ? `promo=${searchParams.get("promo")}`
+      : ""
+    const searchParamsInvite = searchParams.get("invite")
+      ? `invite=${searchParams.get("invite")}`
+      : ""
+    const searchParamsUrl = `${searchParamsPromo}&${searchParamsInvite}`
+    console.log(searchParamsUrl)
     if (!isLastStep) {
       console.log("next step", getFirstInvalidStep())
       if (
@@ -108,11 +117,11 @@ const SelectForm = ({
         })
         setValidIndex(currentStepIndex)
         toast.success("Form submitted")
-        router.push(`/purchase?promo=${promo}`)
+        router.push(`/purchase?${searchParamsUrl}`)
       } catch (error) {
         toast.error("Some Error occurred, try filling again")
         console.log(error)
-        router.push(`/onboarding?promo=${promo}`)
+        router.push(`/onboarding?${searchParamsUrl}`)
       }
       // alert("form submitted")
     }

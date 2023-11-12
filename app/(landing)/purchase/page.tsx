@@ -5,6 +5,7 @@ import { UserButton, currentUser } from "@clerk/nextjs"
 
 import { getCourses } from "@/lib/actions/course.actions"
 import { acceptInvite } from "@/lib/actions/invite.action"
+import { getUser } from "@/lib/actions/user.actions"
 import { db } from "@/lib/db"
 import { cn } from "@/lib/utils"
 import { Button } from "@/components/ui/button"
@@ -28,9 +29,24 @@ const page = async ({
     redirect("/create-course")
   }
   const user = await currentUser()
+  if (!user) {
+    redirect("/sign-in")
+  }
+  const searchParamsPromo = searchParams.promo
+    ? `promo=${searchParams.promo}`
+    : ""
+  const searchParamsInvite = searchParams.invite
+    ? `invite=${searchParams.invite}`
+    : ""
+  const searchParamsUrl = `${searchParamsPromo}&${searchParamsInvite}`
+  const userInfo = await getUser(user.id)
+  if (!userInfo) {
+    redirect(`/onboarding?${searchParamsUrl}`)
+  }
+
   const courseId = courses[0].id
   console.log(searchParams.promo)
-  if (searchParams.invite && user) {
+  if (searchParams.invite) {
     await acceptInvite(searchParams.invite, user.id)
     redirect("teacher/settings")
   }

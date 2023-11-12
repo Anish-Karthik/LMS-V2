@@ -93,7 +93,7 @@ model Admin {
   id        String   @id @default(auto()) @map("_id") @db.ObjectId
   userId    String   @unique
   userObjId String   @unique @db.ObjectId
-  user      User     @relation(fields: [userObjId], references: [id])
+  user      User     @relation(fields: [userObjId], references: [id], onDelete: Cascade)
   invites   Invite[]
 }
 
@@ -101,7 +101,7 @@ model Teacher {
   id        String @id @default(auto()) @map("_id") @db.ObjectId
   userId    String @unique
   userObjId String @unique @db.ObjectId
-  user      User   @relation(fields: [userObjId], references: [id])
+  user      User   @relation(fields: [userObjId], references: [id], onDelete: Cascade)
 
   courseIds String[] @db.ObjectId
   courses   Course[] @relation(fields: [courseIds], references: [id])

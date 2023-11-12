@@ -192,25 +192,7 @@ export function ProfileForm({ userInfo }: { userInfo: User }) {
         country: data.country,
         state: data.state,
       })
-      toast({
-        title: "You submitted the following values:",
-        description: (
-          <pre className="mt-2 w-[340px] rounded-md bg-slate-950 p-4">
-            <code className="text-white">
-              {JSON.stringify(
-                {
-                  ...data,
-                  city: selectedCity?.name,
-                  country: selectedCountry?.name,
-                  state: selectedState?.name,
-                },
-                null,
-                2
-              )}
-            </code>
-          </pre>
-        ),
-      })
+
       router.refresh()
     } catch (err: any) {
       console.log(err)
