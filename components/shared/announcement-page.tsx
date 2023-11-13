@@ -2,7 +2,7 @@
 
 import React from "react"
 import { useSearchParams } from "next/navigation"
-import { Announcement, Attachment, Batch, Course } from "@prisma/client"
+import { Announcement, Attachment, Batch, Course, User } from "@prisma/client"
 
 import AnnouncementCard from "../card/announcement-card"
 import AnnouncementCategory from "./announcement-category"
@@ -19,11 +19,13 @@ const AnnouncementPage = ({
   courses?: Course[]
   batches?: Batch[]
   type: string
-  announcements: (Announcement & { attachments: Attachment[] })[]
+  announcements: (Announcement & { attachments: Attachment[]; user: User })[]
   viewerRole: string
 }) => {
   const searchParams = useSearchParams()
+  console.log(announcements)
   const filteredAnnouncements = announcements.filter((announcement) => {
+    if (type === "blog") return announcement.type === "blog"
     if (type === "general") return true
     if (type === "course")
       return (

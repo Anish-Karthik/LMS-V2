@@ -77,8 +77,8 @@ export const AnnouncementActions = ({
       >
         {isPublished ? "Unpublish" : "Publish"}
       </Button>
-      <ConfirmModal onConfirm={onDelete} typeDelete>
-        <Button size="sm" disabled={isLoading} variant={"destructive"}>
+      <ConfirmModal onConfirm={onDelete}>
+        <Button size="sm" disabled={isLoading}>
           <Trash className="h-4 w-4" />
         </Button>
       </ConfirmModal>

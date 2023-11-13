@@ -17,39 +17,11 @@ const page = async () => {
   const announcements = await getAnnouncements()
   const user = await currentUser()
   const userInfo = await getUser(user!.id)
-  const generalAnnouncements = announcements.filter(
-    (a) => a.courseId === null && a.batchId === null && a.isPublished
-  )
-  const batchAnnouncements = announcements.filter(
-    (a) => a.courseId !== null && a.batchId !== null && a.isPublished
-  )
-  const courseAnnouncements = announcements.filter(
-    (a) => a.courseId !== null && a.batchId === null && a.isPublished
-  )
   const blogAnnouncements = announcements.filter(
     (a) => a.type === "blog" && a.isPublished
   )
 
-  console.log(blogAnnouncements)
   const announcementTabs = [
-    {
-      value: "general",
-      label: "General",
-      icon: NotificationAddSharp,
-      data: generalAnnouncements,
-    },
-    {
-      value: "batch",
-      label: "Batch",
-      icon: NotificationAddOutlined,
-      data: batchAnnouncements,
-    },
-    {
-      value: "course",
-      label: "Course",
-      icon: NotificationImportant,
-      data: courseAnnouncements,
-    },
     {
       value: "blog",
       label: "Blog",
@@ -67,7 +39,7 @@ const page = async () => {
         userRole={userInfo!.role}
         courses={courses as Course[]}
         batches={batches}
-        announcements={announcements}
+        announcements={blogAnnouncements}
       />
     </div>
   )

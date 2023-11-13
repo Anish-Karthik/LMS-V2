@@ -1,7 +1,6 @@
 import React from "react"
 import dynamic from "next/dynamic"
 import Link from "next/link"
-import { currentUser } from "@clerk/nextjs"
 import { Course } from "@prisma/client"
 import { AlertCircle, ArrowLeft, FileIcon, LayoutDashboard } from "lucide-react"
 
@@ -37,7 +36,7 @@ const CreateAnnoucement = async ({
   const courses = await getCourses()
   const course = courses![0]
   const batches = await getBatches(searchParams.courseId || course.id)
-  // const user = await currentUser();
+
   const requiredFields = [
     announcement.title,
     announcement.description,

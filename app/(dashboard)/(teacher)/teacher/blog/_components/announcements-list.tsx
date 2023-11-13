@@ -2,15 +2,12 @@
 
 import { useEffect, useState } from "react"
 import Link from "next/link"
-import { useRouter } from "next/navigation"
 import { Announcement, Attachment } from "@prisma/client"
 import { Pencil, TrashIcon } from "lucide-react"
-import { toast } from "react-hot-toast"
 
 import { deleteAnnouncement } from "@/lib/actions/server/announcement.server.action"
 import { cn } from "@/lib/utils"
 import { Button } from "@/components/ui/button"
-import { ConfirmModal } from "@/components/modals/confirm-modal"
 
 interface AnnouncementsListProps {
   items: (Announcement & { attachments?: Attachment[] })[]
@@ -18,15 +15,14 @@ interface AnnouncementsListProps {
 
 export const AnnouncementsList = ({ items }: AnnouncementsListProps) => {
   const [isMounted, setIsMounted] = useState(false)
-  const [announcements, setAnnouncements] = useState(items)
-  const router = useRouter()
+  const [batches, setBatches] = useState(items)
 
   useEffect(() => {
     setIsMounted(true)
   }, [])
 
   useEffect(() => {
-    setAnnouncements(items)
+    setBatches(items)
   }, [items])
 
   if (!isMounted) {
@@ -35,7 +31,7 @@ export const AnnouncementsList = ({ items }: AnnouncementsListProps) => {
 
   return (
     <div>
-      {announcements.map((announcement, index) => (
+      {batches.map((announcement, index) => (
         <div
           className={cn(
             "mb-4 flex items-center justify-between gap-x-2 rounded-md border border-slate-200 bg-slate-200 text-sm text-slate-700",
@@ -51,12 +47,11 @@ export const AnnouncementsList = ({ items }: AnnouncementsListProps) => {
           <div className="flex items-center justify-normal">
             <div className="ml-auto flex items-center gap-2 pr-2 max-xs:flex-col max-xs:py-1">
               <span className="rounded-sm bg-slate-500 p-1 text-xs text-primary">
-                {announcement.type}
-                {/* {announcement.courseId && announcement.batchId
+                {announcement.courseId && announcement.batchId
                   ? "Batch"
                   : announcement.courseId
                   ? "Course"
-                  : "General"} */}
+                  : "General"}
               </span>
               {announcement.isPublished ? (
                 <span className="text-xs text-green-500">Published</span>
@@ -70,18 +65,14 @@ export const AnnouncementsList = ({ items }: AnnouncementsListProps) => {
                   <Pencil className="h-5 w-5" />
                 </Button>
               </Link>
-              <ConfirmModal
-                typeDelete
-                onConfirm={async () => {
+              <Button
+                variant={"destructive"}
+                onClick={async () => {
                   await deleteAnnouncement(announcement.id)
-                  router.refresh()
-                  toast.success("annoucement Deleted")
                 }}
               >
-                <Button variant={"destructive"}>
-                  <TrashIcon className="h-5 w-5" />
-                </Button>
-              </ConfirmModal>
+                <TrashIcon className="h-5 w-5" />
+              </Button>
             </div>
           </div>
         </div>

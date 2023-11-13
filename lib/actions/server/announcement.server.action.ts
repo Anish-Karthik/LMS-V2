@@ -4,12 +4,27 @@ import { db } from "@/lib/db"
 import { formatDate } from "@/lib/format"
 
 import { getAnnouncementByid } from "../announcement.action"
+import { getUser } from "../user.actions"
 
-export const createAnnouncement = async (title: string) => {
+export const createAnnouncement = async (title: string, userId: string) => {
   try {
+    const userInfo = await getUser(userId)
+    if (!userInfo) {
+      throw new Error("User not found")
+    }
+
     const announcement = await db.announcement.create({
-      data: { title },
+      data: { title, userObjId: userInfo.id },
     })
+
+    if (!announcement) {
+      throw new Error("Announcement not created")
+    }
+    // await db.user.update({
+    //   where: { id: userId },
+    //   data: { announcements: { connect: { id: announcement.id } } },
+    // })
+
     return announcement
   } catch (error: any) {
     console.error(error)

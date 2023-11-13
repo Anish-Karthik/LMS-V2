@@ -48,8 +48,9 @@ model User {
   teacher   Teacher?
   admin     Admin?
 
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
+  createdAt     DateTime       @default(now())
+  updatedAt     DateTime       @updatedAt
+  announcements Announcement[]
 
   @@index([userId, phoneNo])
   @@index([userId, email])
@@ -200,13 +201,14 @@ model VideoData {
 }
 
 model Announcement {
-  id          String  @id @default(auto()) @map("_id") @db.ObjectId
+  id          String       @id @default(auto()) @map("_id") @db.ObjectId
   title       String
   description String?
-  isPublished Boolean @default(false)
-  isNotified  Boolean @default(false)
-  type        String  @default("general")
-
+  isPublished Boolean      @default(false)
+  isNotified  Boolean      @default(false)
+  type        String       @default("general")
+  userObjId   String       @db.ObjectId
+  user        User         @relation(fields: [userObjId], references: [id], onDelete: Cascade)
   attachments Attachment[]
 
   batchId String? @db.ObjectId

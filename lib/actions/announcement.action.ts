@@ -23,6 +23,7 @@ export const getAnnouncements = async () => {
     const announcements = await db.announcement.findMany({
       include: {
         attachments: true,
+        user: true,
       },
     })
     return announcements

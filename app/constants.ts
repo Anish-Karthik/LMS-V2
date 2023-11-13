@@ -109,12 +109,13 @@ export const sidebarLinksTeacher = [
     label: "Announcements",
     role: ["teacher", "admin"],
   },
-  // {
-  //   imgUrl: "/assets/recordings.svg",
-  //   icon: PlayCircle,
-  //   route: "/teacher/recordings",
-  //   label: "Recordings",
-  // },
+  {
+    imgUrl: "/assets/edit.svg",
+    icon: Pen,
+    route: "/teacher/blog",
+    label: "Blog",
+    role: ["teacher", "admin"],
+  },
   {
     imgUrl: "/assets/edit.svg",
     icon: SettingsIcon,
@@ -152,12 +153,13 @@ export const sidebarLinksTeacherMobile = [
     label: "Announcements",
     role: ["teacher", "admin"],
   },
-  // {
-  //   imgUrl: "/assets/recordings.svg",
-  //   icon: PlayCircle,
-  //   route: "/teacher/recordings",
-  //   label: "Recordings",
-  // },
+  {
+    imgUrl: "/assets/edit.svg",
+    icon: Pen,
+    route: "/teacher/blog",
+    label: "Blog",
+    role: ["teacher", "admin"],
+  },
   {
     imgUrl: "/assets/edit.svg",
     icon: SettingsIcon,
@@ -168,12 +170,6 @@ export const sidebarLinksTeacherMobile = [
 ]
 
 export const sidebarLinksStudentMobile = [
-  //   {
-  //   imgUrl: "/assets/home.svg",
-  //   icon: HomeIcon,
-  //   route: "/student/dashboard",
-  //   label: "Home",
-  // },
   {
     imgUrl: "/assets/courses.svg",
     icon: Book,
