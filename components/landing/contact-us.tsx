@@ -1,43 +1,10 @@
 import React from "react"
 import Image from "next/image"
 import Link from "next/link"
-import EmailIcon from "@/public/email-icon.svg"
-import GithubIcon from "@/public/github-icon.svg"
-import LinkedinIcon from "@/public/linkedin-icon.svg"
-import TwitterIcon from "@/public/twitter-icon.svg"
+import { Phone } from "lucide-react"
 
+import { socials } from "@/lib/socials"
 import { cn } from "@/lib/utils"
-
-const socials = [
-  {
-    title: "Linkedin",
-    href: "https://www.linkedin.com/in/anish-karthik/",
-    icon: LinkedinIcon,
-    alt: "Linkedin Icon",
-    style: "",
-  },
-  {
-    title: "Github",
-    href: "https://github.com/Anish-Karthik",
-    icon: GithubIcon,
-    alt: "Github Icon",
-    style: "",
-  },
-  {
-    title: "Mail Me",
-    href: "mailto: anishkarthik.54321@gmail.com",
-    icon: EmailIcon,
-    alt: "Email Icon",
-    style: "px-1",
-  },
-  {
-    title: "Twitter",
-    href: "https://twitter.com/Anish_Karthik_A",
-    icon: TwitterIcon,
-    alt: "Twitter Icon",
-    style: "px-1",
-  },
-]
 
 const ContactUs = () => {
   return (
@@ -58,14 +25,10 @@ const ContactUs = () => {
             alt="logo"
           />
         </Link>
-        <div className="socials flex flex-row justify-evenly gap-2 sm:ml-[5.5rem]">
+        <div className="socials flex flex-row items-center justify-evenly gap-2 sm:ml-[5.5rem]">
           {socials.map((social, index) => (
-            <Link
-              href={social.href}
-              key={index}
-              className={cn("flex ", social.style)}
-            >
-              <Image src={social.icon} alt={social.alt} />
+            <Link href={social.href} key={index} className="flex items-center">
+              <social.icon width={30} />
             </Link>
           ))}
         </div>

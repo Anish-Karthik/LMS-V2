@@ -1,5 +1,6 @@
 import React from "react"
 
+import ContactUs from "@/components/landing/contact-us"
 import LandingNavbar from "@/components/shared/LandingNavbar"
 
 const layout = ({ children }: { children: React.ReactNode }) => {
@@ -9,6 +10,7 @@ const layout = ({ children }: { children: React.ReactNode }) => {
         <LandingNavbar courses={[]} />
       </div>
       <main>{children}</main>
+      <ContactUs />
     </div>
   )
 }

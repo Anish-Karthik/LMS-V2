@@ -12,6 +12,7 @@ export default authMiddleware({
     "/purchase",
     "/about",
     "/testimonials",
+    "/contact",
   ],
   clockSkewInMs: 30000,
   afterAuth(auth, req, evt) {

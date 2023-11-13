@@ -6,6 +6,7 @@ import { getAnnouncements } from "@/lib/actions/announcement.action"
 import { getAllBatches } from "@/lib/actions/batch.action"
 import { getCourses } from "@/lib/actions/course.actions"
 import { getUser } from "@/lib/actions/user.actions"
+import ContactUs from "@/components/landing/contact-us"
 import LandingNavbar from "@/components/shared/LandingNavbar"
 import AnnouncementPage from "@/components/shared/announcement-page"
 
@@ -47,6 +48,7 @@ const page = async () => {
           type="blog"
         />
       </div>
+      <ContactUs />
     </div>
   )
 }
