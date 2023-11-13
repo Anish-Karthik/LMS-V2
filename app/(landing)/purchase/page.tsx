@@ -29,9 +29,6 @@ const page = async ({
     redirect("/create-course")
   }
   const user = await currentUser()
-  if (!user) {
-    redirect("/sign-in")
-  }
   const searchParamsPromo = searchParams.promo
     ? `promo=${searchParams.promo}`
     : ""
@@ -39,14 +36,11 @@ const page = async ({
     ? `invite=${searchParams.invite}`
     : ""
   const searchParamsUrl = `${searchParamsPromo}&${searchParamsInvite}`
-  const userInfo = await getUser(user.id)
-  if (!userInfo) {
-    redirect(`/onboarding?${searchParamsUrl}`)
-  }
 
   const courseId = courses[0].id
   console.log(searchParams.promo)
-  if (searchParams.invite) {
+  if (searchParams.invite && user) {
+    const userInfo = await getUser(user.id)
     await acceptInvite(searchParams.invite, user.id)
     redirect("teacher/settings")
   }
@@ -76,7 +70,7 @@ const page = async ({
       </nav>
       <section className="container my-20 flex flex-col items-center gap-20">
         <MainCard />
-        <div className="!max-w-3xl">
+        <div className="flex !max-w-3xl flex-col items-center gap-20">
           <DetailsSection />
           <ReviewsSection />
           <SyllabusSection

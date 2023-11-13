@@ -26,31 +26,34 @@ model Promo {
 }
 
 model User {
-  id            String   @id @default(auto()) @map("_id") @db.ObjectId
-  userId        String   @unique
-  phoneNo       String?  @unique
-  email         String   @unique
-  name          String
-  image         String?
-  dob           DateTime
-  country       String
-  city          String   @default("None")
-  state         String   @default("None")
-  gender        String   @default("prefer not to say")
-  role          String   @default("user")
-  isBanned      Boolean  @default(false)
-  referralCount Int      @default(0)
-  referralBonus Int      @default(0)
-  isSuperAdmin  Boolean  @default(false)
+  id               String    @id @default(auto()) @map("_id") @db.ObjectId
+  userId           String    @unique
+  phoneNo          String?   @unique
+  email            String    @unique
+  name             String
+  image            String?
+  howDidHear       String?
+  employmentStatus String?
+  dob              DateTime?
+  country          String?
+  city             String    @default("None")
+  state            String    @default("None")
+  gender           String    @default("prefer not to say")
+  role             String    @default("user")
+  isBanned         Boolean   @default(false)
+  referralCount    Int       @default(0)
+  referralBonus    Int       @default(0)
+  isSuperAdmin     Boolean   @default(false)
 
-  promos    Promo[]
-  purchases Purchase[]
-  teacher   Teacher?
-  admin     Admin?
-
-  createdAt     DateTime       @default(now())
-  updatedAt     DateTime       @updatedAt
+  promos        Promo[]
+  purchases     Purchase[]
   announcements Announcement[]
+  testimonials  Testimonial[]
+  teacher       Teacher?
+  admin         Admin?
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
 
   @@index([userId, phoneNo])
   @@index([userId, email])
@@ -279,4 +282,15 @@ model StripeCustomer {
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
+}
+
+model Testimonial {
+  id          String   @id @default(auto()) @map("_id") @db.ObjectId
+  rating      Int      @default(5)
+  description String
+  isPublished Boolean  @default(false)
+  userObjId   String   @db.ObjectId
+  user        User     @relation(fields: [userObjId], references: [id], onDelete: Cascade)
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
 }

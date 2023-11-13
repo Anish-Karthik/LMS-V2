@@ -3,7 +3,7 @@
 import { Montserrat } from "next/font/google"
 import Image from "next/image"
 import Link from "next/link"
-import { UserButton } from "@clerk/nextjs"
+import { UserButton, useAuth } from "@clerk/nextjs"
 import { Course } from "@prisma/client"
 
 import { cn } from "@/lib/utils"
@@ -23,6 +23,7 @@ const LandingNavbar = ({
   courses: Course[]
   route?: string
 }) => {
+  const { userId } = useAuth()
   return (
     <nav className="flex items-center justify-between bg-transparent p-4">
       <Link href="/" className="flex items-center">
@@ -36,7 +37,7 @@ const LandingNavbar = ({
 
       <div className="flex items-center gap-2">
         <ThemeToggle />
-        <Link href={route ?? `/purchase`}>
+        <Link href={!userId ? "/sign-in" : route ?? `/purchase`}>
           <Button variant="outline" className="rounded-full">
             Get Started
           </Button>

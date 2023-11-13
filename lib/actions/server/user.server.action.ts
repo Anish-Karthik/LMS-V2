@@ -15,6 +15,8 @@ type CreateUserProps = {
   state?: string
   city?: string
   email?: string
+  employmentStatus?: string
+  howDidHear?: string
 }
 
 export const createUser = async ({
@@ -28,6 +30,8 @@ export const createUser = async ({
   country,
   state,
   city,
+  employmentStatus,
+  howDidHear,
 }: CreateUserProps) => {
   try {
     if (!userId) throw new Error("Unauthorized user")
@@ -50,6 +54,8 @@ export const createUser = async ({
         country: country!,
         state,
         city,
+        employmentStatus,
+        howDidHear,
         isBanned: false,
         referralBonus: 0,
         referralCount: 0,

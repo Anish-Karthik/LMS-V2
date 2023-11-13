@@ -2,14 +2,7 @@
 
 import React from "react"
 
-import {
-  Card,
-  CardContent,
-  CardFooter,
-  CardHeader,
-  CardTitle,
-} from "@/components/ui/card"
-
+import TestimonialCard from "../card/testimonial-card"
 import VideoPlayerLanding from "./video-player-landing"
 
 const testimonials1 = [
@@ -1517,66 +1510,12 @@ const ReviewsSection = () => {
           <div className="flex gap-3">
             <div className="flex w-full flex-col gap-1">
               {testimonials1.map((item) => (
-                <Card
-                  key={item.description}
-                  className="mb-2 border-none bg-secondary"
-                >
-                  <CardHeader className="!pb-0">
-                    <CardTitle className="flex items-center gap-x-2">
-                      {item.svg}
-                    </CardTitle>
-                    <CardContent className="px-0 pt-4">
-                      {item.description}
-                    </CardContent>
-                  </CardHeader>
-                  <CardFooter className="!-mt-3 ">
-                    <div className="flex flex-row items-center justify-center gap-2 ">
-                      <div>
-                        <div className="rounded-full bg-tertiary-color px-[0.7rem] py-1 text-quaternary-color">
-                          {item.avatar}
-                        </div>
-                      </div>
-                      <div>
-                        <div className="font-semibold">{item.name}</div>
-                        <div className="!text-[13px] text-muted-foreground">
-                          {item.title}
-                        </div>
-                      </div>
-                    </div>
-                  </CardFooter>
-                </Card>
+                <TestimonialCard {...item} key={item.description} />
               ))}
             </div>
             <div className="flex w-full flex-col gap-1">
               {testimonials2.map((item) => (
-                <Card
-                  key={item.description}
-                  className="mb-2 border-none bg-secondary"
-                >
-                  <CardHeader className="!pb-0">
-                    <CardTitle className="flex items-center gap-x-2">
-                      {item.svg}
-                    </CardTitle>
-                    <CardContent className="px-0 pt-4">
-                      {item.description}
-                    </CardContent>
-                  </CardHeader>
-                  <CardFooter className="!-mt-3 ">
-                    <div className="flex flex-row items-center justify-center gap-2 ">
-                      <div>
-                        <div className="rounded-full bg-tertiary-color px-[0.7rem] py-1 text-quaternary-color">
-                          {item.avatar}
-                        </div>
-                      </div>
-                      <div>
-                        <div className="font-semibold">{item.name}</div>
-                        <div className="!text-[13px] text-muted-foreground">
-                          {item.title}
-                        </div>
-                      </div>
-                    </div>
-                  </CardFooter>
-                </Card>
+                <TestimonialCard {...item} key={item.description} />
               ))}
             </div>
           </div>

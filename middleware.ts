@@ -4,7 +4,15 @@ import { authMiddleware, redirectToSignIn } from "@clerk/nextjs"
 // Please edit this to allow other routes to be public as needed.
 // See https://clerk.com/docs/references/nextjs/auth-middleware for more information about configuring your middleware
 export default authMiddleware({
-  publicRoutes: ["/", "/api/webhook", "/api/uploadthing", "/blogs"],
+  publicRoutes: [
+    "/",
+    "/api/webhook",
+    "/api/uploadthing",
+    "/blogs",
+    "/purchase",
+    "/about",
+    "/testimonials",
+  ],
   clockSkewInMs: 30000,
   afterAuth(auth, req, evt) {
     // This function is called after a user is authenticated
