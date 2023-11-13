@@ -75,6 +75,7 @@
     "react-quill": "^2.0.0",
     "react-select": "^5.7.7",
     "recharts": "^2.8.0",
+    "recoil": "^0.7.7",
     "sharp": "^0.31.3",
     "stripe": "^13.9.0",
     "styled-components": "^6.1.0",

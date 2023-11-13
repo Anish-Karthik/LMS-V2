@@ -23,7 +23,7 @@ const AnnouncementPage = ({
   viewerRole: string
 }) => {
   const searchParams = useSearchParams()
-  console.log(announcements)
+  // console.log(announcements)
   const filteredAnnouncements = announcements.filter((announcement) => {
     if (type === "blog") return announcement.type === "blog"
     if (type === "general") return true

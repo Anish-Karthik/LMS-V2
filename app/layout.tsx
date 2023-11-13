@@ -2,6 +2,7 @@ import "@/styles/globals.css"
 import React from "react"
 import { Metadata } from "next"
 import { ClerkProvider } from "@clerk/nextjs"
+import { RecoilRoot } from "recoil"
 
 import { siteConfig } from "@/config/site"
 import { fontSans } from "@/lib/fonts"
@@ -39,6 +40,7 @@ interface RootLayoutProps {
 export default function RootLayout({ children }: RootLayoutProps) {
   return (
     <ClerkProvider>
+      {/* <RecoilRoot> */}
       <html lang="en" suppressHydrationWarning>
         <head />
         <body
@@ -61,6 +63,7 @@ export default function RootLayout({ children }: RootLayoutProps) {
           </ThemeProvider>
         </body>
       </html>
+      {/* </RecoilRoot> */}
     </ClerkProvider>
   )
 }

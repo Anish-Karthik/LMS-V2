@@ -7,6 +7,14 @@ import qs from "query-string"
 import "@/components/ui/checkbox"
 import { Announcement, Batch, Course } from "@prisma/client"
 import { toast } from "react-hot-toast"
+import {
+  RecoilRoot,
+  RecoilState,
+  atom,
+  useRecoilState,
+  useRecoilValue,
+  useSetRecoilState,
+} from "recoil"
 
 import { cn } from "@/lib/utils"
 import {
@@ -17,20 +25,7 @@ import {
   SelectValue,
 } from "@/components/ui/select"
 
-const announcementTypes = [
-  {
-    id: "general",
-    name: "General",
-  },
-  {
-    id: "course",
-    name: "Course",
-  },
-  {
-    id: "batch",
-    name: "Batch",
-  },
-]
+
 export type AnnouncementType = "general" | "course" | "batch"
 export function getCurrentAnnouncementType(
   announcement: Announcement
@@ -51,8 +46,56 @@ const AnnouncementCategory = ({
   batches: Batch[]
   isStudent?: boolean
 }) => {
-  const [batch, setBatch] = useState("all")
-  const [course, setCourse] = useState("all")
+  return (
+    <RecoilRoot>
+      <div
+        className={cn(
+          "flex w-full flex-wrap justify-start gap-2 pl-2 xs:flex-nowrap"
+        )}
+      >
+        {(type === "course" || type === "batch") && (
+          <CustomSelectItems
+            type={type}
+            recoilState={courseState}
+            name="course"
+            items={courses}
+          />
+        )}
+        {type === "batch" && !isStudent && (
+          <CustomSelectItems
+            type={type}
+            recoilState={batchState}
+            name="batch"
+            items={batches}
+          />
+        )}
+      </div>
+    </RecoilRoot>
+  )
+}
+
+export default AnnouncementCategory
+
+function CustomSelectItems({
+  recoilState,
+  items,
+  disabled,
+  type,
+  name,
+  isStudent = false,
+}: {
+  name: string
+  recoilState: RecoilState<string>
+  items: any[]
+  type: string
+  disabled?: boolean
+  isStudent?: boolean
+}) {
+  const [value, setValue] = useRecoilState(recoilState)
+  const handleChange = (val: string) => {
+    setValue(val)
+    toast.success(`Filtering by ${value}`)
+  }
 
   const searchParams = useSearchParams()
   const router = useRouter()
@@ -67,12 +110,13 @@ const AnnouncementCategory = ({
         url: pathname,
         query: {
           type: type,
-          courseId: ["course", "batch"].includes(type)
-            ? course || searchParams.get("courseId")
-            : "",
+          courseId:
+            ["course", "batch"].includes(type) && name === "course"
+              ? value || searchParams.get("courseId")
+              : "",
           batchId:
-            type === "batch" && !isStudent
-              ? batch || searchParams.get("batchId")
+            type === "batch" && name === "batch" && !isStudent
+              ? value || searchParams.get("batchId")
               : "",
         },
       },
@@ -80,46 +124,7 @@ const AnnouncementCategory = ({
     )
 
     router.push(url)
-  }, [type, router, pathname, searchParams, course, batch, isStudent])
-  useEffect(() => {}, [])
-
-  return (
-    <div
-      className={cn(
-        "flex w-full flex-wrap justify-start gap-2 pl-2 xs:flex-nowrap"
-      )}
-    >
-      {(type === "course" || type === "batch") && (
-        <CustomSelectItems
-          setValue={setCourse}
-          value={course}
-          items={courses}
-        />
-      )}
-      {type === "batch" && !isStudent && (
-        <CustomSelectItems setValue={setBatch} value={batch} items={batches} />
-      )}
-    </div>
-  )
-}
-
-export default AnnouncementCategory
-
-function CustomSelectItems({
-  setValue,
-  value,
-  items,
-  disabled,
-}: {
-  setValue: (val: string) => void
-  value: string
-  items: any[]
-  disabled?: boolean
-}) {
-  const handleChange = (val: string) => {
-    setValue(val)
-    toast.success(`Filtering by ${value}`)
-  }
+  }, [type, router, pathname, value, name, searchParams, isStudent])
 
   return (
     <Select
@@ -141,3 +146,13 @@ function CustomSelectItems({
     </Select>
   )
 }
+
+const batchState = atom({
+  key: "batch",
+  default: "all",
+})
+
+const courseState = atom({
+  key: "course",
+  default: "all",
+})
