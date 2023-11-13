@@ -3,13 +3,16 @@
 import { Montserrat } from "next/font/google"
 import Image from "next/image"
 import Link from "next/link"
+import { usePathname } from "next/navigation"
 import { UserButton, useAuth } from "@clerk/nextjs"
 import { Course } from "@prisma/client"
 
 import { cn } from "@/lib/utils"
 import { Button } from "@/components/ui/button"
+import { landingRoutes } from "@/app/constants"
 
 import { ThemeToggle } from "../theme-toggle"
+import LandingNavbarMobile from "./LandingNavbarMobile"
 
 const font = Montserrat({
   weight: "600",
@@ -24,16 +27,31 @@ const LandingNavbar = ({
   route?: string
 }) => {
   const { userId } = useAuth()
+  const pathname = usePathname()
   return (
     <nav className="flex items-center justify-between bg-transparent p-4">
-      <Link href="/" className="flex items-center">
-        <div className="relative mr-4 h-8 w-8">
-          <Image fill alt="Logo" src="/images/logo.png" />
-        </div>
-        <div>
-          <h1 className={cn("text-2xl font-bold ", font.className)}>ALFAQ</h1>
-        </div>
-      </Link>
+      <div className="flex items-center gap-3">
+        <Link href="/" className="flex items-center">
+          <div className="relative mr-4 h-8 w-8">
+            <Image fill alt="Logo" src="/images/logo.png" />
+          </div>
+          <div>
+            <h1 className={cn("text-2xl font-bold ", font.className)}>ALFAQ</h1>
+          </div>
+        </Link>
+        {landingRoutes.map((landingRoute) => (
+          <Link
+            href={landingRoute.href}
+            key={landingRoute.href}
+            className={cn(
+              "text-lg text-white hover:text-blue-400 max-md:hidden",
+              pathname === landingRoute.href && "text-blue-500"
+            )}
+          >
+            {landingRoute.label}
+          </Link>
+        ))}
+      </div>
 
       <div className="flex items-center gap-2">
         <ThemeToggle />
@@ -43,6 +61,7 @@ const LandingNavbar = ({
           </Button>
         </Link>
         {<UserButton afterSignOutUrl="/" afterSwitchSessionUrl="/" />}
+        <LandingNavbarMobile />
       </div>
     </nav>
   )

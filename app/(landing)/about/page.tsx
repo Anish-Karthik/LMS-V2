@@ -11,8 +11,10 @@ const page = () => {
         <div className="grid w-full items-center gap-4 max-lg:grid-rows-2 lg:grid-cols-2">
           <div className="flex !h-full flex-1 bg-text-secondary text-background">
             <div className="!py-auto !my-auto flex flex-col items-center gap-2">
-              <h1 className="px-20 text-4xl font-extrabold">About Us</h1>
-              <p className="text-md px-20 text-center font-bold">
+              <h1 className="px-20 text-xl font-extrabold md:text-3xl lg:text-4xl">
+                About Us
+              </h1>
+              <p className="lg:text-md px-20 text-center text-xs font-bold md:text-sm">
                 In 2019, we established a community in which college students
                 joined forces to deepen their understanding and share insights
                 on the stock market and various financial markets. Over time,

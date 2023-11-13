@@ -190,6 +190,25 @@ export const sidebarLinksStudentMobile = [
   },
 ]
 
+export const landingRoutes = [
+  {
+    label: "About",
+    href: "/about",
+  },
+  {
+    label: "Contact",
+    href: "/contact",
+  },
+  {
+    label: "Blog",
+    href: "/blog",
+  },
+  {
+    label: "Testimonials",
+    href: "/testimonials",
+  },
+]
+
 export type TsideBar = typeof sidebarLinksTeacher
 
 export const communityTabs = [
