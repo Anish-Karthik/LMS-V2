@@ -26,7 +26,6 @@ export default async function LandingPage() {
         route = "/teacher/dashboard"
     }
   }
-  const { data, isLoading } = trpc.test.useQuery()
   return (
     <div className="h-full">
       <LandingNavbar courses={courses} route={route} />

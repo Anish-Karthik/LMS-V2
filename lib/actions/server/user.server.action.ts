@@ -96,12 +96,6 @@ export const updateUser = async ({
         country,
         state,
         city,
-        referralBonus: {
-          increment: 1000,
-        },
-        referralCount: {
-          increment: 1,
-        },
       },
     })
     return true
