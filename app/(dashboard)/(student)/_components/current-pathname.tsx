@@ -50,7 +50,6 @@ const CurrentPathNavigator = ({
             key={index}
             className="flex-start ml-2 flex gap-2"
           >
-            {/* @ts-ignore */}
             <p
               className={cn(
                 " hover:underline",

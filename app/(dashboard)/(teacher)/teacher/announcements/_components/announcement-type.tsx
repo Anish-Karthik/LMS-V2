@@ -4,6 +4,14 @@ import { useEffect, useState } from "react"
 import { usePathname, useRouter, useSearchParams } from "next/navigation"
 import { Pencil } from "lucide-react"
 import qs from "query-string"
+import {
+  RecoilRoot,
+  RecoilState,
+  atom,
+  useRecoilState,
+  useRecoilValue,
+  useSetRecoilState,
+} from "recoil"
 
 import "@/components/ui/checkbox"
 import { Announcement, Batch, Course } from "@prisma/client"
@@ -56,56 +64,47 @@ export const AnnouncementType = ({
   courses: Course[]
   batches: Batch[]
 }) => {
-  const [value, setValue] = useState<string>(
-    getCurrentAnnouncementType(announcement)
+  return (
+    <RecoilRoot>
+      <MiddleLine
+        announcement={announcement}
+        courses={courses}
+        batches={batches}
+      />
+    </RecoilRoot>
   )
-  const [batch, setBatch] = useState(announcement.batchId || "")
-  const [course, setCourse] = useState(announcement.courseId || "")
-  const [isEditing, setIsEditing] = useState(false)
-  const [isSubmitting, setIsSubmitting] = useState(false)
+}
 
-  const searchParams = useSearchParams()
-  const router = useRouter()
-  const pathname = usePathname()
+export default AnnouncementType
 
-  useEffect(() => {
-    const url = qs.stringifyUrl(
-      {
-        url: pathname,
-        query: {
-          type: value,
-          courseId: ["course", "batch"].includes(value)
-            ? course || searchParams.get("courseId")
-            : "",
-          batchId:
-            value === "batch" ? batch || searchParams.get("batchId") : "",
-        },
-      },
-      { skipEmptyString: true, skipNull: true }
-    )
+function MiddleLine({
+  announcement,
+  courses,
+  batches,
+}: {
+  announcement: Announcement
+  courses: Course[]
+  batches: Batch[]
+}) {
+  const announcementTypeState = atom<string>({
+    key: "announcementTypeState",
+    default: getCurrentAnnouncementType(announcement),
+  })
 
-    router.push(url)
-  }, [value, router, pathname, searchParams, course, batch])
+  const batchIdState = atom<string>({
+    key: "batchIdState",
+    default: announcement.batchId || "",
+  })
 
+  const courseIdState = atom<string>({
+    key: "courseIdState",
+    default: announcement.courseId || "",
+  })
+
+  const value = useRecoilValue(announcementTypeState)
+  const [isEditing, setIsEditing] = useRecoilState(isEditingState)
+  const isSubmitting = useRecoilValue(isSubmittingState)
   const toggleEdit = () => setIsEditing((current) => !current)
-  const onSubmit = async () => {
-    setIsSubmitting(true)
-    try {
-      await updateAnnouncement({
-        id: announcement.id,
-        courseId: course,
-        batchId: batch,
-        type: value,
-      })
-      toast.success("Announcement type updated")
-      toggleEdit()
-      router.refresh()
-    } catch {
-      toast.error("Something went wrong")
-    } finally {
-      setIsSubmitting(false)
-    }
-  }
 
   return (
     <div className="mt-5 flex flex-col gap-2 rounded-md border bg-secondary p-5">
@@ -130,8 +129,9 @@ export const AnnouncementType = ({
       >
         {isEditing ? (
           <CustomSelectItems
-            setValue={setValue}
-            value={value}
+            name="type"
+            announcementTypeState={announcementTypeState}
+            recoilState={announcementTypeState}
             items={announcementTypes}
             disabled={isSubmitting}
           />
@@ -143,58 +143,82 @@ export const AnnouncementType = ({
         {(value === "course" || value === "batch") &&
           (isEditing ? (
             <CustomSelectItems
-              setValue={setCourse}
-              value={course}
+              name="course"
+              announcementTypeState={announcementTypeState}
+              recoilState={courseIdState}
               items={courses}
               disabled={isSubmitting}
             />
           ) : (
-            <span className="md:text-md rounded-md bg-primary-foreground p-2 text-sm font-medium max-xs:min-w-full">
-              {courses.find((c) => c.id === course)?.title}
-            </span>
+            <Display items={courses} recoilState={courseIdState} />
           ))}
         {value === "batch" &&
           (isEditing ? (
             <CustomSelectItems
-              setValue={setBatch}
-              value={batch}
+              name="batch"
+              announcementTypeState={announcementTypeState}
+              recoilState={batchIdState}
               items={batches}
               disabled={isSubmitting}
             />
           ) : (
-            <span className="md:text-md rounded-md bg-primary-foreground p-2 text-sm font-medium max-xs:min-w-full">
-              {batches.find((b) => b.id === batch)?.name}
-            </span>
+            <Display items={batches} recoilState={batchIdState} />
           ))}
       </div>
       {isEditing && (
-        <div className="flex items-center gap-x-2">
-          <Button disabled={isSubmitting} onClick={onSubmit}>
-            <span className="md:text-md text-sm font-medium">Save</span>
-          </Button>
-        </div>
+        <SumbitButton
+          announcementId={announcement.id}
+          batchIdState={batchIdState}
+          courseIdState={courseIdState}
+          announcementTypeState={announcementTypeState}
+        />
       )}
     </div>
   )
 }
 
-export default AnnouncementType
-
 function CustomSelectItems({
-  setValue,
-  value,
+  recoilState,
+  name,
   items,
+  announcementTypeState,
   disabled,
 }: {
-  setValue: (val: string) => void
-  value: string
+  name: string
+  recoilState: RecoilState<string>
+  announcementTypeState: RecoilState<string>
   items: any[]
   disabled?: boolean
 }) {
+  const [value, setValue] = useRecoilState(recoilState)
+  const type = useRecoilValue(announcementTypeState)
+  const pathname = usePathname()
+  const searchParams = useSearchParams()
+  const router = useRouter()
   const handleChange = (val: string) => {
     setValue(val)
     toast.success(`Filtering by ${value}`)
   }
+  useEffect(() => {
+    const url = qs.stringifyUrl(
+      {
+        url: pathname,
+        query: {
+          type: type,
+          courseId:
+            ["course", "batch"].includes(type) && name === "course"
+              ? value || searchParams.get("courseId")
+              : "",
+          batchId:
+            type === "batch" && name === "batch"
+              ? value || searchParams.get("batchId")
+              : "",
+        },
+      },
+      { skipEmptyString: true, skipNull: true }
+    )
+    router.push(url)
+  }, [type, router, pathname, searchParams, value, name])
 
   return (
     <Select
@@ -215,3 +239,74 @@ function CustomSelectItems({
     </Select>
   )
 }
+
+function SumbitButton({
+  announcementId,
+  batchIdState,
+  courseIdState,
+  announcementTypeState,
+}: {
+  batchIdState: RecoilState<string>
+  courseIdState: RecoilState<string>
+  announcementTypeState: RecoilState<string>
+  announcementId: string
+}) {
+  const [isSubmitting, setIsSubmitting] = useRecoilState(isSubmittingState)
+  const setIsEditing = useSetRecoilState(isEditingState)
+  const toggleEdit = () => setIsEditing((current) => !current)
+  const batch = useRecoilValue(batchIdState)
+  const course = useRecoilValue(courseIdState)
+  const value = useRecoilValue(announcementTypeState)
+  const router = useRouter()
+  const onSubmit = async () => {
+    setIsSubmitting(true)
+    try {
+      await updateAnnouncement({
+        id: announcementId,
+        courseId: course,
+        batchId: batch,
+        type: value,
+      })
+      toast.success("Announcement type updated")
+      toggleEdit()
+      router.refresh()
+    } catch {
+      toast.error("Something went wrong")
+    } finally {
+      setIsSubmitting(false)
+    }
+  }
+  return (
+    <div className="flex items-center gap-x-2">
+      <Button disabled={isSubmitting} onClick={onSubmit}>
+        <span className="md:text-md text-sm font-medium">Save</span>
+      </Button>
+    </div>
+  )
+}
+
+function Display({
+  recoilState,
+  items,
+}: {
+  recoilState: RecoilState<string>
+  items: any[]
+}) {
+  const value = useRecoilValue(recoilState)
+  return (
+    <span className="md:text-md rounded-md bg-primary-foreground p-2 text-sm font-medium max-xs:min-w-full">
+      {items.find((c) => c.id === value)?.title ||
+        items.find((c) => c.id === value)?.name}
+    </span>
+  )
+}
+
+const isEditingState = atom<boolean>({
+  key: "isEditingState",
+  default: false,
+})
+
+const isSubmittingState = atom<boolean>({
+  key: "isSubmittingState",
+  default: false,
+})

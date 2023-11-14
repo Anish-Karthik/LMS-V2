@@ -1,7 +1,5 @@
-import React from "react"
 import dynamic from "next/dynamic"
 import Link from "next/link"
-import { currentUser } from "@clerk/nextjs"
 import { Course } from "@prisma/client"
 import { AlertCircle, ArrowLeft, FileIcon, LayoutDashboard } from "lucide-react"
 

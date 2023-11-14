@@ -25,7 +25,6 @@ import {
   SelectValue,
 } from "@/components/ui/select"
 
-
 export type AnnouncementType = "general" | "course" | "batch"
 export function getCurrentAnnouncementType(
   announcement: Announcement

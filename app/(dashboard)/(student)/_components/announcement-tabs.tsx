@@ -39,7 +39,6 @@ const AnnouncementTabs = ({
           </TabsTrigger>
         ))}
       </TabsList>
-      {/* TODO: good list like ojn that of course recording */}
       {announcementTabs.map((tab) => (
         <TabsContent value={tab.value} className="w-full">
           <CurrentPathNavigator />
@@ -51,7 +50,6 @@ const AnnouncementTabs = ({
             announcements={tab.data}
             viewerRole={userRole}
           />
-          {/* <AnnouncementsList items={tab.data} /> */}
         </TabsContent>
       ))}
     </Tabs>

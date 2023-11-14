@@ -1,6 +1,6 @@
 "use client"
 
-import { useEffect, useState } from "react"
+import { useEffect } from "react"
 import {
   City,
   Country,
@@ -10,11 +10,10 @@ import {
   State,
 } from "country-state-city"
 import { useForm } from "react-hook-form"
-import Select, { GroupBase, OptionProps } from "react-select"
+import Select from "react-select"
 
 import { cn } from "@/lib/utils"
 import {
-  Form,
   FormControl,
   FormDescription,
   FormField,
