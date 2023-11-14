@@ -1,5 +1,3 @@
-"use client"
-
 import { useEffect, useState } from "react"
 import { redirect, useRouter } from "next/navigation"
 import { useAuth } from "@clerk/nextjs"
@@ -16,7 +14,6 @@ import {
 import { useForm } from "react-hook-form"
 import * as z from "zod"
 
-import { updateUser } from "@/lib/actions/server/user.server.action"
 import { formatDate_YYYYMMDD } from "@/lib/format"
 import { useUploadThing } from "@/lib/uploadthing"
 import { isBase64Image } from "@/lib/utils"
@@ -40,6 +37,7 @@ import {
 } from "@/components/ui/select"
 import { toast } from "@/components/ui/use-toast"
 import { CustomProfilePhoto } from "@/components/form-fields"
+import { trpc } from "@/app/_trpc/client"
 
 import { CountryStateCityForm } from "./country-state-city-select"
 
@@ -88,7 +86,13 @@ const profileFormSchema = z.object({
 
 export type ProfileFormValues = z.infer<typeof profileFormSchema>
 
-export function ProfileForm({ userInfo }: { userInfo: User }) {
+export function ProfileForm({
+  userInfo,
+  setIsEditing,
+}: {
+  userInfo: User
+  setIsEditing: React.Dispatch<React.SetStateAction<boolean>>
+}) {
   const [selectedCountry, setSelectedCountry] = useState<ICountry | null>(null)
   const [selectedState, setSelectedState] = useState<IState | null>(null)
   const [selectedCity, setSelectedCity] = useState<ICity | null>(null)
@@ -96,6 +100,7 @@ export function ProfileForm({ userInfo }: { userInfo: User }) {
   const { startUpload } = useUploadThing("media")
   const { userId } = useAuth()
   const router = useRouter()
+  const updateUser = trpc.user.update.useMutation()
 
   const defaultValues: Partial<ProfileFormValues> = {
     name: userInfo.name,
@@ -182,16 +187,24 @@ export function ProfileForm({ userInfo }: { userInfo: User }) {
           data.image = imgRes[0].url
         }
       }
-      await updateUser({
-        userId: userId!,
-        name: data.name,
-        dob: new Date(data.dob),
-        phoneNo: data.phoneNo,
-        image: data.image,
-        city: data.city,
-        country: data.country,
-        state: data.state,
-      })
+      await updateUser.mutateAsync(
+        {
+          userId: userId!,
+          name: data.name,
+          dob: new Date(data.dob),
+          phoneNo: data.phoneNo,
+          image: data.image,
+          city: data.city,
+          country: data.country,
+          state: data.state,
+        },
+        {
+          onSuccess: () => {
+            toast({ title: "Profile Updated Successfully" })
+            setIsEditing(false)
+          },
+        }
+      )
 
       router.refresh()
     } catch (err: any) {

@@ -1,15 +1,12 @@
+"use client"
+
 import Image from "next/image"
 import Link from "next/link"
 import { Purchase, User } from "@prisma/client"
+import { toast } from "react-hot-toast"
 
-import {
-  banUser,
-  toAdmin,
-  toTeacher,
-  toUser,
-  unBanUser,
-} from "@/lib/actions/server/user.server.action"
 import { Button } from "@/components/ui/button"
+import { trpc } from "@/app/_trpc/client"
 
 import JoinOrLeave from "./join-or-leave"
 
@@ -19,6 +16,57 @@ interface UserCardProps {
 }
 
 const UserCard = ({ user, viewer }: UserCardProps) => {
+  const banUserHook = trpc.user.ban.useMutation({
+    onSuccess: () => {
+      toast.success("User banned successfully")
+    },
+    onError: (error) => {
+      toast.error(error.message)
+    },
+  })
+  const unBanUserHook = trpc.user.unBan.useMutation({
+    onSuccess: () => {
+      toast.success("User unbanned successfully")
+    },
+    onError: (error) => {
+      toast.error(error.message)
+    },
+  })
+  const toAdminHook = trpc.user.toAdmin.useMutation({
+    onSuccess: () => {
+      toast.success("User promoted to admin successfully")
+    },
+    onError: (error) => {
+      toast.error(error.message)
+    },
+  })
+  const toTeacherHook = trpc.user.toTeacher.useMutation({
+    onSuccess: () => {
+      toast.success("User promoted to teacher successfully")
+    },
+    onError: (error) => {
+      toast.error(error.message)
+    },
+  })
+  const toUserHook = trpc.user.toUser.useMutation({
+    onSuccess: () => {
+      toast.success("User demoted to user successfully")
+    },
+    onError: (error) => {
+      toast.error(error.message)
+    },
+  })
+
+  const banUser = async (userId: string) =>
+    await banUserHook.mutateAsync(userId)
+  const unBanUser = async (userId: string) =>
+    await unBanUserHook.mutateAsync(userId)
+  const toAdmin = async (userId: string) =>
+    await toAdminHook.mutateAsync(userId)
+  const toTeacher = async (userId: string) =>
+    await toTeacherHook.mutateAsync(userId)
+  const toUser = async (userId: string) => await toUserHook.mutateAsync(userId)
+
   return (
     <article className="user-card">
       <div className="user-card_avatar">

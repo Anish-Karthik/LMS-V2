@@ -32,7 +32,10 @@ type TAction = "ban" | "unBan" | "toTeacher" | "toAdmin" | "toUser"
 type props = {
   memberRole: string
   memberId: string
-  onActionCallback: (userId: string) => Promise<void>
+  onActionCallback: (userId: string) => Promise<{
+    message: string
+    success: boolean
+  }>
   action: TAction
   notJoinedCommunities?: string[]
 }

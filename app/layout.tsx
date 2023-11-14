@@ -14,6 +14,8 @@ import { ToastProvider } from "@/components/providers/toaster-provider"
 import { TailwindIndicator } from "@/components/tailwind-indicator"
 import { ThemeProvider } from "@/components/theme-provider"
 
+import TRPCProvider from "./_trpc/Provider"
+
 export const metadata: Metadata = {
   title: {
     default: siteConfig.name,
@@ -40,30 +42,30 @@ interface RootLayoutProps {
 export default function RootLayout({ children }: RootLayoutProps) {
   return (
     <ClerkProvider>
-      {/* <RecoilRoot> */}
-      <html lang="en" suppressHydrationWarning>
-        <head />
-        <body
-          className={cn(
-            "min-h-screen bg-background font-sans antialiased",
-            fontSans.variable
-          )}
-        >
-          <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
-            <ConfettiProvider />
-            <ToastProvider />
-            <Toaster />
-            <CloudinaryContext>
-              <div className="relative flex min-h-screen flex-col ">
-                {/* <SiteHeader /> */}
-                {children}
-              </div>
-            </CloudinaryContext>
-            <TailwindIndicator />
-          </ThemeProvider>
-        </body>
-      </html>
-      {/* </RecoilRoot> */}
+      <TRPCProvider>
+        <html lang="en" suppressHydrationWarning>
+          <head />
+          <body
+            className={cn(
+              "min-h-screen bg-background font-sans antialiased",
+              fontSans.variable
+            )}
+          >
+            <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
+              <ConfettiProvider />
+              <ToastProvider />
+              <Toaster />
+              <CloudinaryContext>
+                <div className="relative flex min-h-screen flex-col ">
+                  {/* <SiteHeader /> */}
+                  {children}
+                </div>
+              </CloudinaryContext>
+              <TailwindIndicator />
+            </ThemeProvider>
+          </body>
+        </html>
+      </TRPCProvider>
     </ClerkProvider>
   )
 }

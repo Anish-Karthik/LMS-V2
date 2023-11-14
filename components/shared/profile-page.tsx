@@ -30,7 +30,7 @@ const ProfilePage = ({
         )}
       </div>
       {isEditing ? (
-        <ProfileForm userInfo={userInfo} />
+        <ProfileForm userInfo={userInfo} setIsEditing={setIsEditing} />
       ) : (
         <ProfileComponent userInfo={userInfo} promo={promo} />
       )}

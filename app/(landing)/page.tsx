@@ -6,6 +6,8 @@ import { LandingContent } from "@/components/shared/LandingContent"
 import { LandingHero } from "@/components/shared/LandingHero"
 import LandingNavbar from "@/components/shared/LandingNavbar"
 
+import { trpc } from "../_trpc/client"
+
 export default async function LandingPage() {
   const courses = await db.course.findMany()
   if (!courses) redirect("/create-course")
@@ -24,7 +26,7 @@ export default async function LandingPage() {
         route = "/teacher/dashboard"
     }
   }
-
+  const { data, isLoading } = trpc.test.useQuery()
   return (
     <div className="h-full">
       <LandingNavbar courses={courses} route={route} />

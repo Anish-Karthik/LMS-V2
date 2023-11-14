@@ -8,11 +8,11 @@ import { useForm } from "react-hook-form"
 import toast from "react-hot-toast"
 import { z } from "zod"
 
-import { createUser } from "@/lib/actions/server/user.server.action"
 import { useUploadThing } from "@/lib/uploadthing"
 import { isBase64Image } from "@/lib/utils"
 import { Button } from "@/components/ui/button"
 import { Form } from "@/components/ui/form"
+import { trpc } from "@/app/_trpc/client"
 
 import { CustomInputField, CustomProfilePhoto } from "../form-fields"
 
@@ -29,7 +29,7 @@ const AccountProfile = ({ user, route }: { user: User; route: string }) => {
   const { startUpload } = useUploadThing("media")
   const router = useRouter()
   const pathname = usePathname()
-
+  const createUser = trpc.user.create.useMutation()
   const form = useForm({
     resolver: zodResolver(UserValidation),
     defaultValues: {
@@ -76,14 +76,24 @@ const AccountProfile = ({ user, route }: { user: User; route: string }) => {
           values.image = imgRes[0].url
         }
       }
-
-      await createUser({
-        userId: user.id,
-        name: values.name,
-        email: values.email,
-        image: values.image,
-        phoneNo: values.phoneNo,
-      })
+      await createUser.mutateAsync(
+        {
+          userId: user.id,
+          name: values.name,
+          email: values.email,
+          image: values.image,
+          phoneNo: values.phoneNo,
+        },
+        {
+          onSuccess() {
+            toast.success("Profile Updated Successfully")
+          },
+          onError(error) {
+            setIsSubmitting(false)
+            toast.error(error.message)
+          },
+        }
+      )
 
       if (pathname.includes("/profile/edit")) {
         router.back()

@@ -18,7 +18,7 @@ type CreateUserProps = {
   employmentStatus?: string
   howDidHear?: string
 }
-
+// Has Replaced by TRPC in client
 export const createUser = async ({
   userId,
   email,
@@ -69,6 +69,7 @@ export const createUser = async ({
   }
 }
 
+// Has Replaced by TRPC in client
 export const updateUser = async ({
   userId,
   phoneNo,
@@ -109,7 +110,7 @@ export const updateUser = async ({
     throw new Error(err.message)
   }
 }
-
+// Has Replaced by TRPC in client
 export const banUser = async (userId: string) => {
   try {
     const user = await db.user.update({

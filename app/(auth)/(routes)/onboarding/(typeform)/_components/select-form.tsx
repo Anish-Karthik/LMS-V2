@@ -1,15 +1,13 @@
 "use client"
 
-import React, { useEffect, useState } from "react"
-import { redirect, useRouter, useSearchParams } from "next/navigation"
-import { useAuth } from "@clerk/nextjs"
+import { useEffect, useState } from "react"
+import { useRouter, useSearchParams } from "next/navigation"
 import classNames from "classnames"
 import { Check } from "lucide-react"
 import { useForm } from "react-hook-form"
 import { toast } from "react-hot-toast"
 import { z } from "zod"
 
-import { createUser } from "@/lib/actions/server/user.server.action"
 import styles from "@/lib/styles.module.css"
 import { useHandleScroll } from "@/lib/useHandleScroll"
 import { multiStepHooksType } from "@/lib/useMultiStepForm"
@@ -24,6 +22,7 @@ import {
   FormLabel,
   FormMessage,
 } from "@/components/ui/form"
+import { trpc } from "@/app/_trpc/client"
 
 import { DropdownSelectOption } from "./dropdown-select-option/DropdownSelectOption"
 import { DropdownSelect } from "./dropdown-select/DropdownSelect"
@@ -70,6 +69,7 @@ const SelectForm = ({
   const [selectedData, setSelectedData] = useState<string>(data[name])
   const router = useRouter()
   const searchParams = useSearchParams()
+  const createUser = trpc.user.create.useMutation()
   const { isSubmitting, isValid } = form.formState
   useEffect(() => {
     form.setValue(name, selectedData || "")
@@ -110,7 +110,7 @@ const SelectForm = ({
       else next()
     } else {
       try {
-        await createUser({
+        await createUser.mutateAsync({
           ...data,
           ...values,
           dob: new Date(data.dob),
