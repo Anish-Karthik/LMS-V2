@@ -1,6 +1,15 @@
 import z from "zod"
 
-import { userRouter } from "./routers/user"
+import {
+  announcementRouter,
+  batchRouter,
+  chapterRouter,
+  courseRouter,
+  promoRouter,
+  testimonialRouter,
+  topicRouter,
+  userRouter,
+} from "./routers"
 import { publicProcedure, router } from "./trpc"
 
 export const appRouter = router({
@@ -8,6 +17,13 @@ export const appRouter = router({
     return { message: "Hello World" }
   }),
   user: userRouter,
+  announcement: announcementRouter,
+  batch: batchRouter,
+  course: courseRouter,
+  topic: topicRouter,
+  chapter: chapterRouter,
+  promo: promoRouter,
+  testimonial: testimonialRouter,
 })
 // Export type router type signature,
 // NOT the router itself.
