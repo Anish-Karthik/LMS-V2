@@ -171,6 +171,12 @@ export const sidebarLinksTeacherMobile = [
 
 export const sidebarLinksStudentMobile = [
   {
+    imgUrl: "/assets/home.svg",
+    icon: HomeIcon,
+    route: "/student/dashboard",
+    label: "Dashboard",
+  },
+  {
     imgUrl: "/assets/courses.svg",
     icon: Book,
     route: "/student/courses",

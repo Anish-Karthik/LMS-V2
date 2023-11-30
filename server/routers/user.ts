@@ -288,4 +288,109 @@ export const userRouter = router({
         })
       }
     }),
+  purchasedCourses: publicProcedure
+    .input(z.string())
+    .query(async ({ input: userId }) => {
+      try {
+        const courses = await db.user.findUnique({
+          where: {
+            userId,
+          },
+          select: {
+            purchases: {
+              select: {
+                course: true,
+              },
+            },
+          },
+        })
+        if (!courses)
+          throw new TRPCError({
+            code: "NOT_FOUND",
+            message: "No courses found",
+          })
+        const coursesPurchased = courses.purchases.map(
+          (purchase) => purchase.course
+        )
+
+        return coursesPurchased
+      } catch (error: any) {
+        throw new TRPCError({
+          code: "INTERNAL_SERVER_ERROR",
+          message: error.message || "Failed to get purchased courses",
+        })
+      }
+    }),
+  calculateCourseProgress: publicProcedure
+    .input(
+      z.object({
+        userId: z.string(),
+        courseId: z.string(),
+      })
+    )
+    .query(async ({ input }) => {
+      try {
+        const { userId, courseId } = input
+        const allTopics = await db.user.findUnique({
+          where: {
+            userId,
+          },
+          select: {
+            purchases: {
+              where: {
+                courseId,
+              },
+              select: {
+                Batch: {
+                  select: {
+                    chapters: {
+                      select: {
+                        topics: {
+                          select: {
+                            userProgressTopic: {
+                              select: {
+                                isCompleted: true,
+                              },
+                            },
+                          },
+                        },
+                      },
+                    },
+                  },
+                },
+              },
+            },
+          },
+        })
+
+        const totalModules = allTopics?.purchases[0].Batch?.chapters
+          ?.map((ch) =>
+            ch.topics.map((topic) =>
+              topic.userProgressTopic.map((progress) => progress.isCompleted)
+            )
+          )
+          .flat()
+          .flatMap((x) => x)
+        console.log(totalModules)
+        if (!totalModules || !totalModules.length)
+          return {
+            progress: 0,
+            completedModules: 0,
+            totalModules: 0,
+          }
+        const completedModules = totalModules.filter((x) => x === true)
+        const progress = (completedModules.length / totalModules.length) * 100
+        return {
+          progress,
+          completedModules: completedModules.length,
+          totalModules: totalModules.length,
+        }
+        //
+      } catch (error: any) {
+        throw new TRPCError({
+          code: "INTERNAL_SERVER_ERROR",
+          message: error.message || "Failed to get course progress",
+        })
+      }
+    }),
 })

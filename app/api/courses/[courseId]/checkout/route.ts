@@ -19,7 +19,7 @@ export async function POST(
   try {
     const user = await currentUser()
     const body = await req.json()
-    const { price, promo } = body
+    const { price, promo, batchId } = body
     console.log("price", price)
     console.log("promo", promo)
     console.log("user", user)
@@ -87,6 +87,7 @@ export async function POST(
         userId: user.id,
         promoCode: (promo as Promo)?.code,
         price: price || course.price,
+        batchId: batchId,
         referred: referred.toString(),
       },
     })

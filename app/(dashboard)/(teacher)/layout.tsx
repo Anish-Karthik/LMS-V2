@@ -20,7 +20,7 @@ const DashBoardLayout = async ({
   if (!user) redirect("/sign-in")
   const userInfo = await getUser(user.id)
   if (!userInfo) redirect("/onboarding")
-  if (userInfo.role === "student") redirect("/student/courses")
+  if (userInfo.role === "student") redirect("/student/dashboard")
   if (userInfo.role === "user") redirect("/")
   // form an object where
 

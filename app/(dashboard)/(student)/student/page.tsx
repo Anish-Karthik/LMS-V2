@@ -2,7 +2,7 @@ import React from "react"
 import { redirect } from "next/navigation"
 
 const page = () => {
-  redirect("/student/courses")
+  redirect("/student/dashboard")
   return <div>page</div>
 }
 

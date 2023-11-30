@@ -9,7 +9,7 @@ function MobileNav() {
   const pathname = usePathname()
   return (
     <section className="bottombar sm:hidden">
-      <div className="bottombar_container">
+      <div className="bottombar_container grid grid-cols-4">
         {sidebarLinksStudentMobile.map((link, ind) => {
           const isActive = pathname.includes(link.route.toLowerCase())
 

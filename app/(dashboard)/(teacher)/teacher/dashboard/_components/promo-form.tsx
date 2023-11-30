@@ -2,10 +2,12 @@
 "use client"
 
 import { useRouter } from "next/navigation"
+import { promosState } from "@/store/atoms"
 import { useAuth } from "@clerk/nextjs"
 import { zodResolver } from "@hookform/resolvers/zod"
 import { useForm } from "react-hook-form"
 import toast from "react-hot-toast"
+import { useSetRecoilState } from "recoil"
 import * as z from "zod"
 
 import {
@@ -81,6 +83,7 @@ export function PromoForm({
   type?: "create" | "edit"
   setIsCreating: (val: boolean) => void
 }) {
+  const setPromos = useSetRecoilState(promosState)
   const { userId } = useAuth()
   const schema = type == "edit" ? formSchemaEdit : formSchema
   const router = useRouter()
@@ -102,10 +105,21 @@ export function PromoForm({
   const onSubmit = async (values: z.infer<typeof formSchema>) => {
     try {
       // TODO: TRPC
-      await createOrUpdatePromoClient({
+      const newPromo = await createOrUpdatePromoClient({
         ...values,
         userId,
         discount: parseInt(values.discount),
+      })
+      setPromos((prev) => {
+        if (type == "edit") {
+          return prev.map((promo) => {
+            if (promo.id == newPromo.id) {
+              return newPromo
+            }
+            return promo
+          })
+        }
+        return [newPromo, ...prev]
       })
       console.log(values)
       toast.success(

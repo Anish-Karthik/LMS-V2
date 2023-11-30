@@ -94,4 +94,15 @@ export const promoRouter = router({
       throw new Error("Error getting promo by code", error.message)
     }
   }),
+
+  delete: publicProcedure.input(z.string()).mutation(async ({ input }) => {
+    try {
+      return await db.promo.delete({
+        where: { id: input },
+      })
+    } catch (error: any) {
+      console.error(error)
+      throw new Error("Error deleting promo", error.message)
+    }
+  }),
 })

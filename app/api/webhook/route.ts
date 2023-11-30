@@ -30,6 +30,7 @@ export async function POST(req: Request) {
   const promoCode = session?.metadata?.promoCode
   const price = session?.metadata?.price
   const referred = session?.metadata?.referred
+  const batchId = session?.metadata?.batchId
 
   console.log(referred)
   if (event.type === "checkout.session.completed") {
@@ -42,7 +43,7 @@ export async function POST(req: Request) {
     await purchaseCourse({
       userId,
       courseId,
-      batchId: defaultBatch.id,
+      batchId: batchId || defaultBatch.id,
       price: parseInt(price || "0"),
       referred: referred == "true",
       promo: !!promoCode,

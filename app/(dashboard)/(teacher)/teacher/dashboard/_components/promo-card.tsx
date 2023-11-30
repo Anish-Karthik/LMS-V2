@@ -1,14 +1,17 @@
 "use client"
 
 import { useState } from "react"
-import { redirect } from "next/navigation"
-import { useAuth } from "@clerk/nextjs"
+import { promosState } from "@/store/atoms"
 import { Promo } from "@prisma/client"
-import { Copy, Edit } from "lucide-react"
+import { Copy, Edit, Trash } from "lucide-react"
+import { toast } from "react-hot-toast"
+import { useSetRecoilState } from "recoil"
 
 import { formatDate } from "@/lib/format"
 import { Button } from "@/components/ui/button"
 import { toast as shadcnToast } from "@/components/ui/use-toast"
+import { ConfirmModal } from "@/components/modals/confirm-modal"
+import { trpc } from "@/app/_trpc/client"
 
 import { PromoForm } from "./promo-form"
 
@@ -19,10 +22,18 @@ export function PromoCard({
   userRole: string
   promo: Promo
 }) {
+  const setPromos = useSetRecoilState(promosState)
   const [isCreating, setIsCreating] = useState(false)
+  const deletePromo = trpc.promo.delete.useMutation()
   const handleCopy = () => {
     navigator.clipboard.writeText(promo.code)
     shadcnToast({ title: `${promo.code} Copied to clipboard` })
+  }
+
+  const handleDelete = () => {
+    deletePromo.mutateAsync(promo.id)
+    setPromos((promos) => promos.filter((p) => p.id !== promo.id))
+    toast.success("Promo deleted successfully")
   }
 
   return (
@@ -70,6 +81,16 @@ export function PromoCard({
                 <Button variant="ghost" onClick={() => setIsCreating(true)}>
                   <Edit className="h-4 w-4" />
                 </Button>
+              )}
+              {userRole === "admin" && (
+                <ConfirmModal
+                  typeDelete={userRole === "admin"}
+                  onConfirm={handleDelete}
+                >
+                  <Button variant="destructive">
+                    <Trash className="h-4 w-4" />
+                  </Button>
+                </ConfirmModal>
               )}
             </div>
           </div>

@@ -2,7 +2,7 @@
 
 import { db } from "@/lib/db"
 
-import { createBatch } from "../batch.action"
+import { createBatch, getBatches } from "../batch.action"
 import { getCourseById, getDefaultBatch } from "../course.actions"
 
 export async function createBatchFromClient({
@@ -15,6 +15,10 @@ export async function createBatchFromClient({
   courseId: string
 }) {
   return await createBatch({ name, courseId, isCurrent })
+}
+
+export async function getBatchesClient(courseId: string) {
+  return await getBatches(courseId)
 }
 
 export const updateBatch = async ({

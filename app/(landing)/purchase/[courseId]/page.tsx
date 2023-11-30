@@ -2,6 +2,7 @@ import React from "react"
 import { redirect } from "next/navigation"
 import { currentUser } from "@clerk/nextjs"
 
+import { getBatches } from "@/lib/actions/batch.action"
 import { db } from "@/lib/db"
 import PurchaseCourseForm from "@/components/form/PurchaseCourseForm"
 
@@ -40,9 +41,16 @@ const page = async ({
         },
       })) || undefined
   }
+  const batches = await db.batch.findMany({
+    where: {
+      courseId: params.courseId,
+      isClosed: false,
+    },
+  })
 
   return (
     <PurchaseCourseForm
+      batches={batches}
       courseId={params.courseId}
       course={course!}
       userId={user.id}

@@ -4,7 +4,7 @@ import { useEffect, useState } from "react"
 import dynamic from "next/dynamic"
 import { useRouter } from "next/navigation"
 import { zodResolver } from "@hookform/resolvers/zod"
-import { Course, Promo } from "@prisma/client"
+import { Batch, Course, Promo } from "@prisma/client"
 import { useForm } from "react-hook-form"
 import toast from "react-hot-toast"
 import * as z from "zod"
@@ -50,7 +50,9 @@ const PurchaseCourseForm = ({
   course,
   userId,
   promoObj,
+  batches,
 }: {
+  batches: Batch[]
   userId: string
   courseId: string
   course: Course
@@ -160,14 +162,19 @@ const PurchaseCourseForm = ({
       )}
 
       {success && (
-        <div className="flex flex-col items-center justify-center gap-2 sm:flex-row">
+        <div className="flex flex-col items-center justify-center gap-2">
           <CourseEnrollButton
+            batches={batches}
             courseId={courseId}
             originalPrice={course.price!}
             promo={promo}
             userId={userId}
           />
-          <Button onClick={() => setSuccess(false)} size="sm">
+          <Button
+            onClick={() => setSuccess(false)}
+            size="sm"
+            className="w-full"
+          >
             Back
           </Button>
         </div>
