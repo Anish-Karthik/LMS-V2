@@ -10,18 +10,18 @@ import {
 } from "@/lib/actions/announcement.action"
 import { getBatches } from "@/lib/actions/batch.action"
 import { getCourses } from "@/lib/actions/course.actions"
+import { AnnouncementActions } from "@/components/announcements-teacher/announcement-actions"
+import { AnnouncementDescriptionForm } from "@/components/announcements-teacher/announcement-description-form"
+import { AnnouncementTitleForm } from "@/components/announcements-teacher/announcement-title-form"
+import AnnouncementType from "@/components/announcements-teacher/announcement-type"
+import { AttachmentForm } from "@/components/announcements-teacher/attachment-form"
 import { Banner } from "@/components/banner"
 import { IconBadge } from "@/components/icon-badge"
 
 import CurrentPathNavigator from "../../../_components/current-pathname"
-import { AnnouncementActions } from "../_components/announcement-actions"
-import { AnnouncementDescriptionForm } from "../_components/announcement-description-form"
-import { AnnouncementTitleForm } from "../_components/announcement-title-form"
-import AnnouncementType from "../_components/announcement-type"
-import { AttachmentForm } from "../_components/attachment-form"
 
 const NotifyAnnouncement = dynamic(
-  () => import("../_components/notify-announcement"),
+  () => import("@/components/announcements-teacher/notify-announcement"),
   { ssr: false }
 )
 

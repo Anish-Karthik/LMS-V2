@@ -37,14 +37,15 @@ const page = async ({
   return (
     <div>
       <CurrentPathNavigator />
-      <div className="flex flex-wrap items-center justify-between gap-3 px-6 pt-6 md:mb-0 md:flex-nowrap">
+      <div className="flex flex-wrap items-center justify-between gap-3 px-6 pt-6 sm:flex-nowrap md:mb-0">
         <div className="flex flex-wrap items-center justify-start gap-3 px-6 pt-6 md:mb-0 md:flex-nowrap">
           <SearchInput />
-          <CheckInput role={searchParams.role} name={"role"} />
+
           {/* <CheckInput batchId={searchParams.batchId} name={"batchIds"} /> 
           <CheckInput courseId={searchParams.courseId} name={"courseIds"} />  */}
         </div>
-        <div className="px-6 pt-6 md:mb-0">
+        <div className="flex w-full items-center gap-2 px-6 pt-6 max-sm:justify-start sm:justify-end md:mb-0 md:justify-between">
+          <CheckInput role={searchParams.role} name={"role"} />
           <Link href="/teacher/users/invite">
             <Button className="!h-full">Invite User</Button>
           </Link>

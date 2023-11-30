@@ -5,6 +5,7 @@ import { Announcement, Attachment, User } from "@prisma/client"
 import { File, Pencil } from "lucide-react"
 
 import { formatDate } from "@/lib/format"
+import { checkImage } from "@/lib/utils"
 
 import { Preview } from "../preview"
 import { Button } from "../ui/button"
@@ -18,7 +19,7 @@ const AnnouncementCard = ({
   viewerRole: string
 }) => {
   return (
-    <div className="rounded-md bg-secondary">
+    <div className="mx-auto w-full max-w-4xl rounded-md bg-secondary">
       <div className="max-sh-fit -mb-4 flex flex-wrap justify-between">
         <p className="max-sh-fit rounded-sm p-4 text-xs text-slate-600">
           {/* date */}
@@ -63,34 +64,43 @@ const AnnouncementCard = ({
       <div>
         <Preview value={announcement.description!} />
       </div>
-      {announcement.type === "blog" && (
-        // display blog Image instead of attachments
-        <div className="p-4">
-          {announcement?.attachments[0]?.url && (
-            <Image
-              src={announcement.attachments[0].url}
-              alt={"Image"}
-              width={2000}
-              height={2000}
-            />
-          )}
-        </div>
-      )}
+
+      <div className="flex flex-col gap-2 p-4">
+        {/* check whether the link is image? */}
+        {announcement?.attachments?.map(
+          (attachment) =>
+            attachment.url &&
+            checkImage(attachment.url) && (
+              <Image
+                src={attachment.url}
+                alt={"Image"}
+                width={2000}
+                height={2000}
+              />
+            )
+        )}
+        {/* {announcement?.attachments[0]?.url && (
+            
+          )} */}
+      </div>
       {!!announcement.attachments.length && announcement.type !== "blog" && (
         <>
           <Separator />
           <div className="p-4">
-            {announcement.attachments.map((attachment) => (
-              <Link
-                href={attachment.url}
-                target="_blank"
-                key={attachment.id}
-                className="flex w-full items-center rounded-md border bg-sky-200 p-3 text-sky-700 hover:underline"
-              >
-                <File />
-                <p className="line-clamp-1">{attachment.name}</p>
-              </Link>
-            ))}
+            {announcement.attachments.map(
+              (attachment) =>
+                !checkImage(attachment.url) && (
+                  <Link
+                    href={attachment.url}
+                    target="_blank"
+                    key={attachment.id}
+                    className="flex w-full items-center rounded-md border bg-sky-200 p-3 text-sky-700 hover:underline"
+                  >
+                    <File />
+                    <p className="line-clamp-1">{attachment.name}</p>
+                  </Link>
+                )
+            )}
           </div>
         </>
       )}

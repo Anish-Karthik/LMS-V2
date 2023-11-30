@@ -110,3 +110,44 @@ export type monthData = {
   referred: number
   sales: number
 }
+
+// export function checkImage(url: string) : boolean{
+//   var image = new Image();
+//   let res = false;
+//   image.onload = function() {
+//     if (this.width > 0) {
+//       console.log("image exists");
+//       res = true;
+//     }
+//   }
+//   image.onerror = function() {
+//     console.log("image doesn't exist");
+//     res = false;
+//   }
+//   image.src = url;
+
+//   return res;
+// }
+
+export async function checkImageAsync(url: string) {
+  const res = await fetch(url)
+  const buff = await res.blob()
+  const ans = buff.type.startsWith("image/")
+  console.log(ans)
+  return ans
+}
+
+export function checkImage(url: string): boolean {
+  const fileFormatsmages = [
+    ".jpg",
+    ".jpeg",
+    ".png",
+    ".gif",
+    ".svg",
+    ".webp",
+    ".bmp",
+    ".tiff",
+  ]
+  const ext = url.substring(url.lastIndexOf("."))
+  return fileFormatsmages.includes(ext)
+}

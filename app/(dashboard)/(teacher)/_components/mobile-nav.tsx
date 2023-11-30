@@ -3,6 +3,7 @@
 import Link from "next/link"
 import { usePathname } from "next/navigation"
 
+import { cn } from "@/lib/utils"
 import { sidebarLinksTeacherMobile } from "@/app/constants"
 
 function MobileNav({ isAdmin = false }: { isAdmin?: boolean }) {
@@ -11,11 +12,16 @@ function MobileNav({ isAdmin = false }: { isAdmin?: boolean }) {
   const pathname = usePathname()
   return (
     <section className="bottombar">
-      <div className="bottombar_container">
+      <div
+        className={cn(
+          "bottombar_container grid",
+          !isAdmin ? "grid-cols-4" : "grid-cols-6"
+        )}
+      >
         {sidebarLinksTeacherMobile.map((link, ind) => {
           const isActive = pathname.includes(link.route.toLowerCase())
 
-          if (isAdmin && !link.role.includes("teacher")) return null
+          if (!isAdmin && !link.role.includes("teacher")) return null
           // if(link.route === '/profile') link.route = `/profile/${userId}`
 
           return (

@@ -68,7 +68,7 @@ const UserCard = ({ user, viewer }: UserCardProps) => {
   const toUser = async (userId: string) => await toUserHook.mutateAsync(userId)
 
   return (
-    <article className="user-card">
+    <article className="user-card mx-auto w-full max-w-4xl">
       <div className="user-card_avatar">
         <div className="relative h-12 w-12">
           <Image

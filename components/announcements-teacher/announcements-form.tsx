@@ -83,7 +83,7 @@ export const AnnouncementsForm = ({ initialData }: AnnouncementsFormProps) => {
   }
 
   return (
-    <div className="relative mx-6 mt-6 rounded-md border bg-secondary p-4">
+    <div className="relative mx-auto mt-6 max-w-4xl rounded-md border bg-secondary p-4">
       {isUpdating && (
         <div className="rounded-m absolute right-0 top-0 flex h-full w-full items-center justify-center bg-slate-500/20">
           <Loader2 className="h-6 w-6 animate-spin text-sky-700" />

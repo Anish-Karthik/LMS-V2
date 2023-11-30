@@ -67,7 +67,7 @@ const CheckInput = (props: {
   return (
     <div>
       <Select onValueChange={handleChange} defaultValue={"all"}>
-        <SelectTrigger className="w-[180px] border-none">
+        <SelectTrigger className="max-w-[180px]">
           <SelectValue placeholder="User type" />
         </SelectTrigger>
         <SelectContent className="border-none">

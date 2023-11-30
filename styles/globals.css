@@ -214,7 +214,7 @@ input[type="text"] {
 }
 
 .bottombar_container {
-  @apply flex items-center justify-between gap-3 xs:gap-5;
+  @apply gap-3 xs:gap-5;
 }
 
 .bottombar_link {

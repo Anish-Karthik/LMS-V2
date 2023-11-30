@@ -10,8 +10,7 @@ import { getAnnouncements } from "@/lib/actions/announcement.action"
 import { getAllBatches } from "@/lib/actions/batch.action"
 import { getCourses } from "@/lib/actions/course.actions"
 import { getUser } from "@/lib/actions/user.actions"
-
-import AnnouncementTabs from "./_components/announcement-tabs"
+import AnnouncementTabs from "@/components/announcements-teacher/announcement-tabs"
 
 const page = async () => {
   const announcements = await getAnnouncements()

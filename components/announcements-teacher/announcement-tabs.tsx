@@ -7,7 +7,7 @@ import { Announcement, Batch, Course } from "@prisma/client"
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
 import AnnouncementPage from "@/components/shared/announcement-page"
 
-import CurrentPathNavigator from "../../../_components/current-pathname"
+import CurrentPathNavigator from "../../app/(dashboard)/(teacher)/_components/current-pathname"
 import { AnnouncementsForm } from "./announcements-form"
 
 const AnnouncementTabs = ({
@@ -49,7 +49,7 @@ const AnnouncementTabs = ({
         ))}
       </TabsList>
 
-      <TabsContent value={"create"} className="w-full">
+      <TabsContent value={"create"} className="w-full !px-2">
         <CurrentPathNavigator />
         <AnnouncementsForm initialData={announcements} />
       </TabsContent>
