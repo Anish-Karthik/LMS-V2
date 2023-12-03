@@ -1,9 +1,10 @@
 "use client"
 
+import { useMemo } from "react"
 import { Montserrat } from "next/font/google"
 import Image from "next/image"
 import Link from "next/link"
-import { usePathname } from "next/navigation"
+import { usePathname, useSearchParams } from "next/navigation"
 import { UserButton, useAuth } from "@clerk/nextjs"
 import { Course } from "@prisma/client"
 
@@ -22,15 +23,28 @@ const font = Montserrat({
 const LandingNavbar = ({
   courses,
   route,
+  className,
 }: {
+  className?: string
   courses: Course[]
   route?: string
 }) => {
   const { userId } = useAuth()
   const pathname = usePathname()
+  const searchParams = useSearchParams()
+  const queryString = useMemo(
+    () =>
+      searchParams.get("promo") ? `?promo=${searchParams.get("promo")}` : "",
+    [searchParams]
+  )
   return (
-    <nav className="flex items-center justify-between bg-transparent p-4">
-      <div className="flex items-center gap-3">
+    <nav
+      className={cn(
+        "flex items-center justify-between bg-white p-4",
+        className
+      )}
+    >
+      <div className="flex items-center gap-5 font-semibold">
         <Link href="/" className="flex items-center">
           <div className="relative mr-4 h-8 w-8">
             <Image fill alt="Logo" src="/images/logo.png" />
@@ -44,7 +58,7 @@ const LandingNavbar = ({
             href={landingRoute.href}
             key={landingRoute.href}
             className={cn(
-              "text-lg text-white hover:text-blue-400 max-md:hidden",
+              "text-lg text-text-secondary hover:text-blue-400 max-md:hidden",
               pathname === landingRoute.href && "text-blue-500"
             )}
           >
@@ -55,9 +69,17 @@ const LandingNavbar = ({
 
       <div className="flex items-center gap-2">
         <ThemeToggle />
-        <Link href={!userId ? "/sign-in" : route ?? `/purchase`}>
+        <Link
+          href={
+            !userId
+              ? `/sign-in`
+              : pathname.includes("purchase")
+              ? `/purchase/${courses[0]?.id}${queryString}`
+              : route ?? `/purchase${queryString}`
+          }
+        >
           <Button variant="outline" className="rounded-full">
-            Get Started
+            {pathname.includes("purchase") ? "Purchase Now" : "Get Started"}
           </Button>
         </Link>
         {<UserButton afterSignOutUrl="/" afterSwitchSessionUrl="/" />}

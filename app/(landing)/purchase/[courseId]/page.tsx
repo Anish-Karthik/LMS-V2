@@ -1,8 +1,6 @@
-import React from "react"
 import { redirect } from "next/navigation"
 import { currentUser } from "@clerk/nextjs"
 
-import { getBatches } from "@/lib/actions/batch.action"
 import { db } from "@/lib/db"
 import PurchaseCourseForm from "@/components/form/PurchaseCourseForm"
 
@@ -18,6 +16,9 @@ const page = async ({
       id: params.courseId,
     },
   })
+  if (!course) {
+    redirect("/purchase")
+  }
   const user = await currentUser()
   if (!user) redirect("/sign-in")
   const userInfo = await db.user.findUnique({
@@ -43,7 +44,7 @@ const page = async ({
   }
   const batches = await db.batch.findMany({
     where: {
-      courseId: params.courseId,
+      courseId: course!.id,
       isClosed: false,
     },
   })
@@ -51,7 +52,7 @@ const page = async ({
   return (
     <PurchaseCourseForm
       batches={batches}
-      courseId={params.courseId}
+      courseId={course!.id}
       course={course!}
       userId={user.id}
       promoObj={promo}

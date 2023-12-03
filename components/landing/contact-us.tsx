@@ -6,16 +6,19 @@ import { Phone } from "lucide-react"
 import { socials } from "@/lib/socials"
 import { cn } from "@/lib/utils"
 
-const ContactUs = () => {
+const ContactUs = ({ className }: { className?: string }) => {
   return (
     <footer
       id="contact"
-      className="footer z-10 mt-12 flex w-full flex-col border border-x-transparent border-t-[#33353F] text-white"
+      className={cn(
+        "footer z-10 mt-12 flex w-full flex-col border border-x-transparent border-t-[#33353F] text-background-color",
+        className
+      )}
     >
-      <div className="container flex justify-between gap-2 py-12 sm:px-12">
+      <div className="container flex justify-between gap-2 py-6 sm:px-12">
         <Link
           href={"/"}
-          className="flex items-center text-2xl font-semibold text-white md:text-5xl"
+          className="flex items-center text-2xl font-semibold text-background-color md:text-5xl"
         >
           <Image
             src="/images/logo.png"

@@ -11,10 +11,9 @@ import HandleCopy from "./handle-copy"
 
 const page = () => {
   return (
-    <div>
-      <LandingNavbar courses={[]} />
+    <div className="max-h-full bg-primary-color py-16">
       <div className="max-6xl mx-16 bg-primary-color">
-        <div className="grid w-full items-center gap-4  lg:grid-cols-2">
+        <div className="flex w-full items-center gap-4 lg:grid  lg:grid-cols-2">
           <div className="flex !h-full flex-1 text-background">
             <div className="!py-auto !my-auto flex flex-col items-center gap-2">
               <h1 className="px-20 pt-8 text-2xl font-extrabold xs:text-3xl sm:text-4xl">
@@ -48,7 +47,7 @@ const page = () => {
           </div>
         </div>
       </div>
-      <ContactUs />
+      <ContactUs className="fixed inset-x-0 -bottom-1 bg-secondary-color" />
     </div>
   )
 }

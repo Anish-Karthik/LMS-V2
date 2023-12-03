@@ -24,7 +24,7 @@ const DashBoardLayout = async ({ children }: { children: React.ReactNode }) => {
     redirect("/teacher/dashboard")
   }
 
-  return <>{children}</>
+  return <div className="!h-[92vh] w-full">{children}</div>
 }
 
 export default DashBoardLayout

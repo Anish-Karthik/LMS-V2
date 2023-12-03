@@ -1,5 +1,6 @@
 "use client"
 
+import Image from "next/image"
 import Link from "next/link"
 import { Course } from "@prisma/client"
 import TypewriterComponent from "typewriter-effect"
@@ -14,36 +15,43 @@ export const LandingHero = ({
   route?: string
 }) => {
   return (
-    <div className=" space-y-5 py-36 text-center font-bold">
-      <div className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl xl:text-7xl">
-        <h1>The Best Trading Course for</h1>
-        <div className="bg-gradient-to-r from-purple-400 to-pink-600 bg-clip-text py-2 text-transparent">
-          <TypewriterComponent
-            options={{
-              strings: [
-                "Anyone who wants to learn trading",
-                "Becoming a successful trader",
-                "Making money online",
-                "Trade with confidence",
-              ],
-              autoStart: true,
-              loop: true,
-            }}
+    <section className="w-screen bg-quaternary-color max-lg:pb-40">
+      <div className="mx-auto flex max-w-6xl flex-col items-center gap-3 space-y-5 py-3 max-lg:gap-6 lg:grid lg:grid-cols-2">
+        <div className="flex min-h-[32rem] flex-col items-start justify-center gap-2 pr-5 max-lg:mx-4 max-lg:max-w-xl max-lg:items-center max-sm:mx-16">
+          <div>
+            <h1 className="text-2xl font-extrabold lg:text-4xl">
+              Master the art of Trading with Praglis - The #1 trading community
+            </h1>
+          </div>
+          <p className="text-slate-700">
+            Dive into the world of trading with Praglis Trading Community - your
+            gateway to financial empowerment. Join our thriving community,
+            engage in live trading sessions, and get hands-on guidance from
+            seasoned professionals. No prior knowledge needed, we&apos;ll guide
+            you from the basics to expert-level trading. Your journey to
+            financial success begins now.
+          </p>
+          <div className="flex w-full gap-4">
+            <Button variant={"outline"} className="w-full">
+              View Details
+            </Button>
+            <Button variant={"default"} className="w-full">
+              Get Started
+            </Button>
+          </div>
+        </div>
+        <div
+          className="max-lg:mx-4 
+max-sm:mx-16"
+        >
+          <Image
+            src="https://picsum.photos/id/237/900/800"
+            alt="hero"
+            width={500}
+            height={500}
           />
         </div>
       </div>
-      <div className="text-sm font-light text-zinc-400 md:text-xl">
-        Learn how to trade with our step-by-step video tutorials and live
-        webinars.
-      </div>
-      <div>
-        <Link href={route ?? `/purchase/`}>
-          <Button className="rounded-full p-4 font-semibold md:p-6 md:text-lg">
-            Start Learning
-          </Button>
-        </Link>
-      </div>
-      <div className="text-xs font-normal text-zinc-400 md:text-sm"></div>
-    </div>
+    </section>
   )
 }

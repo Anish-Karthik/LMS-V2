@@ -1,20 +1,20 @@
 import React from "react"
 import Image from "next/image"
 
+import ContactUs from "@/components/landing/contact-us"
 import LandingNavbar from "@/components/shared/LandingNavbar"
 
 const page = () => {
   return (
-    <div>
-      <LandingNavbar courses={[]} />
+    <div className="h-screen bg-text-secondary">
       <div className="mx-20 my-6">
         <div className="grid w-full items-center gap-4 max-lg:grid-rows-2 lg:grid-cols-2">
           <div className="flex !h-full flex-1 bg-text-secondary text-background">
             <div className="!py-auto !my-auto flex flex-col items-center gap-2">
-              <h1 className="px-20 text-xl font-extrabold md:text-3xl lg:text-4xl">
+              <h1 className="w-full px-20 text-xl font-extrabold md:text-3xl lg:text-4xl">
                 About Us
               </h1>
-              <p className="lg:text-md px-20 text-center text-xs font-bold md:text-sm">
+              <p className="lg:text-md px-20 text-xs font-bold text-slate-100 md:text-sm">
                 In 2019, we established a community in which college students
                 joined forces to deepen their understanding and share insights
                 on the stock market and various financial markets. Over time,
@@ -37,6 +37,8 @@ const page = () => {
           </div>
         </div>
       </div>
+
+      <ContactUs className="fixed inset-x-0 -bottom-1 bg-secondary-color" />
     </div>
   )
 }

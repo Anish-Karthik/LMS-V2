@@ -1,13 +1,16 @@
 "use client"
 
-import { useState } from "react"
+import { useEffect, useState } from "react"
 import { useRouter } from "next/navigation"
+import { firstTimeRender } from "@/store/atoms"
 import { Batch, Promo } from "@prisma/client"
 import axios from "axios"
 import toast from "react-hot-toast"
+import { useRecoilState } from "recoil"
 
 import { performPurchaseAsFree } from "@/lib/actions/server/course.server.action"
 import { formatPrice } from "@/lib/format"
+import { useDebounce } from "@/hooks/use-debounce"
 import { Button } from "@/components/ui/button"
 import {
   Select,
@@ -34,11 +37,19 @@ const CourseEnrollButton = ({
 }: CourseEnrollButtonProps) => {
   const [isLoading, setIsLoading] = useState(false)
   const [batch, setBatch] = useState<string | null>(null)
+  const [isFirstTimeRendered, setIsFirstTimeRendered] =
+    useRecoilState(firstTimeRender)
+  const debouncedValue = useDebounce(isFirstTimeRendered, 2000)
   const router = useRouter()
   console.log(promo)
   const price = Math.floor(
     originalPrice! - ((promo?.discount! || 0) * originalPrice!) / 100
   )
+  useEffect(() => {
+    if (isFirstTimeRendered) {
+      setIsFirstTimeRendered(false)
+    }
+  }, [isFirstTimeRendered, setIsFirstTimeRendered])
   if (!userId) router.push("/sign-in")
   console.log("promo", promo)
   console.log("price", price)
@@ -67,7 +78,7 @@ const CourseEnrollButton = ({
         promo: promo || null,
       })
 
-      window.location.assign(response.data.url)
+      router.push(response.data.url)
     } catch (error: any) {
       toast.error(error.message)
       toast.error("Something went wrong")
@@ -77,16 +88,19 @@ const CourseEnrollButton = ({
   }
 
   return (
-    <div className="flex flex-col gap-2">
-      {isLoading || !batches.length ? (
-        <div className="h-8 w-full animate-pulse rounded-md bg-gray-200"></div>
+    <div className="mt-3 flex w-full flex-col gap-3">
+      {isLoading || !batches.length || debouncedValue ? (
+        <div className="flex flex-col gap-3">
+          <div className="h-9 w-full animate-pulse rounded-md bg-gray-100"></div>
+          <div className="h-9 w-full animate-pulse rounded-md bg-gray-100"></div>
+        </div>
       ) : (
         <>
           <Select
             onValueChange={(value) => setBatch(value)}
             defaultValue={batches[0].id}
           >
-            <SelectTrigger className="w-[180px]">
+            <SelectTrigger className="w-full min-w-[180px]">
               <SelectValue placeholder="Select a Batch" />
             </SelectTrigger>
             <SelectContent>

@@ -48,26 +48,6 @@ const page = async ({
   return (
     <div className="w-full">
       {/* <Banner variant="success" label="You already completed this topic." /> */}
-      <nav className="flex items-center justify-between bg-transparent p-4">
-        <Link href="/" className="flex items-center">
-          <div className="relative mr-4 h-8 w-8">
-            <Image fill alt="Logo" src="/images/logo.png" />
-          </div>
-          <div>
-            <h1 className={cn("text-2xl font-bold ")}>ALFAQ</h1>
-          </div>
-        </Link>
-
-        <div className="flex items-center gap-2">
-          <ThemeToggle />
-          <Link href={`/purchase/${courseId}`}>
-            <Button variant="outline" className="rounded-full">
-              Purchase Now
-            </Button>
-          </Link>
-          {<UserButton afterSignOutUrl="/" afterSwitchSessionUrl="/" />}
-        </div>
-      </nav>
       <section className="container my-20 flex flex-col items-center gap-20">
         <MainCard />
         <div className="flex !max-w-3xl flex-col items-center gap-20">
