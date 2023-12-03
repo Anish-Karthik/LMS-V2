@@ -1,18 +1,33 @@
 import React from "react"
 import { redirect } from "next/navigation"
+import { currentUser } from "@clerk/nextjs"
 
-import { getCourses } from "@/lib/actions/course.actions"
+import { db } from "@/lib/db"
 import LandingNavbar from "@/components/shared/LandingNavbar"
 
 const LandingLayout = async ({ children }: { children: React.ReactNode }) => {
-  const courses = await getCourses()
-  if (!courses || !courses.length) {
-    redirect("/create-course")
+  const courses = await db.course.findMany()
+  if (!courses) redirect("/create-course")
+  const course = courses[0]
+  const user = await currentUser()
+  let route: string | undefined = undefined
+  if (user) {
+    const userInfo = await db.user.findUnique({
+      where: {
+        userId: user.id,
+      },
+    })
+    if (userInfo) {
+      if (userInfo.role === "student") route = "/student/announcements"
+      if (userInfo.role === "teacher" || userInfo.role === "admin")
+        route = "/teacher/dashboard"
+    }
   }
   return (
     <div className="h-full w-full">
       <LandingNavbar
         courses={courses}
+        route={route}
         className="fixed inset-x-0 top-0 z-50 bg-white"
       />
       <main className="mt-12 h-full w-full">{children}</main>

@@ -69,19 +69,21 @@ const LandingNavbar = ({
 
       <div className="flex items-center gap-2">
         <ThemeToggle />
-        <Link
-          href={
-            !userId
-              ? `/sign-in`
-              : pathname.includes("purchase")
-              ? `/purchase/${courses[0]?.id}${queryString}`
-              : route ?? `/purchase${queryString}`
-          }
-        >
-          <Button variant="outline" className="rounded-full">
-            {pathname.includes("purchase") ? "Purchase Now" : "Get Started"}
-          </Button>
-        </Link>
+        {pathname.split("/").length < 2 && (
+          <Link
+            href={
+              !userId
+                ? `/sign-in`
+                : pathname.includes("purchase")
+                ? `/purchase/${courses[0]?.id}${queryString}`
+                : route ?? `/purchase${queryString}`
+            }
+          >
+            <Button variant="outline" className="rounded-full">
+              {pathname.includes("purchase") ? "Purchase Now" : "Get Started"}
+            </Button>
+          </Link>
+        )}
         {<UserButton afterSignOutUrl="/" afterSwitchSessionUrl="/" />}
         <LandingNavbarMobile />
       </div>

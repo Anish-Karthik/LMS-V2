@@ -101,7 +101,7 @@ const PurchaseCourseForm = ({
   return (
     <RecoilRoot>
       <div className="my-auto flex h-full flex-col items-center justify-center gap-3 px-3">
-        <div className={cn("w-full max-w-lg", success ? "p-12" : "p-12")}>
+        <div className={cn("w-full max-w-lg lg:p-12")}>
           <div>
             {promo && (
               <h3 className="text-lg font-semibold">

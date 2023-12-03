@@ -20,13 +20,13 @@ export default async function LandingPage() {
     })
     if (userInfo) {
       if (userInfo.role === "student") route = "/student/announcements"
-      if (userInfo.role === "teacher" || userInfo.role === "admin")
+      else if (userInfo.role === "teacher" || userInfo.role === "admin")
         route = "/teacher/dashboard"
+      else route = `/purchase/${course.id}`
     }
   }
   return (
-    <div className="relative h-screen bg-quaternary-color">
-      <LandingNavbar courses={courses} route={route} />
+    <div className="relative flex flex-col justify-center bg-quaternary-color lg:min-h-[85vh]">
       <LandingHero courses={courses} route={route} />
       <ContactUs className="fixed inset-x-0 -bottom-1 bg-secondary-color" />
       {/* <LandingContent /> */}
