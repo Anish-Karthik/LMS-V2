@@ -10,6 +10,7 @@ import {
 } from "@/components/ui/accordion"
 
 import ButtonCard from "./button-card"
+import { ArrowUpIcon } from "lucide-react"
 
 const faq1 = [
   {
@@ -47,61 +48,64 @@ const faq2 = [
 
 const FAQSection = () => {
   return (
-    <div className="w-full max-w-6xl">
-      <div className="mb-12">
+    <section className="grid items-center gap-40 bg-dark-background py-12 text-text-primary max-xl:px-4" id="faqs">
+      <div className="mx-auto my-16 w-full max-w-6xl rounded-md bg-tertiary-color p-6 py-20 text-text-primary">
+        <div className="mb-12">
+          <center>
+            <h1 className="mb-6 text-4xl font-bold">
+              Frequently Asked Questions
+            </h1>
+          </center>
+        </div>
+        <div className="grid w-full gap-x-3 px-3 md:grid-cols-2">
+          <Accordion
+            type="single"
+            collapsible
+            className="flex w-full flex-col gap-2"
+          >
+            {faq1.map((item, index) => (
+              <AccordionItem key={index} value={item.answer}>
+                <AccordionTrigger className="w-full">
+                  <div className="flex w-full items-center justify-between">
+                    <h3 className="text-2xl font-semibold">{item.question}</h3>
+                  </div>
+                </AccordionTrigger>
+                <AccordionContent className="w-full">
+                  <p className="text-xl">{item.answer}</p>
+                </AccordionContent>
+              </AccordionItem>
+            ))}
+          </Accordion>
+          <Accordion
+            type="single"
+            collapsible
+            className="flex w-full flex-col gap-2"
+          >
+            {faq2.map((item, index) => (
+              <AccordionItem key={index} value={item.answer}>
+                <AccordionTrigger className="w-full">
+                  <div className="flex w-full items-center justify-between">
+                    <h3 className="text-2xl font-semibold">{item.question}</h3>
+                  </div>
+                </AccordionTrigger>
+                <AccordionContent className="w-full">
+                  <p className="text-xl">{item.answer}</p>
+                </AccordionContent>
+              </AccordionItem>
+            ))}
+          </Accordion>
+        </div>
         <center>
-          <h1 className="mb-6 text-4xl font-bold">
-            Frequently Asked Questions
-          </h1>
+          <div className="mt-14">
+            <ButtonCard
+              arrowIcon={<ArrowUpIcon width={25} />}
+              scrollTo="#main-details"
+              text="My question is answered! Take me to the pricing section!"
+            />
+          </div>
         </center>
       </div>
-      <div className="flex gap-5">
-        <Accordion
-          type="single"
-          collapsible
-          className="flex w-full flex-col gap-2"
-        >
-          {faq1.map((item, index) => (
-            <AccordionItem key={index} value={item.answer}>
-              <AccordionTrigger className="w-full">
-                <div className="flex w-full items-center justify-between">
-                  <h3 className="text-2xl font-semibold">{item.question}</h3>
-                </div>
-              </AccordionTrigger>
-              <AccordionContent className="w-full">
-                <p className="text-xl">{item.answer}</p>
-              </AccordionContent>
-            </AccordionItem>
-          ))}
-        </Accordion>
-        <Accordion
-          type="single"
-          collapsible
-          className="flex w-full flex-col gap-2"
-        >
-          {faq2.map((item, index) => (
-            <AccordionItem key={index} value={item.answer}>
-              <AccordionTrigger className="w-full">
-                <div className="flex w-full items-center justify-between">
-                  <h3 className="text-2xl font-semibold">{item.question}</h3>
-                </div>
-              </AccordionTrigger>
-              <AccordionContent className="w-full">
-                <p className="text-xl">{item.answer}</p>
-              </AccordionContent>
-            </AccordionItem>
-          ))}
-        </Accordion>
-      </div>
-      <center>
-        <div className="mt-14">
-          <ButtonCard
-            scrollTo="#course-purchase"
-            text="My question is answered! Take me to the pricing section!"
-          />
-        </div>
-      </center>
-    </div>
+    </section>
   )
 }
 

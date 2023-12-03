@@ -7,7 +7,9 @@ const ButtonCard = ({
   scrollTo = "#id",
   text = "",
   isPurchase = false,
+  arrowIcon = <ArrowDownIcon width={25} />,
 }: {
+  arrowIcon?: React.ReactNode
   scrollTo?: string
   text?: string
   isPurchase?: boolean
@@ -22,7 +24,7 @@ const ButtonCard = ({
         >
           <div className="flex items-center gap-2">
             {text}
-            {!isPurchase && <ArrowDownIcon width={25} />}
+            {!isPurchase && arrowIcon}
           </div>
           <div className="absolute -bottom-1 -right-1.5 -z-50 flex h-[52px] w-full rounded-[5px] bg-white"></div>
         </Button>

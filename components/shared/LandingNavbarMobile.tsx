@@ -15,6 +15,7 @@ import {
   SheetTrigger,
 } from "@/components/ui/sheet"
 import { landingRoutes } from "@/app/constants"
+import { Separator } from "../ui/separator"
 
 const LandingNavbarMobile = () => {
   const pathname = usePathname()
@@ -29,21 +30,24 @@ const LandingNavbarMobile = () => {
           <div className="flex flex-col flex-wrap gap-2">
             {landingRoutes.map((landingRoute) => (
               <SheetClose asChild>
-                <Link
-                  href={landingRoute.href}
-                  key={landingRoute.href}
-                  className={cn(
-                    "text-lg text-tertiary-color hover:text-blue-400",
-                    pathname === landingRoute.href && "text-blue-500",
-                    "rounded-md px-4 py-2",
-                    "transition-colors duration-300 ease-in-out"
-                  )}
-                  style={{
-                    textDecoration: "none",
-                  }}
-                >
-                  {landingRoute.label}
-                </Link>
+                <div className="">
+                  <Link
+                    href={landingRoute.href}
+                    key={landingRoute.href}
+                    className={cn(
+                      "text-lg text-tertiary-color hover:text-blue-400",
+                      pathname === landingRoute.href && "text-blue-500",
+                      "rounded-md px-4 py-2",
+                      "transition-colors duration-300 ease-in-out"
+                    )}
+                    style={{
+                      textDecoration: "none",
+                    }}
+                  >
+                    {landingRoute.label}
+                  </Link>
+                  <Separator className="mt-1" />
+                </div>
               </SheetClose>
             ))}
           </div>

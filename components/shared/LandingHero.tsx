@@ -12,9 +12,9 @@ export const LandingHero = ({
   route?: string
 }) => {
   return (
-    <section className="w-full bg-quaternary-color">
-      <div className="mx-auto flex max-w-6xl flex-col items-center gap-3 space-y-5 py-3 max-lg:gap-6 lg:grid lg:grid-cols-2">
-        <div className="flex min-h-[32rem] flex-col items-start justify-center gap-2 max-lg:mx-4 max-lg:max-w-xl max-lg:items-center max-sm:mx-16 max-sm:w-[90vw] md:px-5">
+    <section className="w-full bg-quaternary-color max-lg:py-20">
+      <div className="mx-auto flex max-w-6xl flex-col items-center space-y-5 py-3 max-lg:gap-6 lg:grid lg:grid-cols-2">
+        <div className="flex flex-col items-start justify-center gap-2 max-lg:mx-4 max-lg:max-w-xl max-lg:items-center max-sm:mx-16 max-sm:w-[90vw] md:px-5">
           <div>
             <h1 className="text-md font-extrabold sm:text-xl md:text-2xl lg:text-4xl">
               Master the art of Trading with Praglis - The #1 trading community

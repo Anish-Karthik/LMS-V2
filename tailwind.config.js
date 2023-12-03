@@ -27,6 +27,7 @@ module.exports = withUt({
         "secondary-color": "rgb(var(--secondary-color) / <alpha-value>)",
         "tertiary-color": "rgb(var(--tertiary-color) / <alpha-value>)",
         "quaternary-color": "rgb(var(--quaternary-color) / <alpha-value>)",
+        "dark-background": "hsl(var(--dark-background) / <alpha-value>)",
         primary: {
           DEFAULT: "hsl(var(--primary))",
           foreground: "hsl(var(--primary-foreground))",

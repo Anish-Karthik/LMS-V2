@@ -10,14 +10,17 @@ import { db } from "@/lib/db"
 import { cn } from "@/lib/utils"
 import { Button } from "@/components/ui/button"
 import { Banner } from "@/components/banner"
+import AdvantagesSection from "@/components/landing/advantages-section"
 import ContactUs from "@/components/landing/contact-us"
 import DetailsSection from "@/components/landing/details-section"
 import DisclaimerSection from "@/components/landing/disclaimer-section"
 import FAQSection from "@/components/landing/faq-section"
 import MainCard from "@/components/landing/main-card"
+import ReasonsSection from "@/components/landing/reasons-section"
 import ReviewsSection from "@/components/landing/review-section"
 import SyllabusSection from "@/components/landing/syllabus-section"
 import { ThemeToggle } from "@/components/theme-toggle"
+import PurchaseSection from "@/components/landing/purchase-section"
 
 const page = async ({
   searchParams,
@@ -48,19 +51,17 @@ const page = async ({
   return (
     <div className="w-full">
       {/* <Banner variant="success" label="You already completed this topic." /> */}
-      <section className="container my-20 flex flex-col items-center gap-20">
+      <section className="mt-20 grid w-full items-center ">
         <MainCard />
-        <div className="flex !max-w-3xl flex-col items-center gap-20">
-          <DetailsSection />
-          <ReviewsSection />
-          <SyllabusSection
-            url={`/purchase/${courseId}?promo=${searchParams.promo}`}
-          />
-        </div>
+        <ReasonsSection />
+        <DetailsSection />
+        <AdvantagesSection />
+        <ReviewsSection />
+        <PurchaseSection />
         <FAQSection />
         <DisclaimerSection />
       </section>
-      <ContactUs />
+      <ContactUs className="!mt-0 bg-black text-white" />
     </div>
   )
 }

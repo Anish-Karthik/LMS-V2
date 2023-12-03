@@ -57,6 +57,7 @@
     --secondary-color: 227 45 87; /* red */
     --tertiary-color: 49 10 62; /* purple */
     --quaternary-color: 104 213 151; /* green */
+    --dark-background: 224 71% 4%;
 
   }
 
@@ -234,5 +235,12 @@ input[type="text"] {
   @apply h-auto min-w-[74px] rounded-lg text-[12px] !important;
 }
 
+.landing-section_header {
+  @apply text-xl xs:text-2xl sm:text-3xl md:text-4xl font-bold;
+}
+
+.landing-section_description {
+  @apply text-base xs:text-lg sm:text-xl md:text-2xl text-slate-600;
+}
 
 @import "~@uploadthing/react/styles.css"

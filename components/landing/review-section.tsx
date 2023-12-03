@@ -1497,30 +1497,25 @@ const testimonials2 = [
 
 const ReviewsSection = () => {
   return (
-    <section className="">
+    <section className="w-full bg-background-color py-24 max-xl:px-4" id="reviews">
       <div>
         <center>
-          <h1 className="relative mb-12 text-4xl font-bold ">
+          <h1 className="relative mb-12 text-4xl font-bold text-text-primary">
             <span>Testimonials</span>
           </h1>
         </center>
       </div>
       <div>
-        <div className="flex flex-col gap-4">
-          <div className="flex gap-3">
-            <div className="flex w-full flex-col gap-1">
+        <div className="flex flex-col gap-5">
+          <div className="mx-auto aspect-video w-full max-w-3xl rounded-xl bg-clip-text">
+            <VideoPlayerLanding url="https://youtu.be/SO8lBVWF2Y8?si=aafhnkzdHhVy6_7f" />
+          </div>
+          <div className="mx-auto max-w-3xl gap-x-2">
+            <div className="grid w-full gap-x-2 lg:grid-cols-2">
               {testimonials1.map((item) => (
                 <TestimonialCard {...item} key={item.description} />
               ))}
             </div>
-            <div className="flex w-full flex-col gap-1">
-              {testimonials2.map((item) => (
-                <TestimonialCard {...item} key={item.description} />
-              ))}
-            </div>
-          </div>
-          <div className="mt-16 h-[500px] rounded-xl bg-clip-text">
-            <VideoPlayerLanding url="https://youtu.be/SO8lBVWF2Y8?si=aafhnkzdHhVy6_7f" />
           </div>
         </div>
       </div>

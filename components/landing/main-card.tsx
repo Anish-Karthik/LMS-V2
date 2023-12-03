@@ -10,10 +10,10 @@ import ButtonCard from "./button-card"
 
 const MainCard = () => {
   return (
-    <section className="flex flex-col items-center gap-8">
+    <section className="flex w-full flex-col items-center gap-8 bg-tertiary-color/20 px-4 py-24" id="hero">
       <HeaderCard />
       <ContentCard />
-      <BodyCard />
+      {/* <BodyCard /> */}
       <div className="flex items-center gap-2">
         <Verified size={32} className="text-quaternary-color" />
         <p className="text-xl font-extrabold">
@@ -29,7 +29,7 @@ const MainCard = () => {
           scroll to the main details by clicking the button below.
         </p>
       </div>
-      <ButtonCard scrollTo="#course-details" text="Scroll to main details" />
+      <ButtonCard scrollTo="#main-details" text="Scroll to main details" />
     </section>
   )
 }
@@ -40,14 +40,22 @@ const HeaderCard = () => {
   return (
     // stylish
     <header className="flex flex-col items-center gap-8">
-      <h3 className="font-bold text-quaternary-color">
-        FOR DEVELOPERS WHO WANT TO STAND OUT AND BECOME IRREPLACEABLE
-      </h3>
-      <h1 className="text-6xl font-extrabold">
+      <h1 className="text-3xl font-bold text-quaternary-color xs:text-4xl sm:text-5xl md:text-6xl">
+        <span className="rounded-md bg-gradient-to-r from-green-500 to-blue-500 bg-clip-text text-transparent">
+          Learn,{" "}
+        </span>
+        <span className="rounded-md bg-gradient-to-r from-red-500 to-pink-500 bg-clip-text text-transparent">
+          Trade,{" "}
+        </span>
+        <span className="rounded-md bg-gradient-to-r from-yellow-500 to-yellow-800 bg-clip-text text-transparent">
+          Earn
+        </span>
+      </h1>
+      <h1 className="text-3xl font-extrabold xs:text-4xl sm:text-5xl md:text-6xl">
+        Smartly with{" "}
         <span className="rounded-md bg-gradient-to-r from-pink-500 to-violet-500 bg-clip-text text-transparent">
-          AlfaQ
-        </span>{" "}
-        Trading Community
+          Praglis
+        </span>
       </h1>
       {/* <h1 className="max-w-4xl text-5xl font-extrabold">
         Become a{" "}  
@@ -63,8 +71,9 @@ const HeaderCard = () => {
 const ContentCard = () => {
   return (
     <section>
-      <h1 className="my-2 text-4xl font-extrabold">
-        One stop space for trading
+      <h1 className="my-2 text-center text-lg font-extrabold xs:text-xl md:text-2xl">
+        From Novice to Ninja: Praglis trading community unlocks your trading
+        potential
       </h1>
     </section>
   )
