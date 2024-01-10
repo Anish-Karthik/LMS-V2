@@ -36,12 +36,12 @@ const details = [
   },
 ]
 
-const DetailsSection = () => {
+const DetailsSection = ({ courseId }: { courseId: string }) => {
   return (
     <section className="min-w-6xl max-xl:px-5">
       <div>
         {details.map((detail, index) => (
-          <DetailCard key={index} {...detail} />
+          <DetailCard key={index} {...detail} courseId={courseId} />
         ))}
       </div>
     </section>
@@ -56,12 +56,14 @@ function DetailCard({
   description,
   image,
   className = "bg-quaternary-color/40",
+  courseId,
 }: {
   className?: string
   heading: string
   subheading: string
   description: string
   image: string
+  courseId: string
 }) {
   return (
     <div
@@ -84,12 +86,12 @@ function DetailCard({
           {description}
         </p>
         <div className="mt-2 flex w-full gap-4 max-lg:justify-center">
-          <Link href={`/purchase`}>
+          {/* <Link href={`/purchase`}>
             <Button variant={"outline"} className="w-full">
               View Details
             </Button>
-          </Link>
-          <Link href={`/purchase`}>
+          </Link> */}
+          <Link href={`/purchase/${courseId}`}>
             <Button className="w-full">Enroll Now</Button>
           </Link>
         </div>

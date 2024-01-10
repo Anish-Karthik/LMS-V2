@@ -2,7 +2,10 @@ import React from "react"
 
 const DisclaimerSection = () => {
   return (
-    <section className="grid items-center gap-40 bg-black py-12 text-text-primary max-xl:px-4" id="disclaimer">
+    <section
+      className="grid items-center gap-40 bg-black py-12 text-text-primary max-xl:px-4"
+      id="disclaimer"
+    >
       <div className="mx-auto max-w-3xl">
         <center>
           <h1 className="mb-6 text-4xl font-bold">Disclaimer </h1>

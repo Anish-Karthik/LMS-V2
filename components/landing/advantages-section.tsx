@@ -44,7 +44,10 @@ const advantages = [
 
 const AdvantagesSection = () => {
   return (
-    <section className="flex flex-col items-center bg-background-color/30 py-16 max-xl:px-4" id="benefits">
+    <section
+      className="flex flex-col items-center bg-background-color/30 py-16 max-xl:px-4"
+      id="benefits"
+    >
       <div className="max-w-3xl">
         <center>
           <h1 className="landing-section_header relative mb-16">

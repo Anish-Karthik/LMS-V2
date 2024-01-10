@@ -80,11 +80,19 @@ const page = async () => {
     take: 3,
   })
   return (
-    <section className="flex justify-center p-4">
-      <CourseDetailCard
-        courses={userPurchasedCourses || []}
-        userProgression={userProgression}
-      />
+    <section className="flex justify-center p-4 max-sm:flex-col">
+      <div className="flex flex-col gap-4">
+        <div className="flex flex-col gap-1">
+          <h1 className="text-2xl font-bold">Welcome back {userInfo?.name}</h1>
+          <p className="text-text-secondary">
+            You can access all your courses here.
+          </p>
+        </div>
+        <CourseDetailCard
+          courses={userPurchasedCourses || []}
+          userProgression={userProgression}
+        />
+      </div>
       <div className="flex flex-col">
         <AnnouncementMiniCard announcements={announcements} />
         <div className="flex flex-col gap-1 px-4">

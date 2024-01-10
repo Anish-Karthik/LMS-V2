@@ -1,6 +1,7 @@
 "use client"
 
 import React from "react"
+import { ArrowUpIcon } from "lucide-react"
 
 import {
   Accordion,
@@ -10,7 +11,6 @@ import {
 } from "@/components/ui/accordion"
 
 import ButtonCard from "./button-card"
-import { ArrowUpIcon } from "lucide-react"
 
 const faq1 = [
   {
@@ -48,7 +48,10 @@ const faq2 = [
 
 const FAQSection = () => {
   return (
-    <section className="grid items-center gap-40 bg-dark-background py-12 text-text-primary max-xl:px-4" id="faqs">
+    <section
+      className="grid items-center gap-40 bg-dark-background py-12 text-text-primary max-xl:px-4"
+      id="faqs"
+    >
       <div className="mx-auto my-16 w-full max-w-6xl rounded-md bg-tertiary-color p-6 py-20 text-text-primary">
         <div className="mb-12">
           <center>

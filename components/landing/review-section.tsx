@@ -1497,7 +1497,10 @@ const testimonials2 = [
 
 const ReviewsSection = () => {
   return (
-    <section className="w-full bg-background-color py-24 max-xl:px-4" id="reviews">
+    <section
+      className="w-full bg-background-color py-24 max-xl:px-4"
+      id="reviews"
+    >
       <div>
         <center>
           <h1 className="relative mb-12 text-4xl font-bold text-text-primary">

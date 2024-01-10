@@ -216,7 +216,7 @@ export const landingRoutes = [
   {
     label: "Purchase",
     href: "/purchase",
-  }
+  },
 ]
 
 export type TsideBar = typeof sidebarLinksTeacher

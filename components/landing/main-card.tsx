@@ -10,7 +10,10 @@ import ButtonCard from "./button-card"
 
 const MainCard = () => {
   return (
-    <section className="flex w-full flex-col items-center gap-8 bg-tertiary-color/20 px-4 py-24" id="hero">
+    <section
+      className="flex w-full flex-col items-center gap-8 bg-tertiary-color/20 px-4 py-24"
+      id="hero"
+    >
       <HeaderCard />
       <ContentCard />
       {/* <BodyCard /> */}
