@@ -39,10 +39,7 @@ export const LandingHero = ({
             </Link>
           </div>
         </div>
-        <div
-          className="max-lg:mx-4 
-max-sm:mx-16"
-        >
+        <div className="max-lg:mx-4 max-sm:mx-16">
           <Image
             src="https://picsum.photos/id/237/900/800"
             alt="hero"

@@ -81,7 +81,7 @@ const page = async () => {
   })
   return (
     <section className="flex justify-center p-4 max-sm:flex-col">
-      <div className="flex flex-col gap-4">
+      <div className="flex flex-col gap-4 px-4">
         <div className="flex flex-col gap-1">
           <h1 className="text-2xl font-bold">Welcome back {userInfo?.name}</h1>
           <p className="text-text-secondary">
@@ -93,8 +93,7 @@ const page = async () => {
           userProgression={userProgression}
         />
       </div>
-      <div className="flex flex-col">
-        <AnnouncementMiniCard announcements={announcements} />
+      <div className="grid grid-rows-2 max-sm:pb-10">
         <div className="flex flex-col gap-1 px-4">
           <h1 className="text-2xl font-bold">Refer your Friend</h1>
           <ReferralCard
@@ -104,6 +103,7 @@ const page = async () => {
             referralCount={userInfo!.referralCount}
           />
         </div>
+        <AnnouncementMiniCard announcements={announcements} />
       </div>
     </section>
   )
