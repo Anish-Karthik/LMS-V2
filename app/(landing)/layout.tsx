@@ -8,7 +8,6 @@ import LandingNavbar from "@/components/shared/LandingNavbar"
 const LandingLayout = async ({ children }: { children: React.ReactNode }) => {
   const courses = await db.course.findMany()
   if (!courses) redirect("/create-course")
-  const course = courses[0]
   const user = await currentUser()
   let route: string | undefined = undefined
   if (user) {
