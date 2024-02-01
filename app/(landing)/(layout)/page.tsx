@@ -23,7 +23,7 @@ export default async function LandingPage() {
   if (!courses) redirect("/create-course")
   const course = courses[0]
   const user = await currentUser()
-  let route: string | undefined = undefined
+  let route: string = "/purchase"
   if (user) {
     const userInfo = await db.user.findUnique({
       where: {

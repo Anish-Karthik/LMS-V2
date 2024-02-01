@@ -8,6 +8,7 @@ import {
 } from "@/lib/actions/promo.action"
 import { db } from "@/lib/db"
 import { randomString } from "@/lib/format"
+import { Separator } from "@/components/ui/separator"
 import CourseDetailCard from "@/components/card/course-detail-card"
 import AnnouncementMiniCard from "@/components/shared/announcement-mini-card"
 import { serverClient } from "@/app/_trpc/serverClient"
@@ -80,8 +81,8 @@ const page = async () => {
     take: 3,
   })
   return (
-    <section className="flex justify-center p-4 max-sm:flex-col">
-      <div className="flex flex-col gap-4 px-4">
+    <section className="flex justify-center p-4 max-md:flex-col">
+      <div className="flex flex-col gap-4 px-4 max-md:pb-5">
         <div className="flex flex-col gap-1">
           <h1 className="text-2xl font-bold">Welcome back {userInfo?.name}</h1>
           <p className="text-text-secondary">
@@ -92,8 +93,26 @@ const page = async () => {
           courses={userPurchasedCourses || []}
           userProgression={userProgression}
         />
+        <Separator className="my-2 md:hidden" />
       </div>
-      <div className="grid grid-rows-2 max-sm:pb-10">
+      <div className="flex w-fit flex-col md:max-w-sm">
+        {/* discord link */}
+        <div className="flex flex-col gap-1 px-4 pb-2">
+          <h1 className="text-2xl font-bold">Join our Discord Community</h1>
+          <p className="text-text-secondary">
+            Join our discord community to get help from our mentors and
+            instructors.
+          </p>
+          <a
+            href="https://discord.gg/9R2KZjXJ"
+            target="_blank"
+            rel="noreferrer"
+            className="mt-2 w-full rounded-md bg-primary px-4 py-2 text-center text-white"
+          >
+            Join Discord
+          </a>
+        </div>
+
         <div className="flex flex-col gap-1 px-4">
           <h1 className="text-2xl font-bold">Refer your Friend</h1>
           <ReferralCard

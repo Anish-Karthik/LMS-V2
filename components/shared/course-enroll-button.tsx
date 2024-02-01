@@ -94,7 +94,7 @@ const CourseEnrollButton = ({
           promoId: promo?.id,
         })
 
-        router.push(`/student/courses/${courseId}`)
+        router.push(`/student/dashboard}`)
         return
       }
       console.log("not free")

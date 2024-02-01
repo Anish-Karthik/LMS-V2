@@ -18,7 +18,7 @@ const DashBoardLayout = async ({ children }: { children: React.ReactNode }) => {
     !!userInfo?.purchases?.length && userInfo?.role === "student"
   const isAdmin = ["teacher", "admin"].includes(userInfo?.role || "")
   if (isPurchased) {
-    redirect("/student/courses")
+    redirect("/student/dashboard")
   }
   if (isAdmin) {
     redirect("/teacher/dashboard")

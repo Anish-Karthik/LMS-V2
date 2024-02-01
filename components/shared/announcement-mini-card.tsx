@@ -1,9 +1,13 @@
+import Link from "next/link"
 import {
   NotificationAddOutlined,
   NotificationAddSharp,
   NotificationImportant,
 } from "@mui/icons-material"
 import { Announcement } from "@prisma/client"
+
+import { Preview } from "../preview"
+import { Separator } from "../ui/separator"
 
 const icons = {
   general: NotificationAddSharp,
@@ -15,36 +19,33 @@ const AnnouncementMiniCard = ({
 }: {
   announcements: Announcement[]
 }) => {
+  console.log(announcements)
   return (
     <section className="h-full px-4 pt-4">
       <h2 className="text-xl font-bold">Announcements</h2>
-      <div className="flex max-h-full min-h-[14rem] flex-col rounded-md bg-background-color p-1">
-        {
-          <div key={announcements[0]?.id} className="flex flex-col rounded-md">
-            <div className="flex items-center gap-1">
-              {/* <Button disabled className="bg-text-secondary">
-                {announcements[0]?.type === "general" ? (
-                  <icons.general />
-                ) : announcements[0]?.type === "batch" ? (
-                  <icons.batch />
-                ) : (
-                  <icons.course />
-                )}
-              </Button> */}
-              <h3 className="overflow-hidden text-ellipsis">
-                {announcements[0]?.title}
+      <div className="flex max-h-full min-h-[14rem] flex-col overflow-y-auto rounded-md bg-background-color p-1">
+        {announcements.slice(0, 3).map((announcement) => (
+          <Link
+            href={`/student/announcement/${announcement.id}`}
+            key={announcement?.id}
+            className="!hover:cursor-pointer flex flex-col rounded-md p-2 hover:opacity-70"
+          >
+            <div className="flex items-center justify-between gap-1">
+              <h3 className="overflow-hidden text-ellipsis text-text-primary">
+                {announcement?.title}
               </h3>
-              <p className="text-sm text-slate-500">
-                {announcements[0]?.description?.slice(0, 200)}...
-              </p>
+              <div className="flex justify-end">
+                <p className="text-sm text-slate-500">
+                  {announcement?.updatedAt.toLocaleDateString()}
+                </p>
+              </div>
             </div>
-            <div className="flex justify-end">
-              <p className="text-sm text-slate-500">
-                {announcements[0]?.updatedAt.toLocaleDateString()}
-              </p>
+            <div className="!-m-3 !p-0 text-sm text-slate-200">
+              <Preview value={announcement?.description!} />
             </div>
-          </div>
-        }
+            <Separator />
+          </Link>
+        ))}
       </div>
     </section>
   )

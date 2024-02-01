@@ -62,9 +62,10 @@ export function CustomProfilePhoto({
             )}
           </FormLabel>
           <FormControl className="flex-1 text-base font-semibold ">
-            <Input
+            <input
               type="file"
-              accept="image/*"
+              name="file[]"
+              multiple
               placeholder={`Upload a ${alt}`}
               className="account-form_image-input"
               onChange={(e) => handleImageChange(e, field.onChange)}

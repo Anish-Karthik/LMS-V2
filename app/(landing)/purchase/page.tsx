@@ -37,7 +37,7 @@ const page = async ({
   if (searchParams.invite && user) {
     const userInfo = await getUser(user.id)
     await acceptInvite(searchParams.invite, user.id)
-    redirect("teacher/settings")
+    redirect("/teacher/settings")
   }
   // redirect(`/purchase/${courseId}?promo=${searchParams.promo}`)
   return (
