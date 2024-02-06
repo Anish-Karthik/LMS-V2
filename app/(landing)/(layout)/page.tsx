@@ -42,8 +42,8 @@ export default async function LandingPage() {
     <LandingHero
       title={title}
       description={description}
-      image={image}
-      className="bg-quaternary-color lg:-mt-10"
+      image={"/landing/contact.jpg"}
+      className="bg-text-primary lg:-mt-10"
     >
       <div className="flex w-full gap-4">
         <Link href={`/purchase`}>

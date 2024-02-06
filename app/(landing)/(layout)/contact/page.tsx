@@ -4,6 +4,7 @@ import { socials } from "@/lib/socials"
 import { LandingHero } from "@/components/shared/LandingHero"
 
 import HandleCopy from "./handle-copy"
+import ContactForm from "@/components/form/ContactForm"
 
 const title = "Get In Touch"
 const image = "/landing/about.png"
@@ -14,24 +15,43 @@ const page = () => {
       title={title}
       description={""}
       image={image}
-      className="bg-text-secondary text-background lg:py-20"
+      className="bg-text-primary text-background lg:py-20"
     >
-      <div className="socials flex flex-col justify-evenly gap-2 pb-8 ">
+      <div className="socials flex justify-evenly gap-2">
         {socials.map((social, index) => (
+          ["Mail Me","Phone"].includes(social.title)? null:
           <div className="flex justify-between" key={index}>
             <Link
               href={social.href}
               key={index}
               target="_blank"
-              className="flex items-center gap-2"
+              className="flex items-center gap-2 text-tertiary-color"
             >
               <social.icon width={40} height={40} />
-              <p className="text-underlined">{social.href}</p>
+              {/* <p className="text-underlined">{social.href}</p> */}
             </Link>
-            <HandleCopy text={social.href} />
+            {/* <HandleCopy text={social.href} /> */}
           </div>
         ))}
       </div>
+      <div>
+          {socials.map((social, index) => (
+          !["Mail Me","Phone"].includes(social.title)? null:
+          <div className="flex justify-between" key={index}>
+            <Link
+              href={social.href}
+              key={index}
+              target="_blank"
+              className="flex items-center gap-2 text-tertiary-color"
+            >
+              <social.icon width={40} height={40} />
+              <p className="text-underlined hover:text-blue-500">{social.href}</p>
+            </Link>
+            {/* <HandleCopy text={social.href} /> */}
+          </div>
+        ))}
+      </div>
+      <ContactForm />
     </LandingHero>
   )
 }

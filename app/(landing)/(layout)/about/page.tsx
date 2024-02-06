@@ -20,7 +20,7 @@ const page = () => {
       title={title}
       description={description}
       image={image}
-      className="bg-text-secondary text-background lg:py-20"
+      className="bg-text-primary text-background lg:py-20"
     />
   )
 }

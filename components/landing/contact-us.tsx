@@ -21,7 +21,7 @@ const ContactUs = ({ className }: { className?: string }) => {
           className="flex items-center text-2xl font-semibold text-background-color md:text-5xl"
         >
           <Image
-            src="/images/logo.png"
+            src="/images/logot.png"
             className="rounded-full zoom-in-75"
             width={50}
             height={50}
@@ -36,7 +36,7 @@ const ContactUs = ({ className }: { className?: string }) => {
           ))}
         </div>
 
-        <p className="flex items-center text-slate-600">All rights reserved.</p>
+        <p className="flex items-center text-slate-600 max-sm:hidden">All rights reserved.</p>
       </div>
       {/* <div className="container mt-[-2rem] pb-10 sm:px-12 flex items-center justify-evenly gap-2">
           <p className="text-white text-sm ">

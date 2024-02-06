@@ -20,7 +20,7 @@ export const LandingHero = ({
       <div className="mx-auto flex max-w-6xl flex-col items-center space-y-5 py-3 max-lg:gap-6 lg:grid lg:grid-cols-2">
         <div className="flex flex-col items-start justify-center gap-2 max-lg:mx-4 max-lg:max-w-xl max-lg:items-center max-sm:mx-16 max-sm:w-[90vw] md:px-5">
           <div>
-            <h1 className="text-xl font-extrabold md:text-2xl lg:text-4xl">
+            <h1 className="text-xl font-extrabold text-pink-600 md:text-2xl lg:text-4xl">
               {title}
             </h1>
           </div>

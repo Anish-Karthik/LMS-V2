@@ -46,8 +46,9 @@ const page = async ({
       <section className="mt-20 grid w-full items-center ">
         <MainCard />
         <ReasonsSection />
-        <DetailsSection courseId={courseId} />
-        <AdvantagesSection />
+        <div className="mx-auto max-w-[80%]">
+          <DetailsSection courseId={courseId} />
+        </div>
         <ReviewsSection />
         <PurchaseSection />
         <FAQSection />
