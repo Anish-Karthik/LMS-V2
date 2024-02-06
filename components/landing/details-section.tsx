@@ -1,12 +1,10 @@
 "use client"
-import Autoplay from "embla-carousel-autoplay"
+
 import Image from "next/image"
 import Link from "next/link"
+import Autoplay from "embla-carousel-autoplay"
 
 import { cn } from "@/lib/utils"
-
-import { Button } from "../ui/button"
-
 import {
   Carousel,
   CarouselContent,
@@ -15,6 +13,7 @@ import {
   CarouselPrevious,
 } from "@/components/ui/carousel"
 
+import { Button } from "../ui/button"
 
 const details = [
   {
@@ -45,8 +44,11 @@ const details = [
 
 const DetailsSection = ({ courseId }: { courseId: string }) => {
   return (
-    <section className="!max-w-screen md:min-w-6xl max-xl:px-5"  id="main-details">
-      <Carousel 
+    <section
+      className="!max-w-screen md:min-w-6xl max-xl:px-5"
+      id="main-details"
+    >
+      <Carousel
         className="max-sm:hidden"
         // plugins={[
         //   Autoplay({
@@ -54,14 +56,16 @@ const DetailsSection = ({ courseId }: { courseId: string }) => {
         //   }),
         // ]}
       >
-      <CarouselContent className="!p-0 !m-0">
-        {details.map((detail, index) => (
-          <CarouselItem><DetailCard key={index} {...detail} courseId={courseId} /></CarouselItem>
-        ))}
-      </CarouselContent>
-      <CarouselPrevious />
-      <CarouselNext />
-    </Carousel>
+        <CarouselContent className="!p-0 !m-0">
+          {details.map((detail, index) => (
+            <CarouselItem>
+              <DetailCard key={index} {...detail} courseId={courseId} />
+            </CarouselItem>
+          ))}
+        </CarouselContent>
+        <CarouselPrevious />
+        <CarouselNext />
+      </Carousel>
 
       <div className="sm:hidden">
         {details.map((detail, index) => (

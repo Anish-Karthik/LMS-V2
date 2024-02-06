@@ -36,7 +36,9 @@ const ContactUs = ({ className }: { className?: string }) => {
           ))}
         </div>
 
-        <p className="flex items-center text-slate-600 max-sm:hidden">All rights reserved.</p>
+        <p className="flex items-center text-slate-600 max-sm:hidden">
+          All rights reserved.
+        </p>
       </div>
       {/* <div className="container mt-[-2rem] pb-10 sm:px-12 flex items-center justify-evenly gap-2">
           <p className="text-white text-sm ">

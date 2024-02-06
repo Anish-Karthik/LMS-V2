@@ -1,9 +1,10 @@
 "use client"
 
-import React from 'react'
-import { z } from "zod"
+import React from "react"
 import { zodResolver } from "@hookform/resolvers/zod"
 import { useForm } from "react-hook-form"
+import { toast } from "react-hot-toast"
+import { z } from "zod"
 
 import { Button } from "@/components/ui/button"
 import {
@@ -16,9 +17,9 @@ import {
   FormMessage,
 } from "@/components/ui/form"
 import { Input } from "@/components/ui/input"
-import { Textarea } from '../ui/textarea'
-import { toast } from 'react-hot-toast'
- 
+
+import { Textarea } from "../ui/textarea"
+
 const formSchema = z.object({
   name: z.string().min(2).max(50),
   email: z.string().email(),
@@ -33,22 +34,29 @@ const ContactForm = () => {
       name: "",
     },
   })
- 
+
   // 2. Define a submit handler.
   function onSubmit(values: z.infer<typeof formSchema>) {
-    toast.success('Submit Successful') 
+    toast.success("Submit Successful")
     console.log(values)
   }
   return (
     <Form {...form}>
-      <form onSubmit={form.handleSubmit(onSubmit)} className="max-md:!w-[80%] lg:w-[80%] space-y-1 text-black">
+      <form
+        onSubmit={form.handleSubmit(onSubmit)}
+        className="max-md:!w-[80%] lg:w-[80%] space-y-1 text-black"
+      >
         <FormField
           control={form.control}
           name="name"
           render={({ field }) => (
             <FormItem>
               <FormControl>
-                <Input className='focus:!ring-transparent' placeholder="Your Name" {...field} />
+                <Input
+                  className="focus:!ring-transparent"
+                  placeholder="Your Name"
+                  {...field}
+                />
               </FormControl>
               <FormMessage />
             </FormItem>
@@ -60,7 +68,11 @@ const ContactForm = () => {
           render={({ field }) => (
             <FormItem>
               <FormControl>
-                <Input className='focus:!ring-transparent' placeholder="Your Email" {...field} />
+                <Input
+                  className="focus:!ring-transparent"
+                  placeholder="Your Email"
+                  {...field}
+                />
               </FormControl>
               <FormMessage />
             </FormItem>
@@ -73,14 +85,20 @@ const ContactForm = () => {
           render={({ field }) => (
             <FormItem>
               <FormControl>
-                <Textarea className='focus:!ring-transparent' placeholder="Your Message" {...field} />
+                <Textarea
+                  className="focus:!ring-transparent"
+                  placeholder="Your Message"
+                  {...field}
+                />
               </FormControl>
               <FormMessage />
             </FormItem>
           )}
         />
 
-        <Button className='w-full' type="submit">Submit</Button>
+        <Button className="w-full" type="submit">
+          Submit
+        </Button>
       </form>
     </Form>
   )

@@ -50,7 +50,9 @@ const LandingNavbar = ({
             <Image fill alt="Logo" src="/images/logot.png" />
           </div>
           <div>
-            <h1 className={cn("text-2xl font-bold ", font.className)}>PRAGLIS</h1>
+            <h1 className={cn("text-2xl font-bold ", font.className)}>
+              PRAGLIS
+            </h1>
           </div>
         </Link>
         {landingRoutes.map((landingRoute) => (
@@ -69,10 +71,12 @@ const LandingNavbar = ({
 
       <div className="flex items-center gap-2">
         {/* <ThemeToggle /> */}
-        <Link href={route || `/purchase/${courses[0].id}` || "/purchase"}
-        >
+        <Link href={route || `/purchase/${courses[0].id}` || "/purchase"}>
           <Button variant="outline" className="rounded-full">
-            {!route || !(route?.includes("teacher") || route?.includes("student")) ? "Purchase Now" : "Get Started"}
+            {!route ||
+            !(route?.includes("teacher") || route?.includes("student"))
+              ? "Purchase Now"
+              : "Get Started"}
           </Button>
         </Link>
         {pathname.split("/").length < 2 && (
