@@ -56,7 +56,7 @@ const DetailsSection = ({ courseId }: { courseId: string }) => {
         //   }),
         // ]}
       >
-        <CarouselContent className="!p-0 !m-0">
+        <CarouselContent className="!m-0 !p-0">
           {details.map((detail, index) => (
             <CarouselItem>
               <DetailCard key={index} {...detail} courseId={courseId} />
@@ -96,11 +96,11 @@ function DetailCard({
   return (
     <div
       className={cn(
-        "mx-auto my-12 flex 2xs:max-w-2xs xs:max-w-xs sm:max-w-6xl flex-col items-center space-y-5 rounded-lg py-12 max-xl:px-4 max-lg:gap-6 max-lg:text-center lg:grid lg:grid-cols-2 lg:py-3",
+        "2xs:max-w-2xs mx-auto my-12 flex flex-col items-center space-y-5 rounded-lg py-12 max-xl:px-4 max-lg:gap-6 max-lg:text-center xs:max-w-xs sm:max-w-6xl lg:grid lg:grid-cols-2 lg:py-3",
         className
       )}
     >
-      <div className="w-full flex flex-col items-start justify-center gap-2 max-lg:mx-4 max-lg:max-w-xl max-lg:items-center max-sm:mx-16 max-sm:w-[90vw] lg:pl-16 ">
+      <div className="flex w-full flex-col items-start justify-center gap-2 max-lg:mx-4 max-lg:max-w-xl max-lg:items-center max-sm:mx-16 max-sm:w-[90vw] lg:pl-16 ">
         <div className="w-full">
           <h1 className="text-2xl font-extrabold md:text-4xl lg:text-5xl">
             {heading}

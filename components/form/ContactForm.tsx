@@ -6,6 +6,7 @@ import { useForm } from "react-hook-form"
 import { toast } from "react-hot-toast"
 import { z } from "zod"
 
+import { cn } from "@/lib/utils"
 import { Button } from "@/components/ui/button"
 import {
   Form,
@@ -26,7 +27,7 @@ const formSchema = z.object({
   message: z.string().min(10).max(1000),
 })
 
-const ContactForm = () => {
+const ContactForm = ({ className }: { className?: string }) => {
   // 1. Define your form.
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
@@ -44,7 +45,10 @@ const ContactForm = () => {
     <Form {...form}>
       <form
         onSubmit={form.handleSubmit(onSubmit)}
-        className="max-md:!w-[80%] lg:w-[80%] space-y-1 text-black"
+        className={cn(
+          "space-y-1 text-pink-color max-sm:!w-full sm:w-[70%] md:w-[60%]",
+          className
+        )}
       >
         <FormField
           control={form.control}
@@ -96,7 +100,7 @@ const ContactForm = () => {
           )}
         />
 
-        <Button className="w-full" type="submit">
+        <Button className="w-full bg-pink-color" type="submit">
           Submit
         </Button>
       </form>

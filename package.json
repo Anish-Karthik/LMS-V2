@@ -12,7 +12,7 @@
     "typecheck": "tsc --noEmit",
     "format:write": "prettier --write \"**/*.{ts,tsx,mdx}\" --cache",
     "format:check": "prettier --check \"**/*.{ts,tsx,mdx}\" --cache",
-    "precommit": "npm run typecheck && npm run format:write && npm run lint:fix",
+    "precommit": "npm run typecheck && npm run lint:fix && npm run format:write",
     "postinstall": "prisma generate"
   },
   "dependencies": {

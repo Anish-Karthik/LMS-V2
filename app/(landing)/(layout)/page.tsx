@@ -59,7 +59,7 @@ export default async function LandingPage() {
             <Link href={`/purchase`}>
               <Button
                 variant={"none"}
-                className="w-full text-white bg-purple-color hover:bg-purple-color/40"
+                className="w-full bg-purple-color text-white hover:bg-purple-color/40"
               >
                 View Details
               </Button>

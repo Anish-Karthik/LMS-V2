@@ -95,7 +95,9 @@ const LandingNavbar = ({
           </Link>
         )}
         {/* <ThemeToggle /> */}
-        {<UserButton afterSignOutUrl="/" afterSwitchSessionUrl="/" />}
+        <div className="max-sm:hidden">
+          <UserButton afterSignOutUrl="/" afterSwitchSessionUrl="/" />
+        </div>
         <LandingNavbarMobile />
       </div>
     </nav>
