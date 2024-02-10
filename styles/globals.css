@@ -50,6 +50,9 @@
     --primary-light-color: rgb(38, 139, 255);
     --primary-dark-color: rgb(0, 107, 230); */
 
+    --pink-color: 325 45.5 78.4;
+    --purple-color: 263 76.2 53.9;
+
     --background-color: 50 50 50; /* black */
     --text-primary: 250 248 241; /* white */ 
     --text-secondary: 	253 185 0; /* yellow */

@@ -27,9 +27,9 @@ const LandingLayout = async ({ children }: { children: React.ReactNode }) => {
       <LandingNavbar
         courses={courses}
         route={route}
-        className="fixed inset-x-0 top-0 z-50 bg-white"
+        className="fixed inset-x-0 top-0 z-50 bg-black"
       />
-      <main className="mt-12 h-full w-full">{children}</main>
+      <main className="h-screen w-full">{children}</main>
     </div>
   )
 }

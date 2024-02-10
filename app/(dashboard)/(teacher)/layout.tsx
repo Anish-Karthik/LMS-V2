@@ -32,7 +32,7 @@ const DashBoardLayout = async ({
           <div className="flex h-16 items-center px-4">
             {/* <TeamSwitcher /> */}
             <Image
-              src={"/images/logot.png"}
+              src={"/images/logo1.png"}
               alt="PRAGLIS"
               width={50}
               height={50}

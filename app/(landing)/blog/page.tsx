@@ -20,19 +20,10 @@ const page = async () => {
   blogAnnouncements.sort((a, b) => {
     return new Date(b.updatedAt).getTime() - new Date(a.updatedAt).getTime()
   })
-  const announcementTabs = [
-    {
-      value: "blog",
-      label: "Blog",
-      icon: NotificationAddSharp,
-      data: blogAnnouncements,
-    },
-  ]
-  const courses = await getCourses()
-  const batches = await getAllBatches()
+
   return (
-    <div>
-      <div className="mx-auto mb-24 flex max-w-4xl flex-col items-start">
+    <div className="h-full w-full">
+      <div className="mx-auto mb-24 mt-12 flex max-w-4xl flex-col items-start">
         <div className="ml-4 mt-8">
           <h1 className="text-center text-4xl font-bold">
             Latest Blogs from PRAGLIS
@@ -46,8 +37,8 @@ const page = async () => {
           viewerRole={userInfo?.role || "student"}
           type="blog"
         />
-        <ContactUs className="absolute inset-x-0 -bottom-2 bg-secondary-color" />
       </div>
+      <ContactUs className="w-full text-white" />
     </div>
   )
 }

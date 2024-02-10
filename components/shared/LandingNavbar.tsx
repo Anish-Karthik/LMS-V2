@@ -40,17 +40,17 @@ const LandingNavbar = ({
   return (
     <nav
       className={cn(
-        "flex items-center justify-between bg-white p-4",
+        "flex items-center justify-between p-4 text-white",
         className
       )}
     >
       <div className="flex items-center gap-5 font-semibold">
         <Link href="/" className="flex items-center">
           <div className="relative mr-4 h-12 w-12">
-            <Image fill alt="Logo" src="/images/logot.png" />
+            <Image fill alt="Logo" src="/images/logo1.png" />
           </div>
           <div>
-            <h1 className={cn("text-2xl font-bold ", font.className)}>
+            <h1 className={cn("text-2xl font-bold", font.className)}>
               PRAGLIS
             </h1>
           </div>
@@ -94,6 +94,7 @@ const LandingNavbar = ({
             </Button>
           </Link>
         )}
+        {/* <ThemeToggle /> */}
         {<UserButton afterSignOutUrl="/" afterSwitchSessionUrl="/" />}
         <LandingNavbarMobile />
       </div>

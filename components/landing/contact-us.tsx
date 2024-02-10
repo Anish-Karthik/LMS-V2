@@ -21,7 +21,7 @@ const ContactUs = ({ className }: { className?: string }) => {
           className="flex items-center text-2xl font-semibold text-background-color md:text-5xl"
         >
           <Image
-            src="/images/logot.png"
+            src="/images/logo1.png"
             className="rounded-full zoom-in-75"
             width={50}
             height={50}
@@ -36,15 +36,10 @@ const ContactUs = ({ className }: { className?: string }) => {
           ))}
         </div>
 
-        <p className="flex items-center text-slate-600 max-sm:hidden">
+        <p className="flex items-center text-slate-500 max-sm:hidden">
           All rights reserved.
         </p>
       </div>
-      {/* <div className="container mt-[-2rem] pb-10 sm:px-12 flex items-center justify-evenly gap-2">
-          <p className="text-white text-sm ">
-            Made with ❤️ by Anish Karthik
-          </p>
-      </div> */}
     </footer>
   )
 }

@@ -2,7 +2,6 @@ import "@/styles/globals.css"
 import React from "react"
 import { Metadata } from "next"
 import { ClerkProvider } from "@clerk/nextjs"
-import { RecoilRoot } from "recoil"
 
 import { siteConfig } from "@/config/site"
 import { fontSans } from "@/lib/fonts"
@@ -51,7 +50,12 @@ export default function RootLayout({ children }: RootLayoutProps) {
               fontSans.variable
             )}
           >
-            <ThemeProvider attribute="class" defaultTheme="light" enableSystem>
+            <ThemeProvider
+              attribute="class"
+              defaultTheme="dark"
+              enableSystem
+              forcedTheme="dark"
+            >
               <ConfettiProvider />
               <ToastProvider />
               <Toaster />

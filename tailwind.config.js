@@ -20,6 +20,8 @@ module.exports = withUt({
         ring: "hsl(var(--ring))",
         background: "hsl(var(--background))",
         foreground: "hsl(var(--foreground))",
+        "pink-color": 'hsl(var(--pink-color) / <alpha-value>)',
+        "purple-color": 'hsl(var(--purple-color) / <alpha-value>)',
         "background-color": 'rgb(var(--background-color) / <alpha-value>)',
         "text-primary": "rgb(var(--text-primary) / <alpha-value>)",
         "text-secondary": "rgb(var(--text-secondary) / <alpha-value>)",
@@ -65,6 +67,9 @@ module.exports = withUt({
         lg: `var(--radius)`,
         md: `calc(var(--radius) - 2px)`,
         sm: "calc(var(--radius) - 4px)",
+      },
+      maxWidth: {
+        "8xl": "88rem",
       },
       fontFamily: {
         sans: ["var(--font-sans)", ...fontFamily.sans],
