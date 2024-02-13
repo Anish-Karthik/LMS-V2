@@ -52,9 +52,9 @@ export default function RootLayout({ children }: RootLayoutProps) {
           >
             <ThemeProvider
               attribute="class"
-              defaultTheme="dark"
+              defaultTheme="light"
               enableSystem
-              forcedTheme="dark"
+              forcedTheme="light"
             >
               <ConfettiProvider />
               <ToastProvider />
