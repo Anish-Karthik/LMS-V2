@@ -129,15 +129,15 @@ export default function MobileChapterBar({
                           href={`/student/courses/${courseId}/${topic.type}/${topic.id}`}
                           className={cn(
                             "hover:bg-secondary flex items-center justify-start gap-2 pl-5",
-                            params.topicId === topic.id && "bg-secondary"
+                            params?.topicId === topic.id && "bg-secondary"
                           )}
                         >
                           <Icon
                             size={22}
                             className={cn(
                               "text-slate-500",
-                              params.courseId === courseId &&
-                                params.topicId === topic.id &&
+                              params?.courseId === courseId &&
+                                params?.topicId === topic.id &&
                                 "text-slate-700",
                               isCompleted && "text-emerald-700"
                             )}

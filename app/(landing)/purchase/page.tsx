@@ -4,7 +4,7 @@ import { currentUser } from "@clerk/nextjs"
 import { getCourses } from "@/lib/actions/course.actions"
 import { acceptInvite } from "@/lib/actions/invite.action"
 import { getUser } from "@/lib/actions/user.actions"
-import AdvantagesSection from "@/components/landing/advantages-section"
+import About from "@/components/landing/about"
 import ContactUs from "@/components/landing/contact-us"
 import DetailsSection from "@/components/landing/details-section"
 import DisclaimerSection from "@/components/landing/disclaimer-section"
@@ -41,13 +41,17 @@ const page = async ({
   }
   // redirect(`/purchase/${courseId}?promo=${searchParams.promo}`)
   return (
-    <div className="w-full">
+    <div className="h-full w-full bg-black">
       {/* <Banner variant="success" label="You already completed this topic." /> */}
+
       <section className="mt-20 grid w-full items-center ">
         <MainCard />
+        <About href={`/purchase/${courseId}?promo=${searchParams.promo}`} />
         <ReasonsSection />
-        <div className="mx-auto max-w-[80%]">
-          <DetailsSection courseId={courseId} />
+        <div className="w-full bg-black">
+          <div className="mx-auto max-w-[80%] bg-black">
+            <DetailsSection courseId={courseId} />
+          </div>
         </div>
         <ReviewsSection />
         <PurchaseSection />

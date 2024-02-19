@@ -16,7 +16,7 @@ const RecordingPage = async ({ params }: { params: { courseId: string } }) => {
         purchases: {
           where: {
             Batch: {
-              courseId: params.courseId,
+              courseId: params?.courseId,
             },
           },
           select: {
@@ -48,7 +48,7 @@ const RecordingPage = async ({ params }: { params: { courseId: string } }) => {
   console.log(firstTopic)
   if (firstTopic) {
     redirect(
-      `/student/courses/${params.courseId}/${firstTopic!.type}/${
+      `/student/courses/${params?.courseId}/${firstTopic!.type}/${
         firstTopic!.id
       }`
     )

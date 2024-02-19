@@ -95,6 +95,18 @@
     --ring: 216 34% 17%;
 
     --radius: 0.5rem;
+
+    --pink-color: 312.5 38.71 75.69;
+    --purple-color: 263 76.2 53.9;
+
+    --background-color: 50 50 50; /* black */
+    --text-primary: 250 248 241; /* white */ 
+    --text-secondary: 	253 185 0; /* yellow */
+    --primary-color: 118 208 234; /* blue */
+    --secondary-color: 227 45 87; /* red */
+    --tertiary-color: 49 10 62; /* purple */
+    --quaternary-color: 104 213 151; /* green */
+    --dark-background: 224 71% 4%;
   }
 }
 

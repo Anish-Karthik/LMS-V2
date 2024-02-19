@@ -10,9 +10,9 @@ const CurrentPathNavigator = ({
   className,
   ...props
 }: React.HTMLAttributes<HTMLElement>) => {
-  const pathname = usePathname()
+  const pathname = usePathname()!
   const pathArr = pathname.split("/")
-  const params = useParams()
+  const params = useParams()!
   // map params values to params names
   const paramsNames = Object.keys(params)
   const revParams = new Map()

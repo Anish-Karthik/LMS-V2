@@ -16,8 +16,8 @@ const DashBoardLayout = async ({
 }) => {
   const user = await currentUser()
   if (!user) redirect("/sign-in")
-  if (!params.courseId) redirect("/student/courses")
-  const purchased = await isUserPurchasedCourse(user.id, params.courseId)
+  if (!params?.courseId) redirect("/student/courses")
+  const purchased = await isUserPurchasedCourse(user.id, params?.courseId)
   const userInfo = await getUser(user?.id || "")
   if (!user || !userInfo) redirect("/")
   const curBatch = userInfo.purchases[0].batchId
@@ -44,7 +44,7 @@ const DashBoardLayout = async ({
       position: "asc",
     },
   })
-  if (!purchased) redirect("/purchase/" + params.courseId)
+  if (!purchased) redirect("/purchase/" + params?.courseId)
 
   return (
     <div className="relative h-full">
@@ -53,13 +53,13 @@ const DashBoardLayout = async ({
       {/* <AdminTabs />  */}
       <MobileChapterBar
         chapters={chapters}
-        courseId={params.courseId}
+        courseId={params?.courseId}
         userId={user.id}
       />
       <div className="flex md:grid md:grid-cols-[1fr,7fr]">
         <ChapterBar
           chapters={chapters}
-          courseId={params.courseId}
+          courseId={params?.courseId}
           userId={user.id}
         />
         <main className="w-full ">{children}</main>

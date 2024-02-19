@@ -22,7 +22,7 @@ const AnnouncementPage = ({
   announcements: (Announcement & { attachments: Attachment[]; user: User })[]
   viewerRole: string
 }) => {
-  const searchParams = useSearchParams()
+  const searchParams = useSearchParams()!
   // console.log(announcements)
   const filteredAnnouncements = announcements.filter((announcement) => {
     if (type === "blog") return announcement.type === "blog"

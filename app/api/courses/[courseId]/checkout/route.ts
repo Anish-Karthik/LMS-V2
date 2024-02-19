@@ -27,9 +27,9 @@ export async function POST(
       return new NextResponse("Unauthorized", { status: 401 })
     }
 
-    const course = await getCourseById(params.courseId)
+    const course = await getCourseById(params?.courseId)
 
-    const purchase = await isUserPurchasedCourse(user.id, params.courseId)
+    const purchase = await isUserPurchasedCourse(user.id, params?.courseId)
 
     if (purchase) {
       return new NextResponse("Already purchased", { status: 400 })

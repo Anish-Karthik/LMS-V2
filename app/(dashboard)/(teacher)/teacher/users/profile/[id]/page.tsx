@@ -17,7 +17,7 @@ const page = async ({
 }) => {
   const userInfo = await db.user.findUnique({
     where: {
-      id: params.id,
+      id: params?.id,
     },
   })
   const promoCode = await db.promo.findFirst({

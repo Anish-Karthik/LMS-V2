@@ -13,7 +13,7 @@ const page = async ({
 }) => {
   const course = await db.course.findUnique({
     where: {
-      id: params.courseId,
+      id: params?.courseId,
     },
   })
   if (!course) {
@@ -31,14 +31,14 @@ const page = async ({
     if (userInfo.role === "teacher" || userInfo.role === "admin")
       redirect("/teacher/dashboard")
   } else {
-    redirect(`/onboarding?promo=${searchParams.promo}`)
+    redirect(`/onboarding?promo=${searchParams?.promo}`)
   }
   let promo = undefined
-  if (searchParams.promo) {
+  if (searchParams?.promo) {
     promo =
       (await db.promo.findUnique({
         where: {
-          code: searchParams.promo,
+          code: searchParams?.promo,
         },
       })) || undefined
   }

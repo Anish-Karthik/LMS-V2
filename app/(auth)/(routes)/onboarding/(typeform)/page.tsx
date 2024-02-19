@@ -46,7 +46,7 @@ const page = async ({
     image: user.imageUrl || "",
     userId: user.id,
   }
-  return <TypeForm initialData={initialData} promo={searchParams.promo} />
+  return <TypeForm initialData={initialData} promo={searchParams?.promo} />
 }
 
 export default page

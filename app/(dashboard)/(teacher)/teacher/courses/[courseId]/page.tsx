@@ -13,7 +13,7 @@ import { PriceForm } from "./_components/price-form"
 import { TitleForm } from "./_components/title-form"
 
 const page = async ({ params }: { params: { courseId: string } }) => {
-  const course = await getCourseById(params.courseId)
+  const course = await getCourseById(params?.courseId)
   const user = await currentUser()
   const userInfo = await getUser(user!.id)
   const isTeacher = userInfo!.role === "teacher"

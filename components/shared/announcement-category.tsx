@@ -96,9 +96,9 @@ function CustomSelectItems({
     toast.success(`Filtering by ${value}`)
   }
 
-  const searchParams = useSearchParams()
+  const searchParams = useSearchParams()!
   const router = useRouter()
-  const pathname = usePathname()
+  const pathname = usePathname()!
   useEffect(() => {
     if (type === "general") {
       router.push(pathname.split("?")[0])

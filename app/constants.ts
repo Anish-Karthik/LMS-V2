@@ -199,7 +199,7 @@ export const sidebarLinksStudentMobile = [
 export const landingRoutes = [
   {
     label: "About",
-    href: "/about",
+    href: "/purchase",
   },
   {
     label: "Contact",
@@ -213,10 +213,10 @@ export const landingRoutes = [
     label: "Testimonials",
     href: "/testimonials",
   },
-  {
-    label: "Purchase",
-    href: "/purchase",
-  },
+  // {
+  //   label: "Purchase",
+  //   href: "/purchase",
+  // },
 ]
 
 export type TsideBar = typeof sidebarLinksTeacher

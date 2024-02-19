@@ -22,7 +22,7 @@ const CurrentPathNavigator = ({
   const paramsNames = Object.keys(params)
   const revParams = new Map()
   paramsNames.forEach((name) => {
-    revParams.set(params[name], name)
+    revparams?.set(params[name], name)
   })
 
   return (
@@ -35,7 +35,7 @@ const CurrentPathNavigator = ({
       {pathArr.map((path, index) => {
         if (path === "") return null
         // check if path matches with any params if then return params name
-        if (revParams.has(path)) {
+        if (revparams?.has(path)) {
           return null
         }
         return (
@@ -44,7 +44,7 @@ const CurrentPathNavigator = ({
             href={
               index + 1 === pathArr.length ||
               (index + 2 == pathArr.length &&
-                revParams.has(pathArr[pathArr.length - 1]))
+                revparams?.has(pathArr[pathArr.length - 1]))
                 ? pathname
                 : `${pathname
                     .split("/")
@@ -60,17 +60,17 @@ const CurrentPathNavigator = ({
                 " hover:underline",
                 (index + 1 === pathArr.length ||
                   (index + 2 == pathArr.length &&
-                    revParams.has(pathArr[pathArr.length - 1]))) &&
+                    revparams?.has(pathArr[pathArr.length - 1]))) &&
                   "mr-2 text-blue-500"
               )}
             >
               {path}
             </p>
-            {/*don't display below one if its next satisfies revParams.has(pathArr[index-1]) or if its last index*/}
+            {/*don't display below one if its next satisfies revparams?.has(pathArr[index-1]) or if its last index*/}
             {!(
               index + 1 === pathArr.length ||
               (index + 2 == pathArr.length &&
-                revParams.has(pathArr[pathArr.length - 1]))
+                revparams?.has(pathArr[pathArr.length - 1]))
             ) && <p> {">"} </p>}
           </Link>
         )

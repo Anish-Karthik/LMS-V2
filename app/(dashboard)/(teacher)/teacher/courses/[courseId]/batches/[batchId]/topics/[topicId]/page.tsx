@@ -33,7 +33,7 @@ const topicIdPage = async ({
 
   const topic = await db.topic.findUnique({
     where: {
-      id: params.topicId,
+      id: params?.topicId,
     },
     include: {
       videoData: true,
@@ -41,7 +41,7 @@ const topicIdPage = async ({
   })
   const topicWithAttachments = await db.topic.findUnique({
     where: {
-      id: params.topicId,
+      id: params?.topicId,
     },
     include: {
       attachments: true,
@@ -61,7 +61,7 @@ const topicIdPage = async ({
 
   const isComplete = requiredFields.every(Boolean)
   const emails = await getTopicEmails({
-    batchId: params.batchId,
+    batchId: params?.batchId,
   })
 
   return (
@@ -77,7 +77,7 @@ const topicIdPage = async ({
         <div className="flex items-center justify-between">
           <div className="w-full">
             <Link
-              href={`/teacher/courses/${params.courseId}/batches/${params.batchId}/`}
+              href={`/teacher/courses/${params?.courseId}/batches/${params?.batchId}/`}
               className="mb-6 flex items-center text-sm transition hover:opacity-75"
             >
               <ArrowLeft className="mr-2 h-4 w-4" />
@@ -94,9 +94,9 @@ const topicIdPage = async ({
                 <NotifyTopic topic={topic} emails={emails} />
                 <TopicActions
                   disabled={!isComplete}
-                  batchId={params.batchId}
-                  topicId={params.topicId}
-                  courseId={params.courseId}
+                  batchId={params?.batchId}
+                  topicId={params?.topicId}
+                  courseId={params?.courseId}
                   isPublished={topic.isPublished}
                 />
               </div>
@@ -112,13 +112,13 @@ const topicIdPage = async ({
               </div>
               <TopicTitleForm
                 initialData={topic}
-                batchId={params.batchId}
-                topicId={params.topicId}
+                batchId={params?.batchId}
+                topicId={params?.topicId}
               />
               <TopicDescriptionForm
                 initialData={topic}
-                batchId={params.batchId}
-                topicId={params.topicId}
+                batchId={params?.batchId}
+                topicId={params?.topicId}
               />
             </div>
             {/* <div>
@@ -130,8 +130,8 @@ const topicIdPage = async ({
               </div>
               <TopicAccessForm
                 initialData={topic}
-                batchId={params.batchId}
-                topicId={params.topicId}
+                batchId={params?.batchId}
+                topicId={params?.topicId}
               />
             </div> */}
             <div>
@@ -152,8 +152,8 @@ const topicIdPage = async ({
             </div>
             <TopicVideoForm
               initialData={topic}
-              topicId={params.topicId}
-              batchId={params.batchId}
+              topicId={params?.topicId}
+              batchId={params?.batchId}
             />
           </div>
         </div>

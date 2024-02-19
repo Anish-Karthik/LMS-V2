@@ -24,7 +24,7 @@ const TopicIdPage = async ({
     return redirect("/")
   }
   const userPurchaseInfoForThisCourse = userInfo.purchases.find(
-    (purchase) => purchase.courseId === params.courseId
+    (purchase) => purchase.courseId === params?.courseId
   )
 
   if (!userPurchaseInfoForThisCourse) {
@@ -41,11 +41,11 @@ const TopicIdPage = async ({
     purchase,
   } = await getDetailedTopicClient({
     userId,
-    topicId: params.topicId,
-    courseId: params.courseId,
+    topicId: params?.topicId,
+    courseId: params?.courseId,
   })
   console.log("*************************************")
-  console.log(nextTopic?.id, params.topicId, nextTopic?.type)
+  console.log(nextTopic?.id, params?.topicId, nextTopic?.type)
   console.log("*************************************")
   if (!topic || !batch || !chapter) {
     return (
@@ -86,9 +86,9 @@ const TopicIdPage = async ({
         <div className="p-4">
           <VideoPlayer
             userId={userId}
-            topicId={params.topicId}
+            topicId={params?.topicId}
             title={topic.title}
-            courseId={params.courseId}
+            courseId={params?.courseId}
             nextTopicId={nextTopic?.id}
             nextTopicType={nextTopic?.type}
             playbackId={videoData?.url!}
@@ -104,8 +104,8 @@ const TopicIdPage = async ({
             <ChapterProgressButton
               userId={userId}
               chapterId={chapter.id}
-              topicId={params.topicId}
-              courseId={params.courseId}
+              topicId={params?.topicId}
+              courseId={params?.courseId}
               nextTopicId={nextTopic?.id}
               nextTopicType={nextTopic?.type}
               isCompleted={!!userProgressTopic?.isCompleted}

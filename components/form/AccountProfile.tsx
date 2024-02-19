@@ -28,7 +28,7 @@ const AccountProfile = ({ user, route }: { user: User; route: string }) => {
   const [files, setFiles] = useState<File[]>([])
   const { startUpload } = useUploadThing("media")
   const router = useRouter()
-  const pathname = usePathname()
+  const pathname = usePathname()!
   const createUser = trpc.user.create.useMutation()
   const form = useForm({
     resolver: zodResolver(UserValidation),

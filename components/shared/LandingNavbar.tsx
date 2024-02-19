@@ -30,11 +30,11 @@ const LandingNavbar = ({
   route?: string
 }) => {
   const { userId } = useAuth()
-  const pathname = usePathname()
-  const searchParams = useSearchParams()
+  const pathname = usePathname()!
+  const searchParams = useSearchParams()!
   const queryString = useMemo(
     () =>
-      searchParams.get("promo") ? `?promo=${searchParams.get("promo")}` : "",
+      searchParams?.get("promo") ? `?promo=${searchParams?.get("promo")}` : "",
     [searchParams]
   )
   return (

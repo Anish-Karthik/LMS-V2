@@ -31,10 +31,10 @@ const CreateAnnoucement = async ({
   params: { announcementId: string }
   searchParams: { [key: string]: string }
 }) => {
-  const announcement = await getAnnouncementByid(params.announcementId)
+  const announcement = await getAnnouncementByid(params?.announcementId)
   const courses = await getCourses()
   const course = courses![0]
-  const batches = await getBatches(searchParams.courseId || course.id)
+  const batches = await getBatches(searchParams?.courseId || course.id)
   // const user = await currentUser();
   const requiredFields = [
     announcement.title,
@@ -43,10 +43,10 @@ const CreateAnnoucement = async ({
   ]
 
   const emails = await getEmailsByAnnouncement({
-    announcementId: params.announcementId,
+    announcementId: params?.announcementId,
     announcementType: announcement.type,
-    courseId: searchParams.courseId,
-    batchId: searchParams.batchId,
+    courseId: searchParams?.courseId,
+    batchId: searchParams?.batchId,
   })
 
   const totalFields = requiredFields.length
@@ -89,9 +89,9 @@ const CreateAnnoucement = async ({
                 />
                 <AnnouncementActions
                   disabled={!isComplete}
-                  batchId={searchParams.batchId}
-                  announcementId={params.announcementId}
-                  courseId={searchParams.courseId}
+                  batchId={searchParams?.batchId}
+                  announcementId={params?.announcementId}
+                  courseId={searchParams?.courseId}
                   isPublished={announcement.isPublished}
                 />
               </div>

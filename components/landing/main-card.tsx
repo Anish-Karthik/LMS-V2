@@ -11,7 +11,7 @@ import ButtonCard from "./button-card"
 const MainCard = () => {
   return (
     <section
-      className="bg-tertiary-color/20 flex w-full flex-col items-center gap-8 px-4 py-24"
+      className="flex w-full flex-col items-center gap-8 bg-black px-4 py-24"
       id="hero"
     >
       <HeaderCard />

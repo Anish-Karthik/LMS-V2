@@ -45,7 +45,7 @@ const details = [
 const DetailsSection = ({ courseId }: { courseId: string }) => {
   return (
     <section
-      className="!max-w-screen md:min-w-6xl max-xl:px-5"
+      className="!max-w-screen md:min-w-6xl bg-black max-xl:px-5"
       id="main-details"
     >
       <Carousel
@@ -83,7 +83,7 @@ function DetailCard({
   subheading,
   description,
   image,
-  className = "bg-quaternary-color/40",
+  className = "dark:bg-quaternary-color/40",
   courseId,
 }: {
   className?: string
@@ -109,7 +109,7 @@ function DetailCard({
             {subheading}
           </h2>
         </div>
-        <p className="landing-section_description max-xs:max-w-2xs text-slate-700 max-sm:max-w-xs">
+        <p className="landing-section_description !text-pink-color max-xs:max-w-2xs max-sm:max-w-xs">
           {description}
         </p>
         <div className="mt-2 flex w-full gap-4 max-lg:justify-center">

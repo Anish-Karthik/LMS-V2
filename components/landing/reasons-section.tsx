@@ -45,7 +45,7 @@ const reasons = [
 const ReasonsSection = () => {
   return (
     <section
-      className="bg-primary-color/40 flex flex-col items-center py-16 max-xl:px-4"
+      className="flex flex-col items-center bg-black py-16 max-xl:px-4"
       id="why"
     >
       <div className="max-w-3xl">

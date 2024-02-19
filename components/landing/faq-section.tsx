@@ -49,7 +49,7 @@ const faq2 = [
 const FAQSection = () => {
   return (
     <section
-      className="bg-dark-background text-text-primary grid items-center gap-40 py-12 max-xl:px-4"
+      className="text-text-primary grid items-center gap-40 bg-black py-12 max-xl:px-4"
       id="faqs"
     >
       <div className="bg-tertiary-color text-text-primary mx-auto my-16 w-full max-w-6xl rounded-md p-6 py-20">

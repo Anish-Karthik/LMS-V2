@@ -25,9 +25,9 @@ const CheckInput = (props: {
   const [value, setValue] = useState("")
   const debouncedValue = useDebounce(value)
 
-  const searchParams = useSearchParams()
+  const searchParams = useSearchParams()!
   const router = useRouter()
-  const pathname = usePathname()
+  const pathname = usePathname()!
 
   const role = searchParams.get("role")
   const courseId = searchParams.get("courseId")

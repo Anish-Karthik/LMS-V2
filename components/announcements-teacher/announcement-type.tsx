@@ -192,8 +192,8 @@ function CustomSelectItems({
 }) {
   const [value, setValue] = useRecoilState(recoilState)
   const type = useRecoilValue(announcementTypeState)
-  const pathname = usePathname()
-  const searchParams = useSearchParams()
+  const pathname = usePathname()!
+  const searchParams = useSearchParams()!
   const router = useRouter()
   const handleChange = (val: string) => {
     setValue(val)
@@ -207,11 +207,11 @@ function CustomSelectItems({
           type: type,
           courseId:
             ["course", "batch"].includes(type) && name === "course"
-              ? value || searchParams.get("courseId")
+              ? value || searchParams?.get("courseId")
               : "",
           batchId:
             type === "batch" && name === "batch"
-              ? value || searchParams.get("batchId")
+              ? value || searchParams?.get("batchId")
               : "",
         },
       },

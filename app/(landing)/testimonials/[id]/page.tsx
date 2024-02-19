@@ -23,7 +23,7 @@ const page = async ({ params }: { params: { id: string } }) => {
   }
   const testimonial = await db.testimonial.findUnique({
     where: {
-      id: params.id,
+      id: params?.id,
     },
     include: {
       user: true,
@@ -39,7 +39,7 @@ const page = async ({ params }: { params: { id: string } }) => {
   return (
     <div className="mx-auto max-w-4xl">
       <TestimonialForm
-        id={params.id}
+        id={params?.id}
         defaultValue={{
           description: testimonial.description,
           rating: testimonial.rating,

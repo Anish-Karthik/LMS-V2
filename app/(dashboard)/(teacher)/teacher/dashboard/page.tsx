@@ -67,10 +67,10 @@ export default async function DashboardPage({
   let startDate = new Date()
   let endDate = new Date()
   if (searchParams?.from) {
-    startDate = new Date(searchParams.from)
+    startDate = new Date(searchParams?.from)
   }
   if (searchParams?.to) {
-    endDate = new Date(searchParams.to)
+    endDate = new Date(searchParams?.to)
   }
 
   const yearlyPurchaseData = await db.purchase.findMany({

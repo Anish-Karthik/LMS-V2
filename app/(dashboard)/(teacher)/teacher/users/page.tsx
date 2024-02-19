@@ -22,10 +22,10 @@ const page = async ({
 }) => {
   // const courses = await
   const result = await getUsersWhoHaveRoles({
-    courseId: searchParams.courseId,
-    batchId: searchParams.batchId,
-    role: searchParams.role,
-    searchText: searchParams.searchText,
+    courseId: searchParams?.courseId,
+    batchId: searchParams?.batchId,
+    role: searchParams?.role,
+    searchText: searchParams?.searchText,
   })
   // console.log(result);
 
@@ -41,11 +41,11 @@ const page = async ({
         <div className="flex flex-wrap items-center justify-start gap-3 px-6 pt-6 md:mb-0 md:flex-nowrap">
           <SearchInput />
 
-          {/* <CheckInput batchId={searchParams.batchId} name={"batchIds"} /> 
-          <CheckInput courseId={searchParams.courseId} name={"courseIds"} />  */}
+          {/* <CheckInput batchId={searchParams?.batchId} name={"batchIds"} /> 
+          <CheckInput courseId={searchParams?.courseId} name={"courseIds"} />  */}
         </div>
         <div className="flex w-full items-center gap-2 px-6 pt-6 max-sm:justify-start sm:justify-end md:mb-0 md:justify-between">
-          <CheckInput role={searchParams.role} name={"role"} />
+          <CheckInput role={searchParams?.role} name={"role"} />
           <Link href="/teacher/users/invite">
             <Button className="!h-full">Invite User</Button>
           </Link>
