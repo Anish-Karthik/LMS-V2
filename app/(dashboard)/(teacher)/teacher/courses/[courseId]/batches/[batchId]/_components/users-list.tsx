@@ -99,7 +99,7 @@ const UsersList = ({
   return (
     <>
       <div className="mt-3 grid grid-cols-1 gap-x-2 sm:grid-cols-2">
-        <div className="relative border-2 border-secondary">
+        <div className="border-secondary relative border-2">
           {isUpdating && (
             <div className="absolute inset-0 flex items-center justify-center bg-slate-500/50">
               <div className="h-12 w-12 animate-spin rounded-full border-y-2 border-gray-100"></div>
@@ -118,7 +118,7 @@ const UsersList = ({
                 <h3 className="text-sm font-semibold">{leftBatch.name}</h3>
                 <ListChecks
                   size={20}
-                  className="absolute right-3 z-50 bg-background"
+                  className="bg-background absolute right-3 z-50"
                 />
               </SelectTrigger>
               <SelectContent>
@@ -176,7 +176,7 @@ const UsersList = ({
             </div>
           )}
         </div>
-        <div className="relative border-2 border-secondary">
+        <div className="border-secondary relative border-2">
           {isUpdating && (
             <div className="absolute inset-0 flex items-center justify-center bg-slate-500/50">
               <div className="h-12 w-12 animate-spin rounded-full border-y-2 border-sky-500"></div>
@@ -194,7 +194,7 @@ const UsersList = ({
                 <h3 className="text-sm font-semibold">{rightBatch.name}</h3>
                 <ListChecks
                   size={20}
-                  className="absolute right-3 z-50 bg-background"
+                  className="bg-background absolute right-3 z-50"
                 />
               </SelectTrigger>
               <SelectContent>

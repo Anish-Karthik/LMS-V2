@@ -45,7 +45,7 @@ const reasons = [
 const ReasonsSection = () => {
   return (
     <section
-      className="flex flex-col items-center bg-primary-color/40 py-16 max-xl:px-4"
+      className="bg-primary-color/40 flex flex-col items-center py-16 max-xl:px-4"
       id="why"
     >
       <div className="max-w-3xl">
@@ -73,7 +73,7 @@ const ReasonsSection = () => {
         </center>
       </div>
       <div className="max-w-6xl">
-        <div className="grid items-center gap-10 max-sm:px-20 max-xs:px-1 sm:grid-cols-2 lg:grid-cols-3">
+        <div className="max-xs:px-1 grid items-center gap-10 max-sm:px-20 sm:grid-cols-2 lg:grid-cols-3">
           {reasons.map((reason, index) => (
             <MiniDetailCard
               key={index}

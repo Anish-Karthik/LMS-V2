@@ -116,7 +116,7 @@ export const AttachmentForm = ({
               }
             }}
           />
-          <div className="mt-4 text-xs text-muted-foreground">
+          <div className="text-muted-foreground mt-4 text-xs">
             Add anything your students might need to complete the course.
           </div>
         </div>

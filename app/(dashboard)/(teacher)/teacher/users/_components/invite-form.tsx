@@ -200,7 +200,7 @@ export function InviteForm({
                       mode="single"
                       selected={field.value}
                       onSelect={field.onChange}
-                      className="rounded-md border-gray-300 shadow-sm focus:border-primary focus:ring focus:ring-primary focus:ring-opacity-50 max-xs:!-ml-8"
+                      className="focus:border-primary focus:ring-primary max-xs:!-ml-8 rounded-md border-gray-300 shadow-sm focus:ring focus:ring-opacity-50"
                     />
                     {!field.value ? (
                       <span className="text-xs text-slate-500">

@@ -28,7 +28,7 @@ export default function InviteCard({
   return (
     <>
       {isCreating ? (
-        <div className="w-full rounded-md border-2 border-solid border-secondary p-2">
+        <div className="border-secondary w-full rounded-md border-2 border-solid p-2">
           <InviteForm
             id={invite.id}
             invite={invite.invite}
@@ -39,7 +39,7 @@ export default function InviteCard({
           />
         </div>
       ) : (
-        <div className="flex w-full items-center justify-between max-xs:flex-col max-xs:items-start">
+        <div className="max-xs:flex-col max-xs:items-start flex w-full items-center justify-between">
           <div className="flex items-center gap-4">
             <div className="flex flex-col">
               <h3 className="text-lg font-medium max-sm:text-sm">
@@ -50,7 +50,7 @@ export default function InviteCard({
               </span>
             </div>
           </div>
-          <div className="flex items-center gap-1 max-xs:!w-full max-xs:justify-between">
+          <div className="max-xs:!w-full max-xs:justify-between flex items-center gap-1">
             <div className="flex flex-col">
               <span className="text-sm text-slate-500 max-sm:text-xs">
                 {" "}

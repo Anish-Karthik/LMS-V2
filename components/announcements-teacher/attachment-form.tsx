@@ -56,7 +56,7 @@ export const AttachmentForm = ({ initialData }: AttachmentFormProps) => {
   }
 
   return (
-    <div className="mt-6 rounded-md border bg-secondary p-4">
+    <div className="bg-secondary mt-6 rounded-md border p-4">
       <div className="flex items-center justify-between font-medium">
         Course attachments
         <Button onClick={toggleEdit} variant="ghost">
@@ -122,7 +122,7 @@ export const AttachmentForm = ({ initialData }: AttachmentFormProps) => {
               }
             }}
           />
-          <div className="mt-4 text-xs text-muted-foreground">
+          <div className="text-muted-foreground mt-4 text-xs">
             Add anything your students might need to check out.
           </div>
         </div>

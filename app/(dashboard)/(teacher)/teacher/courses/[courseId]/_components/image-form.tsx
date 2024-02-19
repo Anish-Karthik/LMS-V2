@@ -66,7 +66,7 @@ export const ImageForm = ({ initialData, courseId }: ImageFormProps) => {
       </div>
       {!isEditing &&
         (!initialData.imageUrl ? (
-          <div className="flex h-60 items-center justify-center rounded-md bg-secondary">
+          <div className="bg-secondary flex h-60 items-center justify-center rounded-md">
             <ImageIcon className="h-10 w-10 text-slate-500" />
           </div>
         ) : (
@@ -89,7 +89,7 @@ export const ImageForm = ({ initialData, courseId }: ImageFormProps) => {
               }
             }}
           />
-          <div className="mt-4 text-xs text-muted-foreground">
+          <div className="text-muted-foreground mt-4 text-xs">
             16:9 aspect ratio recommended
           </div>
         </div>

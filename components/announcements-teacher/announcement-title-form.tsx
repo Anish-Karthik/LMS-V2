@@ -58,7 +58,7 @@ export const AnnouncementTitleForm = ({
   }
 
   return (
-    <div className="mt-6 rounded-md border bg-secondary p-4">
+    <div className="bg-secondary mt-6 rounded-md border p-4">
       <div className="flex items-center justify-between font-medium">
         Announcement title
         <Button onClick={toggleEdit} variant="ghost">

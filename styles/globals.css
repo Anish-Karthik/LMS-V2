@@ -50,7 +50,7 @@
     --primary-light-color: rgb(38, 139, 255);
     --primary-dark-color: rgb(0, 107, 230); */
 
-    --pink-color: 325 45.5 78.4;
+    --pink-color: 312.5 38.71 75.69;
     --purple-color: 263 76.2 53.9;
 
     --background-color: 50 50 50; /* black */
@@ -246,4 +246,13 @@ input[type="text"] {
   @apply text-base xs:text-lg sm:text-xl md:text-2xl text-slate-600;
 }
 
-@import "~@uploadthing/react/styles.css"
+h1, h2, h3, h4, h5, h6 {
+  @apply font-orbitron;
+}
+a, button {
+  @apply font-abeezee;
+}
+
+@import "~@uploadthing/react/styles.css";
+@import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400..900&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=ABeeZee:ital@0;1&family=Orbitron&display=swap')

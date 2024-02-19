@@ -44,7 +44,7 @@ export const ConfirmModal = ({
           <AlertDialogCancel>Cancel</AlertDialogCancel>
           <AlertDialogAction
             className={cn(
-              typeDelete && "bg-red-900 text-text-primary hover:bg-red-600"
+              typeDelete && "text-text-primary bg-red-900 hover:bg-red-600"
             )}
             onClick={onConfirm}
           >

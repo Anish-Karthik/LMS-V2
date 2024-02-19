@@ -11,18 +11,18 @@ const ContactUs = ({ className }: { className?: string }) => {
     <footer
       id="contact"
       className={cn(
-        "footer z-10 mt-12 flex w-full flex-col border border-x-transparent border-t-[#33353F] text-background-color",
+        "footer text-background-color z-10 mt-12 flex w-full flex-col border border-x-transparent border-t-[#33353F]",
         className
       )}
     >
       <div className="container flex justify-between gap-2 py-6 sm:px-12">
         <Link
           href={"/"}
-          className="flex items-center text-2xl font-semibold text-background-color md:text-5xl"
+          className="text-background-color flex items-center text-2xl font-semibold md:text-5xl"
         >
           <Image
             src="/images/logo1.png"
-            className="rounded-full zoom-in-75"
+            className="zoom-in-75 rounded-full"
             width={50}
             height={50}
             alt="logo"

@@ -26,7 +26,7 @@ const page = async ({ params }: { params: { courseId: string } }) => {
           <div className="flex items-center justify-between">
             <div className="flex flex-col gap-y-2">
               <h1 className="text-2xl font-medium">Course Details</h1>
-              <span className="text-sm text-primary">Complete all fields</span>
+              <span className="text-primary text-sm">Complete all fields</span>
             </div>
           </div>
         )}

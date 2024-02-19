@@ -45,7 +45,7 @@ const TestimonialCard = ({
   return (
     <Card
       key={description}
-      className={cn("mb-2 border-none bg-secondary", className)}
+      className={cn("bg-secondary mb-2 border-none", className)}
     >
       <CardHeader className="!pb-0">
         <CardTitle className="flex items-center justify-between gap-x-2">
@@ -87,7 +87,7 @@ const TestimonialCard = ({
               className={cn(
                 "rounded-full",
                 typeof avatar === "string" &&
-                  "bg-tertiary-color px-[0.7rem] py-1 text-quaternary-color"
+                  "bg-tertiary-color text-quaternary-color px-[0.7rem] py-1"
               )}
             >
               {avatar}
@@ -95,7 +95,7 @@ const TestimonialCard = ({
           </div>
           <div>
             <div className="font-semibold">{name}</div>
-            <div className="!text-[13px] text-muted-foreground">{title}</div>
+            <div className="text-muted-foreground !text-[13px]">{title}</div>
           </div>
         </div>
       </CardFooter>

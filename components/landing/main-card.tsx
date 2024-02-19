@@ -11,7 +11,7 @@ import ButtonCard from "./button-card"
 const MainCard = () => {
   return (
     <section
-      className="flex w-full flex-col items-center gap-8 bg-tertiary-color/20 px-4 py-24"
+      className="bg-tertiary-color/20 flex w-full flex-col items-center gap-8 px-4 py-24"
       id="hero"
     >
       <HeaderCard />
@@ -21,13 +21,13 @@ const MainCard = () => {
         <Verified size={32} className="text-quaternary-color" />
         <p className="text-xl font-extrabold">
           Up to date:{" "}
-          <span className="ml-2 rounded-md bg-tertiary-color p-2 text-quaternary-color">
+          <span className="bg-tertiary-color text-quaternary-color ml-2 rounded-md p-2">
             {formatDate(new Date())}
           </span>
         </p>
       </div>
       <div className="mt-10 max-w-3xl">
-        <p className="text-center text-2xl text-muted-foreground">
+        <p className="text-muted-foreground text-center text-2xl">
           Read the page if you want every single piece of information. Or just
           scroll to the main details by clicking the button below.
         </p>
@@ -43,7 +43,7 @@ const HeaderCard = () => {
   return (
     // stylish
     <header className="flex flex-col items-center gap-8">
-      <h1 className="text-3xl font-bold text-quaternary-color xs:text-4xl sm:text-5xl md:text-6xl">
+      <h1 className="text-quaternary-color xs:text-4xl text-3xl font-bold sm:text-5xl md:text-6xl">
         <span className="rounded-md bg-gradient-to-r from-green-500 to-blue-500 bg-clip-text text-transparent">
           Learn,{" "}
         </span>
@@ -54,7 +54,7 @@ const HeaderCard = () => {
           Earn
         </span>
       </h1>
-      <h1 className="text-3xl font-extrabold xs:text-4xl sm:text-5xl md:text-6xl">
+      <h1 className="xs:text-4xl text-3xl font-extrabold sm:text-5xl md:text-6xl">
         Smartly with{" "}
         <span className="rounded-md bg-gradient-to-r from-pink-500 to-violet-500 bg-clip-text text-transparent">
           Praglis
@@ -74,7 +74,7 @@ const HeaderCard = () => {
 const ContentCard = () => {
   return (
     <section>
-      <h1 className="my-2 text-center text-lg font-extrabold xs:text-xl md:text-2xl">
+      <h1 className="xs:text-xl my-2 text-center text-lg font-extrabold md:text-2xl">
         From Novice to Ninja: Praglis trading community unlocks your trading
         potential
       </h1>

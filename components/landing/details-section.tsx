@@ -96,7 +96,7 @@ function DetailCard({
   return (
     <div
       className={cn(
-        "2xs:max-w-2xs mx-auto my-12 flex flex-col items-center space-y-5 rounded-lg py-12 max-xl:px-4 max-lg:gap-6 max-lg:text-center xs:max-w-xs sm:max-w-6xl lg:grid lg:grid-cols-2 lg:py-3",
+        "2xs:max-w-2xs xs:max-w-xs mx-auto my-12 flex flex-col items-center space-y-5 rounded-lg py-12 max-xl:px-4 max-lg:gap-6 max-lg:text-center sm:max-w-6xl lg:grid lg:grid-cols-2 lg:py-3",
         className
       )}
     >

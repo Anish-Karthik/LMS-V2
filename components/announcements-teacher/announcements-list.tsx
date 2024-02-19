@@ -49,8 +49,8 @@ export const AnnouncementsList = ({ items }: AnnouncementsListProps) => {
           </div>
 
           <div className="flex items-center justify-normal">
-            <div className="ml-auto flex items-center gap-2 pr-2 max-xs:flex-col max-xs:py-1">
-              <span className="rounded-sm bg-slate-500 p-1 text-xs text-primary">
+            <div className="max-xs:flex-col max-xs:py-1 ml-auto flex items-center gap-2 pr-2">
+              <span className="text-primary rounded-sm bg-slate-500 p-1 text-xs">
                 {announcement.type}
                 {/* {announcement.courseId && announcement.batchId
                   ? "Batch"
@@ -64,7 +64,7 @@ export const AnnouncementsList = ({ items }: AnnouncementsListProps) => {
                 <span className="text-xs text-slate-500">Unpublished</span>
               )}
             </div>
-            <div className="ml-auto flex items-center gap-2 pr-2 max-xs:flex-col max-xs:py-1">
+            <div className="max-xs:flex-col max-xs:py-1 ml-auto flex items-center gap-2 pr-2">
               <Link href={`/teacher/announcements/${announcement.id}`}>
                 <Button variant={"ghost"}>
                   <Pencil className="h-5 w-5" />

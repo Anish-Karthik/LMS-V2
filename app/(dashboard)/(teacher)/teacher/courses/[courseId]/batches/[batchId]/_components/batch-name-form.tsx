@@ -56,7 +56,7 @@ export const BatchNameForm = ({
   }
 
   return (
-    <div className="relative mt-6 rounded-md border bg-secondary p-4">
+    <div className="bg-secondary relative mt-6 rounded-md border p-4">
       {isSubmitting && (
         <div className="absolute inset-0 flex items-center justify-center bg-black/50">
           <div className="flex items-center gap-x-2 rounded-md bg-slate-300 px-4 py-2">

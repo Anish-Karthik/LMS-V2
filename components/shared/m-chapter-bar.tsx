@@ -128,7 +128,7 @@ export default function MobileChapterBar({
                         <Link
                           href={`/student/courses/${courseId}/${topic.type}/${topic.id}`}
                           className={cn(
-                            "flex items-center justify-start gap-2 pl-5 hover:bg-secondary",
+                            "hover:bg-secondary flex items-center justify-start gap-2 pl-5",
                             params.topicId === topic.id && "bg-secondary"
                           )}
                         >

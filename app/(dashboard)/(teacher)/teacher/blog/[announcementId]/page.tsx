@@ -76,7 +76,7 @@ const CreateAnnoucement = async ({
               <ArrowLeft className="mr-2 h-4 w-4" />
               Back to Annoucements
             </Link>
-            <div className="flex w-full items-center justify-between gap-2 max-xs:flex-wrap">
+            <div className="max-xs:flex-wrap flex w-full items-center justify-between gap-2">
               <div className="flex flex-col gap-y-2">
                 <h1 className="text-2xl font-medium">announcement Creation</h1>
                 <span className="text-sm text-slate-700">

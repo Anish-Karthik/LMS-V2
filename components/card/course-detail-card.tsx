@@ -30,7 +30,7 @@ const CourseDetailCard = ({
         value={progress.progress}
         variant={progress.progress === 100 ? "success" : "default"}
       />
-      <p className="text-sm text-text-secondary">{course.description}</p>
+      <p className="text-text-secondary text-sm">{course.description}</p>
     </div>
   )
 }

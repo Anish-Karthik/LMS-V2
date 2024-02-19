@@ -18,7 +18,7 @@ const page = () => {
           filter: "blur(80px)",
         }}
       ></div>
-      <div className="relative z-40 flex h-full w-full flex-col justify-between pt-40 !text-pink-color">
+      <div className="!text-pink-color relative z-40 flex h-full w-full flex-col justify-between pt-40">
         <div className="flex h-full w-full flex-col px-4">
           <div className="socials flex max-w-lg justify-between gap-2">
             {socials.map((social, index) =>

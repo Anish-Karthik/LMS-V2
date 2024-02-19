@@ -46,7 +46,7 @@ const ContactForm = ({ className }: { className?: string }) => {
       <form
         onSubmit={form.handleSubmit(onSubmit)}
         className={cn(
-          "space-y-1 text-pink-color max-sm:!w-full sm:w-[70%] md:w-[60%]",
+          "text-pink-color space-y-1 max-sm:!w-full sm:w-[70%] md:w-[60%]",
           className
         )}
       >
@@ -100,7 +100,7 @@ const ContactForm = ({ className }: { className?: string }) => {
           )}
         />
 
-        <Button className="w-full bg-pink-color" type="submit">
+        <Button className="bg-pink-color w-full" type="submit">
           Submit
         </Button>
       </form>

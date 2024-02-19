@@ -26,7 +26,7 @@ const Sidebar = ({ role }: { role: Trole }) => {
                     key={route.label}
                     href={route.href}
                     className={cn(
-                      "group flex w-full cursor-pointer justify-start rounded-lg p-3 text-sm transition-all duration-200 ease-in-out hover:bg-secondary",
+                      "hover:bg-secondary group flex w-full cursor-pointer justify-start rounded-lg p-3 text-sm transition-all duration-200 ease-in-out",
                       pathname === route.href ? "" : ""
                     )}
                   >

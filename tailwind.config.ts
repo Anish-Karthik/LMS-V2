@@ -1,5 +1,10 @@
-const { fontFamily } = require("tailwindcss/defaultTheme")
-const { withUt } = require("uploadthing/tw");
+// const { fontFamily } = require("tailwindcss/defaultTheme")
+// const { withUt } = require("uploadthing/tw");
+import { fontFamily } from "tailwindcss/defaultTheme"
+import { withUt } from "uploadthing/tw"
+
+// import { fontMono, fontSans, fontSerif } from "./lib/fonts"
+
 /** @type {import('tailwindcss').Config} */
 module.exports = withUt({
   darkMode: ["class"],
@@ -13,16 +18,15 @@ module.exports = withUt({
       },
     },
     extend: {
-      
       colors: {
         border: "hsl(var(--border))",
         input: "hsl(var(--input))",
         ring: "hsl(var(--ring))",
         background: "hsl(var(--background))",
         foreground: "hsl(var(--foreground))",
-        "pink-color": 'hsl(var(--pink-color) / <alpha-value>)',
-        "purple-color": 'hsl(var(--purple-color) / <alpha-value>)',
-        "background-color": 'rgb(var(--background-color) / <alpha-value>)',
+        "pink-color": "hsl(var(--pink-color) / <alpha-value>)",
+        "purple-color": "hsl(var(--purple-color) / <alpha-value>)",
+        "background-color": "rgb(var(--background-color) / <alpha-value>)",
         "text-primary": "rgb(var(--text-primary) / <alpha-value>)",
         "text-secondary": "rgb(var(--text-secondary) / <alpha-value>)",
         "primary-color": "rgb(var(--primary-color) / <alpha-value>)",
@@ -73,15 +77,17 @@ module.exports = withUt({
       },
       fontFamily: {
         sans: ["var(--font-sans)", ...fontFamily.sans],
+        orbitron: ["Orbitron", "sans-serif"],
+        abeezee: ["ABeeZee", "sans-serif"],
       },
       keyframes: {
         "accordion-down": {
-          from: { height: 0 },
+          from: { height: "0" },
           to: { height: "var(--radix-accordion-content-height)" },
         },
         "accordion-up": {
           from: { height: "var(--radix-accordion-content-height)" },
-          to: { height: 0 },
+          to: { height: "0" },
         },
       },
       animation: {
@@ -91,5 +97,4 @@ module.exports = withUt({
     },
   },
   plugins: [require("tailwindcss-animate")],
-});
-
+})

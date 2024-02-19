@@ -1,6 +1,8 @@
+/* eslint-disable @next/next/no-page-custom-font */
 import "@/styles/globals.css"
 import React from "react"
 import { Metadata } from "next"
+import Head from "next/head"
 import { ClerkProvider } from "@clerk/nextjs"
 
 import { siteConfig } from "@/config/site"
@@ -43,10 +45,24 @@ export default function RootLayout({ children }: RootLayoutProps) {
     <ClerkProvider>
       <TRPCProvider>
         <html lang="en" suppressHydrationWarning>
-          <head />
+          <head>
+            <meta charSet="utf-8" />
+            <link rel="preconnect" href="https://fonts.googleapis.com" />
+            <link rel="preconnect" href="https://fonts.gstatic.com" />
+            <link
+              href="https://fonts.googleapis.com/css2?family=Orbitron&display=swap"
+              rel="stylesheet"
+            />
+            <link rel="preconnect" href="https://fonts.googleapis.com" />
+            <link rel="preconnect" href="https://fonts.gstatic.com" />
+            <link
+              href="https://fonts.googleapis.com/css2?family=ABeeZee:ital@0;1&family=Orbitron&display=swap"
+              rel="stylesheet"
+            />
+          </head>
           <body
             className={cn(
-              "min-h-screen bg-background font-sans antialiased",
+              "bg-background min-h-screen font-sans antialiased",
               fontSans.variable
             )}
           >

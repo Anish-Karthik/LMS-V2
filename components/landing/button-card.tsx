@@ -20,7 +20,7 @@ const ButtonCard = ({
         <Button
           variant={"none"}
           size={"lg"}
-          className="shadow-2xl-[red] relative rounded-sm bg-primary-color bg-gradient-to-r from-indigo-500 p-7 text-2xl text-text-primary"
+          className="shadow-2xl-[red] bg-primary-color text-text-primary relative rounded-sm bg-gradient-to-r from-indigo-500 p-7 text-2xl"
         >
           <div className="flex items-center gap-2">
             {text}

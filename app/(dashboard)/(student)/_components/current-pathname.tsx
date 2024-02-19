@@ -23,7 +23,7 @@ const CurrentPathNavigator = ({
   return (
     <div
       className={cn(
-        "flex-start ml-6 mt-4 flex w-fit rounded-sm bg-secondary p-1",
+        "flex-start bg-secondary ml-6 mt-4 flex w-fit rounded-sm p-1",
         className
       )}
     >

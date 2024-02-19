@@ -84,7 +84,7 @@ const UserCard = ({ user, viewer }: UserCardProps) => {
             <h4 className="md:text-md !mr-6 w-fit text-xs font-bold">
               {user.name}
             </h4>
-            <p className="sm:text-md flex items-center justify-center rounded-md bg-text-secondary px-2 text-xs dark:bg-background-color">
+            <p className="sm:text-md bg-text-secondary dark:bg-background-color flex items-center justify-center rounded-md px-2 text-xs">
               {user.role === "user" ? "notEnrolled" : user.role}
             </p>
           </div>

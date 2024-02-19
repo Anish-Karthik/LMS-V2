@@ -3,7 +3,7 @@ import React from "react"
 const DisclaimerSection = () => {
   return (
     <section
-      className="grid items-center gap-40 bg-black py-12 text-text-primary max-xl:px-4"
+      className="text-text-primary grid items-center gap-40 bg-black py-12 max-xl:px-4"
       id="disclaimer"
     >
       <div className="mx-auto max-w-3xl">
@@ -11,7 +11,7 @@ const DisclaimerSection = () => {
           <h1 className="mb-6 text-4xl font-bold">Disclaimer </h1>
         </center>
         <div className="flex flex-col items-center gap-4">
-          <p className="text-center text-xl font-medium text-muted-foreground">
+          <p className="text-muted-foreground text-center text-xl font-medium">
             We do not provide investment advice or recommend specific securities
             or financial instruments to buy or sell, as we are not registered
             with SEBI. Our platform serves as a community space for individuals

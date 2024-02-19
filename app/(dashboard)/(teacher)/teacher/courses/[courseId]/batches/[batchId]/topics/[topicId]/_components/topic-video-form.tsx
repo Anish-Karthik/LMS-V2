@@ -95,13 +95,13 @@ export const TopicVideoForm = ({
             }}
             uploadPreset={process.env.NEXT_PUBLIC_CLOUDINARY_CLOUD_PRESET}
           />
-          <div className="mt-4 text-xs text-muted-foreground">
+          <div className="text-muted-foreground mt-4 text-xs">
             Upload this Topic&apos;s video
           </div>
         </div>
       )}
       {initialData.videoUrl && !isEditing && (
-        <div className="mt-2 text-xs text-muted-foreground">
+        <div className="text-muted-foreground mt-2 text-xs">
           Videos can take a few minutes to process. Refresh the page if video
           does not appear.
         </div>

@@ -23,7 +23,7 @@ const AnnouncementMiniCard = ({
   return (
     <section className="h-full px-4 pt-4">
       <h2 className="text-xl font-bold">Announcements</h2>
-      <div className="flex max-h-full min-h-[14rem] flex-col overflow-y-auto rounded-md bg-background-color p-1">
+      <div className="bg-background-color flex max-h-full min-h-[14rem] flex-col overflow-y-auto rounded-md p-1">
         {announcements.slice(0, 3).map((announcement) => (
           <Link
             href={`/student/announcement/${announcement.id}`}
@@ -31,7 +31,7 @@ const AnnouncementMiniCard = ({
             className="!hover:cursor-pointer flex flex-col rounded-md p-2 hover:opacity-70"
           >
             <div className="flex items-center justify-between gap-1">
-              <h3 className="overflow-hidden text-ellipsis text-text-primary">
+              <h3 className="text-text-primary overflow-hidden text-ellipsis">
                 {announcement?.title}
               </h3>
               <div className="flex justify-end">

@@ -49,7 +49,7 @@ const AnnouncementCategory = ({
     <RecoilRoot>
       <div
         className={cn(
-          "flex w-full flex-wrap justify-start gap-2 pl-2 xs:flex-nowrap"
+          "xs:flex-nowrap flex w-full flex-wrap justify-start gap-2 pl-2"
         )}
       >
         {(type === "course" || type === "batch") && (

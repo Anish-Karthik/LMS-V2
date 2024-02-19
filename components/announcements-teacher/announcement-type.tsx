@@ -107,7 +107,7 @@ function MiddleLine({
   const toggleEdit = () => setIsEditing((current) => !current)
 
   return (
-    <div className="mt-5 flex flex-col gap-2 rounded-md border bg-secondary p-5">
+    <div className="bg-secondary mt-5 flex flex-col gap-2 rounded-md border p-5">
       <div className="-mt-3 flex items-center justify-between font-medium">
         Announcement type
         <Button onClick={toggleEdit} variant="ghost">
@@ -123,7 +123,7 @@ function MiddleLine({
       </div>
       <div
         className={cn(
-          "flex w-full flex-wrap gap-2 xs:flex-nowrap",
+          "xs:flex-nowrap flex w-full flex-wrap gap-2",
           isEditing ? "justify-between" : "justify-start pl-2"
         )}
       >
@@ -136,7 +136,7 @@ function MiddleLine({
             disabled={isSubmitting}
           />
         ) : (
-          <span className="md:text-md rounded-md bg-primary-foreground p-2 text-sm font-medium max-xs:min-w-full">
+          <span className="md:text-md bg-primary-foreground max-xs:min-w-full rounded-md p-2 text-sm font-medium">
             {value}
           </span>
         )}
@@ -294,7 +294,7 @@ function Display({
 }) {
   const value = useRecoilValue(recoilState)
   return (
-    <span className="md:text-md rounded-md bg-primary-foreground p-2 text-sm font-medium max-xs:min-w-full">
+    <span className="md:text-md bg-primary-foreground max-xs:min-w-full rounded-md p-2 text-sm font-medium">
       {items.find((c) => c.id === value)?.title ||
         items.find((c) => c.id === value)?.name}
     </span>

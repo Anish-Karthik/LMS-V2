@@ -11,11 +11,11 @@ const SyllabusSection = ({ url }: { url: string }) => {
           <h1 className="mb-6 text-4xl font-bold">See what you’ll learn </h1>
         </center>
         <div className="flex flex-col gap-4">
-          <p className="text-xl font-medium text-muted-foreground">
+          <p className="text-muted-foreground text-xl font-medium">
             Lorem ipsum dolor sit amet consectetur adipisicing elit. Quisquam,
             quibusdam.
           </p>
-          <p className="text-xl font-medium text-muted-foreground">
+          <p className="text-muted-foreground text-xl font-medium">
             Lorem ipsum dolor sit amet consectetur adipisicing elit. Quisquam,
             quibusdam.
           </p>
@@ -27,7 +27,7 @@ const SyllabusSection = ({ url }: { url: string }) => {
               height={800}
             />
 
-            <p className="text-xl font-medium text-muted-foreground">
+            <p className="text-muted-foreground text-xl font-medium">
               Lorem ipsum dolor sit amet consectetur adipisicing elit. Quisquam,
               quibusdam.
             </p>

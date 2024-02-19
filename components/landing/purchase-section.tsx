@@ -5,7 +5,7 @@ import ButtonCard from "./button-card"
 const PurchaseSection = () => {
   return (
     <section
-      className="-mt-24 grid items-center gap-40 bg-background-color py-12 text-text-primary max-xl:px-4"
+      className="bg-background-color text-text-primary -mt-24 grid items-center gap-40 py-12 max-xl:px-4"
       id="purchase-section"
     >
       <center>

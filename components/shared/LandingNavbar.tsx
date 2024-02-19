@@ -60,7 +60,7 @@ const LandingNavbar = ({
             href={landingRoute.href}
             key={landingRoute.href}
             className={cn(
-              "text-lg text-text-secondary hover:text-blue-400 max-md:hidden",
+              "text-text-secondary text-lg hover:text-blue-400 max-md:hidden",
               pathname === landingRoute.href && "text-blue-500"
             )}
           >

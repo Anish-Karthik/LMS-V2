@@ -37,7 +37,7 @@ const MiniDetailCard = ({
           {detail.heading}
         </h3>
       </div>
-      <p className={cn("text-lg text-text-secondary", descriptionStyle)}>
+      <p className={cn("text-text-secondary text-lg", descriptionStyle)}>
         {detail.description}
       </p>
     </div>

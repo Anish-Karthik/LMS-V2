@@ -19,7 +19,7 @@ const AnnouncementCard = ({
   viewerRole: string
 }) => {
   return (
-    <div className="mx-auto w-full max-w-4xl rounded-md bg-secondary">
+    <div className="bg-secondary mx-auto w-full max-w-4xl rounded-md">
       <div className="max-sh-fit -mb-4 flex flex-wrap justify-between">
         <p className="max-sh-fit rounded-sm p-4 text-xs text-slate-600">
           {/* date */}

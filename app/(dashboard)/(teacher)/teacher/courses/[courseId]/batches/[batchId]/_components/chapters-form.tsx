@@ -113,7 +113,7 @@ export const ChaptersForm = ({
   }
 
   return (
-    <div className="relative mt-6 rounded-md border bg-secondary p-4">
+    <div className="bg-secondary relative mt-6 rounded-md border p-4">
       {isUpdating && (
         <div className="rounded-m absolute right-0 top-0 flex h-full w-full items-center justify-center bg-slate-500/20">
           <Loader2 className="h-6 w-6 animate-spin text-sky-700" />
@@ -186,7 +186,7 @@ export const ChaptersForm = ({
         </div>
       )}
       {!isCreating && !isEditing && (
-        <p className="mt-4 text-xs text-muted-foreground">
+        <p className="text-muted-foreground mt-4 text-xs">
           Drag and drop to reorder the chapters
         </p>
       )}
