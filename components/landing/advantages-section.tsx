@@ -4,6 +4,7 @@ import React, { useRef } from "react"
 import Image from "next/image"
 import { motion, useInView } from "framer-motion"
 
+import { LampContainer } from "../animation/lamp"
 import MiniDetailCard from "../card/mini-detail-card"
 
 const advantages = [
@@ -64,12 +65,17 @@ const AdvantagesSection = () => {
               width={80}
               height={80}
             />
+
             <span>
-              The{" "}
+              <span className="rounded-md bg-gradient-to-r from-orange-500 to-pink-500 bg-clip-text text-transparent">
+                The
+              </span>{" "}
               <span className="rounded-md bg-gradient-to-r from-pink-500 to-violet-500 bg-clip-text text-transparent">
                 Praglis
               </span>{" "}
-              Advantages
+              <span className="rounded-md bg-gradient-to-r from-purple-500 to-indigo-500 bg-clip-text text-transparent">
+                Advantages
+              </span>
             </span>
             <Image
               className="absolute -right-0 z-[-1] translate-y-[-40px] scale-75 opacity-50 max-md:translate-y-[-60px] sm:scale-100"

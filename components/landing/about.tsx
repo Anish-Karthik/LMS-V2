@@ -4,6 +4,8 @@ import Link from "next/link"
 import { Button } from "@/components/ui/button"
 import { LandingHero } from "@/components/shared/LandingHero"
 
+import { BackgroundBeams } from "../animation/background-beams"
+
 const title = "Master the art of Trading"
 const description = `
   your
@@ -22,6 +24,7 @@ const About = ({ href }: { href: string }) => {
       // imageAlternate={<CardStack />}
       className="relative z-40 bg-black pt-40"
     >
+      <BackgroundBeams />
       <div className="flex w-full items-start gap-4">
         <Link href={href}>
           <Button

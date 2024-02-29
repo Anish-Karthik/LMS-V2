@@ -1,17 +1,14 @@
-import React from "react"
 import Image from "next/image"
-import Link from "next/link"
-import { ArrowBigDownIcon, ArrowDownIcon, Verified } from "lucide-react"
+import { Verified } from "lucide-react"
 
 import { formatDate } from "@/lib/format"
 
-import { Button } from "../ui/button"
 import ButtonCard from "./button-card"
 
 const MainCard = () => {
   return (
     <section
-      className="flex w-full flex-col items-center gap-8 bg-black px-4 py-24"
+      className="flex w-full flex-col items-center gap-8 bg-transparent px-4 py-24"
       id="hero"
     >
       <HeaderCard />
@@ -19,12 +16,12 @@ const MainCard = () => {
       {/* <BodyCard /> */}
       <div className="flex items-center gap-2">
         <Verified size={32} className="text-quaternary-color" />
-        <p className="text-xl font-extrabold">
+        {/* <p className="text-xl font-extrabold">
           Up to date:{" "}
           <span className="bg-tertiary-color text-quaternary-color ml-2 rounded-md p-2">
             {formatDate(new Date())}
           </span>
-        </p>
+        </p> */}
       </div>
       <div className="mt-10 max-w-3xl">
         <p className="text-muted-foreground text-center text-2xl">

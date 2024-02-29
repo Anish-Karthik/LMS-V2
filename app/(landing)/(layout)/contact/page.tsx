@@ -1,6 +1,7 @@
 import Link from "next/link"
 
 import { socials } from "@/lib/socials"
+import { BackgroundBeams } from "@/components/animation/background-beams"
 import ContactForm from "@/components/form/ContactForm"
 import ContactUs from "@/components/landing/contact-us"
 
@@ -18,6 +19,7 @@ const page = () => {
           filter: "blur(80px)",
         }}
       ></div> */}
+      <BackgroundBeams />
       <div className="!text-pink-color relative z-40 flex h-full w-full max-w-2xl flex-col justify-between pt-40">
         <div className="flex h-full w-full flex-col px-4 lg:ml-24">
           <div className="socials flex max-w-lg justify-start gap-4">

@@ -4,6 +4,7 @@ import { currentUser } from "@clerk/nextjs"
 import { getCourses } from "@/lib/actions/course.actions"
 import { acceptInvite } from "@/lib/actions/invite.action"
 import { getUser } from "@/lib/actions/user.actions"
+import { WavyBackground } from "@/components/animation/wavy-background"
 import About from "@/components/landing/about"
 import AdvantagesSection from "@/components/landing/advantages-section"
 import ContactUs from "@/components/landing/contact-us"
@@ -46,7 +47,9 @@ const page = async ({
       {/* <Banner variant="success" label="You already completed this topic." /> */}
 
       <section className="mt-20 grid w-full items-center ">
-        <MainCard />
+        <WavyBackground>
+          <MainCard />
+        </WavyBackground>
         <About href={`/purchase/${courseId}?promo=${searchParams.promo}`} />
         <ReasonsSection />
         <AdvantagesSection />

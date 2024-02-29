@@ -9,7 +9,7 @@ import { UserButton, useAuth } from "@clerk/nextjs"
 import { Course } from "@prisma/client"
 
 import { cn } from "@/lib/utils"
-import { Button } from "@/components/ui/button"
+import { Button } from "@/components/animation/moving-border"
 import { landingRoutes } from "@/app/constants"
 
 import { ThemeToggle } from "../theme-toggle"
@@ -89,7 +89,7 @@ const LandingNavbar = ({
                 : route ?? `/purchase${queryString}`
             }
           >
-            <Button variant="outline" className="rounded-full">
+            <Button containerClassName="!h-11 !max-h-11">
               {pathname.includes("purchase") ? "Purchase Now" : "Get Started"}
             </Button>
           </Link>
