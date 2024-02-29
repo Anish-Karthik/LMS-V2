@@ -47,7 +47,7 @@ const page = async ({
       {/* <Banner variant="success" label="You already completed this topic." /> */}
 
       <section className="mt-20 grid w-full items-center ">
-        <WavyBackground>
+        <WavyBackground containerClassName="flex w-full flex-col items-center gap-8 bg-transparent px-4 py-24">
           <MainCard />
         </WavyBackground>
         <About href={`/purchase/${courseId}?promo=${searchParams.promo}`} />

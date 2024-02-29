@@ -11,6 +11,8 @@ import {
   CardItem,
 } from "@/components/animation/3d-card"
 
+import { BackgroundGradient } from "../animation/background-gradient"
+
 const MiniDetailCard = ({
   isInView,
   delay,
@@ -42,38 +44,45 @@ const MiniDetailCard = ({
       transition={{ duration: 0.3, delay }}
       className="h-full"
     >
-      <CardContainer containerClassName={cn("!h-full", backgroundStyle)}>
-        {" "}
-        <CardBody className="group/card relative !h-full  w-full rounded-xl border border-black/[0.1] bg-gray-50 p-6 dark:border-white/[0.2] dark:bg-black dark:hover:shadow-2xl dark:hover:shadow-emerald-500/[0.1]">
-          <div className="flex flex-col items-center gap-4">
-            <CardItem translateZ="120" className="mt-4 w-full">
-              <Image
-                className="mx-auto text-white"
-                src={detail.image}
-                alt="landing-image-1"
-                width={80}
-                height={80}
-              />
-            </CardItem>
+      <BackgroundGradient
+        className="!h-full max-w-sm rounded-[22px] bg-white dark:bg-zinc-900"
+        containerClassName="!h-full"
+      >
+        <CardContainer containerClassName={cn("!h-full rounded-[22px]")}>
+          {" "}
+          <CardBody className="group/card relative !h-full  w-full rounded-[22px] border border-black/[0.1] bg-gray-50 p-6 dark:border-white/[0.2] dark:bg-black dark:hover:shadow-2xl dark:hover:shadow-emerald-500/[0.1]">
+            <div className="flex flex-col items-center gap-4">
+              <CardItem translateZ="120" className="mt-4 w-full">
+                <Image
+                  className="mx-auto text-white"
+                  src={detail.image}
+                  alt="landing-image-1"
+                  width={80}
+                  height={80}
+                />
+              </CardItem>
+              <CardItem
+                translateZ="110"
+                className="text-xl font-bold text-neutral-600 dark:text-white"
+              >
+                <h3 className={cn("text-xl font-semibold", headingStyle)}>
+                  {detail.heading}
+                </h3>
+              </CardItem>
+            </div>
             <CardItem
-              translateZ="110"
+              translateZ="80"
               className="text-xl font-bold text-neutral-600 dark:text-white"
             >
-              <h3 className={cn("text-xl font-semibold", headingStyle)}>
-                {detail.heading}
-              </h3>
+              <p
+                className={cn("text-text-secondary text-lg", descriptionStyle)}
+              >
+                {detail.description}
+              </p>
             </CardItem>
-          </div>
-          <CardItem
-            translateZ="80"
-            className="text-xl font-bold text-neutral-600 dark:text-white"
-          >
-            <p className={cn("text-text-secondary text-lg", descriptionStyle)}>
-              {detail.description}
-            </p>
-          </CardItem>
-        </CardBody>
-      </CardContainer>
+          </CardBody>
+        </CardContainer>
+      </BackgroundGradient>
     </motion.div>
   )
 }

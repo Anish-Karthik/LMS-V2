@@ -3,6 +3,10 @@ import { Verified } from "lucide-react"
 
 import { formatDate } from "@/lib/format"
 
+import {
+  TypewriterEffect,
+  TypewriterEffectSmooth,
+} from "../animation/typewriter-effect"
 import ButtonCard from "./button-card"
 
 const MainCard = () => {
@@ -15,7 +19,7 @@ const MainCard = () => {
       <ContentCard />
       {/* <BodyCard /> */}
       <div className="flex items-center gap-2">
-        <Verified size={32} className="text-quaternary-color" />
+        {/* <Verified size={32} className="text-quaternary-color" /> */}
         {/* <p className="text-xl font-extrabold">
           Up to date:{" "}
           <span className="bg-tertiary-color text-quaternary-color ml-2 rounded-md p-2">
@@ -36,12 +40,34 @@ const MainCard = () => {
 
 export default MainCard
 
+const words = [
+  {
+    text: "Learn,",
+    className:
+      "bg-gradient-to-r from-green-500 to-blue-500 bg-clip-text text-transparent xs:text-4xl text-3xl font-bold sm:text-5xl md:text-6xl",
+  },
+  {
+    text: "Trade,",
+    className:
+      "bg-gradient-to-r from-red-500 to-pink-500 bg-clip-text text-transparent xs:text-4xl text-3xl font-bold sm:text-5xl md:text-6xl",
+  },
+  {
+    text: "Earn",
+    className:
+      "bg-gradient-to-r from-yellow-500 to-yellow-800 bg-clip-text text-transparent xs:text-4xl text-3xl font-bold sm:text-5xl md:text-6xl",
+  },
+]
+
 const HeaderCard = () => {
   return (
     // stylish
     <header className="flex flex-col items-center gap-8">
       <h1 className="text-quaternary-color xs:text-4xl text-3xl font-bold sm:text-5xl md:text-6xl">
-        <span className="rounded-md bg-gradient-to-r from-green-500 to-blue-500 bg-clip-text text-transparent">
+        <TypewriterEffect
+          words={words}
+          cursorClassName="xs:h-8 sm:h-10 md:h-12 lg:h-13 text-purple-color bg-pink-color -mb-1"
+        />
+        {/* <span className="rounded-md bg-gradient-to-r from-green-500 to-blue-500 bg-clip-text text-transparent">
           Learn,{" "}
         </span>
         <span className="rounded-md bg-gradient-to-r from-red-500 to-pink-500 bg-clip-text text-transparent">
@@ -49,7 +75,7 @@ const HeaderCard = () => {
         </span>
         <span className="rounded-md bg-gradient-to-r from-yellow-500 to-yellow-800 bg-clip-text text-transparent">
           Earn
-        </span>
+        </span> */}
       </h1>
       <h1 className="xs:text-4xl text-3xl font-extrabold sm:text-5xl md:text-6xl">
         Smartly with{" "}
@@ -57,13 +83,13 @@ const HeaderCard = () => {
           Praglis
         </span>
       </h1>
-      {/* <h1 className="max-w-4xl text-5xl font-extrabold">
-        Become a{" "}  
+      <h1 className="max-w-4xl text-5xl font-extrabold">
+        {/* Become a{" "}
         <span className="bg-gradient-to-r from-text-secondary to-tertiary-color bg-clip-text text-transparent">
-          Trading Expert 
+          Trading Expert
         </span>{" "}
-        in only one course Trading Community
-      </h1> */}
+        in only one course Trading Community */}
+      </h1>
     </header>
   )
 }
