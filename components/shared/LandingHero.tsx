@@ -22,17 +22,22 @@ export const LandingHero = ({
   className?: string
 }) => {
   const ref = useRef(null)
-  const isInView = useInView(ref, { once: true })
+  const isInView = useInView(ref, {})
   const cardVariants = {
     initial: { y: 50, opacity: 0 },
     animate: { y: 0, opacity: 1 },
   }
   return (
     <section className={cn("w-full py-20", className)}>
-      <div className="mx-auto flex max-w-7xl flex-col items-center space-y-5 py-3 max-lg:gap-6 lg:grid lg:grid-cols-2">
+      <div className="mx-auto flex max-w-7xl flex-col items-center space-y-5 py-3 max-lg:gap-6 lg:flex-row">
         <div
-          className="flex flex-col items-start justify-center gap-6 max-lg:mx-4 max-lg:max-w-xl max-sm:mx-16 max-sm:w-[90vw] md:px-5 lg:pl-6"
+          className="flex flex-1 flex-col items-start justify-center gap-6 max-lg:mx-4 max-lg:max-w-xl max-sm:mx-16 max-sm:w-[90vw] md:px-5 lg:pl-6"
           ref={ref}
+          style={{
+            flex: 1.5,
+            flexGrow: 1.5,
+            flexShrink: 0,
+          }}
         >
           <div>
             <motion.div
@@ -50,7 +55,7 @@ export const LandingHero = ({
             variants={cardVariants}
             initial="initial"
             animate={isInView ? "animate" : "initial"}
-            transition={{ duration: 0.3, delay: 2 * 0.2 }}
+            transition={{ duration: 0.3, delay: 1 * 0.2 }}
           >
             <p className="text-md text-slate-400">{description}</p>
           </motion.div>
@@ -59,18 +64,20 @@ export const LandingHero = ({
             variants={cardVariants}
             initial="initial"
             animate={isInView ? "animate" : "initial"}
-            transition={{ duration: 0.3, delay: 4 * 0.2 }}
+            transition={{ duration: 0.3, delay: 3 * 0.2 }}
           >
             {children}
           </motion.div>
         </div>
-        {imageAlternate ? (
-          imageAlternate
-        ) : (
-          <div className="max-lg:mx-4 max-lg:hidden max-sm:mx-16">
-            <Image src={image} alt="hero" width={500} height={500} />
-          </div>
-        )}
+        <div className="flex-1">
+          {imageAlternate ? (
+            imageAlternate
+          ) : (
+            <div className="max-lg:mx-4 max-lg:hidden max-sm:mx-16">
+              <Image src={image} alt="hero" width={500} height={500} />
+            </div>
+          )}
+        </div>
       </div>
     </section>
   )

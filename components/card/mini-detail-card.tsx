@@ -1,14 +1,21 @@
+"use client"
+
 import React from "react"
 import Image from "next/image"
+import { motion } from "framer-motion"
 
 import { cn } from "@/lib/utils"
 
 const MiniDetailCard = ({
+  isInView,
+  delay,
   detail,
   headingStyle = "text-secondary-color",
   descriptionStyle = "text-text-secondary",
   backgroundStyle = "bg-tertiary-color/40",
 }: {
+  isInView: boolean
+  delay: number
   headingStyle?: string
   descriptionStyle?: string
   backgroundStyle?: string
@@ -18,8 +25,16 @@ const MiniDetailCard = ({
     image: string
   }
 }) => {
+  const cardVariants = {
+    initial: { y: 50, opacity: 0 },
+    animate: { y: 0, opacity: 1 },
+  }
   return (
-    <div
+    <motion.div
+      variants={cardVariants}
+      initial="initial"
+      animate={isInView ? "animate" : "initial"}
+      transition={{ duration: 0.3, delay }}
       className={cn(
         "flex h-full flex-col items-center gap-4 rounded-lg p-6 shadow-md",
         backgroundStyle
@@ -40,7 +55,7 @@ const MiniDetailCard = ({
       <p className={cn("text-text-secondary text-lg", descriptionStyle)}>
         {detail.description}
       </p>
-    </div>
+    </motion.div>
   )
 }
 

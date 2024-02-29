@@ -1,5 +1,8 @@
-import React from "react"
+"use client"
+
+import React, { useRef } from "react"
 import Image from "next/image"
+import { motion, useInView } from "framer-motion"
 
 import MiniDetailCard from "../card/mini-detail-card"
 
@@ -43,9 +46,12 @@ const advantages = [
 ]
 
 const AdvantagesSection = () => {
+  const ref = useRef(null)
+  const isInView = useInView(ref, {})
+
   return (
     <section
-      className="bg-background-color/30 flex flex-col items-center py-16 max-xl:px-4"
+      className="flex flex-col items-center bg-black py-16 max-xl:px-4"
       id="benefits"
     >
       <div className="max-w-3xl">
@@ -59,8 +65,11 @@ const AdvantagesSection = () => {
               height={80}
             />
             <span>
-              6 reasons why you need a trading community to master the art of
-              Trading
+              The{" "}
+              <span className="rounded-md bg-gradient-to-r from-pink-500 to-violet-500 bg-clip-text text-transparent">
+                Praglis
+              </span>{" "}
+              Advantages
             </span>
             <Image
               className="absolute -right-0 z-[-1] translate-y-[-40px] scale-75 opacity-50 max-md:translate-y-[-60px] sm:scale-100"
@@ -73,9 +82,17 @@ const AdvantagesSection = () => {
         </center>
       </div>
       <div className="max-w-6xl">
-        <div className="max-xs:px-1 grid items-center gap-10 max-sm:px-20 sm:grid-cols-2 lg:grid-cols-3">
+        <div
+          className="max-xs:px-1 grid items-center gap-10 max-sm:px-20 sm:grid-cols-2 lg:grid-cols-3"
+          ref={ref}
+        >
           {advantages.map((advantage, index) => (
-            <MiniDetailCard detail={advantage} key={index} />
+            <MiniDetailCard
+              detail={advantage}
+              key={index}
+              isInView={isInView}
+              delay={index * 0.2}
+            />
           ))}
         </div>
       </div>

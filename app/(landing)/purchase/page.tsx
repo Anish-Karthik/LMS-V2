@@ -13,6 +13,7 @@ import MainCard from "@/components/landing/main-card"
 import PurchaseSection from "@/components/landing/purchase-section"
 import ReasonsSection from "@/components/landing/reasons-section"
 import ReviewsSection from "@/components/landing/review-section"
+import AdvantagesSection from "@/components/landing/advantages-section"
 
 const page = async ({
   searchParams,
@@ -48,6 +49,7 @@ const page = async ({
         <MainCard />
         <About href={`/purchase/${courseId}?promo=${searchParams.promo}`} />
         <ReasonsSection />
+        <AdvantagesSection />
         <div className="w-full bg-black">
           <div className="mx-auto max-w-[80%] bg-black">
             <DetailsSection courseId={courseId} />

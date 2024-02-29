@@ -1,5 +1,8 @@
-import React from "react"
+"use client"
+
+import React, { useRef } from "react"
 import Image from "next/image"
+import { useInView } from "framer-motion"
 
 import MiniDetailCard from "../card/mini-detail-card"
 
@@ -43,6 +46,8 @@ const reasons = [
 ]
 
 const ReasonsSection = () => {
+  const ref = useRef(null)
+  const isInView = useInView(ref, {})
   return (
     <section
       className="flex flex-col items-center bg-black py-16 max-xl:px-4"
@@ -73,12 +78,16 @@ const ReasonsSection = () => {
         </center>
       </div>
       <div className="max-w-6xl">
-        <div className="max-xs:px-1 grid items-center gap-10 max-sm:px-20 sm:grid-cols-2 lg:grid-cols-3">
+        <div
+          className="max-xs:px-1 grid items-center gap-10 max-sm:px-20 sm:grid-cols-2 lg:grid-cols-3"
+          ref={ref}
+        >
           {reasons.map((reason, index) => (
             <MiniDetailCard
-              key={index}
               detail={reason}
-              backgroundStyle={"bg-background-color/40"}
+              key={index + 6}
+              isInView={isInView}
+              delay={index * 0.2}
             />
           ))}
         </div>
