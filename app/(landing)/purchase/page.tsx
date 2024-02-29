@@ -5,6 +5,7 @@ import { getCourses } from "@/lib/actions/course.actions"
 import { acceptInvite } from "@/lib/actions/invite.action"
 import { getUser } from "@/lib/actions/user.actions"
 import About from "@/components/landing/about"
+import AdvantagesSection from "@/components/landing/advantages-section"
 import ContactUs from "@/components/landing/contact-us"
 import DetailsSection from "@/components/landing/details-section"
 import DisclaimerSection from "@/components/landing/disclaimer-section"
@@ -13,7 +14,6 @@ import MainCard from "@/components/landing/main-card"
 import PurchaseSection from "@/components/landing/purchase-section"
 import ReasonsSection from "@/components/landing/reasons-section"
 import ReviewsSection from "@/components/landing/review-section"
-import AdvantagesSection from "@/components/landing/advantages-section"
 
 const page = async ({
   searchParams,
