@@ -63,9 +63,9 @@ const HeaderCard = () => {
     // stylish
     <header className="flex flex-col items-center gap-8">
       <h1 className="text-quaternary-color xs:text-4xl text-3xl font-bold sm:text-5xl md:text-6xl">
-        <TypewriterEffect
+        <TypewriterEffectSmooth
           words={words}
-          cursorClassName="xs:h-8 sm:h-10 md:h-12 lg:h-13 text-purple-color bg-pink-color -mb-1"
+          cursorClassName="xs:h-8 sm:h-10 md:h-12 lg:h-13 text-purple-color bg-pink-color mt-[0.4rem]"
         />
         {/* <span className="rounded-md bg-gradient-to-r from-green-500 to-blue-500 bg-clip-text text-transparent">
           Learn,{" "}

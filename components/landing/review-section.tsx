@@ -1511,7 +1511,7 @@ const ReviewsSection = () => {
             <VideoPlayerLanding url="https://youtu.be/SO8lBVWF2Y8?si=aafhnkzdHhVy6_7f" />
           </div>
           <div className="mx-auto max-w-3xl gap-x-2">
-            <div className="grid w-full gap-x-2 lg:grid-cols-2">
+            <div className="grid w-full gap-3 gap-x-4 lg:grid-cols-2">
               {testimonials1.map((item) => (
                 <TestimonialCard {...item} key={item.description} />
               ))}
