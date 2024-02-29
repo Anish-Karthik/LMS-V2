@@ -46,8 +46,8 @@ const JoinOrLeave = ({
   onActionCallback,
   action,
 }: props) => {
-  const pathname = usePathname()
-  const router = useRouter()
+  const pathname = usePathname()!
+  const router = useRouter()!
   const [isSubmiting, setIsSubmiting] = useState(false)
   const [value, setValue] = useState<TAction>(action)
 

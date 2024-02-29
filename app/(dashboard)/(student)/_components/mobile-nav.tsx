@@ -6,7 +6,7 @@ import { usePathname } from "next/navigation"
 import { sidebarLinksStudentMobile } from "@/app/constants"
 
 function MobileNav() {
-  const pathname = usePathname()
+  const pathname = usePathname()!
   return (
     <section className="bottombar sm:hidden">
       <div className="bottombar_container grid grid-cols-4">

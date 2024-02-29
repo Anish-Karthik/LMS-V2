@@ -23,8 +23,8 @@ export function CalendarDateRangePicker({
     from: new Date(new Date().getFullYear(), 0, 1),
     to: new Date(),
   })
-  const router = useRouter()
-  const pathname = usePathname()
+  const router = useRouter()!
+  const pathname = usePathname()!
   useEffect(() => {
     const url = qs.stringifyUrl(
       {

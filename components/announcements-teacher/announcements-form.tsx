@@ -36,9 +36,9 @@ const formSchema = z.object({
 export const AnnouncementsForm = ({ initialData }: AnnouncementsFormProps) => {
   const [isCreating, setIsCreating] = useState(false)
   const [isUpdating, setIsUpdating] = useState(false)
-  const router = useRouter()
-  const searchParams = useSearchParams()
-  const pathname = usePathname()
+  const router = useRouter()!
+  const searchParams = useSearchParams()!
+  const pathname = usePathname()!
   const { userId } = useAuth()
   useEffect(() => {
     // clear search params

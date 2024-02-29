@@ -49,8 +49,8 @@ export const ChaptersList = ({
   const [isMounted, setIsMounted] = useState(false)
   const [chapters, setChapters] = useState(items)
   const [isLoading, setIsLoading] = useState(false)
-  const pathname = usePathname()
-  const router = useRouter()
+  const pathname = usePathname()!
+  const router = useRouter()!
   useEffect(() => {
     setIsMounted(true)
   }, [])

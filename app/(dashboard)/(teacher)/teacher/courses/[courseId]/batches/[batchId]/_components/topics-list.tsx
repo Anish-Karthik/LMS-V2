@@ -22,7 +22,7 @@ interface TopicsListProps {
 export const TopicsList = ({ items, onReorder, onEdit }: TopicsListProps) => {
   const [isMounted, setIsMounted] = useState(false)
   const [topics, setTopics] = useState(items)
-  const pathname = usePathname()
+  const pathname = usePathname()!
   useEffect(() => {
     setIsMounted(true)
   }, [])

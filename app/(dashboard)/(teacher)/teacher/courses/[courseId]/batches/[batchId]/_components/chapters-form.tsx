@@ -53,7 +53,7 @@ export const ChaptersForm = ({
     setIsCreating((current) => !current)
   }
 
-  const router = useRouter()
+  const router = useRouter()!
 
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),

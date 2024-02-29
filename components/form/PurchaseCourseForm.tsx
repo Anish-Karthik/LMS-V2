@@ -60,7 +60,7 @@ const PurchaseCourseForm = ({
   const [value, setValue] = useState("")
   const [promo, setPromo] = useState<Promo | undefined>(promoObj)
   const [continueState, setContinueState] = useState("Continue without promo")
-  const router = useRouter()
+  const router = useRouter()!
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {

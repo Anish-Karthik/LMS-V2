@@ -19,7 +19,7 @@ interface AnnouncementsListProps {
 export const AnnouncementsList = ({ items }: AnnouncementsListProps) => {
   const [isMounted, setIsMounted] = useState(false)
   const [announcements, setAnnouncements] = useState(items)
-  const router = useRouter()
+  const router = useRouter()!
 
   useEffect(() => {
     setIsMounted(true)

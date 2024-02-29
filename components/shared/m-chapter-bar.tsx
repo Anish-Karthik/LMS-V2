@@ -48,7 +48,7 @@ export default function MobileChapterBar({
   courseId: string
   userId: string
 }) {
-  const params = useParams()
+  const params = useParams()!
   return (
     <Sheet>
       <SheetTrigger asChild>

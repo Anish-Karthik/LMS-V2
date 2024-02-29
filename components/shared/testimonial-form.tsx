@@ -53,7 +53,7 @@ const TestimonialForm = ({
   id?: string
 }) => {
   const [isEditing, setIsEditing] = React.useState(edit)
-  const router = useRouter()
+  const router = useRouter()!
   const { userId } = useAuth()
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),

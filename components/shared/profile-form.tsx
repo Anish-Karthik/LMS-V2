@@ -99,7 +99,7 @@ export function ProfileForm({
   const [files, setFiles] = useState<File[]>([])
   const { startUpload } = useUploadThing("media")
   const { userId } = useAuth()
-  const router = useRouter()
+  const router = useRouter()!
   const updateUser = trpc.user.update.useMutation()
 
   const defaultValues: Partial<ProfileFormValues> = {

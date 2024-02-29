@@ -35,7 +35,7 @@ export const AnnouncementTitleForm = ({
 
   const toggleEdit = () => setIsEditing((current) => !current)
 
-  const router = useRouter()
+  const router = useRouter()!
 
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),

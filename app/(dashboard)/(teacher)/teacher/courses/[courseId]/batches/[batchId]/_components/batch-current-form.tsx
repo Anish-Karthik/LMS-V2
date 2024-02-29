@@ -39,7 +39,7 @@ export const BatchCurrentForm = ({
   courseId: string
 }) => {
   const [isEditing, setIsEditing] = useState(false)
-  const router = useRouter()
+  const router = useRouter()!
   const toggleEdit = () => setIsEditing((current) => !current)
 
   const form = useForm<z.infer<typeof formSchema>>({

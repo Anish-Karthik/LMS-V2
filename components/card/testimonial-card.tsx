@@ -41,7 +41,7 @@ const TestimonialCard = ({
   userInfo?: (User & { testimonials: Testimonial[] }) | null
 }) => {
   const { userId } = useAuth()
-  const router = useRouter()
+  const router = useRouter()!
   return (
     <Card
       key={description}

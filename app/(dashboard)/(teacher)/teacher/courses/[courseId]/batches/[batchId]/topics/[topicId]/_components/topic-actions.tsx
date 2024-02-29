@@ -28,7 +28,7 @@ export const TopicActions = ({
   courseId,
   isPublished,
 }: TopicActionsProps) => {
-  const router = useRouter()
+  const router = useRouter()!
   const [isLoading, setIsLoading] = useState(false)
 
   const onClick = async () => {

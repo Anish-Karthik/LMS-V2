@@ -46,8 +46,8 @@ export const TopicsForm = ({
   const toggleCreating = () => {
     setIsCreating((current) => !current)
   }
-  const pathname = usePathname()
-  const router = useRouter()
+  const pathname = usePathname()!
+  const router = useRouter()!
 
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),

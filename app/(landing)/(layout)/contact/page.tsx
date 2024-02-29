@@ -10,17 +10,17 @@ const image = "/landing/about.png"
 const page = () => {
   return (
     <section className="h-full w-full bg-black">
-      <div
+      {/* <div
         className="fixed bottom-[-130%] left-[10%] mx-auto h-[80rem] w-[80rem] rounded-full bg-gradient-to-br"
         style={{
           background:
             "radial-gradient(closest-side, #fff 40%, hsl(263 76.2 53.9))",
           filter: "blur(80px)",
         }}
-      ></div>
-      <div className="!text-pink-color relative z-40 flex h-full w-full flex-col justify-between pt-40">
-        <div className="flex h-full w-full flex-col px-4">
-          <div className="socials flex max-w-lg justify-between gap-2">
+      ></div> */}
+      <div className="!text-pink-color relative z-40 flex h-full w-full max-w-2xl flex-col justify-between pt-40">
+        <div className="flex h-full w-full flex-col px-4 lg:ml-24">
+          <div className="socials flex max-w-lg justify-start gap-4">
             {socials.map((social, index) =>
               ["Mail Me", "Phone"].includes(social.title) ? null : (
                 <div className="flex justify-between" key={index}>

@@ -22,7 +22,7 @@ export const CourseProgressButton = ({
   isCompleted,
   nextChapterId,
 }: CourseProgressButtonProps) => {
-  const router = useRouter()
+  const router = useRouter()!
   const confetti = useConfettiStore()
   const [isLoading, setIsLoading] = useState(false)
 

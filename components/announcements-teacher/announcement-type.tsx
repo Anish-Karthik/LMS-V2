@@ -194,7 +194,7 @@ function CustomSelectItems({
   const type = useRecoilValue(announcementTypeState)
   const pathname = usePathname()!
   const searchParams = useSearchParams()!
-  const router = useRouter()
+  const router = useRouter()!
   const handleChange = (val: string) => {
     setValue(val)
     toast.success(`Filtering by ${value}`)
@@ -257,7 +257,7 @@ function SumbitButton({
   const batch = useRecoilValue(batchIdState)
   const course = useRecoilValue(courseIdState)
   const value = useRecoilValue(announcementTypeState)
-  const router = useRouter()
+  const router = useRouter()!
   const onSubmit = async () => {
     setIsSubmitting(true)
     try {

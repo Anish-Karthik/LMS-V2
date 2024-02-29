@@ -62,7 +62,7 @@ const CourseEnrollButton = ({
       batch: batches.find((batch) => batch.isCurrent)?.id.toString(),
     },
   })
-  const router = useRouter()
+  const router = useRouter()!
   const price = useMemo(
     () =>
       Math.floor(

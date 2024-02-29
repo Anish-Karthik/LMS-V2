@@ -28,7 +28,7 @@ export const AnnouncementActions = ({
   courseId,
   isPublished,
 }: AnnouncementActionsProps) => {
-  const router = useRouter()
+  const router = useRouter()!
   const [isLoading, setIsLoading] = useState(false)
 
   const onClick = async () => {

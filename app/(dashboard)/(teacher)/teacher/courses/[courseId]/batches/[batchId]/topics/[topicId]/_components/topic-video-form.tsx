@@ -29,7 +29,7 @@ export const TopicVideoForm = ({
 }: TopicVideoFormProps) => {
   const [isEditing, setIsEditing] = useState(false)
   const [isMounted, setIsMounted] = useState(false)
-  const router = useRouter()
+  const router = useRouter()!
   useEffect(() => {
     setIsMounted(true)
   }, [])

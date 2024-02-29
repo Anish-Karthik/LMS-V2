@@ -17,7 +17,7 @@ interface UserCardProps {
 }
 
 const UserCard = ({ id, userId, name, username, image }: UserCardProps) => {
-  const router = useRouter()
+  const router = useRouter()!
 
   return (
     <article className="user-card">

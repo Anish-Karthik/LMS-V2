@@ -29,7 +29,7 @@ export const AttachmentForm = ({ initialData }: AttachmentFormProps) => {
 
   const toggleEdit = () => setIsEditing((current) => !current)
 
-  const router = useRouter()
+  const router = useRouter()!
 
   const onSubmit = async (values: z.infer<typeof formSchema>) => {
     try {

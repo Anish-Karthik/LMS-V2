@@ -97,7 +97,7 @@ function CustomSelectItems({
   }
 
   const searchParams = useSearchParams()!
-  const router = useRouter()
+  const router = useRouter()!
   const pathname = usePathname()!
   useEffect(() => {
     if (type === "general") {

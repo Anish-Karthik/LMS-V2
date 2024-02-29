@@ -19,7 +19,7 @@ import { landingRoutes } from "@/app/constants"
 import { Separator } from "../ui/separator"
 
 const LandingNavbarMobile = () => {
-  const pathname = usePathname()
+  const pathname = usePathname()!
   return (
     <Sheet>
       <SheetTrigger asChild className="!max-w-xs md:hidden">

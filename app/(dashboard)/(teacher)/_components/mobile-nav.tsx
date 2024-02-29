@@ -8,8 +8,8 @@ import { sidebarLinksTeacherMobile } from "@/app/constants"
 
 function MobileNav({ isAdmin = false }: { isAdmin?: boolean }) {
   // const { userId } = useAuth()
-  // const router = useRouter()
-  const pathname = usePathname()
+  // const router = useRouter()!
+  const pathname = usePathname()!
   return (
     <section className="bottombar">
       <div

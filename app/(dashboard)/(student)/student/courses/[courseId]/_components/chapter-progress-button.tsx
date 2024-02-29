@@ -28,7 +28,7 @@ export const ChapterProgressButton = ({
   nextTopicType,
   userId,
 }: ChapterProgressButtonProps) => {
-  const router = useRouter()
+  const router = useRouter()!
   const confetti = useConfettiStore()
   const [isLoading, setIsLoading] = useState(false)
   const [isMounted, setIsMounted] = useState(false)

@@ -74,7 +74,7 @@ export function InviteForm({
   setIsCreating: (val: boolean) => void
 }) {
   const { userId } = useAuth()
-  const router = useRouter()
+  const router = useRouter()!
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {

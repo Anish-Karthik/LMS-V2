@@ -31,7 +31,7 @@ export default function ChapterBar({
   courseId: string
   userId: string
 }) {
-  const params = useParams()
+  const params = useParams()!
 
   return (
     <ScrollArea className="hidden w-64 rounded-md border md:block">

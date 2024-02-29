@@ -86,7 +86,7 @@ export function PromoForm({
   const setPromos = useSetRecoilState(promosState)
   const { userId } = useAuth()
   const schema = type == "edit" ? formSchemaEdit : formSchema
-  const router = useRouter()
+  const router = useRouter()!
   const form = useForm<z.infer<typeof schema>>({
     resolver: zodResolver(schema),
     defaultValues: {

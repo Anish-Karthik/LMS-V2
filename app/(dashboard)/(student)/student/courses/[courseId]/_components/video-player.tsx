@@ -35,7 +35,7 @@ export const VideoPlayer = ({
   title,
 }: VideoPlayerProps) => {
   const [isReady, setIsReady] = useState(false)
-  const router = useRouter()
+  const router = useRouter()!
   const confetti = useConfettiStore()
   const [isMounted, setIsMounted] = useState(false)
   useEffect(() => {

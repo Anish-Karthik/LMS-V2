@@ -8,7 +8,7 @@ import { cn } from "@/lib/utils"
 import { sidebarLinksTeacher } from "@/app/constants"
 
 export function MainNav({ isAdmin = false }: { isAdmin?: boolean }) {
-  const pathname = usePathname()
+  const pathname = usePathname()!
   return (
     <nav className="mx-6 hidden items-center space-x-4 md:flex lg:space-x-6">
       {sidebarLinksTeacher.map((link, ind) => {

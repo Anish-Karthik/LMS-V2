@@ -27,7 +27,7 @@ const AccountProfile = ({ user, route }: { user: User; route: string }) => {
   const [isSubmitting, setIsSubmitting] = useState(false)
   const [files, setFiles] = useState<File[]>([])
   const { startUpload } = useUploadThing("media")
-  const router = useRouter()
+  const router = useRouter()!
   const pathname = usePathname()!
   const createUser = trpc.user.create.useMutation()
   const form = useForm({

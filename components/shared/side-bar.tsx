@@ -13,7 +13,7 @@ const montserrat = Montserrat({
 })
 
 const Sidebar = ({ role }: { role: Trole }) => {
-  const pathname = usePathname()
+  const pathname = usePathname()!
   return (
     <div className="inset-y-0 hidden h-full md:fixed md:flex md:w-60 md:flex-col">
       <div className=" flex h-full flex-col space-y-4 rounded-md border-2 py-4">
