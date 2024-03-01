@@ -6,6 +6,8 @@ import { motion, useInView } from "framer-motion"
 
 import { cn } from "@/lib/utils"
 
+const classNames = ["from-yellow-500 to-yellow-800"]
+
 export const LandingHero = ({
   title,
   description,
@@ -47,7 +49,18 @@ export const LandingHero = ({
               animate={isInView ? "animate" : "initial"}
               transition={{ duration: 0.3, delay: 0 * 0.2 }}
             >
-              <h1 className="text-6xl font-extrabold text-white">{title}</h1>
+              <h1 className="text-6xl font-extrabold text-white">
+                {title.split(" ").map((word, i) => (
+                  <span
+                    className={cn(
+                      "bg-gradient-to-r bg-clip-text text-transparent",
+                      classNames[i % classNames.length]
+                    )}
+                  >
+                    {word}{" "}
+                  </span>
+                ))}
+              </h1>
             </motion.div>
           </div>
           <motion.div

@@ -55,12 +55,6 @@ const DetailsSection = ({ courseId }: { courseId: string }) => {
       {details.map((detail, index) => (
         <DetailCard key={index} {...detail} courseId={courseId} />
       ))}
-
-      <div className="sm:hidden">
-        {details.map((detail, index) => (
-          <DetailCard key={index} {...detail} courseId={courseId} />
-        ))}
-      </div>
     </section>
   )
 }

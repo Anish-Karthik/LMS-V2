@@ -1,3 +1,5 @@
+"use client"
+
 import React from "react"
 import Image from "next/image"
 import Link from "next/link"
@@ -5,8 +7,10 @@ import { Phone } from "lucide-react"
 
 import { socials } from "@/lib/socials"
 import { cn } from "@/lib/utils"
+import { AnimatedTooltip } from "@/components/animation/animated-tooltip"
 
 const ContactUs = ({ className }: { className?: string }) => {
+  console.log(socials)
   return (
     <footer
       id="contact"
@@ -29,11 +33,12 @@ const ContactUs = ({ className }: { className?: string }) => {
           />
         </Link>
         <div className="socials flex flex-row items-center justify-evenly gap-2 sm:ml-[5.5rem]">
-          {socials.map((social, index) => (
+          <AnimatedTooltip />
+          {/* {socials.map((social, index) => (
             <Link href={social.href} key={index} className="flex items-center">
               <social.icon width={30} />
             </Link>
-          ))}
+          ))} */}
         </div>
 
         <p className="flex items-center text-slate-500 max-sm:hidden">
