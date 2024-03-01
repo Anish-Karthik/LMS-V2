@@ -3,7 +3,7 @@ import Link from "next/link"
 import { socials } from "@/lib/socials"
 import { BackgroundBeams } from "@/components/animation/background-beams"
 import ContactForm from "@/components/form/ContactForm"
-import ContactUs from "@/components/landing/contact-us"
+import ContactUs from "@/app/(landing)/_components/landing/contact-us"
 
 const title = "Get In Touch"
 const image = "/landing/about.png"

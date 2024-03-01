@@ -4,7 +4,7 @@ import React, { useRef } from "react"
 import Image from "next/image"
 import { useInView } from "framer-motion"
 
-import MiniDetailCard from "../card/mini-detail-card"
+import MiniDetailCard from "../../../../components/card/mini-detail-card"
 
 const reasons = [
   {

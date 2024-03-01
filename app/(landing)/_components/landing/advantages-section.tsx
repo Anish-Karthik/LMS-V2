@@ -4,9 +4,9 @@ import React, { useRef } from "react"
 import Image from "next/image"
 import { motion, useInView } from "framer-motion"
 
-import { LampContainer } from "../animation/lamp"
-import { TypewriterEffectSmooth } from "../animation/typewriter-effect"
-import MiniDetailCard from "../card/mini-detail-card"
+import { LampContainer } from "../../../../components/animation/lamp"
+import { TypewriterEffectSmooth } from "../../../../components/animation/typewriter-effect"
+import MiniDetailCard from "../../../../components/card/mini-detail-card"
 
 const advantages = [
   {

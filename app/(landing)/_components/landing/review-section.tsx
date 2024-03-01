@@ -2,7 +2,7 @@
 
 import React from "react"
 
-import TestimonialCard from "../card/testimonial-card"
+import TestimonialCard from "../../../../components/card/testimonial-card"
 import VideoPlayerLanding from "./video-player-landing"
 
 const testimonials1 = [

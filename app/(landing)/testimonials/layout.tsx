@@ -1,7 +1,7 @@
 import React from "react"
 
-import ContactUs from "@/components/landing/contact-us"
 import LandingNavbar from "@/components/shared/LandingNavbar"
+import ContactUs from "@/app/(landing)/_components/landing/contact-us"
 
 const layout = ({ children }: { children: React.ReactNode }) => {
   return (

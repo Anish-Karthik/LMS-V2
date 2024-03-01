@@ -6,7 +6,7 @@ import { formatDate } from "@/lib/format"
 import {
   TypewriterEffect,
   TypewriterEffectSmooth,
-} from "../animation/typewriter-effect"
+} from "../../../../components/animation/typewriter-effect"
 import ButtonCard from "./button-card"
 
 const MainCard = () => {

@@ -1,5 +1,5 @@
-import ContactUs from "@/components/landing/contact-us"
 import { LandingHero } from "@/components/shared/LandingHero"
+import ContactUs from "@/app/(landing)/_components/landing/contact-us"
 
 const title = "About Us"
 const description = `

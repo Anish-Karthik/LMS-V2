@@ -4,7 +4,7 @@ import Link from "next/link"
 import { Button } from "@/components/ui/button"
 import { LandingHero } from "@/components/shared/LandingHero"
 
-import { BackgroundBeams } from "../animation/background-beams"
+import { BackgroundBeams } from "../../../../components/animation/background-beams"
 
 const title = "Master the art of Trading"
 const description = `
