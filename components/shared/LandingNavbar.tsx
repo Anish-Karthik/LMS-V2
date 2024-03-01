@@ -47,7 +47,7 @@ const LandingNavbar = ({
       <div className="flex items-center gap-5 font-semibold">
         <Link href="/" className="flex items-center">
           <div className="relative mr-4 h-12 w-12">
-            <Image fill alt="Logo" src="/images/logo1.png" />
+            <Image fill alt="Logo" src="/images/logo2.jpg" />
           </div>
           <div>
             <h1 className={cn("text-2xl font-bold", font.className)}>

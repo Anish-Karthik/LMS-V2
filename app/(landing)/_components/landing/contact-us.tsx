@@ -25,7 +25,7 @@ const ContactUs = ({ className }: { className?: string }) => {
           className="text-background-color flex items-center text-2xl font-semibold md:text-5xl"
         >
           <Image
-            src="/images/logo1.png"
+            src="/images/logo2.jpg"
             className="zoom-in-75 rounded-full"
             width={50}
             height={50}
