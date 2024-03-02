@@ -50,16 +50,16 @@ const page = async ({
         <WavyBackground containerClassName="flex w-full flex-col items-center gap-8 bg-transparent px-4 py-24">
           <MainCard />
         </WavyBackground>
-        <About href={`/purchase/${courseId}?promo=${searchParams.promo}`} />
+        <About href={`/purchase/${courseId}?${searchParamsUrl}`} />
         <ReasonsSection />
         <AdvantagesSection />
         <div className="w-full bg-black">
           <div className="mx-auto max-w-[80%] bg-black">
-            <DetailsSection courseId={courseId} />
+            <DetailsSection href={`/purchase/${courseId}?${searchParamsUrl}`} />
           </div>
         </div>
         <ReviewsSection />
-        <PurchaseSection />
+        <PurchaseSection courseId={courseId} searchUrl={searchParamsUrl} />
         <FAQSection />
         <DisclaimerSection />
       </section>

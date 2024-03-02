@@ -111,7 +111,7 @@ const FAQSection = () => {
                 <div className="mt-14">
                   <ButtonCard
                     arrowIcon={<ArrowUpIcon width={25} />}
-                    scrollTo="#main-details"
+                    scrollTo="#purchase-details"
                     text="My question is answered! Take me to the pricing section!"
                   />
                 </div>

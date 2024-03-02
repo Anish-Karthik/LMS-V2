@@ -46,14 +46,14 @@ const details = [
   },
 ]
 
-const DetailsSection = ({ courseId }: { courseId: string }) => {
+const DetailsSection = ({ href }: { href: string }) => {
   return (
     <section
       className="!max-w-screen md:min-w-6xl bg-black max-xl:px-5"
       id="main-details"
     >
       {details.map((detail, index) => (
-        <DetailCard key={index} {...detail} courseId={courseId} />
+        <DetailCard key={index} {...detail} href={href} />
       ))}
     </section>
   )
@@ -67,14 +67,14 @@ function DetailCard({
   description,
   image,
   className = "dark:bg-quaternary-color/40",
-  courseId,
+  href,
 }: {
   className?: string
   heading: string
   subheading: string
   description: string
   image: string
-  courseId: string
+  href: string
 }) {
   return (
     <div className="max-xs:max-w-2xs my-8 max-sm:max-w-xs sm:w-full ">
@@ -100,16 +100,10 @@ function DetailCard({
                 {description}
               </p>
               <div className="mt-2 flex w-full gap-4 max-lg:justify-center">
-                {/* <Link href={`/purchase`}>
-            <Button variant={"outline"} className="w-full">
-              View Details
-            </Button>
-          </Link> */}
-                <Link href={`/purchase/${courseId}`}>
+                <Link href={href}>
                   <button className="animate-shimmer inline-flex h-12 items-center justify-center rounded-md border border-slate-200 bg-[linear-gradient(110deg,#fffefc,45%,#e1d9ce,55%,#fffefc)] bg-[length:200%_100%] px-6 font-medium text-slate-800 transition-colors focus:outline-none focus:ring-2 focus:ring-slate-400 focus:ring-offset-2 focus:ring-offset-slate-50">
                     Enroll Now
                   </button>
-                  {/* <Button className="w-full"></Button> */}
                 </Link>
               </div>
             </div>
