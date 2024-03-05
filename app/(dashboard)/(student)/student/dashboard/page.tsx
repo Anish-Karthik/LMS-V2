@@ -107,7 +107,7 @@ const page = async () => {
             href="https://discord.gg/9R2KZjXJ"
             target="_blank"
             rel="noreferrer"
-            className="bg-primary mt-2 w-full rounded-md px-4 py-2 text-center text-white"
+            className="bg-primary text-purple-color mt-2 w-full rounded-md px-4 py-2 text-center"
           >
             Join Discord
           </a>
