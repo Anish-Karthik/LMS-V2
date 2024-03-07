@@ -4,8 +4,8 @@ import { useMemo } from "react"
 import { Montserrat } from "next/font/google"
 import Image from "next/image"
 import Link from "next/link"
-import { usePathname, useSearchParams } from "next/navigation"
-import { UserButton, useAuth } from "@clerk/nextjs"
+import { usePathname, useRouter, useSearchParams } from "next/navigation"
+import { SignInButton, UserButton, useAuth } from "@clerk/nextjs"
 import { Course } from "@prisma/client"
 
 import { cn } from "@/lib/utils"
@@ -32,6 +32,7 @@ const LandingNavbar = ({
   const { userId } = useAuth()
   const pathname = usePathname()!
   const searchParams = useSearchParams()!
+  const router = useRouter()!
   const queryString = useMemo(
     () =>
       searchParams?.get("promo") ? `?promo=${searchParams?.get("promo")}` : "",
@@ -89,13 +90,27 @@ const LandingNavbar = ({
                 : route ?? `/purchase${queryString}`
             }
           >
-            <Button containerClassName="!h-11 !max-h-11">
-              {pathname.includes("purchase") ? "Purchase Now" : "Get Started"}
+            <Button
+              containerClassName="!h-11 !max-h-11 hover:!text-pink-color"
+              className="hover:!text-pink-color"
+            >
+              {!route || route.includes("purchase")
+                ? "Purchase Now"
+                : "Get Started"}
             </Button>
           </Link>
         )}
         {/* <ThemeToggle /> */}
-        <div className="max-sm:hidden">
+        <div className="flex items-center gap-1">
+          {!!!userId && (
+            <SignInButton>
+              <button className="hover:text-pink-color relative h-10 !max-h-11 rounded-full border border-purple-600/30 bg-slate-700/30 px-8 py-2 text-sm text-white transition duration-200 hover:shadow-2xl hover:shadow-pink-400/[0.3]">
+                <div className="via-pink-color absolute inset-x-0 -top-px mx-auto h-px w-1/2 bg-gradient-to-r from-transparent to-transparent shadow-2xl" />
+                <span className="relative z-20">Sign In</span>
+              </button>
+            </SignInButton>
+          )}
+
           <UserButton afterSignOutUrl="/" afterSwitchSessionUrl="/" />
         </div>
         <LandingNavbarMobile />

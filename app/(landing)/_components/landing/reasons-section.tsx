@@ -4,6 +4,8 @@ import React, { useRef } from "react"
 import Image from "next/image"
 import { useInView } from "framer-motion"
 
+import { TypewriterEffectSmooth } from "@/components/animation/typewriter-effect"
+
 import MiniDetailCard from "../../../../components/card/mini-detail-card"
 
 const reasons = [
@@ -45,6 +47,23 @@ const reasons = [
   },
 ]
 
+const words = [
+  {
+    text: "6",
+    className:
+      "rounded-md bg-gradient-to-r from-orange-500 to-pink-500 bg-clip-text text-transparent",
+  },
+  {
+    text: "Reasons",
+    className:
+      "rounded-md bg-gradient-to-r from-pink-500 to-violet-500 bg-clip-text text-transparent",
+  },
+  // {
+  //   text: "Advantages",
+  //   className:
+  //     "rounded-md bg-gradient-to-r from-purple-500 to-indigo-500 bg-clip-text text-transparent",
+  // },
+]
 const ReasonsSection = () => {
   const ref = useRef(null)
   const isInView = useInView(ref, {})
@@ -63,9 +82,19 @@ const ReasonsSection = () => {
               width={80}
               height={80}
             />
+            <TypewriterEffectSmooth
+              words={words}
+              className="mx-auto justify-center text-center"
+            />
             <span>
-              6 reasons why you need a trading community to master the art of
-              Trading
+              why you need a{" "}
+              <span className="rounded-md bg-gradient-to-r from-pink-500 to-violet-500 bg-clip-text text-transparent">
+                trading
+              </span>{" "}
+              <span className="rounded-md bg-gradient-to-r from-purple-500 to-indigo-500 bg-clip-text text-transparent">
+                community
+              </span>{" "}
+              to master the art of Trading
             </span>
             <Image
               className="absolute -right-0 z-[-1] translate-y-[-40px] scale-75 opacity-50 max-md:translate-y-[-60px] sm:scale-100"

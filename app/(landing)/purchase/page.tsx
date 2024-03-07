@@ -37,7 +37,6 @@ const page = async ({
   const courseId = courses[0].id
   console.log(searchParams.promo)
   if (searchParams.invite && user) {
-    const userInfo = await getUser(user.id)
     await acceptInvite(searchParams.invite, user.id)
     redirect("/teacher/settings")
   }
