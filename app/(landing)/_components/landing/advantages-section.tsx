@@ -102,7 +102,7 @@ const AdvantagesSection = () => {
         >
           {advantages.map((advantage, index) => (
             <MiniDetailCard
-              detail={advantage}
+              detail={{ ...advantage, image: `/clip-art/${index + 7}.png` }}
               key={index}
               isInView={isInView}
               delay={index * 0.2}

@@ -113,7 +113,7 @@ const ReasonsSection = () => {
         >
           {reasons.map((reason, index) => (
             <MiniDetailCard
-              detail={reason}
+              detail={{ ...reason, image: `/clip-art/${index + 1}.png` }}
               key={index + 6}
               isInView={isInView}
               delay={index * 0.2}
