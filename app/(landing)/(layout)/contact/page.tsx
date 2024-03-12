@@ -1,8 +1,6 @@
 "use client"
 
-import Link from "next/link"
 
-import { socials } from "@/lib/socials"
 import { BackgroundBeams } from "@/components/animation/background-beams"
 import { TypewriterEffectSmooth } from "@/components/animation/typewriter-effect"
 // import ContactForm from "@/components/form/ContactForm"
@@ -10,8 +8,6 @@ import ContactUs from "@/app/(landing)/_components/landing/contact-us"
 
 import ContactForm from "../../_components/landing/sample"
 
-const title = "Get In Touch"
-const image = "/landing/about.png"
 
 const words = [
   {
@@ -40,6 +36,7 @@ const page = () => {
               marginLeft: "50px",
               height: "400px",
               width: "500px",
+              margin: "auto",
             }}
           >
             <TypewriterEffectSmooth words={words} className="ml-16" />
