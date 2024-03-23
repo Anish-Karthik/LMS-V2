@@ -45,7 +45,7 @@ const LandingNavbar = ({
         className
       )}
     >
-      <div className="flex items-center gap-5 font-semibold">
+      <div className="flex items-center gap-5 font-light">
         <Link href="/" className="flex items-center">
           <div className="relative mr-4 h-12 w-12">
             <Image fill alt="Logo" src="/images/logo2.jpg" />
@@ -61,8 +61,10 @@ const LandingNavbar = ({
             href={landingRoute.href}
             key={landingRoute.href}
             className={cn(
-              "text-text-secondary text-lg hover:text-blue-400 max-md:hidden",
-              pathname === landingRoute.href && "text-blue-500"
+              "bg-gradient-to-r from-white via-white to-white bg-clip-text text-lg hover:bg-gradient-to-r hover:from-pink-500 hover:via-pink-500 hover:to-pink-500 hover:bg-clip-text hover:text-transparent max-md:hidden",
+              pathname === landingRoute.href
+                ? "bg-gradient-to-r from-pink-500 via-pink-500 to-pink-500 bg-clip-text text-transparent"
+                : "font-extralight"
             )}
           >
             {landingRoute.label}

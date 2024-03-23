@@ -6,7 +6,13 @@ import { motion, useInView } from "framer-motion"
 
 import { cn } from "@/lib/utils"
 
-const classNames = ["from-yellow-500 to-yellow-800"]
+const classNames = [
+  "from-pink-color to-purple-color",
+  "from-white to-white",
+  "from-white to-white",
+  "from-white to-white",
+  "from-white to-white",
+]
 
 export const LandingHero = ({
   title,
@@ -44,9 +50,10 @@ export const LandingHero = ({
           <div>
             <motion.div
               key={0}
+              viewport={{ once: true }}
               variants={cardVariants}
               initial="initial"
-              animate={isInView ? "animate" : "initial"}
+              whileInView="animate"
               transition={{ duration: 0.3, delay: 0 * 0.2 }}
             >
               <h1 className="text-6xl font-extrabold text-white">
@@ -65,18 +72,20 @@ export const LandingHero = ({
           </div>
           <motion.div
             key={1}
+            viewport={{ once: true }}
             variants={cardVariants}
             initial="initial"
-            animate={isInView ? "animate" : "initial"}
+            whileInView="animate"
             transition={{ duration: 0.3, delay: 1 * 0.2 }}
           >
-            <p className="text-md text-slate-400">{description}</p>
+            <h6 className="text-md max-w-xl text-slate-300">{description}</h6>
           </motion.div>
           <motion.div
             key={2}
+            viewport={{ once: true }}
             variants={cardVariants}
             initial="initial"
-            animate={isInView ? "animate" : "initial"}
+            whileInView="animate"
             transition={{ duration: 0.3, delay: 3 * 0.2 }}
           >
             {children}

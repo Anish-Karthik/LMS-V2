@@ -6,7 +6,7 @@ import { LandingHero } from "@/components/shared/LandingHero"
 
 import { BackgroundBeams } from "../../../../components/animation/background-beams"
 
-const title = "Master the art of Trading"
+const title = "Master the art of trading"
 const description = `
   your
   gateway to financial empowerment. Join our thriving community,

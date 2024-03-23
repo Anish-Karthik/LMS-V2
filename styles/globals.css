@@ -255,15 +255,16 @@ input[type="text"] {
 }
 
 .landing-section_description {
-  @apply text-base xs:text-lg sm:text-xl md:text-2xl;
+  @apply text-base xs:text-lg sm:text-xl md:text-2xl font-orbitron mt-1;
 }
 
-h1, h2, h3, h4, h5, h6 {
+h1, h2, h3, h4 {
   @apply font-orbitron;
 }
-a, button, input, textarea, .btn {
+a, button, input, textarea, .btn, p {
   @apply font-abeezee;
 }
+
 
 @import "~@uploadthing/react/styles.css";
 @import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400..900&display=swap');

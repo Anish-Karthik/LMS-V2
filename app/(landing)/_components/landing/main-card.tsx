@@ -28,10 +28,10 @@ const MainCard = () => {
         </p> */}
       </div>
       <div className="mt-10 max-w-3xl">
-        <p className="text-muted-foreground text-center text-2xl">
+        {/* <p className="text-muted-foreground text-center text-2xl">
           Read the page if you want every single piece of information. Or just
           scroll to the main details by clicking the button below.
-        </p>
+        </p> */}
       </div>
       <ButtonCard scrollTo="#main-details" text="Scroll to main details" />
     </section>
@@ -44,17 +44,17 @@ const words = [
   {
     text: "Learn,",
     className:
-      "bg-gradient-to-r from-green-500 to-blue-500 bg-clip-text text-transparent xs:text-4xl text-3xl font-bold sm:text-5xl md:text-6xl",
+      "bg-gradient-to-r from-blue-500 to-blue-500 bg-clip-text text-transparent xs:text-4xl text-3xl font-bold sm:text-5xl md:text-6xl",
   },
   {
     text: "Trade,",
     className:
-      "bg-gradient-to-r from-red-500 to-pink-500 bg-clip-text text-transparent xs:text-4xl text-3xl font-bold sm:text-5xl md:text-6xl",
+      "bg-gradient-to-r from-pink-500 to-pink-500 bg-clip-text text-transparent xs:text-4xl text-3xl font-bold sm:text-5xl md:text-6xl",
   },
   {
     text: "Earn",
     className:
-      "bg-gradient-to-r from-yellow-500 to-yellow-800 bg-clip-text text-transparent xs:text-4xl text-3xl font-bold sm:text-5xl md:text-6xl",
+      "bg-gradient-to-r from-yellow-500 to-yellow-500 bg-clip-text text-transparent xs:text-4xl text-3xl font-bold sm:text-5xl md:text-6xl",
   },
 ]
 
@@ -63,6 +63,9 @@ const HeaderCard = () => {
     // stylish
     <header className="flex flex-col items-center gap-8">
       <h1 className="text-quaternary-color xs:text-4xl text-3xl font-bold sm:text-5xl md:text-6xl">
+        <span className="absolute -z-10 rounded-md bg-black/90 px-4 py-2 text-transparent blur-xl">
+          Learn, Trade, Earn
+        </span>
         <TypewriterEffectSmooth
           words={words}
           cursorClassName="xs:h-8 sm:h-10 md:h-12 lg:h-13 text-purple-color bg-pink-color mt-[0.4rem]"
@@ -77,9 +80,13 @@ const HeaderCard = () => {
           Earn
         </span> */}
       </h1>
+
       <h1 className="xs:text-4xl text-3xl font-extrabold sm:text-5xl md:text-6xl">
+        <span className="absolute -z-10 rounded-md bg-black/90 px-4 py-2 text-transparent blur-xl">
+          Smartly with Praglis
+        </span>
         Smartly with{" "}
-        <span className="rounded-md bg-gradient-to-r from-pink-500 to-violet-500 bg-clip-text text-transparent">
+        <span className="z-50 rounded-md bg-gradient-to-r from-pink-500 to-purple-500 bg-clip-text text-transparent">
           Praglis
         </span>
       </h1>

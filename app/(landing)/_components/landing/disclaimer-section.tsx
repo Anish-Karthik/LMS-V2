@@ -8,10 +8,10 @@ const DisclaimerSection = () => {
     >
       <div className="mx-auto max-w-3xl">
         <center>
-          <h1 className="mb-6 text-4xl font-bold">Disclaimer </h1>
+          <h1 className="mb-6 text-2xl font-bold text-gray-400">Disclaimer </h1>
         </center>
         <div className="flex flex-col items-center gap-4">
-          <p className="text-muted-foreground text-center text-xl font-medium">
+          <p className="text-muted-foreground text-center text-lg font-medium">
             We do not provide investment advice or recommend specific securities
             or financial instruments to buy or sell, as we are not registered
             with SEBI. Our platform serves as a community space for individuals

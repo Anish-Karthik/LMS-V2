@@ -80,7 +80,9 @@ const TestimonialCard = ({
                     </div>
                   )}
               </CardTitle>
-              <CardContent className="px-0 pt-4">{description}</CardContent>
+              <CardContent className="px-0 pt-4">
+                <p>{description}</p>
+              </CardContent>
             </CardHeader>
             <CardFooter className="!-mt-3 ">
               <div className="flex flex-row items-center justify-center gap-2 ">

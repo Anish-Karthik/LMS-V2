@@ -1,13 +1,11 @@
 "use client"
 
-
 import { BackgroundBeams } from "@/components/animation/background-beams"
 import { TypewriterEffectSmooth } from "@/components/animation/typewriter-effect"
 // import ContactForm from "@/components/form/ContactForm"
 import ContactUs from "@/app/(landing)/_components/landing/contact-us"
 
 import ContactForm from "../../_components/landing/sample"
-
 
 const words = [
   {

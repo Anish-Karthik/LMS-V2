@@ -96,7 +96,7 @@ function DetailCard({
                   {subheading}
                 </h2>
               </div>
-              <p className="landing-section_description max-xs:max-w-2xs max-sm:max-w-xs">
+              <p className="landing-section_description max-xs:max-w-2xs !font-abeezee max-sm:max-w-xs">
                 {description}
               </p>
               <div className="mt-2 flex w-full gap-4 max-lg:justify-center">

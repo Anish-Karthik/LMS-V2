@@ -33,7 +33,7 @@ const ContactUs = ({ className }: { className?: string }) => {
           />
         </Link>
         <div className="socials flex flex-row items-center justify-evenly gap-2 sm:ml-[5.5rem]">
-          <AnimatedTooltip />
+          {/* <AnimatedTooltip /> */}
           {/* {socials.map((social, index) => (
             <Link href={social.href} key={index} className="flex items-center">
               <social.icon width={30} />

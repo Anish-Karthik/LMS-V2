@@ -17,8 +17,8 @@ const MiniDetailCard = ({
   isInView,
   delay,
   detail,
-  headingStyle = "text-secondary-color",
-  descriptionStyle = "text-text-secondary",
+  headingStyle,
+  descriptionStyle,
   backgroundStyle = "bg-tertiary-color/40",
 }: {
   isInView: boolean
@@ -40,7 +40,8 @@ const MiniDetailCard = ({
     <motion.div
       variants={cardVariants}
       initial="initial"
-      animate={isInView ? "animate" : "initial"}
+      whileInView="animate"
+      viewport={{ once: true }}
       transition={{ duration: 0.3, delay }}
       className="h-full"
     >
@@ -65,7 +66,12 @@ const MiniDetailCard = ({
                 translateZ="110"
                 className="text-xl font-bold text-neutral-600 dark:text-white"
               >
-                <h3 className={cn("text-xl font-semibold", headingStyle)}>
+                <h3
+                  className={cn(
+                    "text-center text-xl font-semibold text-pink-500", // text-secondary-color
+                    headingStyle
+                  )}
+                >
                   {detail.heading}
                 </h3>
               </CardItem>
@@ -75,7 +81,10 @@ const MiniDetailCard = ({
               className="text-xl font-bold text-neutral-600 dark:text-white"
             >
               <p
-                className={cn("text-text-secondary text-lg", descriptionStyle)}
+                className={cn(
+                  "text-primary-color mt-2 text-center text-base", // text-text-secondary
+                  descriptionStyle
+                )}
               >
                 {detail.description}
               </p>
