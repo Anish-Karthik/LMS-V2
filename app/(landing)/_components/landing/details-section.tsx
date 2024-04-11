@@ -22,7 +22,7 @@ const details = [
     subheading: "Knowledge is power",
     description:
       "Embark on your learning journey with our educational resources. From foundational concepts to advanced strategies, our courses cover it all. Gain the knowledge necessary to make informed trading decisions.",
-    image: "https://picsum.photos/800/800",
+    image: "/landing/learn.jpg",
     className: "bg-text-secondary/10",
     color: "",
   },
@@ -31,7 +31,7 @@ const details = [
     subheading: "Put your knowledge into action",
     description:
       "Apply what you've learned in real-world scenarios. Demo trading environments and our live sessions allow you to practise and refine your skills without the risk of actual financial loss.",
-    image: "https://picsum.photos/800/800",
+    image: "/landing/trade.jpg",
     className: "bg-purple-color/70 !text-pink-color",
     color: "",
   },
@@ -40,7 +40,7 @@ const details = [
     subheading: "Achieve financial success",
     description:
       "As you progress, witness the transformation of your skills into financial success. Praglis alumni have consistently achieved their earning goals. Join the ranks of successful traders who have turned their education into a profitable venture.",
-    image: "https://picsum.photos/800/800",
+    image: "/landing/earn.jpg",
     className: "bg-pink-color/90 text-purple-color",
     color: "",
   },
@@ -108,7 +108,7 @@ function DetailCard({
               </div>
             </div>
             <div className="p-3 max-lg:mx-4 max-sm:hidden lg:p-16">
-              <Image src={image} alt="hero" width={500} height={500} />
+              <Image src={image} alt="hero" width={500} height={500} className="rounded-md" />
             </div>
           </div>
           <Meteors
