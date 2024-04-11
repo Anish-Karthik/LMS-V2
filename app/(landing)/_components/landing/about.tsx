@@ -20,7 +20,7 @@ const About = ({ href }: { href: string }) => {
     <LandingHero
       title={title}
       description={description}
-      image={"/landing/contact.jpg"}
+      image={"/artwork-1.png"}
       // imageAlternate={<CardStack />}
       className="relative z-40 bg-black pt-40"
     >
