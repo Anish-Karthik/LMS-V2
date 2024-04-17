@@ -66,7 +66,12 @@ export default function RootLayout({ children }: RootLayoutProps) {
               fontSans.variable
             )}
           >
-            <ThemeProvider attribute="class" defaultTheme="dark" enableSystem forcedTheme="dark">
+            <ThemeProvider
+              attribute="class"
+              defaultTheme="dark"
+              enableSystem
+              forcedTheme="dark"
+            >
               <ConfettiProvider />
               <ToastProvider />
               <Toaster />

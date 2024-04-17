@@ -185,7 +185,7 @@ const termsAndConditions: (NestedSection | SimpleSection)[] = [
       <span>
         In order to exercise Your right of transfer, You must inform Us of your
         decision by means of a clear statement. You can inform us of your
-        decision By email: {" "}
+        decision By email:{" "}
         <Link
           href={"mailto:praglis.media@gmail.com"}
           className="text-blue-500 underline hover:text-blue-400"
@@ -239,7 +239,7 @@ const displaySections = (arr: typeof termsAndConditions) => {
         if (term.sectionType === "SIMPLE") {
           return (
             <section className="flex flex-col gap-4">
-              <h2 className="font-bold text-5xl text-pink-color">
+              <h2 className="text-pink-color text-xl font-bold sm:text-2xl md:text-3xl lg:text-4xl xl:text-5xl">
                 {term.heading}
               </h2>
               <div className="flex flex-col gap-2">
@@ -252,7 +252,7 @@ const displaySections = (arr: typeof termsAndConditions) => {
         } else {
           return (
             <section className="flex flex-col gap-4">
-              <h2 className="font-bold text-5xl text-pink-color">
+              <h2 className="text-pink-color text-xl font-bold sm:text-2xl md:text-3xl lg:text-4xl xl:text-5xl">
                 {term.section}
               </h2>
               <div>{displaySections(term.subsections)}</div>
@@ -267,9 +267,9 @@ const displaySections = (arr: typeof termsAndConditions) => {
 const page = () => {
   return (
     <main className="w-full">
-      <section className="mx-auto flex w-full max-w-7xl flex-col mt-32 gap-5 mb-12">
+      <section className="mx-auto mb-12 mt-32 flex w-full max-w-7xl flex-col gap-5 p-2 max-xl:p-6">
         <div className="flex flex-col gap-3">
-          <h1 className="text-6xl font-extrabold text-purple-color">
+          <h1 className="text-purple-color text-2xl font-extrabold sm:text-3xl md:text-4xl lg:text-5xl xl:text-6xl">
             Terms & Conditions
           </h1>
           <p>

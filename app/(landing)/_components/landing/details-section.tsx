@@ -108,7 +108,13 @@ function DetailCard({
               </div>
             </div>
             <div className="p-3 max-lg:mx-4 max-sm:hidden lg:p-16">
-              <Image src={image} alt="hero" width={500} height={500} className="rounded-md" />
+              <Image
+                src={image}
+                alt="hero"
+                width={500}
+                height={500}
+                className="rounded-md"
+              />
             </div>
           </div>
           <Meteors

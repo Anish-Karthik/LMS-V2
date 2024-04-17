@@ -40,10 +40,12 @@ const ContactUs = ({ className }: { className?: string }) => {
             </Link>
           ))} */}
         </div>
-
-        <p className="flex items-center text-slate-500 max-sm:hidden">
+        <Link href={"/policies"} className="flex items-center text-slate-500 underline-offset-2 underline hover:text-slate-300">
+          Terms & Conditions
+        </Link>
+        {/* <p className="flex items-center text-slate-500 max-sm:hidden">
           All rights reserved.
-        </p>
+        </p> */}
       </div>
     </footer>
   )
