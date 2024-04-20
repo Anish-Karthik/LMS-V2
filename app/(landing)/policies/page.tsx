@@ -2,6 +2,7 @@ import React from "react"
 import Link from "next/link"
 
 import ContactUs from "../_components/landing/contact-us"
+import PoliciesFooter from "../_components/landing/policies-footer"
 
 type SimpleSection = {
   heading: string
@@ -160,23 +161,23 @@ const termsAndConditions: (NestedSection | SimpleSection)[] = [
       `By continuing to access or use Our Service after those revisions become effective, You agree to be bound by the revised terms. If You do not agree to the new terms, in whole or in part, please stop using the website and the Service.`,
     ],
   },
-  {
-    sectionType: "SIMPLE",
-    heading: "Contact Us",
-    content: [
-      `If you have any questions about these Terms and Conditions, You can contact us:`,
-      <span>
-        By email:{" "}
-        <Link
-          href={"mailto:praglis.media@gmail.com"}
-          className="text-blue-500 underline hover:text-blue-400"
-        >
-          praglis.media@gmail.com
-        </Link>
-      </span>,
-      `within the jurisdiction of the applicable laws of Coimbatore, India.`,
-    ],
-  },
+  // {
+  //   sectionType: "SIMPLE",
+  //   heading: "Contact Us",
+  //   content: [
+  //     `If you have any questions about these Terms and Conditions, You can contact us:`,
+  //     <span>
+  //       By email:{" "}
+  //       <Link
+  //         href={"mailto:praglis.media@gmail.com"}
+  //         className="text-blue-500 underline hover:text-blue-400"
+  //       >
+  //         praglis.media@gmail.com
+  //       </Link>
+  //     </span>,
+  //     `within the jurisdiction of the applicable laws of Coimbatore, India.`,
+  //   ],
+  // },
   {
     sectionType: "SIMPLE",
     heading: "Refund Policy",
@@ -195,13 +196,13 @@ const termsAndConditions: (NestedSection | SimpleSection)[] = [
       </span>,
     ],
   },
-  {
-    sectionType: "SIMPLE",
-    heading: "Gifts",
-    content: [
-      `If the services were marked as a gift when purchased and then sent directly to you, You'll receive a gift credit for the value of your return. Once the returned product is received, a gift certificate will be mailed to You.`,
-    ],
-  },
+  // {
+  //   sectionType: "SIMPLE",
+  //   heading: "Gifts",
+  //   content: [
+  //     `If the services were marked as a gift when purchased and then sent directly to you, You'll receive a gift credit for the value of your return. Once the returned product is received, a gift certificate will be mailed to You.`,
+  //   ],
+  // },
   {
     sectionType: "SIMPLE",
     heading: "Contact Us",
@@ -227,18 +228,33 @@ const termsAndConditions: (NestedSection | SimpleSection)[] = [
       `When you use our service, we may ask you to provide certain personally identifiable information, such as your email address, name, phone number, and address. Additionally, we automatically collect usage data, including your device's IP address, browser type, pages visited, and more. We utilize tracking technologies like cookies, flash cookies, and web beacons to improve and analyze our service. While using cookies is optional, disabling them may limit your ability to access certain parts of our service.`,
       `We use your personal data for various purposes, including providing and maintaining our service, managing your account, contacting you, providing news and offers, and managing your requests. Your personal information may be shared with service providers, affiliates, business partners, other users, or with your consent. We retain your personal data only for as long as necessary and take steps to ensure its security, although no method of transmission over the internet is completely secure.`,
       `Our service may contain links to third-party websites that are not operated by us. We have no control over the content, privacy policies, or practices of these third-party sites and assume no responsibility for them. We may update our privacy policy from time to time, and any changes will be communicated to you via email or through a prominent notice on our service. It's important to review this policy periodically for any updates or changes.`,
-      `If you have any questions about our privacy policy or how we handle your personal information, you can contact us at . Your privacy and security are important to us, and we are committed to ensuring that your personal data is handled responsibly and in accordance with this policy.`,
+      <span>
+        If you have any questions about our privacy policy or how we handle your
+        personal information, you can contact us at{" "}
+        <Link
+          href={"mailto:praglis.media@gmail.com"}
+          className="text-blue-500 underline hover:text-blue-400"
+        >
+          praglis.media@gmail.com
+        </Link>
+        . Your privacy and security are important to us, and we are committed to
+        ensuring that your personal data is handled responsibly and in
+        accordance with this policy.
+      </span>,
     ],
   },
 ]
 
 const displaySections = (arr: typeof termsAndConditions) => {
   return (
-    <section className="flex flex-col gap-4">
+    <section className="!-mt-20 flex flex-col gap-5 !pt-20">
       {arr.map((term) => {
         if (term.sectionType === "SIMPLE") {
           return (
-            <section className="flex flex-col gap-4">
+            <section
+              className="!-mt-20 flex flex-col gap-5 !pt-20"
+              id={term.heading.split(" ")[0].toLowerCase()}
+            >
               <h2 className="text-pink-color text-xl font-bold sm:text-2xl md:text-3xl lg:text-4xl xl:text-5xl">
                 {term.heading}
               </h2>
@@ -251,7 +267,10 @@ const displaySections = (arr: typeof termsAndConditions) => {
           )
         } else {
           return (
-            <section className="flex flex-col gap-4">
+            <section
+              className="flex flex-col gap-5 lg:gap-6"
+              id={term.section.split(" ")[0]}
+            >
               <h2 className="text-pink-color text-xl font-bold sm:text-2xl md:text-3xl lg:text-4xl xl:text-5xl">
                 {term.section}
               </h2>
@@ -267,8 +286,11 @@ const displaySections = (arr: typeof termsAndConditions) => {
 const page = () => {
   return (
     <main className="w-full">
-      <section className="mx-auto mb-12 mt-32 flex w-full max-w-7xl flex-col gap-5 p-2 max-xl:p-6">
-        <div className="flex flex-col gap-3">
+      <section
+        className="mx-auto mb-12 flex w-full max-w-7xl flex-col gap-5 p-2 pt-32 max-xl:p-6"
+        id={"terms"}
+      >
+        <section className="flex flex-col gap-3">
           <h1 className="text-purple-color text-2xl font-extrabold sm:text-3xl md:text-4xl lg:text-5xl xl:text-6xl">
             Terms & Conditions
           </h1>
@@ -288,11 +310,12 @@ const page = () => {
             conditions. Do not continue to use Praglis if you do not agree to
             take all of the terms and conditions stated on this page.
           </p>
-        </div>
+        </section>
         {displaySections(termsAndConditions)}
       </section>
 
-      <ContactUs className="!mt-0 text-white" />
+      <ContactUs className="!mt-0 bg-black text-white" />
+      <PoliciesFooter className="!-mt-10 bg-black text-white" />
     </main>
   )
 }

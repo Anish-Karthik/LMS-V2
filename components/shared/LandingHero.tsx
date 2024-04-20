@@ -15,6 +15,7 @@ const classNames = [
 ]
 
 export const LandingHero = ({
+  id,
   title,
   description,
   image,
@@ -22,6 +23,7 @@ export const LandingHero = ({
   className,
   imageAlternate,
 }: {
+  id?: string
   title: string
   description: string
   image: string
@@ -36,7 +38,10 @@ export const LandingHero = ({
     animate: { y: 0, opacity: 1 },
   }
   return (
-    <section className={cn("w-full py-20", className)}>
+    <section
+      className={cn("w-full py-20", className)}
+      id={id ? id : Math.random().toString(36).substring(7)}
+    >
       <div className="max-sm:max-w-screen-xs mx-auto flex max-w-7xl flex-col items-center space-y-5 py-3 max-lg:gap-6 lg:flex-row">
         <div
           className="flex flex-1 flex-col items-start justify-center gap-6 max-lg:mx-4 max-lg:max-w-xl max-sm:mx-16 max-sm:w-[90vw] md:px-5 lg:pl-6"

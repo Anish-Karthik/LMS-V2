@@ -15,6 +15,8 @@ import PurchaseSection from "@/app/(landing)/_components/landing/purchase-sectio
 import ReasonsSection from "@/app/(landing)/_components/landing/reasons-section"
 import ReviewsSection from "@/app/(landing)/_components/landing/review-section"
 
+import PoliciesFooter from "../_components/landing/policies-footer"
+
 const page = async ({
   searchParams,
 }: {
@@ -65,6 +67,7 @@ const page = async ({
         <DisclaimerSection />
       </section>
       <ContactUs className="!mt-0 bg-black text-white" />
+      <PoliciesFooter className="!-mt-10 bg-black text-white" />
     </div>
   )
 }

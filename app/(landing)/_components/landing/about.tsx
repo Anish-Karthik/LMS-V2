@@ -18,6 +18,7 @@ const image = "https://picsum.photos/id/237/900/800"
 const About = ({ href }: { href: string }) => {
   return (
     <LandingHero
+      id="about"
       title={title}
       description={description}
       image={"/artwork-1.png"}

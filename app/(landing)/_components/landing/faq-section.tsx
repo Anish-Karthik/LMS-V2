@@ -15,35 +15,31 @@ import ButtonCard from "./button-card"
 
 const faq1 = [
   {
-    question: "Is it accessible?",
-    answer: "Yes. It adheres to the WAI-ARIA design pattern.",
+    question: "Can someone with no trading experience enroll?",
+    answer: `Yes, certainly! Our program caters to beginners by providing thorough explanations of every aspect of stock trading, starting from the fundamentals. You'll develop a solid foundation in stock trading. Additionally, you'll have access to expert support to address any questions or concerns you may have.`,
   },
   {
-    question: "Is it styled?",
-    answer:
-      "Yes. It comes with default styles that matches the other components' aesthetic.",
+    question: "What do I need to start trading?",
+    answer: `Trading has transitioned to online platforms, making it accessible to everyone. All you need is a device with reliable internet access, such as a laptop, PC, or even a mobile phone, along with a Demat account. We recommend reputable brokers like Upstox to facilitate your trading journey.`,
   },
   {
-    question: "Is it animated?",
-    answer:
-      "Yes. It's animated by default, but you can disable it if you prefer.",
+    question: "Will this training make me a good stock trader?",
+    answer: `You will be learning, interacting, raising questions, trading, and having fun along with a bunch of other driven and experienced stock traders. It’s a continuous learning process. We have everything setup for you to be the best trader.`,
   },
 ]
 
 const faq2 = [
   {
-    question: "Is it accessible?",
-    answer: "Yes. It adheres to the WAI-ARIA design pattern.",
+    question: "What are the segments covered in the program?",
+    answer: `The program covers stocks markets in general and gives the complete foundations on swing trading, long term investment and intraday trading in forex. Swing trading and Long term investments are ideal for employees and Forex Intraday is recommended for students. As an indiviudual swing trader make, more return percentage than the mutual funds with confidence.`,
   },
   {
-    question: "Is it styled?",
-    answer:
-      "Yes. It comes with default styles that matches the other components' aesthetic.",
+    question: "Do you offer your content in any other languages?",
+    answer: `Our program currently incorporates a bilingual approach, blending instruction in both Tamil and English.`,
   },
   {
-    question: "Is it animated?",
-    answer:
-      "Yes. It's animated by default, but you can disable it if you prefer.",
+    question: "When can I start making money after the program?",
+    answer: `Mastering the foundational concepts and honing them through practice in a demo account are essential steps towards becoming a successful trader. Prioritizing skill development over monetary gains is crucial, as money is merely a byproduct. Focusing on trading solely for monetary gain can pose challenges, as it may negatively impact a trader's psychology.`,
   },
 ]
 
@@ -75,13 +71,13 @@ const FAQSection = () => {
                     <AccordionItem key={index} value={item.answer}>
                       <AccordionTrigger className="w-full">
                         <div className="flex w-full items-center justify-between">
-                          <h3 className="text-2xl font-semibold">
+                          <h3 className="text-lg font-semibold">
                             {item.question}
                           </h3>
                         </div>
                       </AccordionTrigger>
                       <AccordionContent className="w-full">
-                        <p className="text-xl">{item.answer}</p>
+                        <p className="text-base">{item.answer}</p>
                       </AccordionContent>
                     </AccordionItem>
                   ))}
@@ -95,13 +91,13 @@ const FAQSection = () => {
                     <AccordionItem key={index} value={item.answer}>
                       <AccordionTrigger className="w-full">
                         <div className="flex w-full items-center justify-between">
-                          <h3 className="text-2xl font-semibold">
+                          <h3 className="text-lg font-semibold">
                             {item.question}
                           </h3>
                         </div>
                       </AccordionTrigger>
                       <AccordionContent className="w-full">
-                        <p className="text-xl">{item.answer}</p>
+                        <p className="text-base">{item.answer}</p>
                       </AccordionContent>
                     </AccordionItem>
                   ))}

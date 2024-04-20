@@ -1,13 +1,8 @@
-"use client"
-
-import React from "react"
 import Image from "next/image"
 import Link from "next/link"
-import { Phone } from "lucide-react"
 
 import { socials } from "@/lib/socials"
 import { cn } from "@/lib/utils"
-import { AnimatedTooltip } from "@/components/animation/animated-tooltip"
 
 const ContactUs = ({ className }: { className?: string }) => {
   console.log(socials)
@@ -15,7 +10,7 @@ const ContactUs = ({ className }: { className?: string }) => {
     <footer
       id="contact"
       className={cn(
-        "footer text-background-color z-10 mt-12 flex w-full flex-col border border-x-transparent border-t-[#33353F]",
+        "footer text-background-color z-10 mt-12 flex w-full flex-col border-t border-x-transparent border-t-[#33353F]",
         className
       )}
     >
@@ -40,12 +35,12 @@ const ContactUs = ({ className }: { className?: string }) => {
             </Link>
           ))} */}
         </div>
-        <Link href={"/policies"} className="flex items-center text-slate-500 underline-offset-2 underline hover:text-slate-300">
+        {/* <Link href={"/policies"} className="flex items-center text-slate-500 underline-offset-2 underline hover:text-slate-300">
           Terms & Conditions
-        </Link>
-        {/* <p className="flex items-center text-slate-500 max-sm:hidden">
+        </Link> */}
+        <p className="flex items-center text-slate-500 max-sm:hidden">
           All rights reserved.
-        </p> */}
+        </p>
       </div>
     </footer>
   )
