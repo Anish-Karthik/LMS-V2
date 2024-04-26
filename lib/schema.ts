@@ -1,4 +1,5 @@
 import { z } from "zod"
+import { doesPhoneNumberAlreadyExist } from "./actions/server/utils"
 
 export const formSchemaName = z.object({
   name: z.string().min(2, {
@@ -18,7 +19,14 @@ export const formSchemaPhoneNo = z.object({
     })
     .max(10, {
       message: "PhoneNo must be at most 10 characters.",
-    }),
+    }).refine((phoneNo) => {
+      if (!phoneNo) return false
+      return !isNaN(Number(phoneNo))
+    }).refine(async (phoneNo) => {
+      return !(await doesPhoneNumberAlreadyExist(phoneNo));
+    }, {
+      message: "Account with that phone number already exists",
+    })
 })
 export const formSchemaDob = z.object({
   dob: z
