@@ -1,17 +1,14 @@
 "use client"
 
-import { useEffect, useState } from "react"
-import { useRouter, useSearchParams } from "next/navigation"
 import classNames from "classnames"
 import { Check } from "lucide-react"
+import { useParams, useRouter, useSearchParams } from "next/navigation"
+import { useEffect, useState } from "react"
 import { useForm } from "react-hook-form"
 import { toast } from "react-hot-toast"
 import { z } from "zod"
 
-import styles from "@/lib/styles.module.css"
-import { useHandleScroll } from "@/lib/useHandleScroll"
-import { multiStepHooksType } from "@/lib/useMultiStepForm"
-import { ObjectType, OnboardingType, callOnce, cn } from "@/lib/utils"
+import { trpc } from "@/app/_trpc/client"
 import { Button } from "@/components/ui/button"
 import {
   Form,
@@ -22,8 +19,12 @@ import {
   FormLabel,
   FormMessage,
 } from "@/components/ui/form"
-import { trpc } from "@/app/_trpc/client"
+import styles from "@/lib/styles.module.css"
+import { useHandleScroll } from "@/lib/useHandleScroll"
+import { multiStepHooksType } from "@/lib/useMultiStepForm"
+import { ObjectType, OnboardingType, callOnce, cn } from "@/lib/utils"
 
+import { getCoursesClient } from "@/lib/actions/server/course.server.action"
 import { DropdownSelectOption } from "./dropdown-select-option/DropdownSelectOption"
 import { DropdownSelect } from "./dropdown-select/DropdownSelect"
 import { Question } from "./question"
@@ -69,6 +70,7 @@ const SelectForm = ({
   const [selectedData, setSelectedData] = useState<string>(data[name])
   const router = useRouter()!
   const searchParams = useSearchParams()!
+  const params = useParams()
   const createUser = trpc.user.create.useMutation()
   const { isSubmitting, isValid } = form.formState
   useEffect(() => {
@@ -115,9 +117,11 @@ const SelectForm = ({
           ...values,
           dob: new Date(data.dob),
         })
+        const course = await getCoursesClient()
         setValidIndex(currentStepIndex)
         toast.success("Form submitted")
-        router.push(`/purchase?${searchParamsUrl}`)
+        if (!course || !course.length) throw new Error("No courses found")
+        router.push(`/purchase/${course[0].id}?${searchParamsUrl}`)
       } catch (error) {
         toast.error("Some Error occurred, try filling again")
         console.log(error)

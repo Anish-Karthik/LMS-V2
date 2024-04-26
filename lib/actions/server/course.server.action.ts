@@ -3,7 +3,7 @@
 import { db } from "@/lib/db"
 
 import { createBatch } from "../batch.action"
-import { addBatchToCourse } from "../course.actions"
+import { addBatchToCourse, getCourses } from "../course.actions"
 import { purchaseCourse } from "../user.actions"
 
 export const createCourse = async ({
@@ -107,4 +107,9 @@ export const performPurchaseAsFree = async ({
     console.error(error)
     throw new Error(error.message)
   }
+}
+
+
+export const getCoursesClient = async () => {
+  return getCourses()
 }

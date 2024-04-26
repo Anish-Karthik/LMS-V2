@@ -14,7 +14,8 @@
     "format:check": "prettier --check \"**/*.{ts,tsx,mdx}\" --cache",
     "precommit": "npm run typecheck && npm run lint:fix && npm run format:write",
     "pretypecheck": "npm run lint:fix && npm run format:write",
-    "postinstall": "prisma generate"
+    "postinstall": "prisma generate",
+    "stripe:webhook": "stripe listen --forward-to localhost:3000/api/webhook"
   },
   "dependencies": {
     "@clerk/nextjs": "^4.25.3",

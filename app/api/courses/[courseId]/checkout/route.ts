@@ -68,7 +68,7 @@ export async function POST(
       !!(
         await db.promo.findFirst({
           where: {
-            code: promo.code,
+            code: promo?.code || "",
             user: {
               OR: [{ role: "student" }, { role: "teacher" }],
             },
