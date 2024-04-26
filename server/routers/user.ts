@@ -35,7 +35,7 @@ export const userRouter = router({
         name: z.string(),
         image: z.string(),
         gender: z.string().optional(),
-        dob: z.date().optional(),
+        dob: z.coerce.date().optional(),
         country: z.string().optional(),
         state: z.string().optional(),
         city: z.string().optional(),
