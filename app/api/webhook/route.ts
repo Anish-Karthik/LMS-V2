@@ -54,7 +54,7 @@ export async function POST(req: Request) {
       await afterReferral(promoCode, userId)
     }
     console.log("******", promoCode)
-    redirect(`/student/courses/${courseId}`)
+    redirect(`/student/dashboard`)
   } else {
     return new NextResponse(
       `Webhook Error: Unhandled event type ${event.type}`,

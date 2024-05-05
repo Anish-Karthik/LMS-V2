@@ -17,7 +17,7 @@ const LandingLayout = async ({ children }: { children: React.ReactNode }) => {
       },
     })
     if (userInfo) {
-      if (userInfo.role === "student") route = "/student/announcements"
+      if (userInfo.role === "student") route = "/student/dashboard"
       if (userInfo.role === "teacher" || userInfo.role === "admin")
         route = "/teacher/dashboard"
     }
