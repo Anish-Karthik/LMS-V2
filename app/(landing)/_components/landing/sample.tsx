@@ -1,6 +1,10 @@
-import React from "react"
-import { motion } from "framer-motion"
+"use client"
 
+import React, { useState } from "react"
+import { motion } from "framer-motion"
+import toast from "react-hot-toast"
+
+import { sendmail } from "@/lib/mailing/mailer"
 import { TypewriterEffectSmooth } from "@/components/animation/typewriter-effect"
 
 const words = [
@@ -17,8 +21,32 @@ const words = [
 ]
 
 const ContactForm: React.FC = () => {
+  const [data, setData] = useState<{
+    name: string
+    email: string
+    message: string
+  }>({
+    name: "",
+    email: "",
+    message: "",
+  })
   const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault()
+    try {
+      await sendmail({
+        to: [process.env.EMAIL!],
+        subject: "Contact Us",
+        from: data.email,
+        text: `${data.name} has sent you a message: \n\n ${data.message} \n\n You can reply to them at ${data.email}`,
+      })
+      toast.success("Mailed sent successfully")
+    } catch (error) {
+      setData({
+        name: "",
+        email: "",
+        message: "",
+      })
+    }
     console.log("Form submitted")
   }
 
@@ -60,6 +88,8 @@ const ContactForm: React.FC = () => {
                 placeholder="Your Name"
                 className="rounded-md border-2 border-gray-300 bg-transparent p-2 text-white transition-colors duration-300 placeholder:text-gray-300 focus:border-pink-300 focus:outline-none focus:ring-2 focus:ring-pink-500"
                 type="text"
+                value={data.name}
+                onChange={(e) => setData({ ...data, name: e.target.value })}
               />
             </div>
             <div className="flex flex-col gap-2">
@@ -68,6 +98,8 @@ const ContactForm: React.FC = () => {
                 placeholder="Your Email"
                 className="rounded-md border-2 border-gray-300 bg-transparent p-2 text-white transition-colors duration-300 placeholder:text-gray-300 focus:border-pink-300 focus:outline-none focus:ring-2 focus:ring-pink-500"
                 type="email"
+                value={data.email}
+                onChange={(e) => setData({ ...data, email: e.target.value })}
               />
             </div>
             <div className="flex flex-col gap-2">
@@ -77,6 +109,8 @@ const ContactForm: React.FC = () => {
                 className="rounded-md border-2 border-gray-300 bg-transparent p-2 text-white transition-colors duration-300 placeholder:text-gray-300 focus:border-pink-300 focus:outline-none focus:ring-2 focus:ring-pink-500"
                 cols={30}
                 rows={5}
+                value={data.message}
+                onChange={(e) => setData({ ...data, message: e.target.value })}
               ></textarea>
             </div>
             <button

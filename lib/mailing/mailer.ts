@@ -11,18 +11,20 @@ const sender = nodemailer.createTransport({
 })
 
 export async function sendmail({
+  from,
   to,
   subject,
   text,
   html,
 }: {
+  from?: string
   to: string[]
   subject?: string
   text?: string
   html?: any
 }) {
   const info = await sender.sendMail({
-    from: process.env.MAIL_USER,
+    from: from || process.env.MAIL_USER,
     to,
     subject,
     text,

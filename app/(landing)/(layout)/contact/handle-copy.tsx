@@ -5,8 +5,15 @@ import { Copy } from "lucide-react"
 import { toast } from "react-hot-toast"
 
 import { Button } from "@/components/ui/button"
+import { cn } from "@/lib/utils"
 
-const HandleCopy = ({ text }: { text: string }) => {
+const HandleCopy = ({
+  text,
+  className,
+}: {
+  text: string
+  className?: string
+}) => {
   const handleCopy = (text: string) => {
     navigator.clipboard.writeText(text)
     toast.success("Copied to clipboard")
@@ -15,7 +22,7 @@ const HandleCopy = ({ text }: { text: string }) => {
     <Button
       onClick={() => handleCopy(text)}
       variant={"ghost"}
-      className="flex items-center gap-2"
+      className={cn("flex items-center gap-2", className)}
     >
       <Copy size={20} />
     </Button>

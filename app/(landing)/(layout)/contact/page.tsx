@@ -1,4 +1,5 @@
-"use client"
+import Link from "next/link"
+import { LocateIcon, MailIcon, Map, PhoneIcon } from "lucide-react"
 
 import { BackgroundBeams } from "@/components/animation/background-beams"
 import { TypewriterEffectSmooth } from "@/components/animation/typewriter-effect"
@@ -6,6 +7,8 @@ import { TypewriterEffectSmooth } from "@/components/animation/typewriter-effect
 import ContactUs from "@/app/(landing)/_components/landing/contact-us"
 
 import ContactForm from "../../_components/landing/sample"
+import HandleCopy from "./handle-copy"
+import { LocationCity } from "@mui/icons-material"
 
 const words = [
   {
@@ -24,22 +27,70 @@ const page = () => {
   return (
     <section className="mt-20 h-full w-full bg-black">
       <BackgroundBeams />
-      <div style={{ display: "flex", alignItems: "center" }}>
-        <div style={{ flex: 1 }}>
+      <div className="flex flex-col items-center">
+        <div className="flex justify-evenly flex-wrap ">
           <div
-            className="bl"
-            style={{
-              paddingLeft: "3rem",
-              marginTop: "50px",
-              marginLeft: "50px",
-              height: "400px",
-              width: "500px",
-              margin: "auto",
-            }}
+            className=" md:pl-12 md:mt-12 md:ml-12 w-[500px] md:m-auto"
+            // style={{
+            //   paddingLeft: "3rem",
+            //   marginTop: "50px",
+            //   marginLeft: "50px",
+            //   height: "400px",
+            //   width: "500px",
+            //   margin: "auto",
+            // }}
           >
-            <TypewriterEffectSmooth words={words} className="ml-16" />
+            <TypewriterEffectSmooth words={words} className="ml-16 max-md:scale-150 max-md:ml-40" />
             <ContactForm />
             {/* <ContactForm /> */}
+          </div>
+          <div className="bg-gradient-to-r from-orange-500 to-pink-500 bg-clip-text text-transparent">
+            <div className="flex flex-col gap-3 py-3 pl-3">
+              {/* heading contact Details */}
+              <h1 className="text-3xl font-bold text-pink-600 mt-24">
+                Contact Details
+              </h1>
+              <div className="flex justify-between">
+                <Link
+                  href={`mailto:${process.env.EMAIL}`}
+                  target="_blank"
+                  className="flex items-center gap-2 "
+                >
+                  <MailIcon width={30} height={30} className="text-pink-600"/>
+                  <p className="text-underlined">{process.env.EMAIL}</p>
+                </Link>
+                {/* <HandleCopy className={"text-purple-800"} text={process.env.EMAIL!} /> */}
+              </div>
+              <div className="flex justify-between">
+                <Link
+                  href={`tel:${process.env.PHONE}`}
+                  target="_blank"
+                  className="flex items-center gap-2 "
+                >
+                  <PhoneIcon width={30} height={30} className="text-pink-600"/>
+                  <p className="text-underlined">{process.env.PHONE}</p>
+                </Link>
+                {/* <HandleCopy className={"text-purple-800"} text={process.env.PHONE!} /> */}
+              </div>
+              {/* 30/4, Nehru Nagar, 
+Shanthi Medu, 
+Coimbatore 641019 */}
+              <div className="flex justify-between">
+                <Link
+                  href={`https://goo.gl/maps/4Vjv8J7vZQyX3wZm6`}
+                  target="_blank"
+                  className="flex items-center gap-2 "
+                >
+                  <Map width={30} height={30} className="text-pink-600"/>
+                  <p className="text-underlined">
+                    {"30/4, Nehru Nagar, Shanthi Medu, Coimbatore 641019"}
+                  </p>
+                </Link>
+                {/* <HandleCopy className={"text-purple-800"}
+                  text={"30/4, Nehru Nagar, Shanthi Medu, Coimbatore 641019"}
+                /> */}
+              </div>
+            </div>
           </div>
         </div>
         <ContactUs className="z-40 lg:fixed lg:inset-x-0 lg:-bottom-1" />
@@ -69,7 +120,7 @@ const page = () => {
     //                 <social.icon width={40} height={40} />
     //                 {/* <p className="text-underlined">{social.href}</p> */}
     //               </Link>
-    //               {/* <HandleCopy text={social.href} /> */}
+    //               {/* <HandleCopy className={"text-purple-800"} text={social.href} /> */}
     //             </div>
     //           )
     //         )}
@@ -89,7 +140,7 @@ const page = () => {
     //                   {social.href}
     //                 </p>
     //               </Link>
-    //               {/* <HandleCopy text={social.href} /> */}
+    //               {/* <HandleCopy className={"text-purple-800"} text={social.href} /> */}
     //             </div>
     //           )
     //         )}
