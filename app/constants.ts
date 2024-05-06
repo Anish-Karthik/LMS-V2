@@ -214,8 +214,8 @@ export const landingRoutes = [
     href: "/testimonials",
   },
   // {
-  //   label: "Purchase",
-  //   href: "/purchase",
+  //   label: "Policies",
+  //   href: "/policies",
   // },
 ]
 

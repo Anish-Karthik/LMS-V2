@@ -169,10 +169,10 @@ const termsAndConditions: (NestedSection | SimpleSection)[] = [
   //     <span>
   //       By email:{" "}
   //       <Link
-  //         href={"mailto:praglis.media@gmail.com"}
+  //         href={`mailto:${process.env.EMAIL}`}
   //         className="text-blue-500 underline hover:text-blue-400"
   //       >
-  //         praglis.media@gmail.com
+  //         {process.env.EMAIL}
   //       </Link>
   //     </span>,
   //     `within the jurisdiction of the applicable laws of Coimbatore, India.`,
@@ -188,10 +188,10 @@ const termsAndConditions: (NestedSection | SimpleSection)[] = [
         decision by means of a clear statement. You can inform us of your
         decision By email:{" "}
         <Link
-          href={"mailto:praglis.media@gmail.com"}
+          href={`mailto:${process.env.EMAIL}`}
           className="text-blue-500 underline hover:text-blue-400"
         >
-          praglis.media@gmail.com
+          {process.env.EMAIL}
         </Link>
       </span>,
     ],
@@ -211,10 +211,10 @@ const termsAndConditions: (NestedSection | SimpleSection)[] = [
       <span>
         By email:{" "}
         <Link
-          href={"mailto:praglis.media@gmail.com"}
+          href={`mailto:${process.env.EMAIL}`}
           className="text-blue-500 underline hover:text-blue-400"
         >
-          praglis.media@gmail.com
+          {process.env.EMAIL}
         </Link>
       </span>,
       `within the jurisdiction of the applicable laws of Coimbatore, India.`,
@@ -232,14 +232,48 @@ const termsAndConditions: (NestedSection | SimpleSection)[] = [
         If you have any questions about our privacy policy or how we handle your
         personal information, you can contact us at{" "}
         <Link
-          href={"mailto:praglis.media@gmail.com"}
+          href={`mailto:${process.env.EMAIL}`}
           className="text-blue-500 underline hover:text-blue-400"
         >
-          praglis.media@gmail.com
+          {process.env.EMAIL}
         </Link>
         . Your privacy and security are important to us, and we are committed to
         ensuring that your personal data is handled responsibly and in
         accordance with this policy.
+      </span>,
+    ],
+  },
+  {
+    sectionType: "SIMPLE",
+    heading: "Cancellation Policy",
+    content: [
+      `We understand that scheduling conflicts can arise. However, due to the nature of our programs, cancellations are not permitted.`,
+    ],
+  },
+  {
+    sectionType: "SIMPLE",
+    heading: "Rescheduling Option",
+    content: [
+      `We do offer the option to reschedule your registration to another training date/event hosted by Praglis, its affiliates, subsidiaries, or successors. To be eligible to reschedule, you must provide us with at least five (5) days written or electronic (emailed) notice before the originally scheduled date of your training.`,
+    ],
+  },
+  {
+    sectionType: "SIMPLE",
+    heading: "How to Reschedule",
+    content: [
+      <span>
+        Inform us of your intention to reschedule by email:{" "}
+        <Link
+          href={`mailto:${process.env.EMAIL}`}
+          className="text-blue-500 underline hover:text-blue-400"
+        >
+          {process.env.EMAIL}
+        </Link>
+      </span>,
+      `In your email, clearly state your intention to reschedule and your preferred new training date.`,
+
+      <span className="italic">
+        Please note: This policy applies to all registrants.
       </span>,
     ],
   },

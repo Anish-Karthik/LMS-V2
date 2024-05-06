@@ -41,9 +41,10 @@ const data: {
       { title: "Terms & Conditions", href: "/policies#terms" },
       { title: "Privacy", href: "/policies#privacy" },
       { title: "Refund", href: "/policies#refund" },
-      // { title: "Cookies", href: "/policies#cookie" },
+      { title: "Cancellation", href: "/policies#cancellation" },
     ],
   },
+
 ]
 
 const PoliciesFooter = ({ className }: { className?: string }) => {
