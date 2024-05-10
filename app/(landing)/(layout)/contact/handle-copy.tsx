@@ -4,8 +4,8 @@ import React from "react"
 import { Copy } from "lucide-react"
 import { toast } from "react-hot-toast"
 
-import { Button } from "@/components/ui/button"
 import { cn } from "@/lib/utils"
+import { Button } from "@/components/ui/button"
 
 const HandleCopy = ({
   text,

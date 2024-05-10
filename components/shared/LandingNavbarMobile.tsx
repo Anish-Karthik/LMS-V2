@@ -36,7 +36,7 @@ const LandingNavbarMobile = () => {
                     href={landingRoute.href}
                     key={landingRoute.href}
                     className={cn(
-                      "text-pink-500 text-lg hover:text-blue-400",
+                      "text-lg text-pink-500 hover:text-blue-400",
                       pathname === landingRoute.href && "text-blue-500",
                       "rounded-md px-4 py-2",
                       "transition-colors duration-300 ease-in-out"

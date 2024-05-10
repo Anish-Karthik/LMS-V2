@@ -1,14 +1,18 @@
 "use client"
 
+import { useEffect, useState } from "react"
+import { useParams, useRouter, useSearchParams } from "next/navigation"
 import classNames from "classnames"
 import { Check } from "lucide-react"
-import { useParams, useRouter, useSearchParams } from "next/navigation"
-import { useEffect, useState } from "react"
 import { useForm } from "react-hook-form"
 import { toast } from "react-hot-toast"
 import { z } from "zod"
 
-import { trpc } from "@/app/_trpc/client"
+import { getCoursesClient } from "@/lib/actions/server/course.server.action"
+import styles from "@/lib/styles.module.css"
+import { useHandleScroll } from "@/lib/useHandleScroll"
+import { multiStepHooksType } from "@/lib/useMultiStepForm"
+import { ObjectType, OnboardingType, callOnce, cn } from "@/lib/utils"
 import { Button } from "@/components/ui/button"
 import {
   Form,
@@ -19,12 +23,8 @@ import {
   FormLabel,
   FormMessage,
 } from "@/components/ui/form"
-import styles from "@/lib/styles.module.css"
-import { useHandleScroll } from "@/lib/useHandleScroll"
-import { multiStepHooksType } from "@/lib/useMultiStepForm"
-import { ObjectType, OnboardingType, callOnce, cn } from "@/lib/utils"
+import { trpc } from "@/app/_trpc/client"
 
-import { getCoursesClient } from "@/lib/actions/server/course.server.action"
 import { DropdownSelectOption } from "./dropdown-select-option/DropdownSelectOption"
 import { DropdownSelect } from "./dropdown-select/DropdownSelect"
 import { Question } from "./question"

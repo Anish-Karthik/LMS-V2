@@ -44,7 +44,6 @@ const data: {
       { title: "Cancellation", href: "/policies#cancellation" },
     ],
   },
-
 ]
 
 const PoliciesFooter = ({ className }: { className?: string }) => {

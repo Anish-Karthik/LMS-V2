@@ -28,7 +28,7 @@ const page = () => {
     <section className="mt-20 h-full w-full bg-black">
       <BackgroundBeams />
       <div className="flex flex-col items-center bg-black">
-        <div className="flex justify-evenly flex-wrap gap-7">
+        <div className="flex flex-wrap justify-evenly gap-7">
           <div
             className="w-[500px] md:m-auto"
             // style={{
@@ -42,12 +42,12 @@ const page = () => {
           >
             <TypewriterEffectSmooth
               words={words}
-              className="ml-16 max-md:scale-150 max-md:ml-40"
+              className="ml-16 max-md:ml-40 max-md:scale-150"
             />
             <ContactForm />
             {/* <ContactForm /> */}
           </div>
-          <section className="bg-purple-color/10 z-50 md:mt-28 h-fit pr-3 rounded-lg max-md:w-96">
+          <section className="bg-purple-color/10 z-50 h-fit rounded-lg pr-3 max-md:w-96 md:mt-28">
             <div className="bg-gradient-to-r from-orange-500 to-pink-500 bg-clip-text text-transparent">
               <div className="flex flex-col gap-3 py-3 pl-3">
                 {/* heading contact Details */}

@@ -109,7 +109,6 @@ export const performPurchaseAsFree = async ({
   }
 }
 
-
 export const getCoursesClient = async () => {
   return getCourses()
 }
