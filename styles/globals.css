@@ -54,14 +54,13 @@
     --purple-color: 263 76.2 53.9;
 
     --background-color: 50 50 50; /* black */
-    --text-primary: 250 248 241; /* white */ 
-    --text-secondary: 	253 185 0; /* yellow */
+    --text-primary: 250 248 241; /* white */
+    --text-secondary: 253 185 0; /* yellow */
     --primary-color: 118 208 234; /* blue */
     --secondary-color: 227 45 87; /* red */
     --tertiary-color: 49 10 62; /* purple */
     --quaternary-color: 104 213 151; /* green */
     --dark-background: 224 71% 4%;
-
   }
 
   .dark {
@@ -100,8 +99,8 @@
     --purple-color: 263 76.2 53.9;
 
     --background-color: 50 50 50; /* black */
-    --text-primary: 250 248 241; /* white */ 
-    --text-secondary: 	253 185 0; /* yellow */
+    --text-primary: 250 248 241; /* white */
+    --text-secondary: 253 185 0; /* yellow */
     --primary-color: 118 208 234; /* blue */
     --secondary-color: 227 45 87; /* red */
     --tertiary-color: 49 10 62; /* purple */
@@ -179,7 +178,6 @@
       margin-top: 32px;
     }
   }
-
 }
 
 .no-focus {
@@ -204,7 +202,6 @@
 .form_message {
   @apply text-lg sm:text-xl !important;
 }
-
 
 .account-form_image-label {
   @apply flex h-24 w-24 items-center justify-center rounded-full bg-secondary-foreground !important;
@@ -237,7 +234,7 @@ input[type="text"] {
   @apply relative flex flex-col items-center gap-2 rounded-lg p-2 sm:flex-1 sm:px-2 sm:py-2.5;
 }
 
-  /* User card */
+/* User card */
 .user-card {
   @apply flex flex-col justify-between gap-4 rounded-xl bg-secondary p-4 sm:flex-row sm:items-center;
 }
@@ -251,21 +248,35 @@ input[type="text"] {
 }
 
 .landing-section_header {
-  @apply text-xl xs:text-2xl sm:text-3xl md:text-4xl font-bold;
+  @apply text-4xl md:text-5xl lg:text-6xl font-bold;
+}
+.landing-section_header_description {
+  @apply text-3xl md:text-4xl font-bold;
+}
+.landing-section_cursor {
+  @apply h-10 md:h-12 lg:h-14 !important;
 }
 
 .landing-section_description {
   @apply text-base xs:text-lg sm:text-xl md:text-2xl font-orbitron mt-1;
 }
 
-h1, h2, h3, h4 {
+h1,
+h2,
+h3,
+h4 {
   @apply font-orbitron;
 }
-a, button, input, textarea, .btn, p {
+a,
+button,
+input,
+textarea,
+select,
+.btn,
+p {
   @apply font-abeezee;
 }
 
-
 @import "~@uploadthing/react/styles.css";
-@import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400..900&display=swap');
-@import url('https://fonts.googleapis.com/css2?family=ABeeZee:ital@0;1&family=Orbitron&display=swap')
+@import url("https://fonts.googleapis.com/css2?family=Orbitron:wght@400..900&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=ABeeZee:ital@0;1&family=Orbitron&display=swap");

@@ -51,18 +51,13 @@ const words = [
   {
     text: "6",
     className:
-      "rounded-md bg-gradient-to-r from-orange-500 to-pink-500 bg-clip-text text-transparent",
+      "rounded-md bg-gradient-to-r from-orange-500 to-pink-500 bg-clip-text text-transparent landing-section_header",
   },
   {
     text: "Reasons",
     className:
-      "rounded-md bg-gradient-to-r from-pink-500 to-violet-500 bg-clip-text text-transparent",
+      "rounded-md bg-gradient-to-r from-pink-500 to-violet-500 bg-clip-text text-transparent landing-section_header",
   },
-  // {
-  //   text: "Advantages",
-  //   className:
-  //     "rounded-md bg-gradient-to-r from-purple-500 to-indigo-500 bg-clip-text text-transparent",
-  // },
 ]
 const ReasonsSection = () => {
   const ref = useRef(null)
@@ -74,7 +69,7 @@ const ReasonsSection = () => {
     >
       <div className="max-w-3xl">
         <center>
-          <h1 className="landing-section_header relative mb-16">
+          <h1 className="landing-section_header_description relative mb-16">
             <Image
               className="absolute -left-0 z-[-1] translate-y-[-25px] scale-75 opacity-50 sm:scale-100"
               src="/landing/brain.svg"
@@ -84,7 +79,8 @@ const ReasonsSection = () => {
             />
             <TypewriterEffectSmooth
               words={words}
-              className="mx-auto justify-center text-center"
+              className="mx-auto justify-center text-center "
+              cursorClassName="landing-section_cursor"
             />
             <span>
               why you need a{" "}
