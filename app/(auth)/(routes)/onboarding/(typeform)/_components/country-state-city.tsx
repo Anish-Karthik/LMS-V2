@@ -197,7 +197,6 @@ export default function CountryStateCityForm({
                     />
                   )}
                 </FormControl>
-                <FormDescription>Select your {name}.</FormDescription>
                 <FormMessage />
               </FormItem>
             )}

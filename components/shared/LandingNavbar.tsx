@@ -98,7 +98,7 @@ const LandingNavbar = ({
             >
               {!route || route.includes("purchase")
                 ? "Purchase Now"
-                : "Get Started"}
+                : "Dashboard"}
             </Button>
           </Link>
         )}

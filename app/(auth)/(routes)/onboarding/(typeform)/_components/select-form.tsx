@@ -210,9 +210,6 @@ const SelectForm = ({
                     </DropdownSelect>
                   </div>
                 </FormControl>
-                <FormDescription>
-                  This is your public display {name}.
-                </FormDescription>
                 <FormMessage />
               </FormItem>
             )}

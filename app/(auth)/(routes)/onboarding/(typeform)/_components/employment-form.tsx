@@ -163,7 +163,6 @@ export default function EmploymentForm({
                     </div>
                   )}
                 </FormControl>
-                <FormDescription>Select your EmploymentStatus.</FormDescription>
                 <FormMessage />
               </FormItem>
             )}

@@ -1,36 +1,23 @@
 "use client"
 
-import { useEffect, useMemo, useState } from "react"
-import { useRouter } from "next/navigation"
 import { firstTimeRender } from "@/store/atoms"
 import { zodResolver } from "@hookform/resolvers/zod"
 import { Batch, Promo } from "@prisma/client"
-import axios from "axios"
+import { useRouter } from "next/navigation"
+import { useEffect, useMemo, useState } from "react"
 import { useForm } from "react-hook-form"
 import toast from "react-hot-toast"
 import { useRecoilState } from "recoil"
 import * as z from "zod"
 
-import { performPurchaseAsFree } from "@/lib/actions/server/course.server.action"
-import { getUserClient } from "@/lib/actions/server/user.server.action"
-import { formatPrice } from "@/lib/format"
-import {
-  CreateOrderRequest,
-  CreateOrderResponse,
-  PaymentResponse,
-  RazorpayCheckoutRequestBody,
-  makePayment,
-} from "@/lib/make-payment"
-import { useDebounce } from "@/hooks/use-debounce"
 import { Button } from "@/components/ui/button"
 import {
   Form,
-  FormControl,
   FormDescription,
   FormField,
   FormItem,
   FormLabel,
-  FormMessage,
+  FormMessage
 } from "@/components/ui/form"
 import {
   Select,
@@ -39,6 +26,12 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select"
+import { useDebounce } from "@/hooks/use-debounce"
+import { performPurchaseAsFree } from "@/lib/actions/server/course.server.action"
+import { formatPrice } from "@/lib/format"
+import {
+  makePayment
+} from "@/lib/make-payment"
 
 interface CourseEnrollButtonProps {
   userId: string
@@ -114,7 +107,12 @@ const CourseEnrollButton = ({
         price,
         batchId: values.batch,
         promoCode: promo?.code,
-        setPurchasing,
+        setPurchasing: (val: boolean) => {
+          setPurchasing(val)
+          if (val === false) {
+            router.push(`/student/dashboard`)
+          }
+        }
       })
       // const response = await axios.post(`/api/courses/${courseId}/checkout`, {
       //   userId,

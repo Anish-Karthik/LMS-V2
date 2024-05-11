@@ -198,9 +198,6 @@ function FormBodyComponent({
               <FormLabel className="form_heading capitalize">
                 {formHead || name}
               </FormLabel>
-              <FormDescription className="form_description">
-                This is your public display {name}.
-              </FormDescription>
               <FormControl>
                 {type !== "select" ? (
                   !enterDelay && (
