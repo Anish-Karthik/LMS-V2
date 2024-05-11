@@ -49,7 +49,7 @@ const details = [
 const DetailsSection = ({ href }: { href: string }) => {
   return (
     <section
-      className="!max-w-screen md:min-w-6xl bg-black max-xl:px-5"
+      className="md:min-w-6xl w-full bg-black max-xl:px-5"
       id="main-details"
     >
       {details.map((detail, index) => (
@@ -77,13 +77,13 @@ function DetailCard({
   href: string
 }) {
   return (
-    <div className="max-xs:max-w-2xs my-8 max-sm:max-w-xs sm:w-full ">
+    <div className="max-xs:max-w-2xs mx-auto my-8 max-sm:max-w-xs sm:w-full">
       <div className="relative w-full">
         <div className="absolute -inset-0 h-full w-full scale-[0.80] rounded-full bg-red-500 bg-gradient-to-r from-blue-500 to-teal-500 blur-3xl" />
-        <div className="relative flex h-full w-full flex-col  items-start justify-end overflow-hidden rounded-2xl border border-gray-800 bg-gray-900 shadow-xl">
+        <div className="relative flex h-full w-full flex-col items-start justify-end overflow-hidden rounded-2xl border border-gray-800 bg-gray-900 shadow-xl">
           <div
             className={cn(
-              "max-xs:max-w-2xs flex w-full flex-col items-center  rounded-lg p-4 max-lg:gap-6 max-lg:text-center max-sm:max-w-xs sm:w-full lg:grid lg:grid-cols-2",
+              "max-xs:max-w-2xs flex w-full flex-col items-center  rounded-lg p-4 max-lg:gap-6 max-lg:text-center max-sm:max-w-xs sm:w-full md:grid md:grid-cols-2",
               className
             )}
           >
@@ -96,10 +96,10 @@ function DetailCard({
                   {subheading}
                 </h2>
               </div>
-              <p className="landing-section_description max-xs:max-w-2xs !font-abeezee max-sm:max-w-xs">
+              <p className="landing-section_description max-xs:max-w-2xs !font-abeezee max-md:px-2 max-sm:max-w-xs">
                 {description}
               </p>
-              <div className="mt-2 flex w-full gap-4 max-lg:justify-center">
+              <div className="mt-2 flex w-full gap-4 max-lg:justify-center max-md:hidden">
                 <Link href={href}>
                   <button className="animate-shimmer inline-flex h-12 items-center justify-center rounded-md border border-slate-200 bg-[linear-gradient(110deg,#fffefc,45%,#e1d9ce,55%,#fffefc)] bg-[length:200%_100%] px-6 font-medium text-slate-800 transition-colors focus:outline-none focus:ring-2 focus:ring-slate-400 focus:ring-offset-2 focus:ring-offset-slate-50">
                     Enroll Now
@@ -107,7 +107,7 @@ function DetailCard({
                 </Link>
               </div>
             </div>
-            <div className="p-3 max-lg:mx-4 max-sm:hidden lg:p-16">
+            <div className="p-3 max-lg:mx-4 lg:p-16">
               <Image
                 src={image}
                 alt="hero"
@@ -115,6 +115,13 @@ function DetailCard({
                 height={500}
                 className="rounded-md"
               />
+            </div>
+            <div className="mt-2 flex w-full gap-4 max-lg:justify-center md:hidden">
+              <Link href={href}>
+                <button className="animate-shimmer inline-flex h-12 items-center justify-center rounded-md border border-slate-200 bg-[linear-gradient(110deg,#fffefc,45%,#e1d9ce,55%,#fffefc)] bg-[length:200%_100%] px-6 font-medium text-slate-800 transition-colors focus:outline-none focus:ring-2 focus:ring-slate-400 focus:ring-offset-2 focus:ring-offset-slate-50">
+                  Enroll Now
+                </button>
+              </Link>
             </div>
           </div>
           <Meteors

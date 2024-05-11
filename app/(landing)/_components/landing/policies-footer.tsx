@@ -56,15 +56,15 @@ const PoliciesFooter = ({ className }: { className?: string }) => {
         className
       )}
     >
-      <div className="container flex justify-between gap-2 py-6 sm:px-12">
+      <div className="container flex flex-1 justify-between gap-2 py-6 sm:px-12">
         {data.map((item, index) => (
           <div key={index} className="flex flex-col gap-2">
-            <h3 className="text-xl font-semibold">{item.heading}</h3>
+            <h3 className="text-sm font-semibold sm:text-xl">{item.heading}</h3>
             {item.contents.map((content, index) => (
               <Link
                 href={content.href}
                 key={index}
-                className="text-slate-500 underline underline-offset-2 ease-in-out hover:text-slate-300"
+                className="text-slate-500 underline underline-offset-2 ease-in-out hover:text-slate-300 max-sm:text-xs"
               >
                 {content.title}
               </Link>

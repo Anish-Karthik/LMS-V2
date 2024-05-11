@@ -40,7 +40,7 @@ const AnnouncementPage = ({
     return false
   })
   return (
-    <div className="flex flex-col">
+    <div className="flex h-full w-full flex-col">
       {
         <div className="max-w-[600px] p-5">
           <AnnouncementCategory

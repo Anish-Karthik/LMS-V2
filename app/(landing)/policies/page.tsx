@@ -319,7 +319,7 @@ const displaySections = (arr: typeof termsAndConditions) => {
 
 const page = () => {
   return (
-    <main className="w-full">
+    <main className="w-full max-xl:mt-20">
       <section
         className="mx-auto mb-12 flex w-full max-w-7xl flex-col gap-5 p-2 pt-32 max-xl:p-6"
         id={"terms"}

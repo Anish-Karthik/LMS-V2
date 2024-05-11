@@ -25,12 +25,12 @@ const words = [
 
 const page = () => {
   return (
-    <section className="mt-20 h-full w-full bg-black">
+    <section className="mt-20 h-full w-full bg-black p-2 max-md:!w-[100vw]">
       <BackgroundBeams />
-      <div className="flex flex-col items-center bg-black">
-        <div className="flex flex-wrap justify-evenly gap-7">
+      <div className="flex w-full flex-col items-center bg-black">
+        <div className="flex !w-full flex-wrap justify-evenly gap-7">
           <div
-            className="w-[500px] md:m-auto"
+            className="mx-auto w-full sm:w-[500px] md:m-auto"
             // style={{
             //   paddingLeft: "3rem",
             //   marginTop: "50px",
@@ -38,16 +38,18 @@ const page = () => {
             //   height: "400px",
             //   width: "500px",
             //   margin: "auto",
+            // ml-16 max-md:ml-40 max-md:scale-150
             // }}
           >
-            <TypewriterEffectSmooth
-              words={words}
-              className="ml-16 max-md:ml-40 max-md:scale-150"
-            />
+            <div className="flex w-full items-center justify-center text-3xl">
+              <h1 className="bg-gradient-to-r from-orange-500 to-pink-500 bg-clip-text text-transparent">
+                Contact Us
+              </h1>
+            </div>
             <ContactForm />
             {/* <ContactForm /> */}
           </div>
-          <section className="bg-purple-color/10 z-50 h-fit rounded-lg pr-3 max-md:w-96 md:mt-28">
+          <section className="bg-purple-color/10 z-50 h-fit w-full rounded-lg pr-3 sm:w-96 md:mt-28">
             <div className="bg-gradient-to-r from-orange-500 to-pink-500 bg-clip-text text-transparent">
               <div className="flex flex-col gap-3 py-3 pl-3">
                 {/* heading contact Details */}

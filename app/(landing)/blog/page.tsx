@@ -1,12 +1,7 @@
-import React from "react"
 import { currentUser } from "@clerk/nextjs"
-import { NotificationAddSharp } from "@mui/icons-material"
 
 import { getAnnouncements } from "@/lib/actions/announcement.action"
-import { getAllBatches } from "@/lib/actions/batch.action"
-import { getCourses } from "@/lib/actions/course.actions"
 import { getUser } from "@/lib/actions/user.actions"
-import LandingNavbar from "@/components/shared/LandingNavbar"
 import AnnouncementPage from "@/components/shared/announcement-page"
 import ContactUs from "@/app/(landing)/_components/landing/contact-us"
 
@@ -23,8 +18,8 @@ const page = async () => {
 
   return (
     <div className="h-full w-full">
-      <div className="mx-auto mb-24 mt-12 flex max-w-4xl flex-col items-start">
-        <div className="ml-4 mt-8">
+      <div className="mx-auto mb-24 mt-12 flex w-full max-w-4xl flex-col items-start">
+        <div className="ml-4 mt-8 w-full">
           <h1 className="text-center text-4xl font-bold">
             Latest Blogs from PRAGLIS
           </h1>

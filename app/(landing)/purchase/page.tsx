@@ -56,11 +56,7 @@ const page = async ({
         <About href={`/purchase/${courseId}?${searchParamsUrl}`} />
         <ReasonsSection />
         <AdvantagesSection />
-        <div className="w-full bg-black">
-          <div className="mx-auto max-w-[80%] bg-black">
-            <DetailsSection href={`/purchase/${courseId}?${searchParamsUrl}`} />
-          </div>
-        </div>
+        <DetailsSection href={`/purchase/${courseId}?${searchParamsUrl}`} />
         <ReviewsSection />
         <PurchaseSection courseId={courseId} searchUrl={searchParamsUrl} />
         <FAQSection />
