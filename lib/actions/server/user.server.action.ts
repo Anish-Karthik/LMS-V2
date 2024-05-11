@@ -18,6 +18,10 @@ type CreateUserProps = {
   employmentStatus?: string
   howDidHear?: string
 }
+
+export const getUserClient = async (userId: string) => {
+  return getUser(userId)
+}
 // Has Replaced by TRPC in client
 export const createUser = async ({
   userId,

@@ -12,7 +12,15 @@ import { useRecoilState } from "recoil"
 import * as z from "zod"
 
 import { performPurchaseAsFree } from "@/lib/actions/server/course.server.action"
+import { getUserClient } from "@/lib/actions/server/user.server.action"
 import { formatPrice } from "@/lib/format"
+import {
+  CreateOrderRequest,
+  CreateOrderResponse,
+  PaymentResponse,
+  RazorpayCheckoutRequestBody,
+  makePayment,
+} from "@/lib/make-payment"
 import { useDebounce } from "@/hooks/use-debounce"
 import { Button } from "@/components/ui/button"
 import {
@@ -39,6 +47,7 @@ interface CourseEnrollButtonProps {
   originalPrice: number
   batches: Batch[]
 }
+
 const batchSelectSchema = z.object({
   batch: z.string({
     required_error: "Please select an email to display.",
@@ -52,6 +61,7 @@ const CourseEnrollButton = ({
   originalPrice,
   batches,
 }: CourseEnrollButtonProps) => {
+  const [purchasing, setPurchasing] = useState(false)
   const [isFirstTimeRendered, setIsFirstTimeRendered] =
     useRecoilState(firstTimeRender)
   const debouncedValue = useDebounce(isFirstTimeRendered, 2000)
@@ -98,30 +108,45 @@ const CourseEnrollButton = ({
         return
       }
       console.log("not free")
-      const response = await axios.post(`/api/courses/${courseId}/checkout`, {
+      await makePayment({
+        courseId,
         userId,
         price,
         batchId: values.batch,
-        promo: promo || null,
+        promoCode: promo?.code,
+        setPurchasing,
       })
+      // const response = await axios.post(`/api/courses/${courseId}/checkout`, {
+      //   userId,
+      //   price,
+      //   batchId: values.batch,
+      //   promo: promo || null,
+      // })
 
-      router.push(response.data.url)
+      router.push(`/student/dashboard`)
     } catch (error: any) {
+      console.error(error)
+      console.log("error", error)
       toast.error("Something went wrong")
     }
   }
 
   return (
     <div className="relative mt-3 flex w-full flex-col gap-3">
+      {purchasing && (
+        <div className="fixed inset-0 flex items-center justify-center bg-gray-100/50">
+          <div className="h-20 w-20 animate-spin rounded-full border-4 border-gray-900" />
+        </div>
+      )}
       {isSubmitting && (
         <div className="absolute inset-0 flex items-center justify-center bg-gray-100/50">
-          <div className="h-20 w-20 animate-spin rounded-full border-4 border-gray-900"></div>
+          <div className="h-20 w-20 animate-spin rounded-full border-4 border-gray-900" />
         </div>
       )}
       {!batches.length || debouncedValue ? (
         <div className="flex flex-col gap-3">
-          <div className="h-9 w-full animate-pulse rounded-md bg-gray-100"></div>
-          <div className="h-9 w-full animate-pulse rounded-md bg-gray-100"></div>
+          <div className="h-9 w-full animate-pulse rounded-md bg-gray-100" />
+          <div className="h-9 w-full animate-pulse rounded-md bg-gray-100" />
         </div>
       ) : (
         <Form {...form}>

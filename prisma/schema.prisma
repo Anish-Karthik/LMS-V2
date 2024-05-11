@@ -284,6 +284,23 @@ model StripeCustomer {
   updatedAt DateTime @updatedAt
 }
 
+model RazorpayCustomer {
+  id                 String @id @default(auto()) @map("_id") @db.ObjectId
+  userId             String @unique
+  razorpayCustomerId String @unique
+}
+
+model RazorpayPurchase {
+  id        String @id @default(auto()) @map("_id") @db.ObjectId
+  userId    String
+  paymentId String @unique
+  orderId   String @unique
+  signature String @unique
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
 model Testimonial {
   id          String   @id @default(auto()) @map("_id") @db.ObjectId
   rating      Int      @default(5)
