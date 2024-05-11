@@ -270,11 +270,12 @@ h4 {
 a,
 button,
 input,
+input[type="text"],
 textarea,
 select,
 .btn,
 p {
-  @apply font-abeezee;
+  @apply font-abeezee !important;
 }
 
 @import "~@uploadthing/react/styles.css";

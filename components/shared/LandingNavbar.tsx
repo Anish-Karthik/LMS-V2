@@ -108,7 +108,7 @@ const LandingNavbar = ({
             <SignInButton>
               <div className="hover:text-pink-color relative h-10 !max-h-11 rounded-full border border-purple-600/30 bg-slate-700/30 px-4 py-2 text-sm text-white transition duration-200 hover:shadow-2xl hover:shadow-pink-400/[0.3] sm:px-8">
                 <div className="via-pink-color absolute inset-x-0 -top-px mx-auto h-px w-1/2 bg-gradient-to-r from-transparent to-transparent shadow-2xl" />
-                <span className="relative z-20">Sign In</span>
+                <span className="font-abeezee relative z-20">Sign In</span>
               </div>
             </SignInButton>
           )}

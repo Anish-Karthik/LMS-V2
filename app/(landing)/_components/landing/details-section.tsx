@@ -49,7 +49,7 @@ const details = [
 const DetailsSection = ({ href }: { href: string }) => {
   return (
     <section
-      className="md:min-w-6xl w-full bg-black max-xl:px-5"
+      className="md:min-w-6xl bg-black max-xl:px-5"
       id="main-details"
     >
       {details.map((detail, index) => (
@@ -77,7 +77,7 @@ function DetailCard({
   href: string
 }) {
   return (
-    <div className="max-xs:max-w-2xs mx-auto my-8 max-sm:max-w-xs sm:w-full">
+    <div className="max-xs:max-w-2xs mx-auto my-8 max-sm:max-w-xs sm:w-full xl:max-w-7xl">
       <div className="relative w-full">
         <div className="absolute -inset-0 h-full w-full scale-[0.80] rounded-full bg-red-500 bg-gradient-to-r from-blue-500 to-teal-500 blur-3xl" />
         <div className="relative flex h-full w-full flex-col items-start justify-end overflow-hidden rounded-2xl border border-gray-800 bg-gray-900 shadow-xl">

@@ -4,6 +4,7 @@ import React from "react"
 import { Metadata } from "next"
 import Head from "next/head"
 import { ClerkProvider } from "@clerk/nextjs"
+import { dark, neobrutalism } from "@clerk/themes"
 
 import { siteConfig } from "@/config/site"
 import { fontSans } from "@/lib/fonts"
@@ -42,7 +43,11 @@ interface RootLayoutProps {
 
 export default function RootLayout({ children }: RootLayoutProps) {
   return (
-    <ClerkProvider>
+    <ClerkProvider
+      appearance={{
+        baseTheme: dark,
+      }}
+    >
       <TRPCProvider>
         <html lang="en" suppressHydrationWarning>
           <head>
