@@ -94,6 +94,7 @@ const TypeForm = ({
         },
       })}
       name="phoneNo"
+      title="Phone Number"
       type="number"
       formSchema={formSchemaPhoneNo}
       updateFields={updateFields}
@@ -201,6 +202,7 @@ const TypeForm = ({
       })}
       formSchema={formSchemaHowDidHear}
       name="howDidHear"
+      title="How did you hear about us?"
       options={{
         A: "Social media",
         B: "Referred by a friend",

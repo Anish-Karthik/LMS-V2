@@ -6,7 +6,6 @@ import TestimonialCard from "../../../../components/card/testimonial-card"
 import VideoPlayerLanding from "./video-player-landing"
 
 const testimonials1 = [
-
   {
     name: "Nikhil",
     avatar: "N",
@@ -502,11 +501,11 @@ const testimonials1 = [
       </svg>
     ),
   },
-// add these testimonials:
-// Name: Akash
-// Occupation : Student
+  // add these testimonials:
+  // Name: Akash
+  // Occupation : Student
 
-// Bro you are the one who jst taught the very basics of the market.And the support u gave to me naan ivlo live support irukkum neenga kathukratha again solli kuduppinganuh ellam nenachu kooda pakkala trading la evlo learn pannalum the credit is always to praglis(SID&ADHI). Unga way of teaching is something nxt lvl still Enakku neenga sonna examples mindla irukku. Tq bro
+  // Bro you are the one who jst taught the very basics of the market.And the support u gave to me naan ivlo live support irukkum neenga kathukratha again solli kuduppinganuh ellam nenachu kooda pakkala trading la evlo learn pannalum the credit is always to praglis(SID&ADHI). Unga way of teaching is something nxt lvl still Enakku neenga sonna examples mindla irukku. Tq bro
 
   {
     name: "Akash",
@@ -674,10 +673,10 @@ const testimonials1 = [
     ),
   },
 
-// Name : Mohana Priya
-// Occupation: Software Engineer
+  // Name : Mohana Priya
+  // Occupation: Software Engineer
 
-// Praglis team has handled excellent and highly comprehensive trading sessions, which is really impressive. With examples from real world situations, their explanations of everything from fundamentals to trade setup for swing and intraday sessions were outstanding.From my experience, I can tell that it is really detailed oriented session for people with no prior market expertise. In fact I can state that we are making money by following every idea that has been covered in class with proper risk management.
+  // Praglis team has handled excellent and highly comprehensive trading sessions, which is really impressive. With examples from real world situations, their explanations of everything from fundamentals to trade setup for swing and intraday sessions were outstanding.From my experience, I can tell that it is really detailed oriented session for people with no prior market expertise. In fact I can state that we are making money by following every idea that has been covered in class with proper risk management.
 
   {
     name: "Mohana Priya",
@@ -845,10 +844,10 @@ const testimonials1 = [
     ),
   },
 
-// Name: Harritha S.
-// Occupation : Software Developer
+  // Name: Harritha S.
+  // Occupation : Software Developer
 
-// I always want to make passive income as I don't have to spend my time and tried Praglis course to know about trading and stuff. As I started the course just happened to learn a lot about trading and stocks. So it is my first and best thing I have ever done to increase my income. It greatly improves my view on the stock market. Just thankful for the Praglis team
+  // I always want to make passive income as I don't have to spend my time and tried Praglis course to know about trading and stuff. As I started the course just happened to learn a lot about trading and stocks. So it is my first and best thing I have ever done to increase my income. It greatly improves my view on the stock market. Just thankful for the Praglis team
 
   {
     name: "Harritha S.",
@@ -856,7 +855,8 @@ const testimonials1 = [
     title: "Software Developer",
     description:
       "I always want to make passive income as I don't have to spend my time and tried Praglis course to know about trading and stuff. As I started the course just happened to learn a lot about trading and stocks. So it is my first and best thing I have ever done to increase my income. It greatly improves my view on the stock market. Just thankful for the Praglis team",
-    svg: (<svg
+    svg: (
+      <svg
         width="101"
         height="20"
         viewBox="0 0 101 20"
@@ -1015,10 +1015,10 @@ const testimonials1 = [
     ),
   },
 
-// Name: Dharani
-// Occupation : Student
+  // Name: Dharani
+  // Occupation : Student
 
-// Praglis is really a friendly environment to learn trade, the lectures and the course was informative.We could find opportunities for real time experience on the concepts. Enough provisions and support was extended for clarifying our doubts .Interactive live sessions were the best ones to know the live market movements and practical concepts of taking a trade was clearly explained.The team is always helpful in clearing doubts and the sufficient resources were provided for further understanding and development.Praglis is simply a neat and organized teaching team to learn and earn in trade.
+  // Praglis is really a friendly environment to learn trade, the lectures and the course was informative.We could find opportunities for real time experience on the concepts. Enough provisions and support was extended for clarifying our doubts .Interactive live sessions were the best ones to know the live market movements and practical concepts of taking a trade was clearly explained.The team is always helpful in clearing doubts and the sufficient resources were provided for further understanding and development.Praglis is simply a neat and organized teaching team to learn and earn in trade.
 
   {
     name: "Dharani",
@@ -1026,7 +1026,8 @@ const testimonials1 = [
     title: "Student",
     description:
       "Praglis is really a friendly environment to learn trade, the lectures and the course was informative.We could find opportunities for real time experience on the concepts. Enough provisions and support was extended for clarifying our doubts .Interactive live sessions were the best ones to know the live market movements and practical concepts of taking a trade was clearly explained.The team is always helpful in clearing doubts and the sufficient resources were provided for further understanding and development.Praglis is simply a neat and organized teaching team to learn and earn in trade.",
-    svg: (<svg
+    svg: (
+      <svg
         width="101"
         height="20"
         viewBox="0 0 101 20"
@@ -1185,20 +1186,20 @@ const testimonials1 = [
     ),
   },
 
-// Name: Ashik Raja
-// Occupation : Business
+  // Name: Ashik Raja
+  // Occupation : Business
 
-// A very well versed beginner’s course for learning the basics of the stock market - the main objective of this course offered by Praglis team is understanding the technical analysis of market by using candle sticks , and insight about the fundamentals analysis .
+  // A very well versed beginner’s course for learning the basics of the stock market - the main objective of this course offered by Praglis team is understanding the technical analysis of market by using candle sticks , and insight about the fundamentals analysis .
 
-// The presentation and explanation of the course which covers various tools is crystal clear and easy to understand even for a person who doesn’t know anything about share market !
+  // The presentation and explanation of the course which covers various tools is crystal clear and easy to understand even for a person who doesn’t know anything about share market !
 
-// The highlight of joining this course is , the team continues to offer you a discord group where the traders are interacting with each other and explains the trend of the market which gives us an overview about how the trades are done correctly!
+  // The highlight of joining this course is , the team continues to offer you a discord group where the traders are interacting with each other and explains the trend of the market which gives us an overview about how the trades are done correctly!
 
-// The guidance for trading is given for life time is an added advantage.
+  // The guidance for trading is given for life time is an added advantage.
 
-// I felt it to be a very useful course, hope you too will find.
+  // I felt it to be a very useful course, hope you too will find.
 
-// Thanks
+  // Thanks
 
   {
     name: "Ashik Raja",
@@ -1206,7 +1207,8 @@ const testimonials1 = [
     title: "Business",
     description:
       "A very well versed beginner’s course for learning the basics of the stock market - the main objective of this course offered by Praglis team is understanding the technical analysis of market by using candle sticks , and insight about the fundamentals analysis .The presentation and explanation of the course which covers various tools is crystal clear and easy to understand even for a person who doesn’t know anything about share market !The highlight of joining this course is , the team continues to offer you a discord group where the traders are interacting with each other and explains the trend of the market which gives us an overview about how the trades are done correctly!The guidance for trading is given for life time is an added advantage.I felt it to be a very useful course, hope you too will find.Thanks",
-    svg: (<svg
+    svg: (
+      <svg
         width="101"
         height="20"
         viewBox="0 0 101 20"
@@ -1364,7 +1366,6 @@ const testimonials1 = [
       </svg>
     ),
   },
-
 ]
 
 const ReviewsSection = () => {

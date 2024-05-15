@@ -48,13 +48,14 @@ const page = async ({
       isClosed: false,
     },
   })
-
+  const gst = parseInt(process.env.GST || "18")
   return (
     <PurchaseCourseForm
       batches={batches}
       courseId={course!.id}
       course={course!}
       userId={user.id}
+      gst={gst}
       promoObj={promo}
     />
   )

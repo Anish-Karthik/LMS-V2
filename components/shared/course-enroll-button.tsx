@@ -1,15 +1,19 @@
 "use client"
 
+import { useEffect, useMemo, useState } from "react"
+import { useRouter } from "next/navigation"
 import { firstTimeRender } from "@/store/atoms"
 import { zodResolver } from "@hookform/resolvers/zod"
 import { Batch, Promo } from "@prisma/client"
-import { useRouter } from "next/navigation"
-import { useEffect, useMemo, useState } from "react"
 import { useForm } from "react-hook-form"
 import toast from "react-hot-toast"
 import { useRecoilState } from "recoil"
 import * as z from "zod"
 
+import { performPurchaseAsFree } from "@/lib/actions/server/course.server.action"
+import { formatPrice } from "@/lib/format"
+import { makePayment } from "@/lib/make-payment"
+import { useDebounce } from "@/hooks/use-debounce"
 import { Button } from "@/components/ui/button"
 import {
   Form,
@@ -17,7 +21,7 @@ import {
   FormField,
   FormItem,
   FormLabel,
-  FormMessage
+  FormMessage,
 } from "@/components/ui/form"
 import {
   Select,
@@ -26,18 +30,13 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select"
-import { useDebounce } from "@/hooks/use-debounce"
-import { performPurchaseAsFree } from "@/lib/actions/server/course.server.action"
-import { formatPrice } from "@/lib/format"
-import {
-  makePayment
-} from "@/lib/make-payment"
 
 interface CourseEnrollButtonProps {
   userId: string
   courseId: string
   promo: Promo | undefined
   originalPrice: number
+  gst: number
   batches: Batch[]
 }
 
@@ -53,6 +52,7 @@ const CourseEnrollButton = ({
   userId,
   originalPrice,
   batches,
+  gst,
 }: CourseEnrollButtonProps) => {
   const [purchasing, setPurchasing] = useState(false)
   const [isFirstTimeRendered, setIsFirstTimeRendered] =
@@ -72,6 +72,10 @@ const CourseEnrollButton = ({
         originalPrice! - ((promo?.discount! || 0) * originalPrice!) / 100
       ),
     [originalPrice, promo?.discount]
+  )
+  const totalPrice = useMemo(
+    () => Math.floor(price + (price * gst) / 100),
+    [price, gst]
   )
   const { isValid, isSubmitting } = form.formState
 
@@ -97,7 +101,7 @@ const CourseEnrollButton = ({
           promoId: promo?.id,
         })
 
-        router.push(`/student/dashboard}`)
+        router.push(`/student/dashboard`)
         return
       }
       console.log("not free")
@@ -105,14 +109,17 @@ const CourseEnrollButton = ({
         courseId,
         userId,
         price,
+        gst,
         batchId: values.batch,
         promoCode: promo?.code,
         setPurchasing: (val: boolean) => {
           setPurchasing(val)
           if (val === false) {
-            router.push(`/student/dashboard`)
+            setTimeout(() => {
+              router.push(`/student/dashboard`)
+            }, 2000)
           }
-        }
+        },
       })
       // const response = await axios.post(`/api/courses/${courseId}/checkout`, {
       //   userId,
@@ -187,7 +194,8 @@ const CourseEnrollButton = ({
               size="sm"
               className="w-full md:w-auto"
             >
-              Enroll for {promo?.discount === 100 ? "Free" : formatPrice(price)}
+              Enroll for{" "}
+              {promo?.discount === 100 ? "Free" : formatPrice(totalPrice)}
             </Button>
           </form>
         </Form>

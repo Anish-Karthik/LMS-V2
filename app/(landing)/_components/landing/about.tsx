@@ -30,13 +30,16 @@ const About = ({ href }: { href: string }) => {
         <Link href={href}>
           <Button
             variant={"none"}
-            className="bg-purple-color hover:bg-purple-color/40 w-full text-white cursor-pointer z-50 relative"
+            className="bg-purple-color hover:bg-purple-color/40 relative z-50 w-full cursor-pointer text-white"
           >
             View Details
           </Button>
         </Link>
         <Link href={href}>
-          <Button variant={"outline"} className="w-full text-white cursor-pointer z-50 relative">
+          <Button
+            variant={"outline"}
+            className="relative z-50 w-full cursor-pointer text-white"
+          >
             Enroll Now
           </Button>
         </Link>

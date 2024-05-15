@@ -38,6 +38,7 @@ const SelectForm = ({
   name,
   options,
   promo,
+  title,
 }: {
   getHooks: () => multiStepHooksType
   updateFields: (fields: Partial<OnboardingType>) => void
@@ -47,6 +48,7 @@ const SelectForm = ({
   name: "gender" | "howDidHear"
   options: ObjectType
   promo?: string
+  title?: string
 }) => {
   const {
     steps,
@@ -167,7 +169,7 @@ const SelectForm = ({
             render={({ field }) => (
               <FormItem className="flex flex-col">
                 <FormLabel className="form_heading capitalize">
-                  {name}
+                  {title || name}
                 </FormLabel>
                 <FormControl className="relative text-4xl">
                   <div>

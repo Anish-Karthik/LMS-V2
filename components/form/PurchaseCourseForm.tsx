@@ -47,12 +47,14 @@ const PurchaseCourseForm = ({
   course,
   userId,
   promoObj,
+  gst,
   batches,
 }: {
   batches: Batch[]
   userId: string
   courseId: string
   course: Course
+  gst: number
   promoObj?: Promo
 }) => {
   const [isCreating, setIsCreating] = useState(false)
@@ -79,10 +81,12 @@ const PurchaseCourseForm = ({
   }, [promoObj, form, setValue, form.getValues])
 
   const { isSubmitting, isValid } = form.formState
+  // const gst = 18
   const discountedPrice = promo
     ? Math.floor(course.price! - (promo.discount! * course.price!) / 100)
     : course.price!
-
+  const gstOriginalPrice = Math.floor((course.price! * gst) / 100)
+  const gstPrice = Math.floor((discountedPrice * gst) / 100)
   const onSubmit = async (values: z.infer<typeof formSchema>) => {
     try {
       setIsCreating(true)
@@ -112,9 +116,14 @@ const PurchaseCourseForm = ({
             <h3 className="text-lg font-semibold">
               Enroll for{" "}
               <span className={cn(promo ? "line-through" : "")}>
-                {formatPrice(course.price!)}
+                {`${formatPrice(course.price!)} + ${formatPrice(
+                  gstOriginalPrice
+                )} (${gst}% GST)`}
               </span>{" "}
-              {promo && formatPrice(discountedPrice)}
+              {promo &&
+                `${formatPrice(discountedPrice)} + ${formatPrice(
+                  gstPrice
+                )} (${gst}% GST)`}
             </h3>
           </div>
           {!success && (
@@ -173,6 +182,7 @@ const PurchaseCourseForm = ({
                 batches={batches}
                 courseId={courseId}
                 originalPrice={course.price!}
+                gst={gst}
                 promo={promo}
                 userId={userId}
               />

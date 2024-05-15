@@ -48,10 +48,7 @@ const details = [
 
 const DetailsSection = ({ href }: { href: string }) => {
   return (
-    <section
-      className="md:min-w-6xl bg-black max-xl:px-5"
-      id="main-details"
-    >
+    <section className="md:min-w-6xl bg-black max-xl:px-5" id="main-details">
       {details.map((detail, index) => (
         <DetailCard key={index} {...detail} href={href} />
       ))}

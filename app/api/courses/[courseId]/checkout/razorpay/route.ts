@@ -27,6 +27,7 @@ export async function POST(
     const user = await currentUser()
     const body: RazorpayCheckoutRequestBody = await req.json()
     const { price, promoCode, batchId } = body
+    const gst = Number(process.env.GST) || 18
     console.log("price", price)
     console.log("user", user)
     if (!user || !user.id || !user.emailAddresses?.[0]?.emailAddress) {
@@ -49,14 +50,15 @@ export async function POST(
     if (!course) {
       return new NextResponse("Not found", { status: 404 })
     }
-
+    const totalPrice = Math.floor(price + price * (gst / 100))
     // Create an order -> generate the OrderID -> Send it to the Front-end
     // Also, check the amount and currency on the backend (Security measure)
     const options:
       | Orders.RazorpayOrderCreateRequestBody
       | Orders.RazorpayTransferCreateRequestBody
       | Orders.RazorpayAuthorizationCreateRequestBody = {
-      amount: (price * 100).toString(),
+      amount: (totalPrice * 100).toString(),
+
       currency: "INR",
       receipt: shortid.generate(),
       payment_capture: true,
@@ -91,6 +93,7 @@ export async function POST(
       )
       console.log(response)
       const data: CreateOrderResponse & CreateOrderRequest = {
+        gst,
         id: response.id,
         currency: response.currency,
         amount: Number(response.amount), // Convert the amount to a number

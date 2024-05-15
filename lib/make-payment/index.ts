@@ -4,6 +4,7 @@ import toast from "react-hot-toast"
 import { getUserClient } from "../actions/server/user.server.action"
 
 export interface RazorpayCheckoutRequestBody {
+  gst: number
   price: number
   promoCode: string | undefined | null
   batchId: string
@@ -21,19 +22,17 @@ export interface CreateOrderResponse {
   amount: number | string
 }
 
-export interface CreateOrderRequest {
+export interface CreateOrderRequest extends RazorpayCheckoutRequestBody {
   courseId: string
   userId: string
-  promoCode: string | null | undefined
-  price: number
   referred?: boolean
-  batchId: string
 }
 
 export const makePayment = async ({
   courseId,
   userId,
   promoCode,
+  gst,
   price,
   batchId,
   setPurchasing,
@@ -53,6 +52,7 @@ export const makePayment = async ({
   const { data }: { data: CreateOrderRequest & CreateOrderResponse } =
     await axios.post(`/api/courses/${courseId}/checkout/razorpay`, {
       price,
+      gst,
       promoCode,
       batchId,
     })
@@ -95,9 +95,9 @@ export const makePayment = async ({
       setPurchasing(false)
     },
     prefill: {
-      name: userData.name || "Siddarth Praveer",
-      email: userData.email || "media.praglis@gmail.com",
-      contact: userData.phoneNo || "9853785519",
+      name: userData.name,
+      email: userData.email,
+      contact: userData.phoneNo,
     },
   }
   console.log(options)

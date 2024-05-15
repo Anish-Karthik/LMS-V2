@@ -47,6 +47,7 @@ export default function GenericForm({
   formSchema,
   type = "text",
   selectOptions,
+  title,
 }: {
   name:
     | "name"
@@ -63,6 +64,7 @@ export default function GenericForm({
   type?: string
   selectOptions?: string[]
   formHead?: string
+  title?: string
 }) {
   const {
     steps,
@@ -144,6 +146,7 @@ export default function GenericForm({
         formHead={formHead}
         formSchema={formSchema}
         type={type}
+        title={title}
         selectOptions={selectOptions}
         isFirstStep={isFirstStep}
         isLastStep={isLastStep}
@@ -167,6 +170,7 @@ function FormBodyComponent({
   back,
   onSubmit,
   enterDelay,
+  title,
 }: {
   name:
     | "name"
@@ -186,6 +190,7 @@ function FormBodyComponent({
   onSubmit: (values: z.infer<typeof formSchema>) => void
   formHead?: string
   enterDelay: boolean
+  title?: string
 }) {
   return (
     <Form {...form}>
@@ -204,7 +209,7 @@ function FormBodyComponent({
                     <Input
                       className="no-focus form_input"
                       type={type}
-                      placeholder={`Enter your ${name}`}
+                      placeholder={`Enter your ${title || name}`}
                       {...field}
                       autoFocus
                     />
