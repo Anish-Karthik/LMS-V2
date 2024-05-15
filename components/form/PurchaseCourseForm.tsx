@@ -116,14 +116,9 @@ const PurchaseCourseForm = ({
             <h3 className="text-lg font-semibold">
               Enroll for{" "}
               <span className={cn(promo ? "line-through" : "")}>
-                {`${formatPrice(course.price!)} + ${formatPrice(
-                  gstOriginalPrice
-                )} (${gst}% GST)`}
+                {`${formatPrice(course.price!)} + ${gst}% GST`}
               </span>{" "}
-              {promo &&
-                `${formatPrice(discountedPrice)} + ${formatPrice(
-                  gstPrice
-                )} (${gst}% GST)`}
+              {promo && `${formatPrice(discountedPrice)} + ${gst}% GST`}
             </h3>
           </div>
           {!success && (
