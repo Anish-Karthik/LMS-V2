@@ -197,7 +197,7 @@ model Topic {
 model VideoData {
   id      String @id @default(auto()) @map("_id") @db.ObjectId
   url     String
-  topic   Topic  @relation(fields: [topicId], references: [id])
+  topic   Topic  @relation(fields: [topicId], references: [id], onDelete: Cascade, onUpdate: Cascade)
   topicId String @unique @db.ObjectId
 
   @@index([id, topicId])

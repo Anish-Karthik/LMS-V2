@@ -79,7 +79,7 @@ const LandingNavbar = ({
             {!route ||
             !(route?.includes("teacher") || route?.includes("student"))
               ? "Purchase Now"
-              : "Get Started"}
+              : "Dashboard"}
           </Button>
         </Link>
         {pathname.split("/").length < 2 && (

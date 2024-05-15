@@ -95,8 +95,7 @@ const page = async () => {
         />
         <Separator className="my-2 md:hidden" />
       </div>
-      <div className="flex w-fit flex-col md:max-w-sm">
-        {/* discord link */}
+      {/* <div className="flex w-fit flex-col md:max-w-sm">
         <div className="flex flex-col gap-1 px-4 pb-2">
           <h1 className="text-2xl font-bold">Join our Discord Community</h1>
           <p className="text-text-secondary">
@@ -123,7 +122,7 @@ const page = async () => {
           />
         </div>
         <AnnouncementMiniCard announcements={announcements} />
-      </div>
+      </div> */}
     </section>
   )
 }
