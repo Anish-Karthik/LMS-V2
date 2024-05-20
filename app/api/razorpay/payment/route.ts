@@ -40,18 +40,30 @@ export async function POST(req: Request) {
     promo: !!promoCode,
   })
   console.log("purchaseCourse", userId, courseId)
-  if (promoCode) {
-    console.log("afterReferral from route", promoCode)
-    await afterReferral(promoCode, userId)
+  if (!!promoCode) {
+    try {
+      console.log("afterReferral from route", promoCode)
+      await afterReferral(promoCode, userId)
+    } catch (error) {
+      console.log("Error in afterReferral", error)
+      console.log("PROMO CODE", promoCode)
+    }
   }
-  await db.razorpayPurchase.create({
-    data: {
-      paymentId: body.paymentId,
-      orderId: body.orderId,
-      signature: body.signature,
-      userId,
-    },
-  })
+  try {
+    await db.razorpayPurchase.create({
+      data: {
+        paymentId: body.paymentId,
+        orderId: body.orderId,
+        signature: body.signature,
+        userId,
+      },
+    })
+  } catch (error: any) {
+    console.error("Error in razorpayPurchase", error)
+    return new NextResponse(`Webhook Error: ${error?.message}`, {
+      status: 400,
+    })
+  }
   console.log("******", promoCode)
   // redirect(`/student/dashboard`)
 }
