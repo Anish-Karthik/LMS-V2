@@ -89,6 +89,13 @@ export const VideoPlayer = ({
           height="100%"
           onReady={() => setIsReady(true)}
           controls
+          config={{
+            file: {
+              attributes: {
+                controlsList: "nodownload",
+              },
+            },
+          }}
         />
       )}
     </div>
