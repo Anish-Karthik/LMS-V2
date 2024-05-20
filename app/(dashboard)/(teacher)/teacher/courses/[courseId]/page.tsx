@@ -5,7 +5,7 @@ import { getCourseById } from "@/lib/actions/course.actions"
 import { getUser } from "@/lib/actions/user.actions"
 import { IconBadge } from "@/components/icon-badge"
 
-import CurrentPathNavigator from "../../../_components/current-pathname"
+import CurrentPathNavigator from "../../../../../../components/shared/current-pathname"
 import { BatchesForm } from "./_components/batches-form"
 import { DescriptionForm } from "./_components/description-form"
 import { ImageForm } from "./_components/image-form"

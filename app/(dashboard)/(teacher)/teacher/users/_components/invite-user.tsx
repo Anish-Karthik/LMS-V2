@@ -7,7 +7,7 @@ import { PlusCircle } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 
-import CurrentPathNavigator from "../../../_components/current-pathname"
+import CurrentPathNavigator from "../../../../../../components/shared/current-pathname"
 import { InviteForm } from "./invite-form"
 import { InviteList } from "./invite-list"
 

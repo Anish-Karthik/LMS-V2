@@ -6,7 +6,7 @@ import { Batch, Course } from "@prisma/client"
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
 import AnnouncementPage from "@/components/shared/announcement-page"
 
-import CurrentPathNavigator from "./current-pathname"
+import CurrentPathNavigator from "../../../../components/shared/current-pathname"
 
 const AnnouncementTabs = ({
   announcementTabs,

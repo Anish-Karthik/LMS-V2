@@ -8,7 +8,7 @@ import { getTopicEmails } from "@/lib/actions/topic.actions"
 import { db } from "@/lib/db"
 import { Banner } from "@/components/banner"
 import { IconBadge } from "@/components/icon-badge"
-import CurrentPathNavigator from "@/app/(dashboard)/(teacher)/_components/current-pathname"
+import CurrentPathNavigator from "@/components/shared/current-pathname"
 
 import { AttachmentForm } from "./_components/attachment-form"
 import { TopicActions } from "./_components/topic-actions"

@@ -5,7 +5,7 @@ import { currentUser } from "@clerk/nextjs"
 import { getUser, getUsersWhoHaveRoles } from "@/lib/actions/user.actions"
 import { Button } from "@/components/ui/button"
 
-import CurrentPathNavigator from "../../_components/current-pathname"
+import CurrentPathNavigator from "../../../../../components/shared/current-pathname"
 import CheckInput from "./_components/check-input"
 import { SearchInput } from "./_components/search-input"
 import UserCard from "./_components/user-card"

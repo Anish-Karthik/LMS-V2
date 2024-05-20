@@ -8,7 +8,7 @@ import { formatNumber, formatPrice, roundTo } from "@/lib/format"
 import { mapDateToMonthYear, monthData } from "@/lib/utils"
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 
-import CurrentPathNavigator from "../../_components/current-pathname"
+import CurrentPathNavigator from "../../../../../components/shared/current-pathname"
 import { CalendarDateRangePicker } from "./_components/date-range-picker"
 import OverviewCard from "./_components/overview-card"
 import PromoPage from "./_components/promo-page"

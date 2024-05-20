@@ -1,5 +1,6 @@
 import React from "react"
 import dynamic from "next/dynamic"
+import Link from "next/link"
 import { currentUser } from "@clerk/nextjs"
 
 import {
@@ -85,14 +86,16 @@ const page = async () => {
       <div className="flex flex-col gap-4 px-4 max-md:pb-5">
         <div className="flex flex-col gap-1">
           <h1 className="text-2xl font-bold">Welcome back {userInfo?.name}</h1>
-          <p className="text-text-secondary">
-            You can access all your courses here.
-          </p>
+          <p className="text-pink-color">You can access your course here.</p>
         </div>
-        <CourseDetailCard
-          courses={userPurchasedCourses || []}
-          userProgression={userProgression}
-        />
+        {userPurchasedCourses.map((course, i) => (
+          <Link href={`/student/courses/${course.id}`} key={course.id}>
+            <CourseDetailCard
+              course={course}
+              userProgression={userProgression[i]}
+            />
+          </Link>
+        ))}
         <Separator className="my-2 md:hidden" />
       </div>
       {/* <div className="flex w-fit flex-col md:max-w-sm">

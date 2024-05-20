@@ -17,7 +17,7 @@ import { AttachmentForm } from "@/components/announcements-teacher/attachment-fo
 import { Banner } from "@/components/banner"
 import { IconBadge } from "@/components/icon-badge"
 
-import CurrentPathNavigator from "../../../_components/current-pathname"
+import CurrentPathNavigator from "../../../../../../components/shared/current-pathname"
 
 const NotifyAnnouncement = dynamic(
   () => import("@/components/announcements-teacher/notify-announcement"),

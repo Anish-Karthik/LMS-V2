@@ -8,7 +8,7 @@ import { ComplexBatch } from "@/types/nav"
 import { swapUserBatch } from "@/lib/actions/batch.action"
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
 import { IconBadge } from "@/components/icon-badge"
-import CurrentPathNavigator from "@/app/(dashboard)/(teacher)/_components/current-pathname"
+import CurrentPathNavigator from "@/components/shared/current-pathname"
 
 import BatchEditForm from "./batch-edit-form"
 import { ChaptersForm } from "./chapters-form"

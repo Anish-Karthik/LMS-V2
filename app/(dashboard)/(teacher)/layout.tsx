@@ -6,6 +6,7 @@ import { UserButton, currentUser } from "@clerk/nextjs"
 import { getUser } from "@/lib/actions/user.actions"
 import { ThemeToggle } from "@/components/theme-toggle"
 
+import CurrentPathNavigator from "../../../components/shared/current-pathname"
 import { MainNav } from "./_components/main-nav"
 import MobileNav from "./_components/mobile-nav"
 

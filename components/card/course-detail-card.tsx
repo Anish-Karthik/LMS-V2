@@ -4,18 +4,17 @@ import { Course } from "@prisma/client"
 import { CourseProgress } from "../course-progress"
 
 const CourseDetailCard = ({
-  courses,
+  course,
   userProgression,
 }: {
   userProgression: {
     progress: number
     completedModules: number
     totalModules: number
-  }[]
-  courses: Course[]
+  }
+  course: Course
 }) => {
-  const course = courses[0]
-  const progress = userProgression[0]
+  const progress = userProgression
   return (
     <div className="flex !max-w-3xl flex-col gap-2">
       <h1 className="text-3xl font-bold">{course.title}</h1>
@@ -30,7 +29,7 @@ const CourseDetailCard = ({
         value={progress.progress}
         variant={progress.progress === 100 ? "success" : "default"}
       />
-      <p className="text-text-secondary text-sm">{course.description}</p>
+      <p className="text-pink-color text-sm">{course.description}</p>
     </div>
   )
 }
