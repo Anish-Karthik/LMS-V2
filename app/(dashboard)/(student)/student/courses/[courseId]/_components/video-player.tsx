@@ -89,9 +89,11 @@ export const VideoPlayer = ({
           height="100%"
           onReady={() => setIsReady(true)}
           controls
+          onContextMenu={(e: any) => e.preventDefault()}
           config={{
             file: {
               attributes: {
+                disablePictureInPicture: true,
                 controlsList: "nodownload",
               },
             },
