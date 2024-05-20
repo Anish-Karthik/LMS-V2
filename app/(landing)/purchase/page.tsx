@@ -62,8 +62,8 @@ const page = async ({
         <FAQSection />
         <DisclaimerSection />
       </section>
-      {/* <ContactUs className="!mt-0 bg-black text-white" />
-      <PoliciesFooter className="!-mt-10 bg-black text-white" /> */}
+      <ContactUs className="!mt-0 bg-black text-white" />
+      <PoliciesFooter className="!-mt-10 bg-black text-white" />
     </div>
   )
 }

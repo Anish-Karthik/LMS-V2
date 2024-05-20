@@ -50,17 +50,17 @@ const words = [
   {
     text: "The",
     className:
-      "rounded-md bg-gradient-to-r from-orange-500 to-pink-500 bg-clip-text text-transparent landing-section_header",
+      "rounded-md bg-gradient-to-r from-orange-500 to-pink-500 bg-clip-text text-transparent landing-section_header max-sm:!text-2xl",
   },
   {
     text: "Praglis",
     className:
-      "rounded-md bg-gradient-to-r from-pink-500 to-violet-500 bg-clip-text text-transparent landing-section_header",
+      "rounded-md bg-gradient-to-r from-pink-500 to-violet-500 bg-clip-text text-transparent landing-section_header max-sm:!text-2xl",
   },
   {
     text: "Advantages",
     className:
-      "rounded-md bg-gradient-to-r from-purple-500 to-indigo-500 bg-clip-text text-transparent landing-section_header",
+      "rounded-md bg-gradient-to-r from-purple-500 to-indigo-500 bg-clip-text text-transparent landing-section_header max-sm:!text-2xl",
   },
 ]
 
@@ -86,8 +86,8 @@ const AdvantagesSection = () => {
 
             <TypewriterEffectSmooth
               words={words}
-              className="mx-auto justify-center text-center "
-              cursorClassName="landing-section_cursor"
+              className="mx-auto justify-center text-center"
+              cursorClassName="landing-section_cursor max-sm:!h-7 "
             />
             <Image
               className="absolute -right-0 z-[-1] translate-y-[-40px] scale-75 opacity-50 max-md:translate-y-[-60px] sm:scale-100"
