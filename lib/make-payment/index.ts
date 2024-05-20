@@ -85,11 +85,9 @@ export const makePayment = async ({
         toast.success("Purchase Successful")
       } catch (error) {
         // refund the payment
-        // @ts-ignore
-        alert(error?.message)
         toast.remove()
         toast.error(
-          "Purchase Failed, your money will be refunded in 1-2 hours or contact support."
+          "Payment success, some error occured in adding you to course. don't worry admin can add you to course manually. contact them"
         )
         console.error(error)
         console.log(error)

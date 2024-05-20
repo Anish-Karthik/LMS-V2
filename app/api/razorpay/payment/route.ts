@@ -21,6 +21,7 @@ export async function POST(req: Request) {
     signature: string
   } = await req.json()
   const { userId, courseId, batchId, price, referred, promoCode } = body
+  console.log("body", body)
   if (!userId || !courseId) {
     return new NextResponse(`Webhook Error: Missing metadata`, {
       status: 400,
@@ -66,4 +67,5 @@ export async function POST(req: Request) {
   }
   console.log("******", promoCode)
   // redirect(`/student/dashboard`)
+  return new NextResponse("success", { status: 200 })
 }
