@@ -31,15 +31,20 @@ export async function POST(req: Request) {
     return new NextResponse("Unauthorized", { status: 401 })
   }
 
-  const defaultBatch = await getDefaultBatch(courseId)
-  await purchaseCourse({
-    userId,
-    courseId,
-    batchId: batchId || defaultBatch.id,
-    price: price || 0,
-    referred,
-    promo: !!promoCode,
-  })
+  try {
+    const defaultBatch = await getDefaultBatch(courseId)
+    await purchaseCourse({
+      userId,
+      courseId,
+      batchId: batchId || defaultBatch.id,
+      price: price || 0,
+      referred,
+      promo: !!promoCode,
+    })
+  } catch (error) {
+    console.error("Error in purchaseCourse", error)
+    return new NextResponse("Error in purchaseCourse", { status: 500 })
+  }
   console.log("purchaseCourse", userId, courseId)
   if (!!promoCode) {
     try {

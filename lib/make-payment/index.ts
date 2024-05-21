@@ -83,12 +83,17 @@ export const makePayment = async ({
         })
         toast.remove()
         toast.success("Purchase Successful")
-      } catch (error) {
+      } catch (error: any) {
         // refund the payment
+        if (error.code === 504) {
+          toast.success("Purchase Successful")
+        }
         toast.remove()
-        toast.error(
-          "Payment success, some error occured in adding you to course. don't worry admin can add you to course manually. contact them"
-        )
+        if (error.code === 500) {
+          toast.error(
+            "Payment success, some error occured in adding you to course. don't worry admin can add you to course manually. contact them"
+          )
+        }
         console.error(error)
         console.log(error)
       }
