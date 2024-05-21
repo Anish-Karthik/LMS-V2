@@ -138,7 +138,7 @@ export const afterReferral = async (promoCode: string, userId: string) => {
     if (!userInfo) {
       throw new Error("User not found")
     }
-
+    console.log(`userInfo`, userInfo)
     const promo = await db.promo.update({
       where: {
         code: promoCode,

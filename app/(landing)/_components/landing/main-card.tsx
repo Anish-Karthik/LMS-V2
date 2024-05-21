@@ -81,12 +81,12 @@ const HeaderCard = () => {
         </span> */}
       </h1>
 
-      <h1 className="xs:text-4xl text-3xl font-extrabold sm:text-5xl md:text-6xl">
-        <span className="absolute -z-10 rounded-md bg-black/90 px-4 py-2 text-transparent blur-xl">
+      <h1 className="xs:text-4xl text-center text-3xl font-extrabold sm:text-5xl md:text-6xl">
+        <span className="absolute -z-10 rounded-md bg-black/90 px-4 py-2 text-center text-transparent blur-xl">
           Smartly with Praglis
         </span>
         Smartly with{" "}
-        <span className="z-50 rounded-md bg-gradient-to-r from-pink-500 to-purple-500 bg-clip-text text-transparent">
+        <span className="z-50 rounded-md bg-gradient-to-r from-pink-500 to-purple-500 bg-clip-text text-center text-transparent">
           Praglis
         </span>
       </h1>

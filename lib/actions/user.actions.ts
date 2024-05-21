@@ -1,5 +1,6 @@
 import { db } from "../db"
 import { randomString } from "../format"
+import { sendWelcomeEmail } from "../mailing/welcome"
 import { addStudentToBatch } from "./batch.action"
 import { getDefaultBatch } from "./course.actions"
 import { createOrUpdatePromo, isUniquePromoCode } from "./promo.action"
@@ -96,6 +97,8 @@ export const purchaseCourse = async ({
         userId,
         userObjId: user.id,
         batchId: defaultBatch.id,
+        referred,
+        promo,
       },
     })
     await db.user.update({
@@ -121,6 +124,7 @@ export const purchaseCourse = async ({
       referralBonus: 100,
       expiresAt: new Date(Date.now() + 1000 * 60 * 60 * 24 * 30),
     })
+    sendWelcomeEmail(user.email, user.name)
 
     return purchase
   } catch (e: any) {

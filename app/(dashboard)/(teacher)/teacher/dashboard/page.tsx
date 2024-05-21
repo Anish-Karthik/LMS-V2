@@ -70,7 +70,15 @@ export default async function DashboardPage({
     startDate = new Date(searchParams?.from)
   }
   if (searchParams?.to) {
-    endDate = new Date(searchParams?.to)
+    endDate = new Date()
+    // Tue-May-21-2024 to date with current time
+    endDate.setDate(parseInt(searchParams?.to.split("-")[2]))
+    endDate.setMonth(
+      "JanFebMarAprMayJunJulAugSepOctNovDec".indexOf(
+        searchParams?.to.split("-")[1]
+      ) / 3
+    )
+    endDate.setFullYear(parseInt(searchParams?.to.split("-")[3]))
   }
 
   const yearlyPurchaseData = await db.purchase.findMany({
@@ -140,9 +148,10 @@ export default async function DashboardPage({
         (acc, purchase) => acc + purchase.price,
         0
       )
-      monthData.promo = monthPurchases.filter(
-        (purchase) => purchase.promo
-      ).length
+      monthData.promo = monthPurchases.filter((purchase) => {
+        console.log(purchase)
+        return purchase.promo
+      }).length
       monthData.referred = monthPurchases.filter(
         (purchase) => purchase.referred
       ).length

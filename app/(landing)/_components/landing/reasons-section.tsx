@@ -1,8 +1,7 @@
 "use client"
 
-import React, { useRef } from "react"
-import Image from "next/image"
 import { useInView } from "framer-motion"
+import { useRef } from "react"
 
 import { TypewriterEffectSmooth } from "@/components/animation/typewriter-effect"
 
@@ -69,37 +68,25 @@ const ReasonsSection = () => {
     >
       <div className="max-w-3xl">
         <center>
-          <h1 className="landing-section_header_description relative mb-16">
-            <Image
-              className="absolute -left-0 z-[-1] translate-y-[-25px] scale-75 opacity-50 sm:scale-100"
-              src="/landing/brain.svg"
-              alt="landing-image-1"
-              width={80}
-              height={80}
-            />
+          <div className="landing-section_header_description relative mb-16">
             <TypewriterEffectSmooth
               words={words}
-              className="mx-auto justify-center text-center "
+              className="font-orbitron mx-auto justify-center text-center tracking-widest"
               cursorClassName="landing-section_cursor"
             />
-            <span>
-              why you need a{" "}
-              <span className="rounded-md bg-gradient-to-r from-pink-500 to-violet-500 bg-clip-text text-transparent">
-                trading
-              </span>{" "}
-              <span className="rounded-md bg-gradient-to-r from-purple-500 to-indigo-500 bg-clip-text text-transparent">
-                community
-              </span>{" "}
-              to master the art of Trading
-            </span>
-            <Image
-              className="absolute -right-0 z-[-1] translate-y-[-40px] scale-75 opacity-50 max-md:translate-y-[-60px] sm:scale-100"
-              src="/landing/brain.svg"
-              alt="landing-image-1"
-              width={80}
-              height={80}
-            />
-          </h1>
+            <h1>
+              <span>
+                why you need a{" "}
+                <span className="rounded-md bg-gradient-to-r from-pink-500 to-violet-500 bg-clip-text text-transparent">
+                  trading
+                </span>{" "}
+                <span className="rounded-md bg-gradient-to-r from-purple-500 to-indigo-500 bg-clip-text text-transparent">
+                  community
+                </span>{" "}
+                to master the art of Trading
+              </span>
+            </h1>
+          </div>
         </center>
       </div>
       <div className="max-w-6xl">

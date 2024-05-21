@@ -142,7 +142,7 @@ const PurchaseCourseForm = ({
                         <Input
                           disabled={isSubmitting}
                           autoFocus={true}
-                          placeholder="e.g. 'Introduction to the course'"
+                          placeholder="Enter promo code"
                           {...field}
                           onChange={(e) => {
                             e.target.value = e.target.value.toUpperCase()
