@@ -1,5 +1,6 @@
 import { db } from "../db"
 import { randomString } from "../format"
+import { sendmail } from "../mailing/mailer"
 import { sendWelcomeEmail } from "../mailing/welcome"
 import { addStudentToBatch } from "./batch.action"
 import { getDefaultBatch } from "./course.actions"
@@ -125,12 +126,87 @@ export const purchaseCourse = async ({
       expiresAt: new Date(Date.now() + 1000 * 60 * 60 * 24 * 30),
     })
     sendWelcomeEmail(user.email, user.name)
-
+    sendUserHasPurchaseCourseToAllAdmins({
+      user,
+      courseId,
+      price,
+      referred,
+      promo,
+      promoCode,
+    })
     return purchase
   } catch (e: any) {
     console.log("purchaseCourse", e.message)
     console.error("purchaseCourse", e.message)
     throw new Error(e.message || "Unauthorized user")
+  }
+}
+
+export async function sendUserHasPurchaseCourseToAllAdmins({
+  user,
+  courseId,
+  price,
+  referred,
+  promo,
+  promoCode,
+}: {
+  user: any
+  courseId: string
+  price: number
+  referred: boolean
+  promo: boolean
+  promoCode: string
+}) {
+  try {
+    const admins = await db.user.findMany({
+      where: {
+        role: "admin",
+        admin: {
+          isNot: null,
+        },
+      },
+    })
+    console.log("admins", admins)
+    const referrer = referred
+      ? await db.user.findFirst({
+          where: {
+            promos: {
+              some: {
+                code: promoCode,
+              },
+            },
+          },
+        })
+      : null
+    const promoCodeData = await db.promo.findFirst({
+      where: {
+        code: promoCode,
+      },
+    })
+    const GST = process.env.GST
+    sendmail({
+      to: admins.map((admin) => admin.email),
+      subject: "New Purchase",
+      html: `
+        <p>${
+          user.name
+        } has purchased the course for ${price} + ${GST}% GST.</p>
+        ${
+          referred
+            ? `<p>Referrer: ${referrer?.name}</p>`
+            : " <p>Not referred</p>"
+        }
+        <br>
+        ${
+          promo
+            ? `<p>Used the Promo Code: ${promoCode} for ${promoCodeData?.discount}% discount</p>`
+            : "<p>Did not use any promo code</p>"
+        }
+        `,
+    })
+  } catch (e: any) {
+    console.error(e)
+    throw new Error(e.message)
   }
 }
 
