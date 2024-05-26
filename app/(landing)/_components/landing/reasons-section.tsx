@@ -1,7 +1,7 @@
 "use client"
 
-import { useInView } from "framer-motion"
 import { useRef } from "react"
+import { useInView } from "framer-motion"
 
 import { TypewriterEffectSmooth } from "@/components/animation/typewriter-effect"
 

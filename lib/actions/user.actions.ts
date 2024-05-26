@@ -188,9 +188,7 @@ export async function sendUserHasPurchaseCourseToAllAdmins({
       to: admins.map((admin) => admin.email),
       subject: "New Purchase",
       html: `
-        <p>${
-          user.name
-        } has purchased the course for ${price} + ${GST}% GST.</p>
+        <p>${user.name} has purchased the course for ${price} + ${GST}% GST.</p>
         ${
           referred
             ? `<p>Referrer: ${referrer?.name}</p>`

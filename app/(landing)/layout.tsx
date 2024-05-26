@@ -1,9 +1,9 @@
-import { currentUser } from "@clerk/nextjs"
-import { redirect } from "next/navigation"
 import React from "react"
+import { redirect } from "next/navigation"
+import { currentUser } from "@clerk/nextjs"
 
-import LandingNavbar from "@/components/shared/LandingNavbar"
 import { db } from "@/lib/db"
+import LandingNavbar from "@/components/shared/LandingNavbar"
 
 const LandingLayout = async ({ children }: { children: React.ReactNode }) => {
   const courses = await db.course.findMany()

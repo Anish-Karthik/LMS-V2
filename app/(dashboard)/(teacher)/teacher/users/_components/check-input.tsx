@@ -22,7 +22,7 @@ const CheckInput = (props: {
   courseId?: string
   name: string
 }) => {
-  const [value, setValue] = useState( () => {
+  const [value, setValue] = useState(() => {
     if (props.role) return props.role
     if (props.batchId) return props.batchId
     if (props.courseId) return props.courseId

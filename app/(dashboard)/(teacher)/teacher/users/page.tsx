@@ -43,11 +43,11 @@ const page = async ({
   // console.log(resultIds)
   // console.log(resultSet)
   const tmpArr = Array.from(resultSet)
-    .map((id) => result.users.find((user) => user.id === id))
+    .map((id) => result.users.find((user) => user!.id === id))
     .filter((a) => !!a)
-    .filter((a) => a.id !== userInfo!.id)
+    .filter((a) => a!.id !== userInfo!.id)
     .sort((a, b) => {
-      if (a.createdAt < b.createdAt) {
+      if (a!.createdAt < b!.createdAt) {
         return 1
       } else {
         return -1
@@ -56,14 +56,14 @@ const page = async ({
 
   // sort result array by created date
   const resultArr = [
-    ...tmpArr.filter((a) => !!a).filter((a) => a.id === userInfo!.id),
+    ...tmpArr.filter((a) => !!a).filter((a) => a!.id === userInfo!.id),
     ...tmpArr.filter(
-      (a) => a.role !== "admin" && a.role !== "teacher" && a.role !== "student"
+      (a) => a!.role !== "admin" && a!.role !== "teacher" && a!.role !== "student"
     ),
-    ...tmpArr.filter((a) => a.role === "student" && a.isBanned),
-    ...tmpArr.filter((a) => a.role === "student" && !a.isBanned),
-    ...tmpArr.filter((a) => a.role === "admin"),
-    ...tmpArr.filter((a) => a.role === "teacher"),
+    ...tmpArr.filter((a) => a!.role === "student" && a!.isBanned),
+    ...tmpArr.filter((a) => a!.role === "student" && !a!.isBanned),
+    ...tmpArr.filter((a) => a!.role === "admin"),
+    ...tmpArr.filter((a) => a!.role === "teacher"),
   ].filter((a) => !!a)
 
   // console.log(resultArr)

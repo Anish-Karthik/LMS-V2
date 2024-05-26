@@ -3,8 +3,8 @@ import { redirect } from "next/navigation"
 import { currentUser } from "@clerk/nextjs"
 
 import { db } from "@/lib/db"
-
 import CurrentPathNavigator from "@/components/shared/current-pathname"
+
 import InvitePage from "../_components/invite-user"
 
 const InviteUser = async () => {
