@@ -4,8 +4,8 @@ import { currentUser } from "@clerk/nextjs"
 
 import { getUser, getUsersWhoHaveRoles } from "@/lib/actions/user.actions"
 import { Button } from "@/components/ui/button"
+import CurrentPathNavigator from "@/components/shared/current-pathname"
 
-import CurrentPathNavigator from "../../../../../components/shared/current-pathname"
 import CheckInput from "./_components/check-input"
 import { SearchInput } from "./_components/search-input"
 import UserCard from "./_components/user-card"
@@ -34,29 +34,59 @@ const page = async ({
   if (userInfo!.role === "teacher") {
     redirect("/teacher/announcements")
   }
+
+  const resultSet = new Set(result.users.map((user) => user.id))
+  const resultIds = result.users.map((user) => user.id)
+  console.log(Array.from(resultSet).length)
+  console.log(resultIds.length)
+  console.log(result.users.length)
+  // console.log(resultIds)
+  // console.log(resultSet)
+  const tmpArr = Array.from(resultSet)
+    .map((id) => result.users.find((user) => user.id === id))
+    .filter((a) => !!a)
+    .filter((a) => a.id !== userInfo!.id)
+    .sort((a, b) => {
+      if (a.createdAt < b.createdAt) {
+        return 1
+      } else {
+        return -1
+      }
+    })
+
+  // sort result array by created date
+  const resultArr = [
+    ...tmpArr.filter((a) => !!a).filter((a) => a.id === userInfo!.id),
+    ...tmpArr.filter(
+      (a) => a.role !== "admin" && a.role !== "teacher" && a.role !== "student"
+    ),
+    ...tmpArr.filter((a) => a.role === "student" && a.isBanned),
+    ...tmpArr.filter((a) => a.role === "student" && !a.isBanned),
+    ...tmpArr.filter((a) => a.role === "admin"),
+    ...tmpArr.filter((a) => a.role === "teacher"),
+  ].filter((a) => !!a)
+
+  // console.log(resultArr)
   return (
     <div>
       <CurrentPathNavigator />
       <div className="flex flex-wrap items-center justify-between gap-3 px-6 pt-6 sm:flex-nowrap md:mb-0">
         <div className="flex flex-wrap items-center justify-start gap-3 px-6 pt-6 md:mb-0 md:flex-nowrap">
           <SearchInput />
-
-          {/* <CheckInput batchId={searchParams?.batchId} name={"batchIds"} /> 
-          <CheckInput courseId={searchParams?.courseId} name={"courseIds"} />  */}
         </div>
         <div className="flex w-full items-center gap-2 px-6 pt-6 max-sm:justify-start sm:justify-end md:mb-0 md:justify-between">
-          <CheckInput role={searchParams?.role} name={"role"} />
+          <CheckInput role={searchParams?.role || "all"} name={"role"} />
           <Link href="/teacher/users/invite">
             <Button className="!h-full">Invite User</Button>
           </Link>
         </div>
       </div>
       <div className="mt-14 grid grid-cols-1 gap-5 p-5">
-        {result.users.length === 0 ? (
-          <p className="no-result">No users</p>
+        {resultArr.length === 0 ? (
+          <p className="no-result mx-auto">No users</p>
         ) : (
           <>
-            {result.users.map((person) => (
+            {resultArr.map((person) => (
               <UserCard key={person.id} user={person} viewer={userInfo!} />
             ))}
           </>

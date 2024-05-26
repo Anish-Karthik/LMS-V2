@@ -22,7 +22,12 @@ const CheckInput = (props: {
   courseId?: string
   name: string
 }) => {
-  const [value, setValue] = useState("")
+  const [value, setValue] = useState( () => {
+    if (props.role) return props.role
+    if (props.batchId) return props.batchId
+    if (props.courseId) return props.courseId
+    return ""
+  })
   const debouncedValue = useDebounce(value)
 
   const searchParams = useSearchParams()!
@@ -66,7 +71,7 @@ const CheckInput = (props: {
   }
   return (
     <div>
-      <Select onValueChange={handleChange} defaultValue={"all"}>
+      <Select onValueChange={handleChange} defaultValue={"all"} value={value}>
         <SelectTrigger className="max-w-[180px]">
           <SelectValue placeholder="User type" />
         </SelectTrigger>

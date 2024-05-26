@@ -3,7 +3,7 @@ import { Metadata } from "next"
 
 import { Separator } from "@/components/ui/separator"
 
-import CurrentPathNavigator from "../../../../../../../components/shared/current-pathname"
+import CurrentPathNavigator from "@/components/shared/current-pathname"
 
 export const metadata: Metadata = {
   title: "Profile",
