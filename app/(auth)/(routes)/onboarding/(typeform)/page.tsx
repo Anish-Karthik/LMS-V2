@@ -20,6 +20,13 @@ const page = async ({
   const isPurchased =
     !!userInfo?.purchases?.length || userInfo?.role === "student" || false
   const isAdmin = ["teacher", "admin"].includes(userInfo?.role || "")
+  const searchParamsPromo = searchParams.promo
+    ? `promo=${searchParams.promo}`
+    : ""
+  const searchParamsInvite = searchParams.invite
+    ? `invite=${searchParams.invite}`
+    : ""
+  const searchParamsUrl = `${searchParamsPromo}&${searchParamsInvite}`
   if (isPurchased) {
     redirect("/student/dashboard")
   }
@@ -27,7 +34,7 @@ const page = async ({
     redirect("/teacher/dashboard")
   }
   if (userInfo) {
-    redirect("/purchase")
+    redirect("/purchase?" + searchParamsUrl)
   }
   const initialData: OnboardingType = {
     name: "",

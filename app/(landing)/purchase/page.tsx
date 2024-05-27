@@ -3,6 +3,7 @@ import { currentUser } from "@clerk/nextjs"
 
 import { getCourses } from "@/lib/actions/course.actions"
 import { acceptInvite } from "@/lib/actions/invite.action"
+import { getUser } from "@/lib/actions/user.actions"
 import { WavyBackground } from "@/components/animation/wavy-background"
 import About from "@/app/(landing)/_components/landing/about"
 import AdvantagesSection from "@/app/(landing)/_components/landing/advantages-section"
@@ -37,7 +38,11 @@ const page = async ({
 
   const courseId = courses[0].id
   console.log(searchParams.promo)
-  if (searchParams.invite && user) {
+  if (searchParams.invite) {
+    console.log(searchParams.invite)
+    if (!user) redirect("/sign-in?" + searchParamsUrl)
+    const userInfo = await getUser(user.id)
+    if (!userInfo) redirect("/onboarding?" + searchParamsUrl)
     await acceptInvite(searchParams.invite, user.id)
     redirect("/teacher/settings")
   }

@@ -146,6 +146,16 @@ export const acceptInvite = async (invite: string, userId: string) => {
     } else {
       await toTeacher(userId)
     }
+    db.invite.update({
+      where: {
+        id: inviteLink.id,
+      },
+      data: {
+        uses: {
+          decrement: 1,
+        },
+      },
+    })
     sendmail({
       to: [creatorInfo.email],
       subject: "Invite Accepted",
