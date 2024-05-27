@@ -87,7 +87,7 @@ const page = async ({
         ) : (
           <>
             {resultArr.map((person) => (
-              <UserCard key={person.id} user={person} viewer={userInfo!} />
+              <UserCard key={person!.id} user={person!} viewer={userInfo!} />
             ))}
           </>
         )}
