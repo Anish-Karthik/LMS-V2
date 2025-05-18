@@ -10,16 +10,16 @@ import { Banner } from "@/components/banner"
 import { IconBadge } from "@/components/icon-badge"
 import CurrentPathNavigator from "@/components/shared/current-pathname"
 
-import { AttachmentForm } from "../../../../content/chapters/[chapterId]/topics/[topicId]/_components/attachment-form"
-import { TopicActions } from "../../../../content/chapters/[chapterId]/topics/[topicId]/_components/topic-actions"
-import { TopicDescriptionForm } from "../../../../content/chapters/[chapterId]/topics/[topicId]/_components/topic-description-form"
-import { TopicTitleForm } from "../../../../content/chapters/[chapterId]/topics/[topicId]/_components/topic-title-form"
-import { TopicVideoForm } from "../../../../content/chapters/[chapterId]/topics/[topicId]/_components/topic-video-form"
+import { AttachmentForm } from "@/components/shared/topic/attachment-form"
+import { TopicActions } from "@/components/shared/topic/topic-actions"
+import { TopicDescriptionForm } from "@/components/shared/topic/topic-description-form"
+import { TopicTitleForm } from "@/components/shared/topic/topic-title-form"
+import { TopicVideoForm } from "@/components/shared/topic/topic-video-form"
 
 const NotifyTopic = dynamic(
   () =>
     import(
-      "../../../../content/chapters/[chapterId]/topics/[topicId]/_components/notify-topic"
+      "@/components/shared/topic/notify-topic"
     ),
   {
     ssr: false,
@@ -116,14 +116,9 @@ const topicIdPage = async ({
                 <IconBadge icon={LayoutDashboard} />
                 <h2 className="text-xl">Customize your Topic</h2>
               </div>
-              <TopicTitleForm
-                initialData={topic}
-                batchId={params?.batchId}
-                topicId={params?.topicId}
-              />
+              <TopicTitleForm initialData={topic} topicId={params?.topicId} />
               <TopicDescriptionForm
                 initialData={topic}
-                batchId={params?.batchId}
                 topicId={params?.topicId}
               />
             </div>
@@ -156,11 +151,7 @@ const topicIdPage = async ({
               <IconBadge icon={Video} />
               <h2 className="text-xl">Add a video</h2>
             </div>
-            <TopicVideoForm
-              initialData={topic}
-              topicId={params?.topicId}
-              batchId={params?.batchId}
-            />
+            <TopicVideoForm initialData={topic} topicId={params?.topicId} />
           </div>
         </div>
       </div>

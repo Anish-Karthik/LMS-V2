@@ -10,15 +10,21 @@ import { Banner } from "@/components/banner"
 import { IconBadge } from "@/components/icon-badge"
 import CurrentPathNavigator from "@/components/shared/current-pathname"
 
-import { AttachmentForm } from "./_components/attachment-form"
-import { TopicActions } from "./_components/topic-actions"
-import { TopicDescriptionForm } from "./_components/topic-description-form"
-import { TopicTitleForm } from "./_components/topic-title-form"
-import { TopicVideoForm } from "./_components/topic-video-form"
+import { AttachmentForm } from "@/components/shared/topic/attachment-form"
+import { TopicActions } from "@/components/shared/topic/topic-actions"
+import { TopicDescriptionForm } from "@/components/shared/topic/topic-description-form"
+import { TopicTitleForm } from "@/components/shared/topic/topic-title-form"
+import { TopicVideoForm } from "@/components/shared/topic/topic-video-form"
 
-const NotifyTopic = dynamic(() => import("./_components/notify-topic"), {
-  ssr: false,
-})
+const NotifyTopic = dynamic(
+  () =>
+    import(
+      "@/components/shared/topic/notify-topic"
+    ),
+  {
+    ssr: false,
+  }
+)
 
 const topicIdPage = async ({
   params,
@@ -110,10 +116,7 @@ const topicIdPage = async ({
                 <IconBadge icon={LayoutDashboard} />
                 <h2 className="text-xl">Customize your Topic</h2>
               </div>
-              <TopicTitleForm
-                initialData={topic}
-                topicId={params?.topicId}
-              />
+              <TopicTitleForm initialData={topic} topicId={params?.topicId} />
               <TopicDescriptionForm
                 initialData={topic}
                 topicId={params?.topicId}
@@ -147,10 +150,7 @@ const topicIdPage = async ({
               <IconBadge icon={Video} />
               <h2 className="text-xl">Add a video</h2>
             </div>
-            <TopicVideoForm
-              initialData={topic}
-              topicId={params?.topicId} 
-            />
+            <TopicVideoForm initialData={topic} topicId={params?.topicId} />
           </div>
         </div>
       </div>

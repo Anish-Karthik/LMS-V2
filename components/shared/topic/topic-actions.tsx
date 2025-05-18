@@ -17,14 +17,16 @@ interface TopicActionsProps {
   disabled: boolean
   topicId: string
   courseId: string
+  batchId?: string
   isPublished: boolean
-  chapterId: string
+  chapterId?: string
 }
 
 export const TopicActions = ({
   disabled,
   topicId,
   courseId,
+  batchId,
   isPublished,
   chapterId,
 }: TopicActionsProps) => {
@@ -59,7 +61,13 @@ export const TopicActions = ({
 
       toast.success("Chapter deleted")
       router.refresh()
-      router.push(`/teacher/courses/${courseId}/content/chapters/${chapterId}`)
+      if (batchId) {
+        router.push(
+          `/teacher/courses/${courseId}/batches/${batchId}/topics/${topicId}`
+        )
+      } else {
+        router.push(`/teacher/courses/${courseId}/content/chapters/${chapterId}`)
+      }
     } catch {
       toast.error("Something went wrong")
     } finally {
