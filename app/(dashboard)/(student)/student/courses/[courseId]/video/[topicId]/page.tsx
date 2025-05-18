@@ -3,6 +3,7 @@ import { redirect } from "next/navigation"
 import { auth } from "@clerk/nextjs"
 import { File } from "lucide-react"
 
+import { getCourseById } from "@/lib/actions/course.actions"
 import { getDetailedTopicClient } from "@/lib/actions/topic.actions"
 import { getUser } from "@/lib/actions/user.actions"
 import { Separator } from "@/components/ui/separator"
@@ -23,6 +24,8 @@ const TopicIdPage = async ({
   if (!userId || !userInfo) {
     return redirect("/")
   }
+
+  // Check if user has purchased this course
   const userPurchaseInfoForThisCourse = userInfo.purchases.find(
     (purchase) => purchase.courseId === params?.courseId
   )
@@ -30,6 +33,13 @@ const TopicIdPage = async ({
   if (!userPurchaseInfoForThisCourse) {
     return redirect("/")
   }
+
+  // Get course to check if it's self-paced or batch-based
+  const course = await getCourseById(params.courseId)
+  if (!course) {
+    return redirect("/student/courses")
+  }
+
   const {
     topic,
     chapter,
@@ -44,29 +54,43 @@ const TopicIdPage = async ({
     topicId: params?.topicId,
     courseId: params?.courseId,
   })
+
   console.log("*************************************")
   console.log(nextTopic?.id, params?.topicId, nextTopic?.type)
   console.log("*************************************")
-  if (!topic || !batch || !chapter) {
+
+  if (!topic || !chapter) {
     return (
       <>
         <h1>Topic not found{JSON.stringify(topic)}</h1>
-        <h1>Batch not found{JSON.stringify(batch)}</h1>
         <h1>Chapter not found{JSON.stringify(chapter)}</h1>
       </>
     )
   }
-  console.log(userPurchaseInfoForThisCourse.batchId, batch.id)
-  if (userPurchaseInfoForThisCourse.batchId !== batch.id) {
-    return (
-      <>
-        <h1>
-          Batch mismatch, u are not authorized to access this batch content,
-          contact your mentor
-        </h1>
-      </>
-    )
+
+  // For batch-based courses, validate batch access
+  if (course.type === "batch-based") {
+    if (!batch) {
+      return (
+        <>
+          <h1>Batch not found{JSON.stringify(batch)}</h1>
+        </>
+      )
+    }
+
+    console.log(userPurchaseInfoForThisCourse.batchId, batch.id)
+    if (userPurchaseInfoForThisCourse.batchId !== batch.id) {
+      return (
+        <>
+          <h1>
+            Batch mismatch, you are not authorized to access this batch content,
+            contact your mentor
+          </h1>
+        </>
+      )
+    }
   }
+  // For self-paced courses, we don't need to validate batch
 
   const isLocked = false //!topic.isFree && !purchase;
   const completeOnEnd = !!purchase && !!userProgressTopic?.isCompleted
@@ -84,7 +108,7 @@ const TopicIdPage = async ({
       )}
       <div className="mx-auto flex max-w-4xl flex-col pb-20">
         <div className="p-4">
-          <VideoPlayer
+          {videoData?.url ? <VideoPlayer
             userId={userId}
             topicId={params?.topicId}
             title={topic.title}
@@ -95,7 +119,12 @@ const TopicIdPage = async ({
             isLocked={isLocked}
             isCompleted={!!userProgressTopic?.isCompleted}
             completeOnEnd={completeOnEnd}
-          />
+          /> : (
+            <div className="flex flex-col items-center justify-center space-y-4 py-8">
+              <Banner variant="warning" label="No video content available for this topic." />
+              <h1 className="text-xl font-semibold text-gray-700">Video content unavailable</h1>
+            </div>
+          )}
         </div>
         <div>
           <div className="flex flex-col items-center justify-between p-4 md:flex-row">

@@ -2,6 +2,7 @@ import { Attachment, Topic } from "@prisma/client"
 
 import { db } from "../db"
 import { getBatchById } from "./batch.action"
+import { getCourseById } from "./course.actions"
 
 export const getTopicById = async (topicId: string) => {
   try {
@@ -62,32 +63,17 @@ export const getDetailedTopicClient = async ({
   userId: string
 }) => {
   try {
-    // find to which batch the topic belongs to
-    const purchase = await db.topic.findUnique({
-      where: {
-        id: topicId,
-      },
-      select: {
-        chapter: {
-          select: {
-            batch: {
-              include: {
-                purchases: {
-                  where: {
-                    userId: userId,
-                  },
-                },
-              },
-            },
-          },
-        },
-      },
-    })
-
-    if (!purchase || !purchase.chapter?.batch?.purchases) {
-      throw new Error("Course not purchased")
+    // Get course to determine if it's self-paced or batch-based
+    const course = await getCourseById(courseId)
+    if (!course) {
+      throw new Error("Course not found")
     }
+
+    // Get topic and chapter info
     const topic = await getPublishedTopicsById(topicId)
+    if (!topic) {
+      throw new Error("Topic not found")
+    }
 
     const currentChapter = await db.chapter.findUnique({
       where: {
@@ -98,10 +84,51 @@ export const getDetailedTopicClient = async ({
       throw new Error("Chapter not found")
     }
 
-    if (!topic) {
-      throw new Error("Topic not found")
+    // Check if user has purchased the course
+    const userPurchase = await db.purchase.findFirst({
+      where: {
+        userId: userId,
+        courseId: courseId,
+      },
+    })
+
+    if (!userPurchase) {
+      throw new Error("Course not purchased")
     }
-    const batch = await getBatchById(currentChapter.batchId)
+
+    // For batch-based courses, check if the batch matches
+    let batch = null
+    let purchase = null
+
+    if (course.type === "batch-based" && currentChapter.batchId) {
+      batch = await getBatchById(currentChapter.batchId)
+
+      // Check if user has access to this batch
+      purchase = await db.topic.findUnique({
+        where: {
+          id: topicId,
+        },
+        select: {
+          chapter: {
+            select: {
+              batch: {
+                include: {
+                  purchases: {
+                    where: {
+                      userId: userId,
+                    },
+                  },
+                },
+              },
+            },
+          },
+        },
+      })
+
+      if (!purchase || !purchase.chapter?.batch?.purchases) {
+        throw new Error("Batch not purchased or mismatched")
+      }
+    }
 
     let videoData = null
     let attachments: Attachment[] = []
@@ -113,6 +140,7 @@ export const getDetailedTopicClient = async ({
       },
     })
 
+    // Find next topic in same chapter
     nextTopic = await db.topic.findFirst({
       where: {
         chapterId: topic.chapterId,
@@ -127,35 +155,63 @@ export const getDetailedTopicClient = async ({
     })
 
     if (!nextTopic) {
-      // get next chapter's first topic
-      const nextChapter = await db.chapter.findFirst({
-        where: {
-          batchId: currentChapter?.batchId,
-          position: {
-            gt: currentChapter?.position,
-          },
-        },
-        include: {
-          topics: {
-            orderBy: {
-              position: "asc",
+      // Find next chapter's first topic
+      if (course.type === "self-paced") {
+        // For self-paced courses, get next chapter by courseId
+        const nextChapter = await db.chapter.findFirst({
+          where: {
+            courseId: courseId,
+            isPublished: true,
+            position: {
+              gt: currentChapter?.position,
             },
           },
-        },
-        orderBy: {
-          position: "asc",
-        },
-      })
-      if (nextChapter) {
-        nextTopic = await db.topic.findFirst({
-          where: {
-            chapterId: nextChapter.id,
-            isPublished: true,
+          include: {
+            topics: {
+              where: {
+                isPublished: true,
+              },
+              orderBy: {
+                position: "asc",
+              },
+            },
           },
           orderBy: {
             position: "asc",
           },
         })
+
+        if (nextChapter && nextChapter.topics.length > 0) {
+          nextTopic = nextChapter.topics[0]
+        }
+      } else if (currentChapter.batchId) {
+        // For batch-based courses, get next chapter by batchId
+        const nextChapter = await db.chapter.findFirst({
+          where: {
+            batchId: currentChapter.batchId,
+            isPublished: true,
+            position: {
+              gt: currentChapter?.position,
+            },
+          },
+          include: {
+            topics: {
+              where: {
+                isPublished: true,
+              },
+              orderBy: {
+                position: "asc",
+              },
+            },
+          },
+          orderBy: {
+            position: "asc",
+          },
+        })
+
+        if (nextChapter && nextChapter.topics.length > 0) {
+          nextTopic = nextChapter.topics[0]
+        }
       }
     }
 

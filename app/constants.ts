@@ -180,7 +180,7 @@ export const sidebarLinksStudentMobile = [
     imgUrl: "/assets/courses.svg",
     icon: Book,
     route: "/student/courses",
-    label: "Course",
+    label: "Courses",
   },
   {
     imgUrl: "/assets/reply.svg",
