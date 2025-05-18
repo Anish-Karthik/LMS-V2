@@ -178,6 +178,7 @@ const PurchaseCourseForm = ({
                 courseId={courseId}
                 originalPrice={course.price!}
                 gst={gst}
+                courseType={course.type as "self-paced" | "batch-based"}
                 promo={promo}
                 userId={userId}
               />

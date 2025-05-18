@@ -66,6 +66,7 @@ export async function POST(
 
     try {
       let razorpayCustomer = await getRazorpayCustomer(user.id)
+      console.log("Debug: razorpayCustomer", razorpayCustomer)
       if (!razorpayCustomer) {
         const customer = await razorpay.customers.create({
           email: userData.email,
@@ -76,17 +77,15 @@ export async function POST(
         razorpayCustomer = await createRazorpayCustomer(user.id, customer.id)
       }
 
-      const referred =
-        !!(
-          await db.promo.findFirst({
-            where: {
-              code: promoCode || "",
-              user: {
-                OR: [{ role: "student" }, { role: "teacher" }],
-              },
-            },
-          })
-        )?.code ?? false
+      const promoResult = await db.promo.findFirst({
+        where: {
+          code: promoCode || "",
+          user: {
+            OR: [{ role: "student" }, { role: "teacher" }],
+          },
+        },
+      })
+      const referred = Boolean(promoResult?.code)
       console.log("referred", referred)
       const response: CreateOrderResponse = await razorpay.orders.create(
         options

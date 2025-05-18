@@ -19,12 +19,14 @@ export const createRazorpayCustomer = async (
   razorpayCustomerId: string
 ) => {
   try {
+    console.log("creating razorpayCustomer", userId, razorpayCustomerId)
     const razorpayCustomer = await db.razorpayCustomer.create({
       data: {
         userId,
         razorpayCustomerId,
       },
     })
+    console.log("razorpayCustomer created", razorpayCustomer)
     return razorpayCustomer
   } catch (e: any) {
     console.error(e)
@@ -39,6 +41,7 @@ export const getRazorpayCustomer = async (userId: string) => {
         userId,
       },
     })
+    console.log("razorpayCustomer", razorpayCustomer)
     return razorpayCustomer
   } catch (e: any) {
     console.error(e)

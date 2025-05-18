@@ -6,6 +6,7 @@ import { getUser, isUserPurchasedCourse } from "@/lib/actions/user.actions"
 import { db } from "@/lib/db"
 import ChapterBar from "@/components/shared/chapter-bar"
 import MobileChapterBar from "@/components/shared/m-chapter-bar"
+import CurrentPathNavigator from "@/components/shared/current-pathname"
 
 const DashBoardLayout = async ({
   children,
@@ -20,8 +21,16 @@ const DashBoardLayout = async ({
   const purchased = await isUserPurchasedCourse(user.id, params?.courseId)
   const userInfo = await getUser(user?.id || "")
   if (!user || !userInfo) redirect("/")
-  const curBatch = userInfo.purchases[0].batchId
-  if (!curBatch) redirect("/")
+  const curBatch = userInfo.purchases?.[0]?.batchId
+
+
+  if (!curBatch) {
+    return (
+      <div className="relative h-full">
+        <main className="w-full">{children}</main>
+      </div>
+    )
+  }
   const chapters = await db.chapter.findMany({
     where: {
       batchId: curBatch,

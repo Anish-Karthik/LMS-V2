@@ -7,7 +7,8 @@ export interface RazorpayCheckoutRequestBody {
   gst: number
   price: number
   promoCode: string | undefined | null
-  batchId: string
+  batchId?: string
+  courseType?: "self-paced" | "batch-based"
 }
 
 export interface PaymentResponse {
@@ -35,9 +36,11 @@ export const makePayment = async ({
   gst,
   price,
   batchId,
+  courseType,
   setPurchasing,
 }: CreateOrderRequest & {
   setPurchasing: (purchasing: boolean) => void
+  courseType?: "self-paced" | "batch-based"
 }) => {
   //console.log("here...");
   if (!userId) return Promise.reject("Unauthorized")
@@ -48,29 +51,35 @@ export const makePayment = async ({
     alert("Razorpay SDK Failed to load")
     return
   }
+
+  // Prepare request payload
+  const payload: any = {
+    price,
+    gst,
+    promoCode,
+    courseType,
+  }
+
+  // Only add batchId for batch-based courses
+  if (courseType !== "self-paced" && batchId) {
+    payload.batchId = batchId
+  }
+  console.log(payload)
   // Make API call to the serverless API
   const { data }: { data: CreateOrderRequest & CreateOrderResponse } =
-    await axios.post(`/api/courses/${courseId}/checkout/razorpay`, {
-      price,
-      gst,
-      promoCode,
-      batchId,
-    })
+    await axios.post(`/api/courses/${courseId}/checkout/razorpay`, payload)
   console.log(data)
   const { currency, amount, id, ...rest } = data
-  console.log(rest)
-  console.log(currency, amount, id)
-  console.log(process.env.NEXT_PUBLIC_RAZORPAY_KEY)
+
   const options = {
     key: process.env.NEXT_PUBLIC_RAZORPAY_KEY!, // Enter the Key ID generated from the Dashboard
-    name: "www.praglis.in",
+    name: "localhost:3000",
     currency: currency,
     amount: amount,
     order_id: id,
     description: "Thank you for purchasing the course",
     image: "/images/logo2.jpg",
     handler: async function (response: PaymentResponse) {
-      console.log(response)
       // Validate payment at server - using webhooks is a better idea.
       setPurchasing(true)
       toast.loading("Purchasing Course")
@@ -80,6 +89,7 @@ export const makePayment = async ({
           orderId: response.razorpay_order_id,
           signature: response.razorpay_signature,
           ...rest,
+          courseType,
         })
         toast.remove()
         toast.success("Purchase Successful")
@@ -90,13 +100,12 @@ export const makePayment = async ({
           toast.success("Purchase Successful")
         } else if (error.code === 500) {
           toast.error(
-            "Payment success, some error occured in adding you to course. don't worry admin can add you to course manually. contact them"
+            "Payment success, some error occurred in adding you to course. Don't worry, admin can add you to course manually. Contact them."
           )
         } else {
           toast.success("Purchase Successful")
         }
         console.error(error)
-        console.log(error)
       }
       setPurchasing(false)
     },
@@ -106,10 +115,11 @@ export const makePayment = async ({
       contact: userData.phoneNo,
     },
   }
-  console.log(options)
+
   const paymentObject = new (window as any).Razorpay(options)
   paymentObject.open()
 }
+
 export const initializeRazorpay = () => {
   return new Promise((resolve) => {
     const script = document.createElement("script")

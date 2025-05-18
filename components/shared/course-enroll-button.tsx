@@ -2,12 +2,10 @@
 
 import { useEffect, useMemo, useState } from "react"
 import { useRouter } from "next/navigation"
-import { firstTimeRender } from "@/store/atoms"
 import { zodResolver } from "@hookform/resolvers/zod"
 import { Batch, Promo } from "@prisma/client"
 import { useForm } from "react-hook-form"
 import toast from "react-hot-toast"
-import { useRecoilState } from "recoil"
 import * as z from "zod"
 
 import { performPurchaseAsFree } from "@/lib/actions/server/course.server.action"
@@ -38,12 +36,11 @@ interface CourseEnrollButtonProps {
   originalPrice: number
   gst: number
   batches: Batch[]
+  courseType: "self-paced" | "batch-based"
 }
 
 const batchSelectSchema = z.object({
-  batch: z.string({
-    required_error: "Please select an email to display.",
-  }),
+  batch: z.string().optional(),
 })
 
 const CourseEnrollButton = ({
@@ -53,16 +50,19 @@ const CourseEnrollButton = ({
   originalPrice,
   batches,
   gst,
+  courseType,
 }: CourseEnrollButtonProps) => {
   const [purchasing, setPurchasing] = useState(false)
-  const [isFirstTimeRendered, setIsFirstTimeRendered] =
-    useRecoilState(firstTimeRender)
+  const [isFirstTimeRendered, setIsFirstTimeRendered] = useState(true)
   const debouncedValue = useDebounce(isFirstTimeRendered, 2000)
 
   const form = useForm<z.infer<typeof batchSelectSchema>>({
     resolver: zodResolver(batchSelectSchema),
     defaultValues: {
-      batch: batches.find((batch) => batch.isCurrent)?.id.toString(),
+      batch:
+        courseType === "batch-based"
+          ? batches.find((batch) => batch.isCurrent)?.id.toString()
+          : undefined,
     },
   })
   const router = useRouter()!
@@ -85,32 +85,37 @@ const CourseEnrollButton = ({
     if (isFirstTimeRendered) {
       setIsFirstTimeRendered(false)
     }
-  }, [isFirstTimeRendered, setIsFirstTimeRendered])
+  }, [isFirstTimeRendered])
   if (!userId) router.push("/sign-in")
 
   const onClick = async (values: z.infer<typeof batchSelectSchema>) => {
-    console.log("price", price)
     try {
+      // For 100% discount (free courses)
       if (promo?.discount === 100) {
-        console.log("free")
-        const response = await performPurchaseAsFree({
+        // For free courses
+        const purchaseData: any = {
           courseId,
           userId,
-          batchId: values.batch!,
           price: price < 1 ? originalPrice : price,
           promoId: promo?.id,
-        })
+        }
 
+        // Only add batchId for batch-based courses
+        if (courseType === "batch-based" && values.batch) {
+          purchaseData.batchId = values.batch
+        }
+
+        await performPurchaseAsFree(purchaseData)
         router.push(`/student/dashboard`)
         return
       }
-      console.log("not free")
-      await makePayment({
+
+      // For paid courses
+      const paymentData: any = {
         courseId,
         userId,
         price,
         gst,
-        batchId: values.batch,
         promoCode: promo?.code,
         setPurchasing: (val: boolean) => {
           setPurchasing(val)
@@ -120,18 +125,18 @@ const CourseEnrollButton = ({
             }, 2000)
           }
         },
-      })
-      // const response = await axios.post(`/api/courses/${courseId}/checkout`, {
-      //   userId,
-      //   price,
-      //   batchId: values.batch,
-      //   promo: promo || null,
-      // })
+      }
+
+      // Only add batchId for batch-based courses
+      if (courseType === "batch-based" && values.batch) {
+        paymentData.batchId = values.batch
+      }
+
+      await makePayment(paymentData)
 
       router.push(`/student/dashboard`)
     } catch (error: any) {
       console.error(error)
-      console.log("error", error)
       toast.error("Something went wrong")
     }
   }
@@ -148,7 +153,7 @@ const CourseEnrollButton = ({
           <div className="h-20 w-20 animate-spin rounded-full border-4 border-gray-900" />
         </div>
       )}
-      {!batches.length || debouncedValue ? (
+      {courseType === "batch-based" && (!batches.length || debouncedValue) ? (
         <div className="flex flex-col gap-3">
           <div className="h-9 w-full animate-pulse rounded-md bg-gray-100" />
           <div className="h-9 w-full animate-pulse rounded-md bg-gray-100" />
@@ -159,38 +164,46 @@ const CourseEnrollButton = ({
             onSubmit={form.handleSubmit(onClick)}
             className="mt-3 flex w-full flex-col gap-3"
           >
-            <FormField
-              control={form.control}
-              name="batch"
-              render={({ field }) => (
-                <FormItem>
-                  <FormLabel>Select a Batch</FormLabel>
+            {courseType === "batch-based" && (
+              <FormField
+                control={form.control}
+                name="batch"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel>Select a Batch</FormLabel>
 
-                  <Select
-                    onValueChange={(value) => field.onChange(value)}
-                    defaultValue={batches[0].id}
-                  >
-                    <SelectTrigger className="w-full">
-                      <SelectValue placeholder="Select a Batch" />
-                    </SelectTrigger>
-                    <SelectContent>
-                      {batches.map((batch) => (
-                        <SelectItem value={batch.id.toString()}>
-                          {batch.name}
-                        </SelectItem>
-                      ))}
-                    </SelectContent>
-                  </Select>
+                    <Select
+                      onValueChange={(value) => field.onChange(value)}
+                      defaultValue={batches[0]?.id}
+                    >
+                      <SelectTrigger className="w-full">
+                        <SelectValue placeholder="Select a Batch" />
+                      </SelectTrigger>
+                      <SelectContent>
+                        {batches.map((batch) => (
+                          <SelectItem
+                            key={batch.id}
+                            value={batch.id.toString()}
+                          >
+                            {batch.name}
+                          </SelectItem>
+                        ))}
+                      </SelectContent>
+                    </Select>
 
-                  <FormDescription>
-                    You can switch batches later by contacting admins{" "}
-                  </FormDescription>
-                  <FormMessage />
-                </FormItem>
-              )}
-            />
+                    <FormDescription>
+                      You can switch batches later by contacting admins{" "}
+                    </FormDescription>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+            )}
             <Button
-              disabled={isSubmitting || !batches.length}
+              disabled={
+                isSubmitting ||
+                (courseType === "batch-based" && !batches.length)
+              }
               size="sm"
               className="w-full md:w-auto"
             >
