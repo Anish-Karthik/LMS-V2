@@ -11,11 +11,13 @@ export const createCourse = async ({
   description,
   imageUrl,
   price,
+  type = "batch-based",
 }: {
   title: string
   description: string
   imageUrl: string
   price: number
+  type?: "batch-based" | "self-paced"
 }) => {
   try {
     const course = await db.course.create({
@@ -24,16 +26,24 @@ export const createCourse = async ({
         description,
         imageUrl,
         price,
+        type,
       },
     })
-    const batch = await createBatch({
-      name: "Batch 1",
-      courseId: course.id,
-      isCurrent: true,
-    })
-    if (!batch) throw new Error("Batch creation failed")
 
-    await addBatchToCourse(batch.id, course.id)
+    // Only create batch for batch-based courses
+    if (type === "batch-based") {
+      // Use a unique batch name by including the course ID
+      const batchName = `Batch 1 - ${course.id.substring(0, 5)}`
+
+      const batch = await createBatch({
+        name: batchName,
+        courseId: course.id,
+        isCurrent: true,
+      })
+
+      if (!batch) throw new Error("Batch creation failed")
+      await addBatchToCourse(batch.id, course.id)
+    }
 
     return course
   } catch (e: any) {
@@ -48,12 +58,14 @@ export const editCourse = async ({
   description,
   imageUrl,
   price,
+  type,
 }: {
   id: string
   title?: string
   description?: string
   imageUrl?: string
   price?: number
+  type?: "batch-based" | "self-paced"
 }) => {
   try {
     const course = await db.course.update({
@@ -63,6 +75,7 @@ export const editCourse = async ({
         description,
         imageUrl,
         price,
+        type,
       },
     })
     return course
@@ -109,6 +122,6 @@ export const performPurchaseAsFree = async ({
   }
 }
 
-export const getCoursesClient = async () => {
-  return getCourses()
+export const getCoursesClient = async (isTeacherOrAdmin: boolean = false) => {
+  return getCourses(isTeacherOrAdmin)
 }

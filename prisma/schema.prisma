@@ -122,7 +122,8 @@ model Course {
   description   String?
   imageUrl      String?
   price         Float?
-  // isPublished Boolean @default(false)
+  type          String         @default("batch-based") // "batch-based" or "self-paced"
+  isPublished   Boolean        @default(false)
   batches       Batch[]
   announcements Announcement[]
   Purchase      Purchase[]

@@ -74,14 +74,14 @@ const LandingNavbar = ({
 
       <div className="flex items-center gap-2">
         {/* <ThemeToggle /> */}
-        <Link href={route || `/purchase/${courses[0].id}` || "/purchase"}>
+        {courses.length > 0 && <Link href={route || `/purchase/${courses[0].id}` || "/purchase"}>
           <Button variant="outline" className="rounded-full">
             {!route ||
             !(route?.includes("teacher") || route?.includes("student"))
               ? "Purchase Now"
               : "Dashboard"}
           </Button>
-        </Link>
+        </Link>}
         {pathname.split("/").length < 2 && (
           <Link
             href={

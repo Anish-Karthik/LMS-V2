@@ -73,16 +73,35 @@ export const BatchesForm = ({ initialData, courseId }: BatchesFormProps) => {
     router.push(`/teacher/courses/${courseId}/Batches/${id}`)
   }
 
+  const isSelfPaced = initialData.type === "self-paced"
+
   return (
-    <div className="bg-secondary relative mt-6 rounded-md border p-4">
+    <div
+      className={cn(
+        "bg-secondary relative mt-6 rounded-md border p-4",
+        isSelfPaced && "opacity-75"
+      )}
+    >
       {isUpdating && (
         <div className="rounded-m absolute right-0 top-0 flex h-full w-full items-center justify-center bg-slate-500/20">
           <Loader2 className="h-6 w-6 animate-spin text-sky-700" />
         </div>
       )}
+      {isSelfPaced && (
+        <div className="rounded-md absolute right-0 top-0 flex h-full w-full items-center justify-center bg-slate-500/30">
+          <div className="rounded-md bg-white p-4 shadow-md">
+            <p className="font-semibold text-center">
+              Batches not available for self-paced courses
+            </p>
+            <p className="text-sm text-muted-foreground text-center mt-1">
+              Change the course type to batch-based to manage batches
+            </p>
+          </div>
+        </div>
+      )}
       <div className="flex items-center justify-between font-medium">
         Course batches
-        <Button onClick={toggleCreating} variant="ghost">
+        <Button onClick={toggleCreating} variant="ghost" disabled={isSelfPaced}>
           {isCreating ? (
             <>Cancel</>
           ) : (
@@ -93,7 +112,7 @@ export const BatchesForm = ({ initialData, courseId }: BatchesFormProps) => {
           )}
         </Button>
       </div>
-      {isCreating && (
+      {isCreating && !isSelfPaced && (
         <Form {...form}>
           <form
             onSubmit={form.handleSubmit(onSubmit)}
@@ -121,7 +140,7 @@ export const BatchesForm = ({ initialData, courseId }: BatchesFormProps) => {
           </form>
         </Form>
       )}
-      {!isCreating && (
+      {!isCreating && !isSelfPaced && (
         <div
           className={cn(
             "mt-2 text-sm",
@@ -135,6 +154,15 @@ export const BatchesForm = ({ initialData, courseId }: BatchesFormProps) => {
             items={data.batches || []}
             courseId={courseId}
           />
+        </div>
+      )}
+      {!isCreating && isSelfPaced && data.batches.length > 0 && (
+        <div className="mt-2 text-sm">
+          <p className="text-amber-600 font-medium">
+            Warning: This course has {data.batches.length}{" "}
+            {data.batches.length === 1 ? "batch" : "batches"} that will be
+            hidden since it's now a self-paced course.
+          </p>
         </div>
       )}
     </div>

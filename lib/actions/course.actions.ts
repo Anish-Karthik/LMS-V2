@@ -21,9 +21,10 @@ export const addBatchToCourse = async (batchId: string, courseId: string) => {
   }
 }
 
-export const getCourses = async () => {
+export const getCourses = async (isTeacherOrAdmin: boolean = false) => {
   try {
     const courses = await db.course.findMany({
+      where: isTeacherOrAdmin ? {} : { isPublished: true },
       include: {
         batches: true,
         Purchase: true,
