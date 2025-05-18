@@ -2,6 +2,7 @@ import z from "zod"
 
 import {
   announcementRouter,
+  attendanceRouter,
   batchRouter,
   chapterRouter,
   courseRouter,
@@ -24,6 +25,7 @@ export const appRouter = router({
   chapter: chapterRouter,
   promo: promoRouter,
   testimonial: testimonialRouter,
+  attendance: attendanceRouter,
 })
 // Export type router type signature,
 // NOT the router itself.

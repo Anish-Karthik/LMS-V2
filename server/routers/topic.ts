@@ -290,4 +290,15 @@ export const topicRouter = router({
       throw new Error("Topic not found: ", error.message)
     }
   }),
+  get: publicProcedure.input(z.string()).query(async ({ input }) => {
+    try {
+      const topic = await db.topic.findUnique({
+        where: { id: input },
+      })
+      return topic
+    } catch (error: any) {
+      console.error(error)
+      throw new Error("Topic not found: ", error.message)
+    }
+  }),
 })

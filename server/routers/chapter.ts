@@ -1,10 +1,16 @@
-import { TRPCError } from "@trpc/server"
-import { z } from "zod"
+import { TRPCError } from "@trpc/server";
+import { z } from "zod";
 
-import { getChapterById } from "@/lib/actions/chapter.action"
-import { db } from "@/lib/db"
 
-import { publicProcedure, router } from "../trpc"
+
+import { getChapterById } from "@/lib/actions/chapter.action";
+import { db } from "@/lib/db";
+import { getChaptersByCourseId } from "@/lib/actions/chapter.action";
+
+
+
+import { publicProcedure, router } from "../trpc";
+
 
 export const chapterRouter = router({
   create: publicProcedure
@@ -16,6 +22,14 @@ export const chapterRouter = router({
     )
     .mutation(async ({ input }) => {
       try {
+        const batch = await db.batch.findUnique({
+          where: {
+            id: input.batchId,
+          },
+        })
+        if (!batch) {
+          throw new Error("Batch not found")
+        }
         const lastChapter = await db.chapter.findFirst({
           where: {
             batchId: input.batchId,
@@ -31,6 +45,7 @@ export const chapterRouter = router({
           data: {
             title: input.title,
             batchId: input.batchId,
+            courseId: batch.courseId,
             position: newPosition,
           },
         })
@@ -128,7 +143,7 @@ export const chapterRouter = router({
     try {
       const chapter = await db.chapter.update({
         where: { id: input },
-        data: { isPublished: true }
+        data: { isPublished: true },
       })
       return chapter
     } catch (error: any) {
@@ -141,12 +156,16 @@ export const chapterRouter = router({
     try {
       const chapter = await db.chapter.update({
         where: { id: input },
-        data: { isPublished: false }
+        data: { isPublished: false },
       })
       return chapter
     } catch (error: any) {
-      console.error(error) 
+      console.error(error)
       throw new Error("Failed to unpublish chapter")
     }
+  }),
+
+  getChaptersByCourseId: publicProcedure.input(z.string()).query(async ({ input }) => {
+    return await getChaptersByCourseId(input)
   }),
 })

@@ -2,6 +2,7 @@ import Link from "next/link"
 import { currentUser } from "@clerk/nextjs"
 import {
   BookOpenIcon,
+  ClipboardCheck,
   IndianRupee,
   LayoutDashboardIcon,
   ListChecksIcon,
@@ -59,6 +60,12 @@ const page = async ({ params }: { params: { courseId: string } }) => {
                 </Button>
               </Link>
             )}
+            <Link href={`/teacher/courses/${course.id}/attendance`}>
+              <Button variant="outline" size="sm">
+                <ClipboardCheck className="h-4 w-4 mr-2" />
+                Attendance Management
+              </Button>
+            </Link>
             <PublishButton initialData={course} courseId={course.id} />
             <DeleteCourseButton courseId={course.id} />
           </div>

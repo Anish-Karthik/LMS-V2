@@ -45,12 +45,14 @@ model User {
   referralBonus    Int       @default(0)
   isSuperAdmin     Boolean   @default(false)
 
-  promos        Promo[]
-  purchases     Purchase[]
-  announcements Announcement[]
-  testimonials  Testimonial[]
-  teacher       Teacher?
-  admin         Admin?
+  promos            Promo[]
+  purchases         Purchase[]
+  announcements     Announcement[]
+  testimonials      Testimonial[]
+  teacher           Teacher?
+  admin             Admin?
+  attendances       Attendance[] // Relation to track student attendance
+  markedAttendances Attendance[]   @relation("AttendanceMarker") // Relation to track who marked attendance
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
@@ -189,10 +191,15 @@ model Topic {
   position    Int
   description String?
   videoUrl    String?
-  type        String  @default("video")
+  type        String  @default("video") // "video", "quiz", "assignment", "live"
   isPublished Boolean @default(false)
   isNotified  Boolean @default(false)
   isFree      Boolean @default(false)
+
+  // Fields for live classes
+  startTime DateTime? // When the live class starts
+  duration  Int? // Duration in minutes
+  liveLink  String? // URL for the live class
 
   chapterId String  @db.ObjectId
   chapter   Chapter @relation(fields: [chapterId], references: [id], onDelete: Cascade)
@@ -201,8 +208,39 @@ model Topic {
   attachments       Attachment[]
   userProgressTopic UserProgressTopic[]
   videoData         VideoData?
+  attendances       Attendance[] // Relation to track attendance for this topic
 
   @@index([chapterId])
+}
+
+model Attendance {
+  id String @id @default(auto()) @map("_id") @db.ObjectId
+
+  // Student being marked
+  userId    String
+  userObjId String @db.ObjectId
+  user      User   @relation(fields: [userObjId], references: [id], onDelete: Cascade)
+
+  // Topic for which attendance is being tracked
+  topicId String @db.ObjectId
+  topic   Topic  @relation(fields: [topicId], references: [id], onDelete: Cascade)
+
+  // Person marking the attendance (teacher/admin)
+  markedById String @db.ObjectId
+  markedBy   User   @relation("AttendanceMarker", fields: [markedById], references: [id])
+
+  // Attendance status
+  status String @default("absent") // "present", "absent", "excused", "late"
+
+  notes String? // Optional notes about attendance
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@unique([userId, topicId]) // One attendance record per student per topic
+  @@index([topicId])
+  @@index([userId])
+  @@index([markedById])
 }
 
 model VideoData {

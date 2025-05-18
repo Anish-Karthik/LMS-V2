@@ -1,4 +1,5 @@
 import { currentUser } from "@clerk/nextjs"
+
 import { db } from "../db"
 import { getUser } from "./user.actions"
 
@@ -8,7 +9,9 @@ export const getChapterById = async (chapterId: string) => {
     if (!user) throw new Error("User not found")
     const userInfo = await getUser(user.id)
     if (!userInfo) throw new Error("User not found")
-    const isShowOnlyPublishedChapters = !(userInfo.role === "teacher" || userInfo.role === "admin")
+    const isShowOnlyPublishedChapters = !(
+      userInfo.role === "teacher" || userInfo.role === "admin"
+    )
     const whereClause = isShowOnlyPublishedChapters ? { isPublished: true } : {}
     const chapter = await db.chapter.findUnique({
       where: { ...whereClause, id: chapterId },
@@ -44,5 +47,28 @@ export const getChaptersByBatchId = async (batchId: string) => {
   } catch (error) {
     console.error(error)
     throw new Error("Chapter reorder failed")
+  }
+}
+
+export const getChaptersByCourseId = async (courseId: string) => {
+  try {
+    return await db.chapter.findMany({
+      where: {
+        courseId,
+      },
+      include: {
+        topics: {
+          orderBy: {
+            position: "asc",
+          },
+        },
+      },
+      orderBy: {
+        position: "asc",
+      },
+    })
+  } catch (error) {
+    console.error(error)
+    throw new Error("Chapter not found")
   }
 }
