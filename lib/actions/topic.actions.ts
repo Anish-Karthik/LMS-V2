@@ -195,14 +195,24 @@ export const getDetailedTopicClient = async ({
   }
 }
 
-export async function getTopicEmails({ batchId }: { batchId: string }) {
+export async function getTopicEmails({
+  batchId,
+  courseId,
+}: {
+  batchId?: string
+  courseId?: string
+}) {
   try {
     const emails = await db.user.findMany({
       where: {
         purchases: {
-          some: {
-            batchId: batchId,
-          },
+          some: batchId
+            ? {
+                batchId: batchId,
+              }
+            : {
+                courseId: courseId,
+              },
         },
       },
       select: {

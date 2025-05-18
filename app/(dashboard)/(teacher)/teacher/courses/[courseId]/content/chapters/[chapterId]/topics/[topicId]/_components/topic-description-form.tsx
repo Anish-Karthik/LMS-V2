@@ -3,12 +3,14 @@
 import { useState } from "react"
 import { useRouter } from "next/navigation"
 import { zodResolver } from "@hookform/resolvers/zod"
+import { Topic } from "@prisma/client"
 import { Pencil } from "lucide-react"
 import { useForm } from "react-hook-form"
 import toast from "react-hot-toast"
 import * as z from "zod"
 
 import { updateTopic } from "@/lib/actions/server/topic.server.action"
+import { cn } from "@/lib/utils"
 import { Button } from "@/components/ui/button"
 import {
   Form,
@@ -17,25 +19,22 @@ import {
   FormItem,
   FormMessage,
 } from "@/components/ui/form"
-import { Input } from "@/components/ui/input"
+import { Editor } from "@/components/editor"
+import { Preview } from "@/components/preview"
 
-interface TopicTitleFormProps {
-  initialData: {
-    title: string
-  }
-  batchId: string
+interface TopicDescriptionFormProps {
+  initialData: Topic
   topicId: string
 }
 
 const formSchema = z.object({
-  title: z.string().min(1),
+  description: z.string().min(1),
 })
 
-export const TopicTitleForm = ({
+export const TopicDescriptionForm = ({
   initialData,
-  batchId,
   topicId,
-}: TopicTitleFormProps) => {
+}: TopicDescriptionFormProps) => {
   const [isEditing, setIsEditing] = useState(false)
 
   const toggleEdit = () => setIsEditing((current) => !current)
@@ -44,14 +43,16 @@ export const TopicTitleForm = ({
 
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
-    defaultValues: initialData,
+    defaultValues: {
+      description: initialData?.description || "",
+    },
   })
 
   const { isSubmitting, isValid } = form.formState
 
   const onSubmit = async (values: z.infer<typeof formSchema>) => {
     try {
-      await updateTopic({ topicId, title: values.title })
+      await updateTopic({ topicId, description: values.description })
       toast.success("Topic updated")
       toggleEdit()
       router.refresh()
@@ -63,19 +64,31 @@ export const TopicTitleForm = ({
   return (
     <div className="bg-secondary mt-6 rounded-md border p-4">
       <div className="flex items-center justify-between font-medium">
-        Topic title
+        Topic description
         <Button onClick={toggleEdit} variant="ghost">
           {isEditing ? (
             <>Cancel</>
           ) : (
             <>
               <Pencil className="mr-2 h-4 w-4" />
-              Edit title
+              Edit description
             </>
           )}
         </Button>
       </div>
-      {!isEditing && <p className="mt-2 text-sm">{initialData.title}</p>}
+      {!isEditing && (
+        <div
+          className={cn(
+            "mt-2 text-sm",
+            !initialData.description && "italic text-slate-500"
+          )}
+        >
+          {!initialData.description && "No description"}
+          {initialData.description && (
+            <Preview value={initialData.description} />
+          )}
+        </div>
+      )}
       {isEditing && (
         <Form {...form}>
           <form
@@ -84,15 +97,11 @@ export const TopicTitleForm = ({
           >
             <FormField
               control={form.control}
-              name="title"
+              name="description"
               render={({ field }) => (
                 <FormItem>
                   <FormControl>
-                    <Input
-                      disabled={isSubmitting}
-                      placeholder="e.g. 'Introduction to the course'"
-                      {...field}
-                    />
+                    <Editor {...field} />
                   </FormControl>
                   <FormMessage />
                 </FormItem>

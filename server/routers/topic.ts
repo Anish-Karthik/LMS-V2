@@ -9,8 +9,8 @@ export const topicRouter = router({
   create: publicProcedure
     .input(
       z.object({
+        title: z.string().min(1),
         chapterId: z.string(),
-        title: z.string(),
       })
     )
     .mutation(async ({ input }) => {
@@ -33,37 +33,106 @@ export const topicRouter = router({
             position: newPosition,
           },
         })
+
         return topic
       } catch (error: any) {
         console.error(error)
-        throw new Error("Topic creation failed")
+        throw new Error(error.message || "Failed to create topic")
       }
     }),
 
-  reorderTopics: publicProcedure
+  update: publicProcedure
     .input(
       z.object({
-        chapterId: z.string(),
-        topics: z.array(
+        id: z.string(),
+        title: z.string().optional(),
+        description: z.string().optional(),
+        videoUrl: z.string().optional(),
+        isFree: z.boolean().optional(),
+      })
+    )
+    .mutation(async ({ input }) => {
+      try {
+        const topic = await db.topic.update({
+          where: { id: input.id },
+          data: {
+            title: input.title,
+            description: input.description,
+            videoUrl: input.videoUrl,
+            isFree: input.isFree,
+          },
+        })
+
+        return topic
+      } catch (error: any) {
+        console.error(error)
+        throw new Error(error.message || "Failed to update topic")
+      }
+    }),
+
+  delete: publicProcedure.input(z.string()).mutation(async ({ input }) => {
+    try {
+      await db.topic.delete({
+        where: { id: input },
+      })
+
+      return { success: true }
+    } catch (error: any) {
+      console.error(error)
+      throw new Error(error.message || "Failed to delete topic")
+    }
+  }),
+
+  reorder: publicProcedure
+    .input(
+      z.object({
+        list: z.array(
           z.object({
             id: z.string(),
             position: z.number(),
           })
         ),
+        chapterId: z.string(),
       })
     )
     .mutation(async ({ input }) => {
       try {
-        for (let item of input.topics) {
-          await db.topic.update({
+        const transactions = input.list.map((item) =>
+          db.topic.update({
             where: { id: item.id },
             data: { position: item.position },
           })
-        }
+        )
+
+        await db.$transaction(transactions)
+
         return { success: true }
       } catch (error: any) {
         console.error(error)
-        throw new Error("Topic reorder failed")
+        throw new Error(error.message || "Failed to reorder topics")
+      }
+    }),
+
+  togglePublish: publicProcedure
+    .input(
+      z.object({
+        id: z.string(),
+        isPublished: z.boolean(),
+      })
+    )
+    .mutation(async ({ input }) => {
+      try {
+        const topic = await db.topic.update({
+          where: { id: input.id },
+          data: { isPublished: input.isPublished },
+        })
+
+        return topic
+      } catch (error: any) {
+        console.error(error)
+        throw new Error(
+          error.message || "Failed to toggle topic publish status"
+        )
       }
     }),
 
@@ -81,108 +150,6 @@ export const topicRouter = router({
       } catch (error: any) {
         console.error(error)
         throw new Error("Topics not found")
-      }
-    }),
-
-  delete: publicProcedure.input(z.string()).mutation(async ({ input }) => {
-    try {
-      const topic = await db.topic.findUnique({
-        where: {
-          id: input,
-        },
-      })
-
-      if (!topic) {
-        return new Error("Not Found")
-      }
-
-      if (topic.videoUrl) {
-        const existingVideo = await db.videoData.findFirst({
-          where: {
-            topicId: input,
-          },
-        })
-
-        if (existingVideo) {
-          db.videoData.delete({
-            where: {
-              id: existingVideo.id,
-            },
-          })
-        }
-      }
-
-      await db.topic.delete({
-        where: {
-          id: input,
-        },
-      })
-    } catch (error: any) {
-      console.error(error)
-      throw new Error("Topic deletion failed: ", error.message)
-    }
-  }),
-
-  update: publicProcedure
-    .input(
-      z.object({
-        topicId: z.string(),
-        title: z.string().optional(),
-        videoUrl: z.string().optional(),
-        description: z.string().optional(),
-        isPublished: z.boolean().optional(),
-      })
-    )
-    .mutation(async ({ input }) => {
-      try {
-        const topic = await db.topic.findUnique({
-          where: {
-            id: input.topicId,
-          },
-        })
-
-        if (!topic) {
-          return new Error("Not Found")
-        }
-
-        const updatedTopic = await db.topic.update({
-          where: {
-            id: input.topicId,
-          },
-          data: {
-            title: input.title || topic.title,
-            videoUrl: input.videoUrl || topic.videoUrl,
-            description: input.description || topic.description,
-            isPublished: input.isPublished || topic.isPublished,
-          },
-        })
-
-        if (input.videoUrl) {
-          const existingVideo = await db.videoData.findFirst({
-            where: {
-              topicId: input.topicId,
-            },
-          })
-
-          if (existingVideo) {
-            db.videoData.delete({
-              where: {
-                id: existingVideo.id,
-              },
-            })
-          }
-          await db.videoData.create({
-            data: {
-              topicId: input.topicId,
-              url: input.videoUrl,
-            },
-          })
-        }
-
-        return updatedTopic
-      } catch (error: any) {
-        console.error(error)
-        throw new Error("Topic update failed: ", error.message)
       }
     }),
 

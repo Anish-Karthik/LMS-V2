@@ -38,6 +38,7 @@ interface ChaptersListProps {
   onReorder: (updateData: { id: string; position: number }[]) => void
   onEdit: (id: string) => void
   setIsEditing: (isEditing: boolean) => void
+  onTogglePublish: (id: string, isPublished: boolean) => void
 }
 
 export const ChaptersList = ({
@@ -45,6 +46,7 @@ export const ChaptersList = ({
   onReorder,
   onEdit,
   setIsEditing,
+  onTogglePublish,
 }: ChaptersListProps) => {
   const [isMounted, setIsMounted] = useState(false)
   const [chapters, setChapters] = useState(items)
@@ -98,6 +100,12 @@ export const ChaptersList = ({
     }
   }
 
+  const toggleWrapper = (chapterId: string, isPublished: boolean) => {
+    onTogglePublish(chapterId, isPublished);
+    //set state to isPublished
+    setChapters(chapters.map((chapter) => chapter.id === chapterId ? { ...chapter, isPublished: isPublished } : chapter))
+  }
+
   if (!isMounted) {
     return null
   }
@@ -136,15 +144,17 @@ export const ChaptersList = ({
                         {chapter.title}
 
                         <div className="ml-auto flex items-center gap-x-2 pr-2">
+                          <Button
+                            onClick={() => toggleWrapper(chapter.id, !chapter.isPublished)}
+                            variant="ghost"
+                            size="sm"
+                          >
+                            {chapter.isPublished ? "Unpublish" : "Publish"}
+                          </Button>
                           <Pencil
                             onClick={() => onEdit(chapter.id)}
                             className="h-4 w-4 cursor-pointer transition hover:opacity-75"
                           />
-
-                          {/* <Link href={pathname+`/chapter/${chapter.id}`} className="flex items-center">
-                          <PlusCircle className="mr-2 h-4 w-4" />
-                            Add a topic
-                        </Link> */}
                           <ArrowDropDownCircle className="h-4 w-4 cursor-pointer transition hover:opacity-75" />
                           <ConfirmModal
                             onConfirm={() => onDelete(chapter.id)}
@@ -164,18 +174,10 @@ export const ChaptersList = ({
                   >
                     <div>
                       <TopicsForm
-                        batchId={chapter.batchId}
+                        batchId={chapter.batchId || ""}
                         chapterId={chapter.id}
                         initialData={chapter.topics}
                       />
-                      {/* {chapter.topics.map((topic) =>(
-                          <div className="flex items-center justify-start gap-2 pl-2 hover:bg-secondary">
-                            <div className="cursor-pointer p-2">{topic.title}</div>
-                            <Link href={pathname+`/topic/${topic.id}`} className="flex items-center">
-                              <Pencil className="mr-2 h-4 w-4" />
-                            </Link>
-                          </div>
-                        ))} */}
                     </div>
                   </CollapsibleTopics>
                 )}
@@ -188,7 +190,6 @@ export const ChaptersList = ({
     </DragDropContext>
   )
 }
-
 function CreateTopicForm({ chapterId }: { chapterId: string }) {
   const [isCreating, setIsCreating] = useState(false)
   const formSchema = z.object({

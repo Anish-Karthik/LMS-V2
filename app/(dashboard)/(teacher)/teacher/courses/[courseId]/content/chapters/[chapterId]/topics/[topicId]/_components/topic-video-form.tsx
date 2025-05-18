@@ -14,7 +14,6 @@ import { Button } from "@/components/ui/button"
 
 interface TopicVideoFormProps {
   initialData: Topic & { videoData?: VideoData | null }
-  batchId: string
   topicId: string
 }
 
@@ -24,7 +23,6 @@ const formSchema = z.object({
 
 export const TopicVideoForm = ({
   initialData,
-  batchId,
   topicId,
 }: TopicVideoFormProps) => {
   const [isEditing, setIsEditing] = useState(false)

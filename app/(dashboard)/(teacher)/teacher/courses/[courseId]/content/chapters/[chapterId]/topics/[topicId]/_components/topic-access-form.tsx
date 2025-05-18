@@ -9,34 +9,32 @@ import { useForm } from "react-hook-form"
 import toast from "react-hot-toast"
 import * as z from "zod"
 
-import { updateTopic } from "@/lib/actions/server/topic.server.action"
 import { cn } from "@/lib/utils"
 import { Button } from "@/components/ui/button"
+import { Checkbox } from "@/components/ui/checkbox"
 import {
   Form,
   FormControl,
+  FormDescription,
   FormField,
   FormItem,
-  FormMessage,
 } from "@/components/ui/form"
-import { Editor } from "@/components/editor"
-import { Preview } from "@/components/preview"
 
-interface TopicDescriptionFormProps {
+interface TopicAccessFormProps {
   initialData: Topic
-  batchId: string
+  courseId: string
   topicId: string
 }
 
 const formSchema = z.object({
-  description: z.string().min(1),
+  isFree: z.boolean().default(false),
 })
 
-export const TopicDescriptionForm = ({
+export const TopicAccessForm = ({
   initialData,
-  batchId,
+  courseId,
   topicId,
-}: TopicDescriptionFormProps) => {
+}: TopicAccessFormProps) => {
   const [isEditing, setIsEditing] = useState(false)
 
   const toggleEdit = () => setIsEditing((current) => !current)
@@ -46,7 +44,7 @@ export const TopicDescriptionForm = ({
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
-      description: initialData?.description || "",
+      isFree: !!initialData.isFree,
     },
   })
 
@@ -54,8 +52,7 @@ export const TopicDescriptionForm = ({
 
   const onSubmit = async (values: z.infer<typeof formSchema>) => {
     try {
-      await updateTopic({ topicId, description: values.description })
-      toast.success("Topic updated")
+      toast.success("Chapter updated")
       toggleEdit()
       router.refresh()
     } catch {
@@ -66,30 +63,31 @@ export const TopicDescriptionForm = ({
   return (
     <div className="bg-secondary mt-6 rounded-md border p-4">
       <div className="flex items-center justify-between font-medium">
-        Topic description
+        Chapter access
         <Button onClick={toggleEdit} variant="ghost">
           {isEditing ? (
             <>Cancel</>
           ) : (
             <>
               <Pencil className="mr-2 h-4 w-4" />
-              Edit description
+              Edit access
             </>
           )}
         </Button>
       </div>
       {!isEditing && (
-        <div
+        <p
           className={cn(
             "mt-2 text-sm",
-            !initialData.description && "italic text-slate-500"
+            !initialData.isFree && "italic text-slate-500"
           )}
         >
-          {!initialData.description && "No description"}
-          {initialData.description && (
-            <Preview value={initialData.description} />
+          {initialData.isFree ? (
+            <>This topic is free for preview.</>
+          ) : (
+            <>This topic is not free.</>
           )}
-        </div>
+        </p>
       )}
       {isEditing && (
         <Form {...form}>
@@ -99,13 +97,21 @@ export const TopicDescriptionForm = ({
           >
             <FormField
               control={form.control}
-              name="description"
+              name="isFree"
               render={({ field }) => (
-                <FormItem>
+                <FormItem className="flex flex-row items-start space-x-3 space-y-0 rounded-md border p-4">
                   <FormControl>
-                    <Editor {...field} />
+                    <Checkbox
+                      checked={field.value}
+                      onCheckedChange={field.onChange}
+                    />
                   </FormControl>
-                  <FormMessage />
+                  <div className="space-y-1 leading-none">
+                    <FormDescription>
+                      Check this box if you want to make this topic free for
+                      preview
+                    </FormDescription>
+                  </div>
                 </FormItem>
               )}
             />

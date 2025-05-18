@@ -123,4 +123,30 @@ export const chapterRouter = router({
   get: publicProcedure.input(z.string()).query(async ({ input }) => {
     return await getChapterById(input)
   }),
+
+  publish: publicProcedure.input(z.string()).mutation(async ({ input }) => {
+    try {
+      const chapter = await db.chapter.update({
+        where: { id: input },
+        data: { isPublished: true }
+      })
+      return chapter
+    } catch (error: any) {
+      console.error(error)
+      throw new Error("Failed to publish chapter")
+    }
+  }),
+
+  unpublish: publicProcedure.input(z.string()).mutation(async ({ input }) => {
+    try {
+      const chapter = await db.chapter.update({
+        where: { id: input },
+        data: { isPublished: false }
+      })
+      return chapter
+    } catch (error: any) {
+      console.error(error) 
+      throw new Error("Failed to unpublish chapter")
+    }
+  }),
 })

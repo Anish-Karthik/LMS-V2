@@ -3,38 +3,37 @@
 import { useState } from "react"
 import { useRouter } from "next/navigation"
 import { zodResolver } from "@hookform/resolvers/zod"
-import { Topic } from "@prisma/client"
 import { Pencil } from "lucide-react"
 import { useForm } from "react-hook-form"
 import toast from "react-hot-toast"
 import * as z from "zod"
 
-import { cn } from "@/lib/utils"
+import { updateTopic } from "@/lib/actions/server/topic.server.action"
 import { Button } from "@/components/ui/button"
-import { Checkbox } from "@/components/ui/checkbox"
 import {
   Form,
   FormControl,
-  FormDescription,
   FormField,
   FormItem,
+  FormMessage,
 } from "@/components/ui/form"
+import { Input } from "@/components/ui/input"
 
-interface TopicAccessFormProps {
-  initialData: Topic
-  batchId: string
+interface TopicTitleFormProps {
+  initialData: {
+    title: string
+  }
   topicId: string
 }
 
 const formSchema = z.object({
-  isFree: z.boolean().default(false),
+  title: z.string().min(1),
 })
 
-export const TopicAccessForm = ({
+export const TopicTitleForm = ({
   initialData,
-  batchId,
   topicId,
-}: TopicAccessFormProps) => {
+}: TopicTitleFormProps) => {
   const [isEditing, setIsEditing] = useState(false)
 
   const toggleEdit = () => setIsEditing((current) => !current)
@@ -43,16 +42,15 @@ export const TopicAccessForm = ({
 
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
-    defaultValues: {
-      isFree: !!initialData.isFree,
-    },
+    defaultValues: initialData,
   })
 
   const { isSubmitting, isValid } = form.formState
 
   const onSubmit = async (values: z.infer<typeof formSchema>) => {
     try {
-      toast.success("Chapter updated")
+      await updateTopic({ topicId, title: values.title })
+      toast.success("Topic updated")
       toggleEdit()
       router.refresh()
     } catch {
@@ -63,32 +61,19 @@ export const TopicAccessForm = ({
   return (
     <div className="bg-secondary mt-6 rounded-md border p-4">
       <div className="flex items-center justify-between font-medium">
-        Chapter access
+        Topic title
         <Button onClick={toggleEdit} variant="ghost">
           {isEditing ? (
             <>Cancel</>
           ) : (
             <>
               <Pencil className="mr-2 h-4 w-4" />
-              Edit access
+              Edit title
             </>
           )}
         </Button>
       </div>
-      {!isEditing && (
-        <p
-          className={cn(
-            "mt-2 text-sm",
-            !initialData.isFree && "italic text-slate-500"
-          )}
-        >
-          {initialData.isFree ? (
-            <>This topic is free for preview.</>
-          ) : (
-            <>This topic is not free.</>
-          )}
-        </p>
-      )}
+      {!isEditing && <p className="mt-2 text-sm">{initialData.title}</p>}
       {isEditing && (
         <Form {...form}>
           <form
@@ -97,21 +82,17 @@ export const TopicAccessForm = ({
           >
             <FormField
               control={form.control}
-              name="isFree"
+              name="title"
               render={({ field }) => (
-                <FormItem className="flex flex-row items-start space-x-3 space-y-0 rounded-md border p-4">
+                <FormItem>
                   <FormControl>
-                    <Checkbox
-                      checked={field.value}
-                      onCheckedChange={field.onChange}
+                    <Input
+                      disabled={isSubmitting}
+                      placeholder="e.g. 'Introduction to the course'"
+                      {...field}
                     />
                   </FormControl>
-                  <div className="space-y-1 leading-none">
-                    <FormDescription>
-                      Check this box if you want to make this topic free for
-                      preview
-                    </FormDescription>
-                  </div>
+                  <FormMessage />
                 </FormItem>
               )}
             />

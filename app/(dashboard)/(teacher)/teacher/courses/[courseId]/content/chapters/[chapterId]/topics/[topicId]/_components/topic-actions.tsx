@@ -15,18 +15,18 @@ import { ConfirmModal } from "@/components/modals/confirm-modal"
 
 interface TopicActionsProps {
   disabled: boolean
-  batchId: string
   topicId: string
   courseId: string
   isPublished: boolean
+  chapterId: string
 }
 
 export const TopicActions = ({
   disabled,
-  batchId,
   topicId,
   courseId,
   isPublished,
+  chapterId,
 }: TopicActionsProps) => {
   const router = useRouter()!
   const [isLoading, setIsLoading] = useState(false)
@@ -59,7 +59,7 @@ export const TopicActions = ({
 
       toast.success("Chapter deleted")
       router.refresh()
-      router.push(`/teacher/courses/${courseId}/batches/${batchId}`)
+      router.push(`/teacher/courses/${courseId}/content/chapters/${chapterId}`)
     } catch {
       toast.error("Something went wrong")
     } finally {

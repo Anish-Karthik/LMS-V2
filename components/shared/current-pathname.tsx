@@ -35,22 +35,17 @@ const CurrentPathNavigator = ({
           return null
         }
         return (
-          // navigate to the path till current path
           <Link
             href={
               index + 1 === pathArr.length ||
               (index + 2 == pathArr.length &&
                 revParams?.has(pathArr[pathArr.length - 1]))
-                ? pathname
-                : `${pathname
-                    .split("/")
-                    .slice(0, index + 1)
-                    .join("/")}`
+                ? `${pathname.split("/").slice(0, index + 1).join("/")}`
+                : `${pathname.split("/").slice(0, index + 1).join("/")}`
             }
             key={index}
             className="flex-start ml-2 flex gap-2"
           >
-            {/* @ts-ignore */}
             <p
               className={cn(
                 " hover:underline",
@@ -62,7 +57,6 @@ const CurrentPathNavigator = ({
             >
               {capitalize(path)}
             </p>
-            {/*don't display below one if its next satisfies revParams?.has(pathArr[index-1]) or if its last index*/}
             {!(
               index + 1 === pathArr.length ||
               (index + 2 == pathArr.length &&

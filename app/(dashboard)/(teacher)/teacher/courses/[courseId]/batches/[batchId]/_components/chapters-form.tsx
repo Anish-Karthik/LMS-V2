@@ -4,7 +4,7 @@ import { useState } from "react"
 import { useRouter } from "next/navigation"
 import { zodResolver } from "@hookform/resolvers/zod"
 import { Chapter, Topic } from "@prisma/client"
-import { Loader2, PlusCircle } from "lucide-react"
+import { EyeIcon, EyeOffIcon, Loader2, PlusCircle } from "lucide-react"
 import { useForm } from "react-hook-form"
 import toast from "react-hot-toast"
 import * as z from "zod"
@@ -25,6 +25,7 @@ import {
   FormMessage,
 } from "@/components/ui/form"
 import { Input } from "@/components/ui/input"
+import { trpc } from "@/app/_trpc/client"
 
 import { ChaptersList } from "./chapters-list"
 
@@ -48,7 +49,7 @@ export const ChaptersForm = ({
   const [isEditing, setIsEditing] = useState(false)
   const [editId, setEditId] = useState("")
   const [editIdTitle, setEditIdTitle] = useState("")
-
+  const trpcUtils = trpc.useUtils()
   const toggleCreating = () => {
     setIsCreating((current) => !current)
   }
@@ -63,6 +64,27 @@ export const ChaptersForm = ({
   })
 
   const { isSubmitting, isValid } = form.formState
+
+  const publishChapter = trpc.chapter.publish.useMutation({
+    onSuccess: () => {
+      toast.success("Chapter published")
+      router.refresh()
+    },
+    onError: (error) => {
+      toast.error("Failed to publish chapter")
+      console.error(error)
+    },
+  })
+
+  const unpublishChapter = trpc.chapter.unpublish.useMutation({
+    onSuccess: () => {
+      toast.success("Chapter unpublished")
+    },
+    onError: (error) => {
+      toast.error("Failed to unpublish chapter")
+      console.error(error)
+    },
+  })
 
   const onSubmit = async (values: z.infer<typeof formSchema>) => {
     try {
@@ -110,6 +132,14 @@ export const ChaptersForm = ({
     setEditIdTitle(tmpTitle)
     setIsEditing(true)
     setEditId(id)
+  }
+
+  const onTogglePublish = (id: string, isPublished: boolean) => {
+    if (isPublished) {
+      unpublishChapter.mutate(id)
+    } else {
+      publishChapter.mutate(id)
+    }
   }
 
   return (
@@ -181,6 +211,7 @@ export const ChaptersForm = ({
               onReorder={onReorder}
               items={initialData || []}
               setIsEditing={setIsEditing}
+              onTogglePublish={onTogglePublish}
             />
           )}
         </div>

@@ -172,4 +172,152 @@ export const courseRouter = router({
         throw new Error(error.message)
       }
     }),
+
+  // Add new methods for managing chapters directly in self-paced courses
+  addChapter: publicProcedure
+    .input(
+      z.object({
+        courseId: z.string(),
+        title: z.string().min(1),
+        description: z.string().optional(),
+        position: z.number().int().min(0).default(0),
+        isPublished: z.boolean().default(false),
+      })
+    )
+    .mutation(async ({ input }) => {
+      try {
+        const course = await db.course.findUnique({
+          where: { id: input.courseId },
+        })
+
+        if (!course) {
+          throw new TRPCError({
+            code: "NOT_FOUND",
+            message: "Course not found",
+          })
+        }
+
+        if (course.type !== "self-paced") {
+          throw new TRPCError({
+            code: "BAD_REQUEST",
+            message:
+              "Chapters can only be added directly to self-paced courses",
+          })
+        }
+
+        const chapter = await db.$transaction(async (tx) => {
+          // Create chapter
+          const newChapter = await tx.chapter.create({
+            data: {
+              title: input.title,
+              description: input.description,
+              position: input.position,
+              isPublished: input.isPublished,
+              batchId: null,
+            },
+          })
+
+          // Connect chapter to course
+          await tx.course.update({
+            where: { id: input.courseId },
+            data: {
+              chapters: {
+                connect: { id: newChapter.id },
+              },
+            },
+          })
+
+          return newChapter
+        })
+
+        return chapter
+      } catch (e: any) {
+        console.error(e)
+        throw new Error(e.message)
+      }
+    }),
+
+  getCourseChapters: publicProcedure
+    .input(
+      z.object({
+        courseId: z.string(),
+      })
+    )
+    .query(async ({ input }) => {
+      try {
+        const course = await db.course.findUnique({
+          where: { id: input.courseId },
+          select: {
+            chapters: {
+              orderBy: { position: "asc" },
+              include: {
+                topics: {
+                  orderBy: { position: "asc" },
+                },
+              },
+            },
+          },
+        })
+
+        if (!course) {
+          throw new TRPCError({
+            code: "NOT_FOUND",
+            message: "Course not found",
+          })
+        }
+
+        return course.chapters
+      } catch (e: any) {
+        console.error(e)
+        throw new Error(e.message)
+      }
+    }),
+
+  updateChapter: publicProcedure
+    .input(
+      z.object({
+        chapterId: z.string(),
+        title: z.string().min(1).optional(),
+        description: z.string().optional(),
+        position: z.number().int().min(0).optional(),
+        isPublished: z.boolean().optional(),
+      })
+    )
+    .mutation(async ({ input }) => {
+      try {
+        const chapter = await db.chapter.update({
+          where: { id: input.chapterId },
+          data: {
+            title: input.title,
+            description: input.description,
+            position: input.position,
+            isPublished: input.isPublished,
+          },
+        })
+
+        return chapter
+      } catch (e: any) {
+        console.error(e)
+        throw new Error(e.message)
+      }
+    }),
+
+  deleteChapter: publicProcedure
+    .input(
+      z.object({
+        chapterId: z.string(),
+      })
+    )
+    .mutation(async ({ input }) => {
+      try {
+        await db.chapter.delete({
+          where: { id: input.chapterId },
+        })
+
+        return { success: true }
+      } catch (e: any) {
+        console.error(e)
+        throw new Error(e.message)
+      }
+    }),
 })

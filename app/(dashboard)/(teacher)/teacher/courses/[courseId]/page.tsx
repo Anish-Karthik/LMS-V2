@@ -1,5 +1,7 @@
+import Link from "next/link"
 import { currentUser } from "@clerk/nextjs"
 import {
+  BookOpenIcon,
   IndianRupee,
   LayoutDashboardIcon,
   ListChecksIcon,
@@ -8,6 +10,7 @@ import {
 
 import { getCourseById } from "@/lib/actions/course.actions"
 import { getUser } from "@/lib/actions/user.actions"
+import { Button } from "@/components/ui/button"
 import { IconBadge } from "@/components/icon-badge"
 
 import CurrentPathNavigator from "../../../../../../components/shared/current-pathname"
@@ -26,6 +29,9 @@ const page = async ({ params }: { params: { courseId: string } }) => {
   const userInfo = await getUser(user!.id)
   const isTeacher = userInfo!.role === "teacher"
   if (!course) return <div>Course not found</div>
+
+  const isSelfPaced = course.type === "self-paced"
+
   return (
     <>
       <CurrentPathNavigator />
@@ -45,6 +51,14 @@ const page = async ({ params }: { params: { courseId: string } }) => {
             </span>
           </div>
           <div className="flex items-center gap-2">
+            {isSelfPaced && (
+              <Link href={`/teacher/courses/${course.id}/content/chapters`}>
+                <Button variant="outline" size="sm">
+                  <BookOpenIcon className="h-4 w-4 mr-2" />
+                  Content Management
+                </Button>
+              </Link>
+            )}
             <PublishButton initialData={course} courseId={course.id} />
             <DeleteCourseButton courseId={course.id} />
           </div>
@@ -58,13 +72,15 @@ const page = async ({ params }: { params: { courseId: string } }) => {
               </div>
               <TypeForm initialData={course} courseId={course.id} />
             </div>
-            <div>
-              <div className="flex items-center gap-x-2">
-                <IconBadge icon={ListChecksIcon} />
-                <h2 className="text-xl">Course batches</h2>
+            {!isSelfPaced && (
+              <div>
+                <div className="flex items-center gap-x-2">
+                  <IconBadge icon={ListChecksIcon} />
+                  <h2 className="text-xl">Course batches</h2>
+                </div>
+                <BatchesForm initialData={course} courseId={course.id} />
               </div>
-              <BatchesForm initialData={course} courseId={course.id} />
-            </div>
+            )}
           </div>
         ) : (
           <div className="mt-8 grid grid-cols-1 gap-6 md:grid-cols-2">
@@ -79,13 +95,15 @@ const page = async ({ params }: { params: { courseId: string } }) => {
               <TypeForm initialData={course} courseId={course.id} />
             </div>
             <div className="space-y-6">
-              <div>
-                <div className="flex items-center gap-x-2">
-                  <IconBadge icon={ListChecksIcon} />
-                  <h2 className="text-xl">Course batches</h2>
+              {!isSelfPaced && (
+                <div>
+                  <div className="flex items-center gap-x-2">
+                    <IconBadge icon={ListChecksIcon} />
+                    <h2 className="text-xl">Course batches</h2>
+                  </div>
+                  <BatchesForm initialData={course} courseId={course.id} />
                 </div>
-                <BatchesForm initialData={course} courseId={course.id} />
-              </div>
+              )}
               <div>
                 <div className="flex items-center gap-x-2">
                   <IconBadge icon={IndianRupee} />

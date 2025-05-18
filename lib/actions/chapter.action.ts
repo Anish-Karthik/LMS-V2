@@ -1,9 +1,17 @@
+import { currentUser } from "@clerk/nextjs"
 import { db } from "../db"
+import { getUser } from "./user.actions"
 
 export const getChapterById = async (chapterId: string) => {
   try {
+    const user = await currentUser()
+    if (!user) throw new Error("User not found")
+    const userInfo = await getUser(user.id)
+    if (!userInfo) throw new Error("User not found")
+    const isShowOnlyPublishedChapters = !(userInfo.role === "teacher" || userInfo.role === "admin")
+    const whereClause = isShowOnlyPublishedChapters ? { isPublished: true } : {}
     const chapter = await db.chapter.findUnique({
-      where: { id: chapterId },
+      where: { ...whereClause, id: chapterId },
       include: {
         topics: true,
       },

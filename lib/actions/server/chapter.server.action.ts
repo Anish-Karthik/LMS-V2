@@ -97,3 +97,20 @@ export const deleteChapter = async (chapterId: string) => {
 export const getChapterByIdClient = async (chapterId: string) => {
   return await getChapterById(chapterId)
 }
+
+export const deleteChapterClient = async (id: string) => {
+  try {
+    const response = await fetch(`/api/chapters/${id}`, {
+      method: "DELETE",
+    })
+
+    if (!response.ok) {
+      throw new Error("Failed to delete chapter")
+    }
+
+    return await response.json()
+  } catch (error) {
+    console.error("Error deleting chapter:", error)
+    throw error
+  }
+}
