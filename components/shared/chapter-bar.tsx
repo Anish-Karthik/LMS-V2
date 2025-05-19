@@ -58,7 +58,7 @@ export default function ChapterBar({
             <CollapsibleTopics
               trigger={
                 <div
-                  key={chapter.id}
+                  key={"inner" + chapter.id}
                   className="flex cursor-pointer items-center justify-between px-3"
                 >
                   <div className="flex items-center justify-start gap-1">
@@ -80,8 +80,9 @@ export default function ChapterBar({
                   <ArrowDropDownCircle className="cursor-pointer text-sky-700 transition hover:opacity-75" />
                 </div>
               }
+              key={"outer" + chapter.id}
             >
-              <div>
+              <div key={"inner most" + chapter.id}>
                 {chapter.topics.map((topic) => {
                   if (!topic.isPublished) return null
                   const isCompleted = topic.userProgressTopic.find(
@@ -92,9 +93,11 @@ export default function ChapterBar({
                   notCompleteIcon.set("quiz", HelpCircle)
                   notCompleteIcon.set("lab", Pen)
                   notCompleteIcon.set("assignment", FileQuestion)
+                  notCompleteIcon.set("article", FileQuestion)
+                  notCompleteIcon.set("live", PlayCircle)
                   const Icon = isCompleted
                     ? CheckCircle
-                    : notCompleteIcon.get(topic.type)!
+                    : notCompleteIcon.get(topic.type) || FileQuestion
                   return (
                     <Link
                       href={`/student/courses/${courseId}/${topic.type}/${topic.id}`}

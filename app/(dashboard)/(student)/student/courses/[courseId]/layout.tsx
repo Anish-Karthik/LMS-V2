@@ -100,7 +100,7 @@ const DashBoardLayout = async ({
       },
     })
   }
-
+  console.log(chapters, "CHAPTERS")
   if (!purchased) redirect("/student/courses/" + params?.courseId + "/details")
 
   return (
