@@ -101,9 +101,15 @@ export const ChaptersList = ({
   }
 
   const toggleWrapper = (chapterId: string, isPublished: boolean) => {
-    onTogglePublish(chapterId, isPublished);
+    onTogglePublish(chapterId, isPublished)
     //set state to isPublished
-    setChapters(chapters.map((chapter) => chapter.id === chapterId ? { ...chapter, isPublished: isPublished } : chapter))
+    setChapters(
+      chapters.map((chapter) =>
+        chapter.id === chapterId
+          ? { ...chapter, isPublished: isPublished }
+          : chapter
+      )
+    )
   }
 
   if (!isMounted) {
@@ -145,7 +151,9 @@ export const ChaptersList = ({
 
                         <div className="ml-auto flex items-center gap-x-2 pr-2">
                           <Button
-                            onClick={() => toggleWrapper(chapter.id, !chapter.isPublished)}
+                            onClick={() =>
+                              toggleWrapper(chapter.id, !chapter.isPublished)
+                            }
                             variant="ghost"
                             size="sm"
                           >

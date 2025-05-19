@@ -127,15 +127,15 @@ const LiveTopicPage = async ({
         <Separator />
 
         {/* Live session information */}
-        <div className="p-6 bg-secondary rounded-md shadow-sm mx-4 my-6">
+        <div className="bg-secondary mx-4 my-6 rounded-md p-6 shadow-sm">
           <div className="space-y-6">
-            <h3 className="text-xl font-semibold text-center mb-4">
+            <h3 className="mb-4 text-center text-xl font-semibold">
               Live Session Details
             </h3>
 
             {hasStartTime ? (
               <div className="flex items-center space-x-3">
-                <Calendar className="h-5 w-5 text-primary" />
+                <Calendar className="text-primary h-5 w-5" />
                 <div>
                   <p className="text-sm font-medium">Scheduled Time</p>
                   <p className="text-base">{formattedStartTime}</p>
@@ -150,7 +150,7 @@ const LiveTopicPage = async ({
 
             {hasDuration && (
               <div className="flex items-center space-x-3">
-                <Clock className="h-5 w-5 text-primary" />
+                <Clock className="text-primary h-5 w-5" />
                 <div>
                   <p className="text-sm font-medium">Duration</p>
                   <p className="text-base">{topic.duration} minutes</p>
@@ -166,7 +166,7 @@ const LiveTopicPage = async ({
                     target="_blank"
                     rel="noopener noreferrer"
                   >
-                    <ExternalLink className="h-4 w-4 mr-2" />
+                    <ExternalLink className="mr-2 h-4 w-4" />
                     Join Live Session
                   </Link>
                 </Button>

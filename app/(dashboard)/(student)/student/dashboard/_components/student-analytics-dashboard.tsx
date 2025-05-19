@@ -90,7 +90,7 @@ export function StudentAnalyticsDashboard({
     return (
       <Card>
         <CardContent className="pt-6">
-          <p className="text-center text-muted-foreground">
+          <p className="text-muted-foreground text-center">
             You haven't enrolled in any courses yet.
           </p>
         </CardContent>
@@ -108,14 +108,14 @@ export function StudentAnalyticsDashboard({
           <TabsTrigger value="course">Course Details</TabsTrigger>
         </TabsList>
 
-        <TabsContent value="overview" className="space-y-4 mt-4">
+        <TabsContent value="overview" className="mt-4 space-y-4">
           <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-4">
             <Card>
               <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
                 <CardTitle className="text-sm font-medium">
                   Total Courses
                 </CardTitle>
-                <BookOpen className="h-4 w-4 text-muted-foreground" />
+                <BookOpen className="text-muted-foreground h-4 w-4" />
               </CardHeader>
               <CardContent>
                 <div className="text-2xl font-bold">
@@ -129,7 +129,7 @@ export function StudentAnalyticsDashboard({
                 <CardTitle className="text-sm font-medium">
                   Average Progress
                 </CardTitle>
-                <BookOpen className="h-4 w-4 text-muted-foreground" />
+                <BookOpen className="text-muted-foreground h-4 w-4" />
               </CardHeader>
               <CardContent>
                 <div className="text-2xl font-bold">
@@ -143,7 +143,7 @@ export function StudentAnalyticsDashboard({
                 <CardTitle className="text-sm font-medium">
                   Topics Completed
                 </CardTitle>
-                <BookOpen className="h-4 w-4 text-muted-foreground" />
+                <BookOpen className="text-muted-foreground h-4 w-4" />
               </CardHeader>
               <CardContent>
                 <div className="text-2xl font-bold">
@@ -158,7 +158,7 @@ export function StudentAnalyticsDashboard({
                 <CardTitle className="text-sm font-medium">
                   Quizzes Passed
                 </CardTitle>
-                <Award className="h-4 w-4 text-muted-foreground" />
+                <Award className="text-muted-foreground h-4 w-4" />
               </CardHeader>
               <CardContent>
                 <div className="text-2xl font-bold">
@@ -170,7 +170,7 @@ export function StudentAnalyticsDashboard({
           </div>
 
           <div>
-            <h3 className="text-lg font-semibold mb-4">Course Progress</h3>
+            <h3 className="mb-4 text-lg font-semibold">Course Progress</h3>
             <div className="space-y-4">
               {courses.map((course) => (
                 <Card key={course.id}>
@@ -184,7 +184,7 @@ export function StudentAnalyticsDashboard({
                           {course.progress?.completedTopics || 0} of{" "}
                           {course.progress?.totalTopics || 0} topics completed
                         </p>
-                        <p className="text-sm text-muted-foreground">
+                        <p className="text-muted-foreground text-sm">
                           Enrolled:{" "}
                           {new Date(course.purchaseDate).toLocaleDateString()}
                         </p>
@@ -200,7 +200,7 @@ export function StudentAnalyticsDashboard({
           </div>
         </TabsContent>
 
-        <TabsContent value="course" className="space-y-4 mt-4">
+        <TabsContent value="course" className="mt-4 space-y-4">
           <div className="mb-4">
             <Select
               value={selectedCourseId}

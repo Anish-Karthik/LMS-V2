@@ -41,8 +41,8 @@ const AttendancePage = () => {
   if (chaptersLoading) {
     return (
       <div className="p-8">
-        <div className="flex items-center justify-center h-full">
-          <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-primary"></div>
+        <div className="flex h-full items-center justify-center">
+          <div className="border-primary h-12 w-12 animate-spin rounded-full border-b-2"></div>
         </div>
       </div>
     )
@@ -107,7 +107,7 @@ const AttendancePage = () => {
               No upcoming live classes scheduled.
             </div>
           ) : (
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+            <div className="grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-3">
               {upcomingTopics.map((topic) => (
                 <Card key={topic.id}>
                   <CardHeader>
@@ -118,8 +118,8 @@ const AttendancePage = () => {
                   </CardHeader>
                   <CardContent>
                     {topic.startTime && (
-                      <div className="flex items-center mb-2">
-                        <Clock className="h-4 w-4 mr-2 text-muted-foreground" />
+                      <div className="mb-2 flex items-center">
+                        <Clock className="text-muted-foreground mr-2 h-4 w-4" />
                         <span className="text-sm">
                           {format(
                             new Date(topic.startTime),
@@ -129,7 +129,7 @@ const AttendancePage = () => {
                       </div>
                     )}
                     {topic.duration && (
-                      <div className="text-sm text-muted-foreground">
+                      <div className="text-muted-foreground text-sm">
                         Duration: {topic.duration} minutes
                       </div>
                     )}
@@ -155,7 +155,7 @@ const AttendancePage = () => {
               No past live classes found.
             </div>
           ) : (
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+            <div className="grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-3">
               {pastTopics.map((topic) => (
                 <Card key={topic.id}>
                   <CardHeader>
@@ -166,8 +166,8 @@ const AttendancePage = () => {
                   </CardHeader>
                   <CardContent>
                     {topic.startTime && (
-                      <div className="flex items-center mb-2">
-                        <Clock className="h-4 w-4 mr-2 text-muted-foreground" />
+                      <div className="mb-2 flex items-center">
+                        <Clock className="text-muted-foreground mr-2 h-4 w-4" />
                         <span className="text-sm">
                           {format(
                             new Date(topic.startTime),
@@ -177,7 +177,7 @@ const AttendancePage = () => {
                       </div>
                     )}
                     {topic.duration && (
-                      <div className="text-sm text-muted-foreground">
+                      <div className="text-muted-foreground text-sm">
                         Duration: {topic.duration} minutes
                       </div>
                     )}
@@ -187,7 +187,7 @@ const AttendancePage = () => {
                       <Link
                         href={`/teacher/courses/${courseId}/attendance/${topic.id}`}
                       >
-                        <Users className="h-4 w-4 mr-2" />
+                        <Users className="mr-2 h-4 w-4" />
                         Mark Attendance
                       </Link>
                     </Button>
@@ -204,7 +204,7 @@ const AttendancePage = () => {
               No topics found in this course.
             </div>
           ) : (
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+            <div className="grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-3">
               {allTopics.map((topic) => (
                 <Card key={topic.id}>
                   <CardHeader>
@@ -216,8 +216,8 @@ const AttendancePage = () => {
                   <CardContent>
                     <div className="text-sm">Type: {topic.type}</div>
                     {topic.startTime && (
-                      <div className="flex items-center mt-2">
-                        <Clock className="h-4 w-4 mr-2 text-muted-foreground" />
+                      <div className="mt-2 flex items-center">
+                        <Clock className="text-muted-foreground mr-2 h-4 w-4" />
                         <span className="text-sm">
                           {format(
                             new Date(topic.startTime),
@@ -236,7 +236,7 @@ const AttendancePage = () => {
                       <Link
                         href={`/teacher/courses/${courseId}/attendance/${topic.id}`}
                       >
-                        <Users className="h-4 w-4 mr-2" />
+                        <Users className="mr-2 h-4 w-4" />
                         Mark Attendance
                       </Link>
                     </Button>

@@ -35,12 +35,7 @@ const QuizAttemptPage = async ({
     return redirect("/student/courses")
   }
 
-  const {
-    topic,
-    chapter,
-    batch,
-    quizAttempts,
-  } = await getDetailedTopicClient({
+  const { topic, chapter, batch, quizAttempts } = await getDetailedTopicClient({
     userId: user.id,
     topicId: params?.topicId,
     courseId: params?.courseId,
@@ -65,48 +60,57 @@ const QuizAttemptPage = async ({
   const questions = topic.questions ? JSON.parse(topic.questions as string) : []
 
   if (questions.length === 0) {
-    return redirect(`/student/courses/${params.courseId}/quiz/${params.topicId}`)
+    return redirect(
+      `/student/courses/${params.courseId}/quiz/${params.topicId}`
+    )
   }
 
   // Check if there's a pending attempt
-  const pendingAttempts = quizAttempts?.filter(attempt => !attempt.answers) || []
-  
+  const pendingAttempts =
+    quizAttempts?.filter((attempt) => !attempt.answers) || []
+
   // If no pending attempt, redirect back to quiz page
   if (pendingAttempts.length === 0) {
-    return redirect(`/student/courses/${params.courseId}/quiz/${params.topicId}`)
+    return redirect(
+      `/student/courses/${params.courseId}/quiz/${params.topicId}`
+    )
   }
-  
+
   // Get the most recent pending attempt
   const currentAttempt = pendingAttempts[0]
 
   // Check if user has reached maximum attempts
-  const attemptsRemaining = !topic.allowedAttempts ? 
-    Infinity : 
-    topic.allowedAttempts - (quizAttempts?.length || 0)
+  const attemptsRemaining = !topic.allowedAttempts
+    ? Infinity
+    : topic.allowedAttempts - (quizAttempts?.length || 0)
 
   if (attemptsRemaining <= 0) {
-    return redirect(`/student/courses/${params.courseId}/quiz/${params.topicId}`)
+    return redirect(
+      `/student/courses/${params.courseId}/quiz/${params.topicId}`
+    )
   }
 
   // Check if user has already passed the quiz
   const hasPassed = quizAttempts?.some((attempt) => attempt.passed)
 
   if (hasPassed) {
-    return redirect(`/student/courses/${params.courseId}/quiz/${params.topicId}`)
+    return redirect(
+      `/student/courses/${params.courseId}/quiz/${params.topicId}`
+    )
   }
 
   return (
     <div className="mx-auto max-w-4xl pb-20">
       <div className="p-4">
-        <h1 className="text-2xl font-bold mb-6">{topic.title}</h1>
-        
+        <h1 className="mb-6 text-2xl font-bold">{topic.title}</h1>
+
         {topic.timeLimit && (
-          <Banner 
-            variant="warning" 
-            label={`This quiz has a time limit of ${topic.timeLimit} minutes. The timer started when you clicked 'Start Quiz'.`} 
+          <Banner
+            variant="warning"
+            label={`This quiz has a time limit of ${topic.timeLimit} minutes. The timer started when you clicked 'Start Quiz'.`}
           />
         )}
-        
+
         <div className="mt-6">
           <QuizAttemptForm
             topicId={params.topicId}

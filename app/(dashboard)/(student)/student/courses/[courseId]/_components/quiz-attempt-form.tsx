@@ -188,9 +188,9 @@ export const QuizAttemptForm = ({
     form.formState.isSubmitting || submitQuizAttempt.isLoading || autoSubmitting
 
   return (
-    <div className="p-4 rounded-md shadow">
+    <div className="rounded-md p-4 shadow">
       {timeLimit && timeRemaining !== null && (
-        <div className="mb-6 p-2 bg-secondary rounded flex justify-between items-center">
+        <div className="bg-secondary mb-6 flex items-center justify-between rounded p-2">
           <span className="font-medium">Time Remaining:</span>
           <span className="text-lg font-bold">
             {formattedTimeRemaining || "0:00"}
@@ -200,7 +200,7 @@ export const QuizAttemptForm = ({
 
       {passingScore && (
         <div className="mb-6">
-          <p className="text-sm text-muted-foreground">
+          <p className="text-muted-foreground text-sm">
             Passing score: {passingScore}%
           </p>
         </div>
@@ -209,9 +209,9 @@ export const QuizAttemptForm = ({
       <Form {...form}>
         <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
           {questions.map((question, index) => (
-            <div key={question.id} className="p-4 border rounded-md">
+            <div key={question.id} className="rounded-md border p-4">
               <div className="mb-4">
-                <h3 className="text-lg font-medium mb-1">
+                <h3 className="mb-1 text-lg font-medium">
                   Question {index + 1}{" "}
                   {question.points > 1 && `(${question.points} points)`}
                 </h3>
@@ -238,12 +238,12 @@ export const QuizAttemptForm = ({
                               (option) => (
                                 <FormItem
                                   key={option.id}
-                                  className="flex items-center space-x-3 space-y-0 p-2 border rounded-md"
+                                  className="flex items-center space-x-3 space-y-0 rounded-md border p-2"
                                 >
                                   <FormControl>
                                     <RadioGroupItem value={option.id} />
                                   </FormControl>
-                                  <FormLabel className="font-normal cursor-pointer">
+                                  <FormLabel className="cursor-pointer font-normal">
                                     {option.text}
                                   </FormLabel>
                                 </FormItem>
@@ -272,7 +272,7 @@ export const QuizAttemptForm = ({
                           {(question.options as QuizOption[]).map((option) => (
                             <FormItem
                               key={option.id}
-                              className="flex items-center space-x-3 space-y-0 p-2 border rounded-md"
+                              className="flex items-center space-x-3 space-y-0 rounded-md border p-2"
                             >
                               <FormControl>
                                 <Checkbox
@@ -294,7 +294,7 @@ export const QuizAttemptForm = ({
                                   }}
                                 />
                               </FormControl>
-                              <FormLabel className="font-normal cursor-pointer">
+                              <FormLabel className="cursor-pointer font-normal">
                                 {option.text}
                               </FormLabel>
                             </FormItem>
@@ -332,7 +332,7 @@ export const QuizAttemptForm = ({
               disabled={isSubmitting}
             >
               {isSubmitting && (
-                <Loader2 className="w-4 h-4 mr-2 animate-spin" />
+                <Loader2 className="mr-2 h-4 w-4 animate-spin" />
               )}
               {autoSubmitting ? "Submitting..." : "Submit Quiz"}
             </Button>

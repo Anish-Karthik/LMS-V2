@@ -8,8 +8,8 @@ import { db } from "@/lib/db"
 import { Button } from "@/components/ui/button"
 import { Banner } from "@/components/banner"
 import { IconBadge } from "@/components/icon-badge"
-
 import CurrentPathNavigator from "@/components/shared/current-pathname"
+
 import { ChaptersList } from "../_components/chapters-list"
 
 const CourseContentPage = async ({
@@ -71,12 +71,12 @@ const CourseContentPage = async ({
           <div className="w-full">
             <Link
               href={`/teacher/courses/${params.courseId}`}
-              className="flex items-center text-sm hover:opacity-75 transition mb-6"
+              className="mb-6 flex items-center text-sm transition hover:opacity-75"
             >
-              <ChevronLeft className="h-4 w-4 mr-2" />
+              <ChevronLeft className="mr-2 h-4 w-4" />
               Back to course setup
             </Link>
-            <div className="flex items-center justify-between w-full">
+            <div className="flex w-full items-center justify-between">
               <div className="flex flex-col gap-y-2">
                 <h1 className="text-2xl font-medium">Course Content</h1>
                 <span className="text-sm text-slate-700">
@@ -87,14 +87,14 @@ const CourseContentPage = async ({
                 href={`/teacher/courses/${params.courseId}/content/chapters/new`}
               >
                 <Button>
-                  <Plus className="h-4 w-4 mr-2" />
+                  <Plus className="mr-2 h-4 w-4" />
                   Add chapter
                 </Button>
               </Link>
             </div>
           </div>
         </div>
-        <div className="grid grid-cols-1 gap-6 mt-8">
+        <div className="mt-8 grid grid-cols-1 gap-6">
           <div className="space-y-4">
             <div className="flex items-center gap-x-2">
               <IconBadge icon={LayoutDashboard} />
@@ -105,7 +105,7 @@ const CourseContentPage = async ({
               chapters={course.chapters}
             />
             {!course.chapters.length && (
-              <div className="text-center text-sm text-muted-foreground mt-4">
+              <div className="text-muted-foreground mt-4 text-center text-sm">
                 No chapters yet
               </div>
             )}

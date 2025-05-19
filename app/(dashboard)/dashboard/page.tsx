@@ -1,6 +1,7 @@
 import { redirect } from "next/navigation"
-import { getUser } from "@/lib/actions/user.actions"
 import { currentUser } from "@clerk/nextjs"
+
+import { getUser } from "@/lib/actions/user.actions"
 
 const page = async ({
   searchParams,

@@ -1,6 +1,7 @@
 "use client"
 
 import { useState } from "react"
+import { QuizAttempt } from "@prisma/client"
 import { Check, Clock, X } from "lucide-react"
 
 import {
@@ -12,7 +13,6 @@ import {
 import { Badge } from "@/components/ui/badge"
 import { Separator } from "@/components/ui/separator"
 import { Preview } from "@/components/preview"
-import { QuizAttempt } from "@prisma/client"
 
 interface QuizOption {
   id: string
@@ -29,7 +29,6 @@ interface QuizQuestion {
   explanation?: string
   points: number
 }
-
 
 interface QuizAttemptHistoryProps {
   attempts: QuizAttempt[]
@@ -66,7 +65,7 @@ export const QuizAttemptHistory = ({
           <Badge
             key={attempt.id}
             variant={attempt.id === selectedAttempt ? "default" : "outline"}
-            className="cursor-pointer hover:bg-secondary"
+            className="hover:bg-secondary cursor-pointer"
             onClick={() => setSelectedAttempt(attempt.id)}
           >
             Attempt {new Date(attempt.createdAt).toLocaleDateString()} (
@@ -75,25 +74,25 @@ export const QuizAttemptHistory = ({
         ))}
       </div>
 
-      <div className="p-4 border rounded-md">
+      <div className="rounded-md border p-4">
         <div className="mb-4 flex flex-wrap gap-4">
           <div>
-            <h3 className="text-sm font-medium text-muted-foreground">Score</h3>
+            <h3 className="text-muted-foreground text-sm font-medium">Score</h3>
             <p className="text-xl font-bold">{currentAttempt.score}%</p>
           </div>
           <div>
-            <h3 className="text-sm font-medium text-muted-foreground">
+            <h3 className="text-muted-foreground text-sm font-medium">
               Result
             </h3>
-            <p className="text-xl font-bold flex items-center">
+            <p className="flex items-center text-xl font-bold">
               {currentAttempt.passed ? (
                 <>
-                  <Check className="w-5 h-5 mr-1 text-green-500" />
+                  <Check className="mr-1 h-5 w-5 text-green-500" />
                   Passed
                 </>
               ) : (
                 <>
-                  <X className="w-5 h-5 mr-1 text-red-500" />
+                  <X className="mr-1 h-5 w-5 text-red-500" />
                   Failed
                 </>
               )}
@@ -101,11 +100,11 @@ export const QuizAttemptHistory = ({
           </div>
           {currentAttempt.timeTaken && (
             <div>
-              <h3 className="text-sm font-medium text-muted-foreground">
+              <h3 className="text-muted-foreground text-sm font-medium">
                 Time
               </h3>
-              <p className="text-xl font-bold flex items-center">
-                <Clock className="w-5 h-5 mr-1 text-muted-foreground" />
+              <p className="flex items-center text-xl font-bold">
+                <Clock className="text-muted-foreground mr-1 h-5 w-5" />
                 {Math.floor(currentAttempt.timeTaken / 60)}m{" "}
                 {currentAttempt.timeTaken % 60}s
               </p>
@@ -115,7 +114,7 @@ export const QuizAttemptHistory = ({
 
         <Separator className="my-4" />
 
-        <h3 className="font-medium mb-2">Quiz Results</h3>
+        <h3 className="mb-2 font-medium">Quiz Results</h3>
         <Accordion type="single" collapsible className="w-full">
           {questions.map((question, index) => {
             const userAnswer = attemptAnswers[question.id]
@@ -131,14 +130,14 @@ export const QuizAttemptHistory = ({
                       }`}
                     >
                       {isCorrect ? (
-                        <Check className="w-5 h-5" />
+                        <Check className="h-5 w-5" />
                       ) : (
-                        <X className="w-5 h-5" />
+                        <X className="h-5 w-5" />
                       )}
                     </span>
                     <div className="text-left">
                       <span className="font-medium">Question {index + 1}</span>
-                      <span className="ml-2 text-sm text-muted-foreground">
+                      <span className="text-muted-foreground ml-2 text-sm">
                         ({question.points}{" "}
                         {question.points === 1 ? "point" : "points"})
                       </span>
@@ -152,20 +151,20 @@ export const QuizAttemptHistory = ({
                     </div>
 
                     <div className="mb-4">
-                      <h4 className="text-sm font-medium mb-2">Your Answer:</h4>
+                      <h4 className="mb-2 text-sm font-medium">Your Answer:</h4>
                       {renderUserAnswer(question, userAnswer)}
                     </div>
 
                     <div className="mb-4">
-                      <h4 className="text-sm font-medium mb-2">
+                      <h4 className="mb-2 text-sm font-medium">
                         Correct Answer:
                       </h4>
                       {renderCorrectAnswer(question)}
                     </div>
 
                     {question.explanation && (
-                      <div className="mt-4 p-3 bg-muted rounded-md">
-                        <h4 className="text-sm font-medium mb-1">
+                      <div className="bg-muted mt-4 rounded-md p-3">
+                        <h4 className="mb-1 text-sm font-medium">
                           Explanation:
                         </h4>
                         <Preview value={question.explanation} />

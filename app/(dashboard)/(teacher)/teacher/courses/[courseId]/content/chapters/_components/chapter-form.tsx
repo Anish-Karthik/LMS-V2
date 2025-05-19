@@ -126,8 +126,8 @@ export const ChapterForm = ({ courseId, initialData }: ChapterFormProps) => {
 
   return (
     <div>
-      <div className="mt-6 border rounded-md p-4">
-        <div className="font-medium flex items-center justify-between">
+      <div className="mt-6 rounded-md border p-4">
+        <div className="flex items-center justify-between font-medium">
           Chapter details
           {initialData && (
             <div className="flex items-center gap-x-2">
@@ -139,12 +139,12 @@ export const ChapterForm = ({ courseId, initialData }: ChapterFormProps) => {
               >
                 {initialData.isPublished ? (
                   <>
-                    <EyeOffIcon className="h-4 w-4 mr-2" />
+                    <EyeOffIcon className="mr-2 h-4 w-4" />
                     Unpublish
                   </>
                 ) : (
                   <>
-                    <EyeIcon className="h-4 w-4 mr-2" />
+                    <EyeIcon className="mr-2 h-4 w-4" />
                     Publish
                   </>
                 )}
@@ -154,7 +154,7 @@ export const ChapterForm = ({ courseId, initialData }: ChapterFormProps) => {
                   <>Cancel</>
                 ) : (
                   <>
-                    <Pencil className="h-4 w-4 mr-2" />
+                    <Pencil className="mr-2 h-4 w-4" />
                     Edit
                   </>
                 )}
@@ -165,7 +165,7 @@ export const ChapterForm = ({ courseId, initialData }: ChapterFormProps) => {
         {!isEditing && initialData ? (
           <div className="mt-4">
             <div className="text-xl font-medium">{initialData.title}</div>
-            <div className="text-sm mt-2">
+            <div className="mt-2 text-sm">
               {initialData.description || "No description provided"}
             </div>
           </div>
@@ -173,7 +173,7 @@ export const ChapterForm = ({ courseId, initialData }: ChapterFormProps) => {
           <Form {...form}>
             <form
               onSubmit={form.handleSubmit(onSubmit)}
-              className="space-y-4 mt-4"
+              className="mt-4 space-y-4"
             >
               <FormField
                 control={form.control}
@@ -212,7 +212,7 @@ export const ChapterForm = ({ courseId, initialData }: ChapterFormProps) => {
               <div className="flex items-center gap-x-2">
                 <Button disabled={!isValid || isLoading} type="submit">
                   {isLoading && (
-                    <Loader2 className="w-4 h-4 mr-2 animate-spin" />
+                    <Loader2 className="mr-2 h-4 w-4 animate-spin" />
                   )}
                   {initialData ? "Save changes" : "Create chapter"}
                 </Button>

@@ -162,9 +162,9 @@ export const TopicsList = ({
                           size="sm"
                         >
                           {topic.isPublished ? (
-                            <EyeOffIcon className="h-4 w-4 mr-2" />
+                            <EyeOffIcon className="mr-2 h-4 w-4" />
                           ) : (
-                            <EyeIcon className="h-4 w-4 mr-2" />
+                            <EyeIcon className="mr-2 h-4 w-4" />
                           )}
                           {topic.isPublished ? "Unpublish" : "Publish"}
                         </Button>
@@ -172,7 +172,7 @@ export const TopicsList = ({
                           href={`/teacher/courses/${courseId}/content/chapters/${chapterId}/topics/${topic.id}`}
                         >
                           <Button variant="ghost" size="sm">
-                            <Pencil className="h-4 w-4 mr-2" />
+                            <Pencil className="mr-2 h-4 w-4" />
                             Edit
                           </Button>
                         </a>
@@ -182,7 +182,7 @@ export const TopicsList = ({
                           variant="ghost"
                           size="sm"
                         >
-                          <Trash className="h-4 w-4 mr-2" />
+                          <Trash className="mr-2 h-4 w-4" />
                           Delete
                         </Button>
                       </div>

@@ -48,7 +48,7 @@ export const DeleteCourseButton = ({ courseId }: DeleteCourseButtonProps) => {
     <AlertDialog>
       <AlertDialogTrigger asChild>
         <Button variant="destructive" size="sm" disabled={isDeleting}>
-          <Trash className="h-4 w-4 mr-2" /> Delete Course
+          <Trash className="mr-2 h-4 w-4" /> Delete Course
         </Button>
       </AlertDialogTrigger>
       <AlertDialogContent>

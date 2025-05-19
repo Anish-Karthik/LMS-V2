@@ -11,7 +11,7 @@ export function HeroAnimation() {
   return (
     <div
       ref={containerRef}
-      className="relative w-full aspect-square max-w-md mx-auto"
+      className="relative mx-auto aspect-square w-full max-w-md"
     >
       {/* Dashboard mockup */}
       <motion.div
@@ -27,7 +27,7 @@ export function HeroAnimation() {
           height={400}
           className="rounded-xl shadow-2xl border border-purple-800/30"
         /> */}
-        <div className="w-[500px] h-[400px] bg-purple-800/30 rounded-xl shadow-2xl border border-purple-800/30" />
+        <div className="h-[400px] w-[500px] rounded-xl border border-purple-800/30 bg-purple-800/30 shadow-2xl" />
       </motion.div>
 
       {/* Floating elements */}
@@ -35,11 +35,11 @@ export function HeroAnimation() {
         initial={{ opacity: 0, x: -20 }}
         animate={{ opacity: 1, x: 0 }}
         transition={{ duration: 0.8, delay: 0.5 }}
-        className="absolute top-10 -left-16 z-20"
+        className="absolute -left-16 top-10 z-20"
       >
-        <div className="bg-gradient-to-br from-purple-900 to-purple-800 p-4 rounded-lg shadow-xl border border-purple-700/50">
+        <div className="rounded-lg border border-purple-700/50 bg-gradient-to-br from-purple-900 to-purple-800 p-4 shadow-xl">
           <div className="flex items-center gap-3">
-            <div className="h-10 w-10 rounded-full bg-purple-600 flex items-center justify-center">
+            <div className="flex h-10 w-10 items-center justify-center rounded-full bg-purple-600">
               <Users className="h-5 w-5 text-white" />
             </div>
             <div>
@@ -56,9 +56,9 @@ export function HeroAnimation() {
         transition={{ duration: 0.8, delay: 0.7 }}
         className="absolute -bottom-10 left-10 z-20"
       >
-        <div className="bg-gradient-to-br from-pink-900 to-pink-800 p-4 rounded-lg shadow-xl border border-pink-700/50">
+        <div className="rounded-lg border border-pink-700/50 bg-gradient-to-br from-pink-900 to-pink-800 p-4 shadow-xl">
           <div className="flex items-center gap-3">
-            <div className="h-10 w-10 rounded-full bg-pink-600 flex items-center justify-center">
+            <div className="flex h-10 w-10 items-center justify-center rounded-full bg-pink-600">
               <BarChart3 className="h-5 w-5 text-white" />
             </div>
             <div>
@@ -73,11 +73,11 @@ export function HeroAnimation() {
         initial={{ opacity: 0, x: 20 }}
         animate={{ opacity: 1, x: 0 }}
         transition={{ duration: 0.8, delay: 0.9 }}
-        className="absolute top-20 -right-16 z-20"
+        className="absolute -right-16 top-20 z-20"
       >
-        <div className="bg-gradient-to-br from-purple-900 to-pink-900 p-4 rounded-lg shadow-xl border border-purple-700/50">
+        <div className="rounded-lg border border-purple-700/50 bg-gradient-to-br from-purple-900 to-pink-900 p-4 shadow-xl">
           <div className="flex items-center gap-3">
-            <div className="h-10 w-10 rounded-full bg-gradient-to-r from-purple-600 to-pink-600 flex items-center justify-center">
+            <div className="flex h-10 w-10 items-center justify-center rounded-full bg-gradient-to-r from-purple-600 to-pink-600">
               <Calendar className="h-5 w-5 text-white" />
             </div>
             <div>

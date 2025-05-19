@@ -71,9 +71,9 @@ export async function POST(
           OR: [{ role: "student" }, { role: "teacher" }],
         },
       },
-    });
-    
-    const referred = Boolean(promoResult?.code);
+    })
+
+    const referred = Boolean(promoResult?.code)
     console.log("referred", referred)
     const session = await stripe.checkout.sessions.create({
       customer: stripeCustomer.stripeCustomerId,

@@ -82,13 +82,7 @@ const LandingNavbar = ({
           </Link>
         )}
         {pathname.split("/").length < 2 && (
-          <Link
-            href={
-              !userId
-                ? `/sign-in`
-                : 'dashboard'
-            }
-          >
+          <Link href={!userId ? `/sign-in` : "dashboard"}>
             <Button
               containerClassName="!h-11 !max-h-11 hover:!text-pink-color"
               className="hover:!text-pink-color"

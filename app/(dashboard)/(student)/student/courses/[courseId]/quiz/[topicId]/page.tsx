@@ -1,6 +1,7 @@
 import Link from "next/link"
 import { redirect } from "next/navigation"
 import { auth, currentUser } from "@clerk/nextjs"
+import { QuizAttempt } from "@prisma/client"
 import { ArrowLeft, File, ListChecks } from "lucide-react"
 
 import { getCourseById } from "@/lib/actions/course.actions"
@@ -20,7 +21,6 @@ import { Preview } from "@/components/preview"
 import { ChapterProgressButton } from "../../_components/chapter-progress-button"
 import { QuizAttemptHistory } from "../../_components/quiz-attempt-history"
 import { QuizStartForm } from "../../_components/quiz-start-form"
-import { QuizAttempt } from "@prisma/client"
 
 const QuizTopicPage = async ({
   params,
@@ -151,14 +151,14 @@ const QuizTopicPage = async ({
         <div className="p-4">
           {/* Quiz description */}
           <div className="mb-8">
-            <h3 className="text-lg font-semibold mb-2">Instructions</h3>
+            <h3 className="mb-2 text-lg font-semibold">Instructions</h3>
             <Preview value={topic.description || "No instructions provided."} />
           </div>
 
           {/* Show completed attempts with answers if user has passed or used all attempts */}
           {shouldShowAnswers && completedAttempts.length > 0 && (
             <div className="mb-8">
-              <h3 className="text-lg font-semibold mb-4">Your Quiz Results</h3>
+              <h3 className="mb-4 text-lg font-semibold">Your Quiz Results</h3>
               <QuizAttemptHistory
                 attempts={completedAttempts as QuizAttempt[]}
                 questions={questions}
@@ -169,15 +169,15 @@ const QuizTopicPage = async ({
           {/* Previous attempts summary when still taking quiz */}
           {!shouldShowAnswers && completedAttempts.length > 0 && (
             <div className="mb-8">
-              <h3 className="text-lg font-semibold mb-4">Previous Attempts</h3>
+              <h3 className="mb-4 text-lg font-semibold">Previous Attempts</h3>
               <div className="space-y-2">
                 {completedAttempts.map((attempt) => (
                   <div
                     key={attempt.id}
-                    className={`p-4 border rounded-md ${
+                    className={`rounded-md border p-4 ${
                       attempt.passed
-                        ? "bg-green-50 border-green-200"
-                        : "bg-red-50 border-red-200"
+                        ? "border-green-200 bg-green-50"
+                        : "border-red-200 bg-red-50"
                     }`}
                   >
                     <div className="flex justify-between">
@@ -185,12 +185,12 @@ const QuizTopicPage = async ({
                         Score: {attempt.score}%{attempt.passed && " (Passed)"}
                         {!attempt.passed && " (Failed)"}
                       </p>
-                      <p className="text-sm text-muted-foreground">
+                      <p className="text-muted-foreground text-sm">
                         {new Date(attempt.createdAt).toLocaleString()}
                       </p>
                     </div>
                     {attempt.timeTaken && (
-                      <p className="text-sm text-muted-foreground mt-1">
+                      <p className="text-muted-foreground mt-1 text-sm">
                         Time taken: {Math.floor(attempt.timeTaken / 60)}m{" "}
                         {attempt.timeTaken % 60}s
                       </p>
@@ -218,7 +218,7 @@ const QuizTopicPage = async ({
 
           {!isLocked && hasAttempts && !hasPassed && questions.length > 0 && (
             <div className="mt-6">
-              <h3 className="text-xl font-semibold mb-4">Ready to Start?</h3>
+              <h3 className="mb-4 text-xl font-semibold">Ready to Start?</h3>
               <QuizStartForm
                 topicId={params.topicId}
                 courseId={params.courseId}

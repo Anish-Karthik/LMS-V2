@@ -34,7 +34,7 @@ export default function ChapterBar({
   const params = useParams()!
 
   return (
-    <ScrollArea className="hidden w-64 rounded-md border md:block h-full min-h-[calc(92vh)] max-h-[calc(92vh)] overflow-y-auto">
+    <ScrollArea className="hidden h-full max-h-[calc(92vh)] min-h-[calc(92vh)] w-64 overflow-y-auto rounded-md border md:block">
       <div className=" mb-2 border-b p-2 font-bold">
         <h2>Chapters</h2>
       </div>

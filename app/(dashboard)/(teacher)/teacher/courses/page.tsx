@@ -39,9 +39,9 @@ const CoursesPage = async () => {
           {!courses || courses.length === 0 ? (
             <div className="flex flex-col items-center justify-center rounded-md border border-dashed p-8 text-center">
               <h2 className="text-lg font-medium">No courses found</h2>
-              <p className="mt-1 text-sm text-muted-foreground">
-                You don&apos;t have any courses yet. Create your first course to get
-                started.
+              <p className="text-muted-foreground mt-1 text-sm">
+                You don&apos;t have any courses yet. Create your first course to
+                get started.
               </p>
               <Link href="/teacher/courses/create" className="mt-4">
                 <Button>
@@ -59,11 +59,13 @@ const CoursesPage = async () => {
                   className="group relative overflow-hidden rounded-lg border transition hover:shadow-md"
                 >
                   <div className="absolute right-2 top-2 z-10">
-                    <span className={`rounded px-2 py-1 text-xs font-medium ${
-                      course.isPublished 
-                        ? "bg-green-100 text-green-700"
-                        : "bg-yellow-100 text-yellow-700"
-                    }`}>
+                    <span
+                      className={`rounded px-2 py-1 text-xs font-medium ${
+                        course.isPublished
+                          ? "bg-green-100 text-green-700"
+                          : "bg-yellow-100 text-yellow-700"
+                      }`}
+                    >
                       {course.isPublished ? "Published" : "Draft"}
                     </span>
                   </div>
@@ -82,10 +84,10 @@ const CoursesPage = async () => {
                   </div>
                   <div className="p-3">
                     <h3 className="line-clamp-1 font-medium">{course.title}</h3>
-                    <p className="line-clamp-2 mt-1 text-sm text-muted-foreground">
+                    <p className="text-muted-foreground mt-1 line-clamp-2 text-sm">
                       {course.description || "No description"}
                     </p>
-                    <div className="mt-2 flex flex-col gap-1 text-sm text-muted-foreground">
+                    <div className="text-muted-foreground mt-2 flex flex-col gap-1 text-sm">
                       <div className="flex items-center">
                         <span className="mr-2">Type:</span>
                         <span className="rounded bg-slate-100 px-2 py-0.5 text-xs font-medium">

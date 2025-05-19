@@ -2,15 +2,15 @@ import z from "zod"
 
 import {
   announcementRouter,
+  attendanceRouter,
   batchRouter,
   chapterRouter,
   courseRouter,
   promoRouter,
+  quizRouter,
   testimonialRouter,
   topicRouter,
   userRouter,
-  attendanceRouter,
-  quizRouter,
 } from "./routers"
 import { publicProcedure, router } from "./trpc"
 

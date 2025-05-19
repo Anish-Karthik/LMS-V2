@@ -1,11 +1,11 @@
 "use client"
 
-import { Testimonial } from "@prisma/client"
 import Image from "next/image"
+import { Testimonial } from "@prisma/client"
 
-import { trpc } from "@/app/_trpc/client"
-import Stars from "@/components/shared/react-stars"
 import { Card, CardContent } from "@/components/ui/card"
+import Stars from "@/components/shared/react-stars"
+import { trpc } from "@/app/_trpc/client"
 
 interface TestimonialWithUser extends Testimonial {
   user: {
@@ -33,7 +33,7 @@ const CourseReviewsInner = ({
     return (
       <Card>
         <CardContent className="p-6">
-          <p className="text-center text-muted-foreground">
+          <p className="text-muted-foreground text-center">
             No reviews yet. Be the first to review this course!
           </p>
         </CardContent>
@@ -71,7 +71,7 @@ const CourseReviewsInner = ({
                       className="object-cover"
                     />
                   ) : (
-                    <div className="flex h-full w-full items-center justify-center bg-muted text-xl uppercase">
+                    <div className="bg-muted flex h-full w-full items-center justify-center text-xl uppercase">
                       {testimonial.user.name.charAt(0)}
                     </div>
                   )}
@@ -86,7 +86,7 @@ const CourseReviewsInner = ({
                         edit={false}
                         size={16}
                       />
-                      <span className="ml-2 text-sm text-muted-foreground">
+                      <span className="text-muted-foreground ml-2 text-sm">
                         {new Date(testimonial.createdAt).toLocaleDateString()}
                       </span>
                     </div>

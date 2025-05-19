@@ -108,21 +108,28 @@ const TopicIdPage = async ({
       )}
       <div className="mx-auto flex max-w-4xl flex-col pb-20">
         <div className="p-4">
-          {videoData?.url ? <VideoPlayer
-            userId={userId}
-            topicId={params?.topicId}
-            title={topic.title}
-            courseId={params?.courseId}
-            nextTopicId={nextTopic?.id}
-            nextTopicType={nextTopic?.type}
-            playbackId={videoData?.url!}
-            isLocked={isLocked}
-            isCompleted={!!userProgressTopic?.isCompleted}
-            completeOnEnd={completeOnEnd}
-          /> : (
+          {videoData?.url ? (
+            <VideoPlayer
+              userId={userId}
+              topicId={params?.topicId}
+              title={topic.title}
+              courseId={params?.courseId}
+              nextTopicId={nextTopic?.id}
+              nextTopicType={nextTopic?.type}
+              playbackId={videoData?.url!}
+              isLocked={isLocked}
+              isCompleted={!!userProgressTopic?.isCompleted}
+              completeOnEnd={completeOnEnd}
+            />
+          ) : (
             <div className="flex flex-col items-center justify-center space-y-4 py-8">
-              <Banner variant="warning" label="No video content available for this topic." />
-              <h1 className="text-xl font-semibold text-gray-700">Video content unavailable</h1>
+              <Banner
+                variant="warning"
+                label="No video content available for this topic."
+              />
+              <h1 className="text-xl font-semibold text-gray-700">
+                Video content unavailable
+              </h1>
             </div>
           )}
         </div>

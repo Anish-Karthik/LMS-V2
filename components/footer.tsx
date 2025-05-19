@@ -9,7 +9,7 @@ export function Footer() {
           <div className="space-y-4">
             <div className="flex items-center gap-2">
               <div className="h-8 w-8 rounded-full bg-gradient-to-r from-pink-500 to-purple-600"></div>
-              <span className="text-xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-pink-500 to-purple-600">
+              <span className="bg-gradient-to-r from-pink-500 to-purple-600 bg-clip-text text-xl font-bold text-transparent">
                 Clovers
               </span>
             </div>
@@ -43,7 +43,7 @@ export function Footer() {
               <li>
                 <Link
                   href="#"
-                  className="text-sm text-purple-200 hover:text-pink-400 transition-colors"
+                  className="text-sm text-purple-200 transition-colors hover:text-pink-400"
                 >
                   Features
                 </Link>
@@ -51,7 +51,7 @@ export function Footer() {
               <li>
                 <Link
                   href="#"
-                  className="text-sm text-purple-200 hover:text-pink-400 transition-colors"
+                  className="text-sm text-purple-200 transition-colors hover:text-pink-400"
                 >
                   Pricing
                 </Link>
@@ -59,7 +59,7 @@ export function Footer() {
               <li>
                 <Link
                   href="#"
-                  className="text-sm text-purple-200 hover:text-pink-400 transition-colors"
+                  className="text-sm text-purple-200 transition-colors hover:text-pink-400"
                 >
                   Integrations
                 </Link>
@@ -67,7 +67,7 @@ export function Footer() {
               <li>
                 <Link
                   href="#"
-                  className="text-sm text-purple-200 hover:text-pink-400 transition-colors"
+                  className="text-sm text-purple-200 transition-colors hover:text-pink-400"
                 >
                   Case Studies
                 </Link>
@@ -75,7 +75,7 @@ export function Footer() {
               <li>
                 <Link
                   href="#"
-                  className="text-sm text-purple-200 hover:text-pink-400 transition-colors"
+                  className="text-sm text-purple-200 transition-colors hover:text-pink-400"
                 >
                   Documentation
                 </Link>
@@ -89,7 +89,7 @@ export function Footer() {
               <li>
                 <Link
                   href="#"
-                  className="text-sm text-purple-200 hover:text-pink-400 transition-colors"
+                  className="text-sm text-purple-200 transition-colors hover:text-pink-400"
                 >
                   About Us
                 </Link>
@@ -97,7 +97,7 @@ export function Footer() {
               <li>
                 <Link
                   href="#"
-                  className="text-sm text-purple-200 hover:text-pink-400 transition-colors"
+                  className="text-sm text-purple-200 transition-colors hover:text-pink-400"
                 >
                   Careers
                 </Link>
@@ -105,7 +105,7 @@ export function Footer() {
               <li>
                 <Link
                   href="/blog"
-                  className="text-sm text-purple-200 hover:text-pink-400 transition-colors"
+                  className="text-sm text-purple-200 transition-colors hover:text-pink-400"
                 >
                   Blog
                 </Link>
@@ -113,7 +113,7 @@ export function Footer() {
               <li>
                 <Link
                   href="#"
-                  className="text-sm text-purple-200 hover:text-pink-400 transition-colors"
+                  className="text-sm text-purple-200 transition-colors hover:text-pink-400"
                 >
                   Press
                 </Link>
@@ -121,7 +121,7 @@ export function Footer() {
               <li>
                 <Link
                   href="#"
-                  className="text-sm text-purple-200 hover:text-pink-400 transition-colors"
+                  className="text-sm text-purple-200 transition-colors hover:text-pink-400"
                 >
                   Partners
                 </Link>
@@ -135,7 +135,7 @@ export function Footer() {
               <li>
                 <Link
                   href="#"
-                  className="text-sm text-purple-200 hover:text-pink-400 transition-colors"
+                  className="text-sm text-purple-200 transition-colors hover:text-pink-400"
                 >
                   Help Center
                 </Link>
@@ -143,7 +143,7 @@ export function Footer() {
               <li>
                 <Link
                   href="/contact"
-                  className="text-sm text-purple-200 hover:text-pink-400 transition-colors"
+                  className="text-sm text-purple-200 transition-colors hover:text-pink-400"
                 >
                   Contact Us
                 </Link>
@@ -151,7 +151,7 @@ export function Footer() {
               <li>
                 <Link
                   href="#"
-                  className="text-sm text-purple-200 hover:text-pink-400 transition-colors"
+                  className="text-sm text-purple-200 transition-colors hover:text-pink-400"
                 >
                   Status
                 </Link>
@@ -159,7 +159,7 @@ export function Footer() {
               <li>
                 <Link
                   href="/policies#privacy"
-                  className="text-sm text-purple-200 hover:text-pink-400 transition-colors"
+                  className="text-sm text-purple-200 transition-colors hover:text-pink-400"
                 >
                   Privacy Policy
                 </Link>
@@ -167,7 +167,7 @@ export function Footer() {
               <li>
                 <Link
                   href="/policies#terms"
-                  className="text-sm text-purple-200 hover:text-pink-400 transition-colors"
+                  className="text-sm text-purple-200 transition-colors hover:text-pink-400"
                 >
                   Terms of Service
                 </Link>
@@ -176,26 +176,26 @@ export function Footer() {
           </div>
         </div>
 
-        <div className="mt-10 border-t border-purple-900/20 pt-6 flex flex-col md:flex-row justify-between items-center">
+        <div className="mt-10 flex flex-col items-center justify-between border-t border-purple-900/20 pt-6 md:flex-row">
           <p className="text-xs text-purple-300">
             © {new Date().getFullYear()} Clovers LMS. All rights reserved.
           </p>
-          <div className="flex gap-4 mt-4 md:mt-0">
+          <div className="mt-4 flex gap-4 md:mt-0">
             <Link
               href="/policies#privacy"
-              className="text-xs text-purple-300 hover:text-pink-400 transition-colors"
+              className="text-xs text-purple-300 transition-colors hover:text-pink-400"
             >
               Privacy Policy
             </Link>
             <Link
               href="/policies#terms"
-              className="text-xs text-purple-300 hover:text-pink-400 transition-colors"
+              className="text-xs text-purple-300 transition-colors hover:text-pink-400"
             >
               Terms of Service
             </Link>
             <Link
               href="/policies#cookie"
-              className="text-xs text-purple-300 hover:text-pink-400 transition-colors"
+              className="text-xs text-purple-300 transition-colors hover:text-pink-400"
             >
               Cookie Policy
             </Link>

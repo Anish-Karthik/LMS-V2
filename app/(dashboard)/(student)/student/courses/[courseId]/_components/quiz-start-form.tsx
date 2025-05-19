@@ -56,15 +56,15 @@ const QuizStartFormInner = ({
   }
 
   return (
-    <div className="p-4 rounded-md shadow">
+    <div className="rounded-md p-4 shadow">
       <div className="mb-6 space-y-4">
         <h2 className="text-xl font-semibold">Quiz Information</h2>
 
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+        <div className="grid grid-cols-1 gap-4 md:grid-cols-3">
           {timeLimit && (
             <Card>
-              <CardHeader className="py-2 flex flex-row items-center space-x-2">
-                <Clock className="h-4 w-4 text-muted-foreground" />
+              <CardHeader className="flex flex-row items-center space-x-2 py-2">
+                <Clock className="text-muted-foreground h-4 w-4" />
                 <CardTitle className="text-sm">Time Limit</CardTitle>
               </CardHeader>
               <CardContent>
@@ -75,8 +75,8 @@ const QuizStartFormInner = ({
 
           {passingScore && (
             <Card>
-              <CardHeader className="py-2 flex flex-row items-center space-x-2">
-                <ListChecks className="h-4 w-4 text-muted-foreground" />
+              <CardHeader className="flex flex-row items-center space-x-2 py-2">
+                <ListChecks className="text-muted-foreground h-4 w-4" />
                 <CardTitle className="text-sm">Passing Score</CardTitle>
               </CardHeader>
               <CardContent>
@@ -87,8 +87,8 @@ const QuizStartFormInner = ({
 
           {allowedAttempts && (
             <Card>
-              <CardHeader className="py-2 flex flex-row items-center space-x-2">
-                <Play className="h-4 w-4 text-muted-foreground" />
+              <CardHeader className="flex flex-row items-center space-x-2 py-2">
+                <Play className="text-muted-foreground h-4 w-4" />
                 <CardTitle className="text-sm">Attempts</CardTitle>
               </CardHeader>
               <CardContent>
@@ -114,12 +114,12 @@ const QuizStartFormInner = ({
           </Button>
 
           {allowedAttempts && attemptsUsed >= allowedAttempts && (
-            <p className="text-sm text-center mt-2 text-red-500">
+            <p className="mt-2 text-center text-sm text-red-500">
               You have used all allowed attempts for this quiz.
             </p>
           )}
 
-          <p className="text-sm text-center mt-2 text-muted-foreground">
+          <p className="text-muted-foreground mt-2 text-center text-sm">
             Once you start, the timer will begin and cannot be paused.
           </p>
         </div>

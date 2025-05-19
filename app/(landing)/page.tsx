@@ -27,27 +27,27 @@ export default function Home() {
       {/* Hero Section */}
       <section className="relative overflow-hidden py-20 md:py-32">
         <div className="container px-4 md:px-6">
-          <div className="grid gap-12 md:grid-cols-2 md:gap-16 items-center">
+          <div className="grid items-center gap-12 md:grid-cols-2 md:gap-16">
             <div className="space-y-6">
               <div className="inline-block rounded-full bg-gradient-to-r from-pink-500 to-purple-600 px-4 py-1.5 text-sm font-medium">
                 Next-Gen Learning Management System
               </div>
-              <h1 className="text-4xl md:text-6xl font-bold tracking-tighter bg-clip-text text-transparent bg-gradient-to-r from-pink-500 via-purple-500 to-pink-400">
+              <h1 className="bg-gradient-to-r from-pink-500 via-purple-500 to-pink-400 bg-clip-text text-4xl font-bold tracking-tighter text-transparent md:text-6xl">
                 Transform Your Corporate Training Experience
               </h1>
               <p className="text-xl text-purple-200 md:text-2xl/relaxed lg:text-base/relaxed xl:text-xl/relaxed">
                 The all-in-one B2B learning platform that streamlines training,
                 enhances engagement, and delivers powerful analytics.
               </p>
-              <div className="flex flex-col sm:flex-row gap-4">
+              <div className="flex flex-col gap-4 sm:flex-row">
                 <Link href="/dashboard">
-                  <Button className="bg-gradient-to-r from-pink-500 to-purple-600 hover:from-pink-600 hover:to-purple-700 text-white rounded-full px-8 py-6 text-lg font-medium">
+                  <Button className="rounded-full bg-gradient-to-r from-pink-500 to-purple-600 px-8 py-6 text-lg font-medium text-white hover:from-pink-600 hover:to-purple-700">
                     Get Started <ChevronRight className="ml-2 h-4 w-4" />
                   </Button>
                 </Link>
                 <Button
                   variant="outline"
-                  className="border-purple-500 text-purple-300 hover:bg-purple-950/30 rounded-full px-8 py-6 text-lg font-medium"
+                  className="rounded-full border-purple-500 px-8 py-6 text-lg font-medium text-purple-300 hover:bg-purple-950/30"
                 >
                   Book a Demo
                 </Button>
@@ -57,23 +57,23 @@ export default function Home() {
               <div className="relative z-10">
                 <HeroAnimation />
               </div>
-              <div className="absolute inset-0 bg-gradient-to-r from-pink-500/20 to-purple-600/20 blur-3xl rounded-full transform -translate-y-1/2 translate-x-1/4 opacity-30"></div>
+              <div className="absolute inset-0 -translate-y-1/2 translate-x-1/4 rounded-full bg-gradient-to-r from-pink-500/20 to-purple-600/20 opacity-30 blur-3xl"></div>
             </div>
           </div>
         </div>
 
         {/* Background elements */}
-        <div className="absolute top-0 left-0 w-full h-full overflow-hidden pointer-events-none">
-          <div className="absolute top-1/4 left-1/4 w-64 h-64 bg-purple-600/20 rounded-full filter blur-3xl"></div>
-          <div className="absolute bottom-1/4 right-1/4 w-80 h-80 bg-pink-600/20 rounded-full filter blur-3xl"></div>
+        <div className="pointer-events-none absolute left-0 top-0 h-full w-full overflow-hidden">
+          <div className="absolute left-1/4 top-1/4 h-64 w-64 rounded-full bg-purple-600/20 blur-3xl"></div>
+          <div className="absolute bottom-1/4 right-1/4 h-80 w-80 rounded-full bg-pink-600/20 blur-3xl"></div>
         </div>
       </section>
 
       {/* Features Section */}
-      <section className="py-20 md:py-32 relative">
+      <section className="relative py-20 md:py-32">
         <div className="container px-4 md:px-6">
-          <div className="text-center max-w-3xl mx-auto mb-16">
-            <h2 className="text-3xl md:text-5xl font-bold tracking-tighter bg-clip-text text-transparent bg-gradient-to-r from-pink-500 to-purple-600 mb-4">
+          <div className="mx-auto mb-16 max-w-3xl text-center">
+            <h2 className="mb-4 bg-gradient-to-r from-pink-500 to-purple-600 bg-clip-text text-3xl font-bold tracking-tighter text-transparent md:text-5xl">
               Comprehensive Features for Modern Learning
             </h2>
             <p className="text-lg text-purple-200">
@@ -117,11 +117,11 @@ export default function Home() {
         </div>
 
         {/* Background elements */}
-        <div className="absolute top-1/2 right-0 w-96 h-96 bg-purple-600/10 rounded-full filter blur-3xl"></div>
+        <div className="absolute right-0 top-1/2 h-96 w-96 rounded-full bg-purple-600/10 blur-3xl"></div>
       </section>
 
       {/* Stats Section */}
-      <section className="py-16 bg-gradient-to-r from-purple-900/30 to-pink-900/30">
+      <section className="bg-gradient-to-r from-purple-900/30 to-pink-900/30 py-16">
         <div className="container px-4 md:px-6">
           <div className="grid gap-8 md:grid-cols-2 lg:grid-cols-4">
             <StatsCard number="98%" label="Completion Rate" />
@@ -133,10 +133,10 @@ export default function Home() {
       </section>
 
       {/* Testimonials Section */}
-      <section className="py-20 md:py-32 relative">
+      <section className="relative py-20 md:py-32">
         <div className="container px-4 md:px-6">
-          <div className="text-center max-w-3xl mx-auto mb-16">
-            <h2 className="text-3xl md:text-5xl font-bold tracking-tighter bg-clip-text text-transparent bg-gradient-to-r from-pink-500 to-purple-600 mb-4">
+          <div className="mx-auto mb-16 max-w-3xl text-center">
+            <h2 className="mb-4 bg-gradient-to-r from-pink-500 to-purple-600 bg-clip-text text-3xl font-bold tracking-tighter text-transparent md:text-5xl">
               Trusted by Learning Leaders
             </h2>
             <p className="text-lg text-purple-200">
@@ -167,14 +167,14 @@ export default function Home() {
         </div>
 
         {/* Background elements */}
-        <div className="absolute bottom-0 left-0 w-96 h-96 bg-pink-600/10 rounded-full filter blur-3xl"></div>
+        <div className="absolute bottom-0 left-0 h-96 w-96 rounded-full bg-pink-600/10 blur-3xl"></div>
       </section>
 
       {/* Pricing Section */}
-      <section className="py-20 md:py-32 relative border-t border-purple-900/30">
+      <section className="relative border-t border-purple-900/30 py-20 md:py-32">
         <div className="container px-4 md:px-6">
-          <div className="text-center max-w-3xl mx-auto mb-16">
-            <h2 className="text-3xl md:text-5xl font-bold tracking-tighter bg-clip-text text-transparent bg-gradient-to-r from-pink-500 to-purple-600 mb-4">
+          <div className="mx-auto mb-16 max-w-3xl text-center">
+            <h2 className="mb-4 bg-gradient-to-r from-pink-500 to-purple-600 bg-clip-text text-3xl font-bold tracking-tighter text-transparent md:text-5xl">
               Flexible Pricing for Teams of All Sizes
             </h2>
             <p className="text-lg text-purple-200">
@@ -235,25 +235,25 @@ export default function Home() {
       </section>
 
       {/* CTA Section */}
-      <section className="py-20 md:py-32 relative">
+      <section className="relative py-20 md:py-32">
         <div className="container px-4 md:px-6">
           <div className="relative overflow-hidden rounded-3xl bg-gradient-to-r from-purple-900/80 to-pink-900/80 p-8 md:p-12 lg:p-16">
-            <div className="grid gap-6 md:grid-cols-2 items-center">
+            <div className="grid items-center gap-6 md:grid-cols-2">
               <div className="space-y-6">
-                <h2 className="text-3xl md:text-4xl font-bold tracking-tighter text-white">
+                <h2 className="text-3xl font-bold tracking-tighter text-white md:text-4xl">
                   Ready to Transform Your Learning Experience?
                 </h2>
                 <p className="text-lg text-purple-100">
                   Join hundreds of forward-thinking companies already using our
                   platform to elevate their training programs.
                 </p>
-                <div className="flex flex-col sm:flex-row gap-4">
-                  <Button className="bg-white text-purple-900 hover:bg-purple-100 rounded-full px-8 py-6 text-lg font-medium">
+                <div className="flex flex-col gap-4 sm:flex-row">
+                  <Button className="rounded-full bg-white px-8 py-6 text-lg font-medium text-purple-900 hover:bg-purple-100">
                     Schedule a Demo
                   </Button>
                   <Button
                     variant="outline"
-                    className="border-white text-white hover:bg-white/10 rounded-full px-8 py-6 text-lg font-medium"
+                    className="rounded-full border-white px-8 py-6 text-lg font-medium text-white hover:bg-white/10"
                   >
                     View Case Studies
                   </Button>
@@ -267,14 +267,14 @@ export default function Home() {
                   height={300}
                   className="rounded-xl shadow-2xl"
                 /> */}
-                <div className="absolute inset-0 bg-gradient-to-r from-pink-500/20 to-purple-600/20 blur-xl rounded-xl h-[300px] w-[400px]"></div>
-                <div className="w-[400px] h-[300px] bg-purple-800/30 rounded-xl shadow-2xl border border-purple-800/30" />
+                <div className="absolute inset-0 h-[300px] w-[400px] rounded-xl bg-gradient-to-r from-pink-500/20 to-purple-600/20 blur-xl"></div>
+                <div className="h-[300px] w-[400px] rounded-xl border border-purple-800/30 bg-purple-800/30 shadow-2xl" />
               </div>
             </div>
 
             {/* Background elements */}
-            <div className="absolute top-0 right-0 w-64 h-64 bg-pink-600/30 rounded-full filter blur-3xl transform translate-x-1/2 -translate-y-1/2"></div>
-            <div className="absolute bottom-0 left-0 w-64 h-64 bg-purple-600/30 rounded-full filter blur-3xl transform -translate-x-1/2 translate-y-1/2"></div>
+            <div className="absolute right-0 top-0 h-64 w-64 -translate-y-1/2 translate-x-1/2 rounded-full bg-pink-600/30 blur-3xl"></div>
+            <div className="absolute bottom-0 left-0 h-64 w-64 -translate-x-1/2 translate-y-1/2 rounded-full bg-purple-600/30 blur-3xl"></div>
           </div>
         </div>
       </section>

@@ -11,18 +11,18 @@ interface StatsCardProps {
 
 export function StatsCard({ number, label }: StatsCardProps) {
   return (
-    <Card className="bg-black/50 border-0 overflow-hidden">
+    <Card className="overflow-hidden border-0 bg-black/50">
       <CardContent className="p-6 text-center">
         <motion.div
           initial={{ opacity: 0, scale: 0.8 }}
           whileInView={{ opacity: 1, scale: 1 }}
           transition={{ duration: 0.5 }}
           viewport={{ once: true }}
-          className="text-4xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-pink-500 to-purple-600"
+          className="bg-gradient-to-r from-pink-500 to-purple-600 bg-clip-text text-4xl font-bold text-transparent"
         >
           {number}
         </motion.div>
-        <div className="text-purple-200 mt-2">{label}</div>
+        <div className="mt-2 text-purple-200">{label}</div>
       </CardContent>
     </Card>
   )

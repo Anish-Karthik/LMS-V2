@@ -18,8 +18,8 @@ interface FeatureCardProps {
 
 export function FeatureCard({ icon, title, description }: FeatureCardProps) {
   return (
-    <Card className="bg-black border border-purple-900/30 overflow-hidden group relative">
-      <div className="absolute inset-0 bg-gradient-to-r from-pink-500/10 to-purple-600/10 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+    <Card className="group relative overflow-hidden border border-purple-900/30 bg-black">
+      <div className="absolute inset-0 bg-gradient-to-r from-pink-500/10 to-purple-600/10 opacity-0 transition-opacity duration-300 group-hover:opacity-100"></div>
       <CardHeader className="pb-2">
         <div className="mb-4">{icon}</div>
         <CardTitle className="text-xl font-bold text-white">{title}</CardTitle>
@@ -29,7 +29,7 @@ export function FeatureCard({ icon, title, description }: FeatureCardProps) {
           {description}
         </CardDescription>
       </CardContent>
-      <div className="absolute bottom-0 left-0 right-0 h-1 bg-gradient-to-r from-pink-500 to-purple-600 transform scale-x-0 group-hover:scale-x-100 transition-transform duration-300 origin-left"></div>
+      <div className="absolute inset-x-0 bottom-0 h-1 origin-left scale-x-0 bg-gradient-to-r from-pink-500 to-purple-600 transition-transform duration-300 group-hover:scale-x-100"></div>
     </Card>
   )
 }

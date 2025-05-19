@@ -1,16 +1,13 @@
-import { TRPCError } from "@trpc/server";
-import { z } from "zod";
+import { TRPCError } from "@trpc/server"
+import { z } from "zod"
 
+import {
+  getChapterById,
+  getChaptersByCourseId,
+} from "@/lib/actions/chapter.action"
+import { db } from "@/lib/db"
 
-
-import { getChapterById } from "@/lib/actions/chapter.action";
-import { db } from "@/lib/db";
-import { getChaptersByCourseId } from "@/lib/actions/chapter.action";
-
-
-
-import { publicProcedure, router } from "../trpc";
-
+import { publicProcedure, router } from "../trpc"
 
 export const chapterRouter = router({
   create: publicProcedure
@@ -165,7 +162,9 @@ export const chapterRouter = router({
     }
   }),
 
-  getChaptersByCourseId: publicProcedure.input(z.string()).query(async ({ input }) => {
-    return await getChaptersByCourseId(input)
-  }),
+  getChaptersByCourseId: publicProcedure
+    .input(z.string())
+    .query(async ({ input }) => {
+      return await getChaptersByCourseId(input)
+    }),
 })

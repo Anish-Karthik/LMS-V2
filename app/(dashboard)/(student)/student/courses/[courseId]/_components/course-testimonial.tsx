@@ -148,7 +148,7 @@ const CourseTestimonialInner = ({
                 edit={false}
                 size={24}
               />
-              <span className="ml-2 text-sm text-muted-foreground">
+              <span className="text-muted-foreground ml-2 text-sm">
                 {new Date(existingTestimonial.updatedAt).toLocaleDateString()}
               </span>
             </div>
@@ -214,7 +214,7 @@ const CourseTestimonialInner = ({
           </Form>
         ) : (
           <div className="flex flex-col items-center justify-center py-6">
-            <p className="text-center text-muted-foreground mb-4">
+            <p className="text-muted-foreground mb-4 text-center">
               You haven't reviewed this course yet. Share your experience to
               help others!
             </p>
@@ -240,9 +240,7 @@ const CourseTestimonialInner = ({
 
 // Wrapper with TRPC provider
 const CourseTestimonial = (props: CourseTestimonialProps) => (
-
-    <CourseTestimonialInner {...props} />
-
+  <CourseTestimonialInner {...props} />
 )
 
 export default CourseTestimonial

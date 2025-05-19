@@ -15,7 +15,9 @@ import {
 import { getTopicEmails } from "@/lib/actions/topic.actions"
 import { db } from "@/lib/db"
 import { Banner } from "@/components/banner"
+import { Editor } from "@/components/editor"
 import { IconBadge } from "@/components/icon-badge"
+import { Preview } from "@/components/preview"
 import CurrentPathNavigator from "@/components/shared/current-pathname"
 import { AttachmentForm } from "@/components/shared/topic/attachment-form"
 import { QuizEditor } from "@/components/shared/topic/quiz-editor"
@@ -24,8 +26,6 @@ import { TopicDescriptionForm } from "@/components/shared/topic/topic-descriptio
 import { TopicForm } from "@/components/shared/topic/topic-form"
 import { TopicTitleForm } from "@/components/shared/topic/topic-title-form"
 import { TopicVideoForm } from "@/components/shared/topic/topic-video-form"
-import { Editor } from "@/components/editor"
-import { Preview } from "@/components/preview"
 
 const NotifyTopic = dynamic(
   () => import("@/components/shared/topic/notify-topic"),

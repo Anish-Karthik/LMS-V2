@@ -185,8 +185,8 @@ export const QuizEditor = ({ topicId, initialData }: QuizEditorProps) => {
   }
 
   return (
-    <div className="p-4 bg-secondary rounded-md border mt-6">
-      <div className="font-medium flex items-center justify-between">
+    <div className="bg-secondary mt-6 rounded-md border p-4">
+      <div className="flex items-center justify-between font-medium">
         <h2 className="text-xl">Quiz Questions</h2>
         <div className="flex space-x-2">
           <Button
@@ -195,7 +195,7 @@ export const QuizEditor = ({ topicId, initialData }: QuizEditorProps) => {
             size="sm"
             onClick={() => addQuestion("single")}
           >
-            <PlusCircle className="h-4 w-4 mr-2" />
+            <PlusCircle className="mr-2 h-4 w-4" />
             Single Choice
           </Button>
           <Button
@@ -204,7 +204,7 @@ export const QuizEditor = ({ topicId, initialData }: QuizEditorProps) => {
             size="sm"
             onClick={() => addQuestion("multiple")}
           >
-            <PlusCircle className="h-4 w-4 mr-2" />
+            <PlusCircle className="mr-2 h-4 w-4" />
             Multiple Choice
           </Button>
           <Button
@@ -213,16 +213,16 @@ export const QuizEditor = ({ topicId, initialData }: QuizEditorProps) => {
             size="sm"
             onClick={() => addQuestion("text")}
           >
-            <PlusCircle className="h-4 w-4 mr-2" />
+            <PlusCircle className="mr-2 h-4 w-4" />
             Text Answer
           </Button>
         </div>
       </div>
 
       <Form {...form}>
-        <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6 mt-6">
+        <form onSubmit={form.handleSubmit(onSubmit)} className="mt-6 space-y-6">
           {questions.length === 0 && (
-            <div className="text-center py-10 border border-dashed rounded-md text-muted-foreground">
+            <div className="text-muted-foreground rounded-md border border-dashed py-10 text-center">
               No questions yet. Add a question to get started.
             </div>
           )}
@@ -233,7 +233,7 @@ export const QuizEditor = ({ topicId, initialData }: QuizEditorProps) => {
             return (
               <div
                 key={question.id}
-                className="p-4 border rounded-md bg-card relative"
+                className="bg-card relative rounded-md border p-4"
               >
                 <div className="absolute right-2 top-2 flex space-x-1">
                   <Button
@@ -260,7 +260,7 @@ export const QuizEditor = ({ topicId, initialData }: QuizEditorProps) => {
                     size="icon"
                     onClick={() => remove(questionIndex)}
                   >
-                    <Trash2 className="h-4 w-4 text-destructive" />
+                    <Trash2 className="text-destructive h-4 w-4" />
                   </Button>
                 </div>
 
@@ -304,7 +304,7 @@ export const QuizEditor = ({ topicId, initialData }: QuizEditorProps) => {
                 {questionType === "single" && (
                   <div className="mt-4">
                     <FormLabel>Options (Select one correct answer)</FormLabel>
-                    <div className="space-y-3 mt-2">
+                    <div className="mt-2 space-y-3">
                       {form
                         .watch(`questions.${questionIndex}.options`)
                         ?.map((option, optionIndex) => (
@@ -320,7 +320,7 @@ export const QuizEditor = ({ topicId, initialData }: QuizEditorProps) => {
                                   <FormControl>
                                     <input
                                       type="radio"
-                                      className="h-4 w-4 text-primary border-primary rounded-full focus:ring-primary"
+                                      className="text-primary border-primary focus:ring-primary h-4 w-4 rounded-full"
                                       checked={field.value}
                                       onChange={() =>
                                         handleSingleChoiceChange(
@@ -374,7 +374,7 @@ export const QuizEditor = ({ topicId, initialData }: QuizEditorProps) => {
                       className="mt-2"
                       onClick={() => addOption(questionIndex)}
                     >
-                      <PlusCircle className="h-4 w-4 mr-2" />
+                      <PlusCircle className="mr-2 h-4 w-4" />
                       Add Option
                     </Button>
                   </div>
@@ -383,7 +383,7 @@ export const QuizEditor = ({ topicId, initialData }: QuizEditorProps) => {
                 {questionType === "multiple" && (
                   <div className="mt-4">
                     <FormLabel>Options (Select all correct answers)</FormLabel>
-                    <div className="space-y-3 mt-2">
+                    <div className="mt-2 space-y-3">
                       {form
                         .watch(`questions.${questionIndex}.options`)
                         ?.map((option, optionIndex) => (
@@ -446,7 +446,7 @@ export const QuizEditor = ({ topicId, initialData }: QuizEditorProps) => {
                       className="mt-2"
                       onClick={() => addOption(questionIndex)}
                     >
-                      <PlusCircle className="h-4 w-4 mr-2" />
+                      <PlusCircle className="mr-2 h-4 w-4" />
                       Add Option
                     </Button>
                   </div>
@@ -501,7 +501,7 @@ export const QuizEditor = ({ topicId, initialData }: QuizEditorProps) => {
           })}
 
           <Button type="submit" disabled={isLoading} className="mt-6">
-            {isLoading && <Loader2 className="h-4 w-4 mr-2 animate-spin" />}
+            {isLoading && <Loader2 className="mr-2 h-4 w-4 animate-spin" />}
             Save Questions
           </Button>
         </form>

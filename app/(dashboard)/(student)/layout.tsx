@@ -1,5 +1,6 @@
 import React from "react"
 import Image from "next/image"
+import Link from "next/link"
 import { redirect } from "next/navigation"
 import { UserButton, currentUser } from "@clerk/nextjs"
 
@@ -9,7 +10,6 @@ import { ThemeToggle } from "@/components/theme-toggle"
 
 import { MainNav } from "./_components/main-nav"
 import MobileNav from "./_components/mobile-nav"
-import Link from "next/link"
 
 const DashBoardLayout = async ({ children }: { children: React.ReactNode }) => {
   const user = await currentUser()

@@ -88,12 +88,12 @@ export const BatchesForm = ({ initialData, courseId }: BatchesFormProps) => {
         </div>
       )}
       {isSelfPaced && (
-        <div className="rounded-md absolute right-0 top-0 flex h-full w-full items-center justify-center bg-slate-500/30">
+        <div className="absolute right-0 top-0 flex h-full w-full items-center justify-center rounded-md bg-slate-500/30">
           <div className="rounded-md bg-white p-4 shadow-md">
-            <p className="font-semibold text-center">
+            <p className="text-center font-semibold">
               Batches not available for self-paced courses
             </p>
-            <p className="text-sm text-muted-foreground text-center mt-1">
+            <p className="text-muted-foreground mt-1 text-center text-sm">
               Change the course type to batch-based to manage batches
             </p>
           </div>
@@ -158,7 +158,7 @@ export const BatchesForm = ({ initialData, courseId }: BatchesFormProps) => {
       )}
       {!isCreating && isSelfPaced && data.batches.length > 0 && (
         <div className="mt-2 text-sm">
-          <p className="text-amber-600 font-medium">
+          <p className="font-medium text-amber-600">
             Warning: This course has {data.batches.length}{" "}
             {data.batches.length === 1 ? "batch" : "batches"} that will be
             hidden since it's now a self-paced course.

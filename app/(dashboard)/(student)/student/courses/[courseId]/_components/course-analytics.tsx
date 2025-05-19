@@ -2,9 +2,9 @@
 
 import { useMemo } from "react"
 import Link from "next/link"
+import { formatDistanceToNow } from "date-fns"
 import { Award, BarChart, Clock, XCircle } from "lucide-react"
 
-import { formatDistanceToNow } from "date-fns"
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { Progress } from "@/components/ui/progress"
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
@@ -88,14 +88,14 @@ export function CourseAnalytics({ analytics }: { analytics: CourseAnalytics }) {
         <TabsTrigger value="quizzes">Quizzes</TabsTrigger>
       </TabsList>
 
-      <TabsContent value="overview" className="space-y-4 mt-4">
+      <TabsContent value="overview" className="mt-4 space-y-4">
         <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-4">
           <Card>
             <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
               <CardTitle className="text-sm font-medium">
                 Course Progress
               </CardTitle>
-              <BarChart className="h-4 w-4 text-muted-foreground" />
+              <BarChart className="text-muted-foreground h-4 w-4" />
             </CardHeader>
             <CardContent>
               <div className="text-2xl font-bold">
@@ -103,9 +103,9 @@ export function CourseAnalytics({ analytics }: { analytics: CourseAnalytics }) {
               </div>
               <Progress
                 value={analytics.completionPercentage}
-                className="h-2 mt-2"
+                className="mt-2 h-2"
               />
-              <p className="text-xs text-muted-foreground mt-2">
+              <p className="text-muted-foreground mt-2 text-xs">
                 {analytics.completedModules} of {analytics.totalModules} modules
                 completed
               </p>
@@ -117,11 +117,11 @@ export function CourseAnalytics({ analytics }: { analytics: CourseAnalytics }) {
               <CardTitle className="text-sm font-medium">
                 Time Enrolled
               </CardTitle>
-              <Clock className="h-4 w-4 text-muted-foreground" />
+              <Clock className="text-muted-foreground h-4 w-4" />
             </CardHeader>
             <CardContent>
               <div className="text-2xl font-bold">{timeElapsed}</div>
-              <p className="text-xs text-muted-foreground mt-2">
+              <p className="text-muted-foreground mt-2 text-xs">
                 Since {analytics.purchaseDate.toLocaleDateString()}
               </p>
             </CardContent>
@@ -132,13 +132,13 @@ export function CourseAnalytics({ analytics }: { analytics: CourseAnalytics }) {
               <CardTitle className="text-sm font-medium">
                 Quiz Performance
               </CardTitle>
-              <Award className="h-4 w-4 text-muted-foreground" />
+              <Award className="text-muted-foreground h-4 w-4" />
             </CardHeader>
             <CardContent>
               <div className="text-2xl font-bold">
                 {quizStats.averageScore}%
               </div>
-              <p className="text-xs text-muted-foreground mt-2">
+              <p className="text-muted-foreground mt-2 text-xs">
                 Average score across all quizzes
               </p>
             </CardContent>
@@ -149,13 +149,13 @@ export function CourseAnalytics({ analytics }: { analytics: CourseAnalytics }) {
               <CardTitle className="text-sm font-medium">
                 Failed Attempts
               </CardTitle>
-              <XCircle className="h-4 w-4 text-muted-foreground" />
+              <XCircle className="text-muted-foreground h-4 w-4" />
             </CardHeader>
             <CardContent>
               <div className="text-2xl font-bold">
                 {quizStats.failedAttempts}
               </div>
-              <p className="text-xs text-muted-foreground mt-2">
+              <p className="text-muted-foreground mt-2 text-xs">
                 Total quiz attempts that didn't pass
               </p>
             </CardContent>
@@ -168,28 +168,28 @@ export function CourseAnalytics({ analytics }: { analytics: CourseAnalytics }) {
           </CardHeader>
           <CardContent>
             <div className="space-y-2">
-              <div className="flex justify-between items-center">
-                <span className="text-sm text-muted-foreground">
+              <div className="flex items-center justify-between">
+                <span className="text-muted-foreground text-sm">
                   Average Quiz Score
                 </span>
                 <span className="font-medium">{quizStats.averageScore}%</span>
               </div>
-              <div className="flex justify-between items-center">
-                <span className="text-sm text-muted-foreground">
+              <div className="flex items-center justify-between">
+                <span className="text-muted-foreground text-sm">
                   Quiz Pass Rate
                 </span>
                 <span className="font-medium">{quizStats.passRate}%</span>
               </div>
-              <div className="flex justify-between items-center">
-                <span className="text-sm text-muted-foreground">
+              <div className="flex items-center justify-between">
+                <span className="text-muted-foreground text-sm">
                   Avg. Attempts to Pass
                 </span>
                 <span className="font-medium">
                   {quizStats.averageAttemptsToPass}
                 </span>
               </div>
-              <div className="flex justify-between items-center">
-                <span className="text-sm text-muted-foreground">
+              <div className="flex items-center justify-between">
+                <span className="text-muted-foreground text-sm">
                   Avg. Time per Quiz
                 </span>
                 <span className="font-medium">
@@ -205,11 +205,11 @@ export function CourseAnalytics({ analytics }: { analytics: CourseAnalytics }) {
         </Card>
       </TabsContent>
 
-      <TabsContent value="quizzes" className="space-y-4 mt-4">
+      <TabsContent value="quizzes" className="mt-4 space-y-4">
         {analytics.quizAttempts.length === 0 ? (
           <Card>
             <CardContent className="pt-6">
-              <p className="text-center text-muted-foreground">
+              <p className="text-muted-foreground text-center">
                 You haven't attempted any quizzes yet.
               </p>
             </CardContent>
@@ -228,7 +228,7 @@ export function CourseAnalytics({ analytics }: { analytics: CourseAnalytics }) {
                     <>
                       <div className="space-y-2">
                         <div className="flex justify-between">
-                          <span className="text-sm text-muted-foreground">
+                          <span className="text-muted-foreground text-sm">
                             Best Score
                           </span>
                           <span className="font-medium">
@@ -239,7 +239,7 @@ export function CourseAnalytics({ analytics }: { analytics: CourseAnalytics }) {
                           </span>
                         </div>
                         <div className="flex justify-between">
-                          <span className="text-sm text-muted-foreground">
+                          <span className="text-muted-foreground text-sm">
                             Attempts
                           </span>
                           <span className="font-medium">
@@ -247,7 +247,7 @@ export function CourseAnalytics({ analytics }: { analytics: CourseAnalytics }) {
                           </span>
                         </div>
                         <div className="flex justify-between">
-                          <span className="text-sm text-muted-foreground">
+                          <span className="text-muted-foreground text-sm">
                             Status
                           </span>
                           <span
@@ -274,7 +274,7 @@ export function CourseAnalytics({ analytics }: { analytics: CourseAnalytics }) {
                       </div>
                     </>
                   ) : (
-                    <p className="text-sm text-muted-foreground">
+                    <p className="text-muted-foreground text-sm">
                       No attempts yet
                     </p>
                   )}

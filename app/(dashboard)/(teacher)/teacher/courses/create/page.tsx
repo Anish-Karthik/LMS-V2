@@ -79,7 +79,7 @@ const CreateCoursePage = async () => {
               <div className="flex items-center gap-x-2">
                 <IconBadge icon={LayoutDashboardIcon} />
                 <h2 className="text-xl">Course batches</h2>
-                <span className="text-slate-500 text-sm">
+                <span className="text-sm text-slate-500">
                   (Only for batch-based courses)
                 </span>
               </div>

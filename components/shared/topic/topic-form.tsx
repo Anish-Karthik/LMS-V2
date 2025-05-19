@@ -201,28 +201,28 @@ export const TopicForm = ({
   const renderTopicTypeIcon = (topicType: string) => {
     switch (topicType) {
       case "video":
-        return <Video className="h-4 w-4 mr-2 text-blue-500" />
+        return <Video className="mr-2 h-4 w-4 text-blue-500" />
       case "quiz":
-        return <ListChecks className="h-4 w-4 mr-2 text-green-500" />
+        return <ListChecks className="mr-2 h-4 w-4 text-green-500" />
       case "article":
-        return <FileText className="h-4 w-4 mr-2 text-yellow-500" />
+        return <FileText className="mr-2 h-4 w-4 text-yellow-500" />
       case "live":
-        return <Calendar className="h-4 w-4 mr-2 text-red-500" />
+        return <Calendar className="mr-2 h-4 w-4 text-red-500" />
       default:
         return null
     }
   }
 
   return (
-    <div className="p-4 bg-secondary rounded-md border mt-6">
-      <div className="font-medium flex items-center justify-between">
+    <div className="bg-secondary mt-6 rounded-md border p-4">
+      <div className="flex items-center justify-between font-medium">
         Topic settings
         <Button onClick={toggleEdit} variant="ghost">
           {isEditing ? (
             <>Cancel</>
           ) : (
             <>
-              <Pencil className="h-4 w-4 mr-2" />
+              <Pencil className="mr-2 h-4 w-4" />
               Edit topic
             </>
           )}
@@ -230,14 +230,14 @@ export const TopicForm = ({
       </div>
       {!isEditing && (
         <div className="mt-4 space-y-4">
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+          <div className="grid grid-cols-1 gap-4 md:grid-cols-2">
             <div>
               <div className="text-sm font-medium">Title</div>
-              <p className="text-sm mt-1">{initialData.title}</p>
+              <p className="mt-1 text-sm">{initialData.title}</p>
             </div>
             <div>
               <div className="text-sm font-medium">Type</div>
-              <div className="flex items-center mt-1">
+              <div className="mt-1 flex items-center">
                 {renderTopicTypeIcon(initialData.type)}
                 <span className="text-sm capitalize">{initialData.type}</span>
               </div>
@@ -246,7 +246,7 @@ export const TopicForm = ({
 
           <div>
             <div className="text-sm font-medium">Description</div>
-            <p className="text-sm mt-1">
+            <p className="mt-1 text-sm">
               {initialData.description || "No description provided"}
             </p>
           </div>
@@ -254,7 +254,7 @@ export const TopicForm = ({
           {initialData.type === "video" && initialData.videoUrl && (
             <div>
               <div className="text-sm font-medium">Video URL</div>
-              <p className="text-sm mt-1 text-blue-500 underline">
+              <p className="mt-1 text-sm text-blue-500 underline">
                 <a
                   href={initialData.videoUrl}
                   target="_blank"
@@ -267,11 +267,11 @@ export const TopicForm = ({
           )}
 
           {initialData.type === "live" && (
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+            <div className="grid grid-cols-1 gap-4 md:grid-cols-2">
               {initialData.startTime && (
                 <div>
                   <div className="text-sm font-medium">Start Time</div>
-                  <p className="text-sm mt-1">
+                  <p className="mt-1 text-sm">
                     {format(new Date(initialData.startTime), "PPP p")}
                   </p>
                 </div>
@@ -279,13 +279,13 @@ export const TopicForm = ({
               {initialData.duration && (
                 <div>
                   <div className="text-sm font-medium">Duration</div>
-                  <p className="text-sm mt-1">{initialData.duration} minutes</p>
+                  <p className="mt-1 text-sm">{initialData.duration} minutes</p>
                 </div>
               )}
               {initialData.liveLink && (
                 <div className="col-span-2">
                   <div className="text-sm font-medium">Live Link</div>
-                  <p className="text-sm mt-1 text-blue-500 underline">
+                  <p className="mt-1 text-sm text-blue-500 underline">
                     <a
                       href={initialData.liveLink}
                       target="_blank"
@@ -300,11 +300,11 @@ export const TopicForm = ({
           )}
 
           {initialData.type === "quiz" && (
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+            <div className="grid grid-cols-1 gap-4 md:grid-cols-3">
               {initialData.timeLimit && (
                 <div>
                   <div className="text-sm font-medium">Time Limit</div>
-                  <p className="text-sm mt-1">
+                  <p className="mt-1 text-sm">
                     {initialData.timeLimit} minutes
                   </p>
                 </div>
@@ -312,13 +312,13 @@ export const TopicForm = ({
               {initialData.passingScore && (
                 <div>
                   <div className="text-sm font-medium">Passing Score</div>
-                  <p className="text-sm mt-1">{initialData.passingScore}%</p>
+                  <p className="mt-1 text-sm">{initialData.passingScore}%</p>
                 </div>
               )}
               {initialData.allowedAttempts && (
                 <div>
                   <div className="text-sm font-medium">Allowed Attempts</div>
-                  <p className="text-sm mt-1">{initialData.allowedAttempts}</p>
+                  <p className="mt-1 text-sm">{initialData.allowedAttempts}</p>
                 </div>
               )}
             </div>
@@ -326,13 +326,13 @@ export const TopicForm = ({
 
           <div>
             <div className="flex items-center">
-              <div className="text-sm font-medium mr-2">Access</div>
+              <div className="mr-2 text-sm font-medium">Access</div>
               {initialData.isFree ? (
-                <div className="text-xs bg-green-100 text-green-800 px-2 py-1 rounded-full">
+                <div className="rounded-full bg-green-100 px-2 py-1 text-xs text-green-800">
                   Free
                 </div>
               ) : (
-                <div className="text-xs bg-amber-100 text-amber-800 px-2 py-1 rounded-full">
+                <div className="rounded-full bg-amber-100 px-2 py-1 text-xs text-amber-800">
                   Premium
                 </div>
               )}
@@ -344,7 +344,7 @@ export const TopicForm = ({
         <Form {...form}>
           <form
             onSubmit={form.handleSubmit(onSubmit)}
-            className="space-y-4 mt-4"
+            className="mt-4 space-y-4"
           >
             <FormField
               control={form.control}
@@ -383,25 +383,25 @@ export const TopicForm = ({
                     <SelectContent>
                       <SelectItem value="video">
                         <div className="flex items-center">
-                          <Video className="h-4 w-4 mr-2 text-blue-500" />
+                          <Video className="mr-2 h-4 w-4 text-blue-500" />
                           Video
                         </div>
                       </SelectItem>
                       <SelectItem value="quiz">
                         <div className="flex items-center">
-                          <ListChecks className="h-4 w-4 mr-2 text-green-500" />
+                          <ListChecks className="mr-2 h-4 w-4 text-green-500" />
                           Quiz
                         </div>
                       </SelectItem>
                       <SelectItem value="article">
                         <div className="flex items-center">
-                          <FileText className="h-4 w-4 mr-2 text-yellow-500" />
+                          <FileText className="mr-2 h-4 w-4 text-yellow-500" />
                           Article
                         </div>
                       </SelectItem>
                       <SelectItem value="live">
                         <div className="flex items-center">
-                          <Calendar className="h-4 w-4 mr-2 text-red-500" />
+                          <Calendar className="mr-2 h-4 w-4 text-red-500" />
                           Live Session
                         </div>
                       </SelectItem>
@@ -452,7 +452,7 @@ export const TopicForm = ({
 
             {type === "live" && (
               <>
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                <div className="grid grid-cols-1 gap-4 md:grid-cols-2">
                   <FormField
                     control={form.control}
                     name="startTime"
@@ -484,7 +484,7 @@ export const TopicForm = ({
                               onSelect={field.onChange}
                               initialFocus
                             />
-                            <div className="p-3 border-t border-border">
+                            <div className="border-border border-t p-3">
                               <Input
                                 type="time"
                                 onChange={(e) => {
@@ -553,7 +553,7 @@ export const TopicForm = ({
 
             {type === "quiz" && (
               <div className="space-y-4">
-                <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+                <div className="grid grid-cols-1 gap-4 md:grid-cols-3">
                   <FormField
                     control={form.control}
                     name="timeLimit"
@@ -661,7 +661,7 @@ export const TopicForm = ({
             />
             <div className="flex items-center gap-x-2">
               <Button disabled={!isValid || isLoading} type="submit">
-                {isLoading && <Loader2 className="w-4 h-4 mr-2 animate-spin" />}
+                {isLoading && <Loader2 className="mr-2 h-4 w-4 animate-spin" />}
                 Save changes
               </Button>
               {!isValid && (

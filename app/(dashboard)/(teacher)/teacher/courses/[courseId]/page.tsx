@@ -42,7 +42,7 @@ const page = async ({ params }: { params: { courseId: string } }) => {
             <h1 className="text-2xl font-medium">
               Course Details
               {!course.isPublished && (
-                <span className="ml-2 text-sm bg-slate-200 px-2 py-1 rounded-md text-slate-700">
+                <span className="ml-2 rounded-md bg-slate-200 px-2 py-1 text-sm text-slate-700">
                   Draft
                 </span>
               )}
@@ -55,14 +55,14 @@ const page = async ({ params }: { params: { courseId: string } }) => {
             {isSelfPaced && (
               <Link href={`/teacher/courses/${course.id}/content/chapters`}>
                 <Button variant="outline" size="sm">
-                  <BookOpenIcon className="h-4 w-4 mr-2" />
+                  <BookOpenIcon className="mr-2 h-4 w-4" />
                   Content Management
                 </Button>
               </Link>
             )}
             <Link href={`/teacher/courses/${course.id}/attendance`}>
               <Button variant="outline" size="sm">
-                <ClipboardCheck className="h-4 w-4 mr-2" />
+                <ClipboardCheck className="mr-2 h-4 w-4" />
                 Attendance Management
               </Button>
             </Link>

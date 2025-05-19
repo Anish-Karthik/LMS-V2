@@ -73,12 +73,12 @@ export const PublishButton = ({
           >
             {initialData.isPublished ? (
               <>
-                <EyeOffIcon className="h-4 w-4 mr-2" />
+                <EyeOffIcon className="mr-2 h-4 w-4" />
                 Unpublish
               </>
             ) : (
               <>
-                <EyeIcon className="h-4 w-4 mr-2" />
+                <EyeIcon className="mr-2 h-4 w-4" />
                 Publish
               </>
             )}

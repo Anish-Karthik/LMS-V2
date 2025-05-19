@@ -1,18 +1,13 @@
-import { currentUser } from "@clerk/nextjs"
-import {
-  BookOpen,
-  CalendarDays,
-  Clock,
-  Users
-} from "lucide-react"
 import Image from "next/image"
 import { redirect } from "next/navigation"
+import { currentUser } from "@clerk/nextjs"
+import { BookOpen, CalendarDays, Clock, Users } from "lucide-react"
 
-import { Badge } from "@/components/ui/badge"
-import { Button } from "@/components/ui/button"
 import { getCourseById } from "@/lib/actions/course.actions"
 import { db } from "@/lib/db"
 import { formatPrice } from "@/lib/format"
+import { Badge } from "@/components/ui/badge"
+import { Button } from "@/components/ui/button"
 
 import CourseReviews from "../_components/course-reviews"
 import CourseTestimonial from "../_components/course-testimonial"
@@ -101,11 +96,11 @@ const CourseDetailsPage = async ({
 
   return (
     <div className="container py-8">
-      <div className="grid grid-cols-1 lg:grid-cols-3 gap-10">
+      <div className="grid grid-cols-1 gap-10 lg:grid-cols-3">
         {/* Main content area - Course details */}
-        <div className="lg:col-span-2 space-y-8">
+        <div className="space-y-8 lg:col-span-2">
           {/* Course image and basic info */}
-          <div className="relative rounded-xl overflow-hidden">
+          <div className="relative overflow-hidden rounded-xl">
             <div className="aspect-video w-full">
               <Image
                 src={course.imageUrl || "/placeholder-course.jpg"}
@@ -118,8 +113,8 @@ const CourseDetailsPage = async ({
 
           {/* Course title and overview */}
           <div>
-            <h1 className="text-3xl font-bold mb-3">{course.title}</h1>
-            <div className="flex items-center space-x-4 mb-4">
+            <h1 className="mb-3 text-3xl font-bold">{course.title}</h1>
+            <div className="mb-4 flex items-center space-x-4">
               <Badge
                 variant={course.type === "self-paced" ? "secondary" : "default"}
               >
@@ -131,54 +126,54 @@ const CourseDetailsPage = async ({
                   <span className="ml-1 font-medium">
                     {averageRating.toFixed(1)}
                   </span>
-                  <span className="ml-1 text-muted-foreground">
+                  <span className="text-muted-foreground ml-1">
                     ({courseTestimonials.length} reviews)
                   </span>
                 </div>
               )}
             </div>
 
-            <p className="text-lg text-muted-foreground">
+            <p className="text-muted-foreground text-lg">
               {course.description ||
                 "No description available for this course."}
             </p>
           </div>
 
           {/* Course features */}
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
-            <div className="bg-background rounded-lg p-4 shadow-sm border">
+          <div className="grid grid-cols-2 gap-4 md:grid-cols-4">
+            <div className="bg-background rounded-lg border p-4 shadow-sm">
               <div className="flex flex-col items-center text-center">
-                <Clock className="h-8 w-8 text-primary mb-2" />
+                <Clock className="text-primary mb-2 h-8 w-8" />
                 <h3 className="font-medium">Learning Format</h3>
-                <p className="text-sm text-muted-foreground">
+                <p className="text-muted-foreground text-sm">
                   {course.type === "self-paced"
                     ? "Learn at your own pace"
                     : "Scheduled sessions"}
                 </p>
               </div>
             </div>
-            <div className="bg-background rounded-lg p-4 shadow-sm border">
+            <div className="bg-background rounded-lg border p-4 shadow-sm">
               <div className="flex flex-col items-center text-center">
-                <Users className="h-8 w-8 text-primary mb-2" />
+                <Users className="text-primary mb-2 h-8 w-8" />
                 <h3 className="font-medium">Expert Teachers</h3>
-                <p className="text-sm text-muted-foreground">
+                <p className="text-muted-foreground text-sm">
                   {teacherInfo.length} instructor
                   {teacherInfo.length !== 1 ? "s" : ""}
                 </p>
               </div>
             </div>
-            <div className="bg-background rounded-lg p-4 shadow-sm border">
+            <div className="bg-background rounded-lg border p-4 shadow-sm">
               <div className="flex flex-col items-center text-center">
-                <CalendarDays className="h-8 w-8 text-primary mb-2" />
+                <CalendarDays className="text-primary mb-2 h-8 w-8" />
                 <h3 className="font-medium">Access</h3>
-                <p className="text-sm text-muted-foreground">Lifetime access</p>
+                <p className="text-muted-foreground text-sm">Lifetime access</p>
               </div>
             </div>
-            <div className="bg-background rounded-lg p-4 shadow-sm border">
+            <div className="bg-background rounded-lg border p-4 shadow-sm">
               <div className="flex flex-col items-center text-center">
-                <BookOpen className="h-8 w-8 text-primary mb-2" />
+                <BookOpen className="text-primary mb-2 h-8 w-8" />
                 <h3 className="font-medium">Resources</h3>
-                <p className="text-sm text-muted-foreground">
+                <p className="text-muted-foreground text-sm">
                   Downloadable materials
                 </p>
               </div>
@@ -187,12 +182,12 @@ const CourseDetailsPage = async ({
 
           {/* Instructors section */}
           {teacherInfo.length > 0 && (
-            <div className="bg-background rounded-xl p-6 shadow-sm border">
-              <h2 className="text-2xl font-bold mb-4">Your Instructors</h2>
+            <div className="bg-background rounded-xl border p-6 shadow-sm">
+              <h2 className="mb-4 text-2xl font-bold">Your Instructors</h2>
               <div className="space-y-4">
                 {teacherInfo.map((teacher) => (
                   <div key={teacher.id} className="flex items-start gap-4">
-                    <div className="relative h-12 w-12 rounded-full overflow-hidden">
+                    <div className="relative h-12 w-12 overflow-hidden rounded-full">
                       {teacher.user.image ? (
                         <Image
                           src={teacher.user.image}
@@ -201,14 +196,14 @@ const CourseDetailsPage = async ({
                           className="object-cover"
                         />
                       ) : (
-                        <div className="bg-primary h-full w-full flex items-center justify-center text-white font-bold">
+                        <div className="bg-primary flex h-full w-full items-center justify-center font-bold text-white">
                           {teacher.user.name.charAt(0)}
                         </div>
                       )}
                     </div>
                     <div>
                       <h3 className="font-bold">{teacher.user.name}</h3>
-                      <p className="text-sm text-muted-foreground">
+                      <p className="text-muted-foreground text-sm">
                         Course Instructor
                       </p>
                     </div>
@@ -219,8 +214,8 @@ const CourseDetailsPage = async ({
           )}
 
           {/* Reviews section */}
-          <div className="bg-background rounded-xl p-6 shadow-sm border">
-            <h2 className="text-2xl font-bold mb-4">Student Reviews</h2>
+          <div className="bg-background rounded-xl border p-6 shadow-sm">
+            <h2 className="mb-4 text-2xl font-bold">Student Reviews</h2>
             <CourseReviews
               courseId={params.courseId}
               // initialTestimonials={courseTestimonials}
@@ -232,28 +227,28 @@ const CourseDetailsPage = async ({
         <div className="lg:col-span-1">
           <div className="sticky top-24 space-y-6">
             {/* Price card */}
-            <div className="bg-background rounded-xl p-6 shadow-sm border">
-              <h2 className="text-2xl font-bold mb-4">
+            <div className="bg-background rounded-xl border p-6 shadow-sm">
+              <h2 className="mb-4 text-2xl font-bold">
                 {formatPrice(course.price || 0)}
               </h2>
               {userPurchase ? (
-                <Button size="lg" className="w-full mb-4" asChild>
+                <Button size="lg" className="mb-4 w-full" asChild>
                   <a href={`/student/courses/${params.courseId}`}>
                     Go to Course
                   </a>
                 </Button>
               ) : (
-                <Button size="lg" className="w-full mb-4" asChild>
+                <Button size="lg" className="mb-4 w-full" asChild>
                   <a href={`/purchase/${params.courseId}`}>Enroll Now</a>
                 </Button>
               )}
 
-              <div className="pt-4 border-t">
-                <h3 className="font-medium mb-2">This course includes:</h3>
+              <div className="border-t pt-4">
+                <h3 className="mb-2 font-medium">This course includes:</h3>
                 <ul className="space-y-2 text-sm">
                   <li className="flex items-center">
                     <svg
-                      className="h-5 w-5 text-green-500 mr-2"
+                      className="mr-2 h-5 w-5 text-green-500"
                       fill="none"
                       viewBox="0 0 24 24"
                       stroke="currentColor"
@@ -271,7 +266,7 @@ const CourseDetailsPage = async ({
                   </li>
                   <li className="flex items-center">
                     <svg
-                      className="h-5 w-5 text-green-500 mr-2"
+                      className="mr-2 h-5 w-5 text-green-500"
                       fill="none"
                       viewBox="0 0 24 24"
                       stroke="currentColor"
@@ -287,7 +282,7 @@ const CourseDetailsPage = async ({
                   </li>
                   <li className="flex items-center">
                     <svg
-                      className="h-5 w-5 text-green-500 mr-2"
+                      className="mr-2 h-5 w-5 text-green-500"
                       fill="none"
                       viewBox="0 0 24 24"
                       stroke="currentColor"
@@ -303,7 +298,7 @@ const CourseDetailsPage = async ({
                   </li>
                   <li className="flex items-center">
                     <svg
-                      className="h-5 w-5 text-green-500 mr-2"
+                      className="mr-2 h-5 w-5 text-green-500"
                       fill="none"
                       viewBox="0 0 24 24"
                       stroke="currentColor"
@@ -322,8 +317,8 @@ const CourseDetailsPage = async ({
             </div>
 
             {/* Your review card */}
-            <div className="bg-background rounded-xl p-6 shadow-sm border">
-              <h2 className="text-xl font-bold mb-4">Your Review</h2>
+            <div className="bg-background rounded-xl border p-6 shadow-sm">
+              <h2 className="mb-4 text-xl font-bold">Your Review</h2>
               {userPurchase ? (
                 <CourseTestimonial
                   courseId={params.courseId}

@@ -417,8 +417,8 @@ const TopicAttendancePage = () => {
   if (topicLoading || studentsLoading) {
     return (
       <div className="p-8">
-        <div className="flex items-center justify-center h-full">
-          <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-primary"></div>
+        <div className="flex h-full items-center justify-center">
+          <div className="border-primary h-12 w-12 animate-spin rounded-full border-b-2"></div>
         </div>
       </div>
     )
@@ -449,13 +449,13 @@ const TopicAttendancePage = () => {
             Attendance Management • {topic.type} Topic
           </p>
           {topic.startTime && (
-            <div className="flex items-center mt-2">
-              <Clock className="h-4 w-4 mr-2 text-muted-foreground" />
+            <div className="mt-2 flex items-center">
+              <Clock className="text-muted-foreground mr-2 h-4 w-4" />
               <span className="text-sm">
                 {new Date(topic.startTime).toLocaleString()}
               </span>
               {topic.duration && (
-                <span className="text-sm ml-2">({topic.duration} minutes)</span>
+                <span className="ml-2 text-sm">({topic.duration} minutes)</span>
               )}
             </div>
           )}
@@ -469,17 +469,17 @@ const TopicAttendancePage = () => {
                 onClick={() => setIsEditing(false)}
                 disabled={isSaving}
               >
-                <X className="h-4 w-4 mr-2" />
+                <X className="mr-2 h-4 w-4" />
                 Cancel
               </Button>
               <Button onClick={handleSaveAttendance} disabled={isSaving}>
-                <Save className="h-4 w-4 mr-2" />
+                <Save className="mr-2 h-4 w-4" />
                 {isSaving ? "Saving..." : "Save Attendance"}
               </Button>
             </>
           ) : (
             <Button onClick={() => setIsEditing(true)}>
-              <Edit2 className="h-4 w-4 mr-2" />
+              <Edit2 className="mr-2 h-4 w-4" />
               Mark Attendance
             </Button>
           )}
@@ -490,18 +490,18 @@ const TopicAttendancePage = () => {
 
       {/* Add save/load defaults dropdown to the bulk actions section */}
       {isEditing && (
-        <div className="mb-4 p-4 border rounded-md bg-muted/30">
+        <div className="bg-muted/30 mb-4 rounded-md border p-4">
           <div className="flex flex-col gap-2">
             <div className="flex items-center justify-between">
               <div className="flex items-center">
-                <Users className="h-4 w-4 mr-2" />
+                <Users className="mr-2 h-4 w-4" />
                 <span className="font-medium">Bulk Actions</span>
               </div>
 
               <DropdownMenu>
                 <DropdownMenuTrigger asChild>
                   <Button variant="outline" size="sm">
-                    <Settings className="h-4 w-4 mr-2" />
+                    <Settings className="mr-2 h-4 w-4" />
                     Saved Defaults
                   </Button>
                 </DropdownMenuTrigger>
@@ -509,7 +509,7 @@ const TopicAttendancePage = () => {
                   <DropdownMenuItem
                     onClick={() => setSaveDefaultDialogOpen(true)}
                   >
-                    <BookmarkIcon className="h-4 w-4 mr-2" />
+                    <BookmarkIcon className="mr-2 h-4 w-4" />
                     Save Current Settings
                   </DropdownMenuItem>
 
@@ -518,10 +518,10 @@ const TopicAttendancePage = () => {
                   {savedDefaults.map((defaultSetting, index) => (
                     <DropdownMenuItem
                       key={index}
-                      className="flex justify-between items-center"
+                      className="flex items-center justify-between"
                     >
                       <span
-                        className="cursor-pointer flex-grow"
+                        className="grow cursor-pointer"
                         onClick={() => applyDefault(defaultSetting)}
                       >
                         {defaultSetting.name}
@@ -541,7 +541,7 @@ const TopicAttendancePage = () => {
                   ))}
 
                   {savedDefaults.length === 0 && (
-                    <div className="px-2 py-2 text-sm text-muted-foreground">
+                    <div className="text-muted-foreground p-2 text-sm">
                       No saved defaults
                     </div>
                   )}
@@ -549,49 +549,49 @@ const TopicAttendancePage = () => {
               </DropdownMenu>
             </div>
 
-            <div className="flex flex-wrap gap-2 mt-2">
+            <div className="mt-2 flex flex-wrap gap-2">
               <Button
                 size="sm"
                 variant="outline"
-                className="bg-green-50 text-green-700 border-green-200 hover:bg-green-100 hover:text-green-800"
+                className="border-green-200 bg-green-50 text-green-700 hover:bg-green-100 hover:text-green-800"
                 onClick={() => handleBulkStatusChange("present", "all")}
               >
-                <CheckCircle2 className="h-4 w-4 mr-1" />
+                <CheckCircle2 className="mr-1 h-4 w-4" />
                 Mark All Present
               </Button>
               <Button
                 size="sm"
                 variant="outline"
-                className="bg-red-50 text-red-700 border-red-200 hover:bg-red-100 hover:text-red-800"
+                className="border-red-200 bg-red-50 text-red-700 hover:bg-red-100 hover:text-red-800"
                 onClick={() => handleBulkStatusChange("absent", "all")}
               >
-                <XCircle className="h-4 w-4 mr-1" />
+                <XCircle className="mr-1 h-4 w-4" />
                 Mark All Absent
               </Button>
               <Button
                 size="sm"
                 variant="outline"
-                className="bg-yellow-50 text-yellow-700 border-yellow-200 hover:bg-yellow-100 hover:text-yellow-800"
+                className="border-yellow-200 bg-yellow-50 text-yellow-700 hover:bg-yellow-100 hover:text-yellow-800"
                 onClick={() => handleBulkStatusChange("excused", "all")}
               >
-                <Clock className="h-4 w-4 mr-1" />
+                <Clock className="mr-1 h-4 w-4" />
                 Mark All Excused
               </Button>
               <Button
                 size="sm"
                 variant="outline"
-                className="bg-orange-50 text-orange-700 border-orange-200 hover:bg-orange-100 hover:text-orange-800"
+                className="border-orange-200 bg-orange-50 text-orange-700 hover:bg-orange-100 hover:text-orange-800"
                 onClick={() => handleBulkStatusChange("late", "all")}
               >
-                <Clock className="h-4 w-4 mr-1" />
+                <Clock className="mr-1 h-4 w-4" />
                 Mark All Late
               </Button>
             </div>
 
             {selectedStudents.length > 0 && (
               <div className="mt-3">
-                <div className="flex items-center text-sm text-muted-foreground mb-2">
-                  <UserCheck className="h-4 w-4 mr-1" />
+                <div className="text-muted-foreground mb-2 flex items-center text-sm">
+                  <UserCheck className="mr-1 h-4 w-4" />
                   <span>{selectedStudents.length} students selected</span>
                 </div>
                 <div className="flex flex-wrap gap-2">
@@ -602,7 +602,7 @@ const TopicAttendancePage = () => {
                       handleBulkStatusChange("present", "selected")
                     }
                   >
-                    <CheckCircle2 className="h-4 w-4 mr-1" />
+                    <CheckCircle2 className="mr-1 h-4 w-4" />
                     Mark Selected Present
                   </Button>
                   <Button
@@ -610,7 +610,7 @@ const TopicAttendancePage = () => {
                     className="bg-red-500 hover:bg-red-600"
                     onClick={() => handleBulkStatusChange("absent", "selected")}
                   >
-                    <XCircle className="h-4 w-4 mr-1" />
+                    <XCircle className="mr-1 h-4 w-4" />
                     Mark Selected Absent
                   </Button>
                   <Button
@@ -637,7 +637,7 @@ const TopicAttendancePage = () => {
       )}
 
       <div className="relative mb-4">
-        <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-muted-foreground h-4 w-4" />
+        <Search className="text-muted-foreground absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2" />
         <Input
           placeholder="Search students by name or email..."
           className="pl-10"
@@ -646,8 +646,8 @@ const TopicAttendancePage = () => {
         />
       </div>
 
-      <div className="border rounded-md">
-        <div className="bg-muted px-4 py-3 grid grid-cols-12 text-sm font-medium">
+      <div className="rounded-md border">
+        <div className="bg-muted grid grid-cols-12 px-4 py-3 text-sm font-medium">
           {isEditing && (
             <div className="col-span-1">
               <Checkbox
@@ -663,7 +663,7 @@ const TopicAttendancePage = () => {
         </div>
 
         {!filteredStudents || filteredStudents.length === 0 ? (
-          <div className="px-4 py-6 text-center text-muted-foreground">
+          <div className="text-muted-foreground px-4 py-6 text-center">
             No students found for this topic.
           </div>
         ) : (
@@ -671,7 +671,7 @@ const TopicAttendancePage = () => {
             {filteredStudents.map((student) => (
               <div
                 key={student.userId}
-                className="px-4 py-3 grid grid-cols-12 items-center hover:bg-muted/50"
+                className="hover:bg-muted/50 grid grid-cols-12 items-center px-4 py-3"
               >
                 {isEditing && (
                   <div className="col-span-1">
@@ -693,13 +693,13 @@ const TopicAttendancePage = () => {
                         className="h-8 w-8 rounded-full"
                       />
                     ) : (
-                      <div className="h-8 w-8 rounded-full bg-primary/10 flex items-center justify-center text-primary font-medium">
+                      <div className="bg-primary/10 text-primary flex h-8 w-8 items-center justify-center rounded-full font-medium">
                         {student.name.charAt(0)}
                       </div>
                     )}
                     <div>
                       <div className="font-medium">{student.name}</div>
-                      <div className="text-sm text-muted-foreground">
+                      <div className="text-muted-foreground text-sm">
                         {student.email}
                       </div>
                     </div>
@@ -735,25 +735,25 @@ const TopicAttendancePage = () => {
                     >
                       {attendanceForm[student.userId]?.status === "present" && (
                         <div className="flex items-center">
-                          <CheckCircle2 className="h-4 w-4 mr-1" />
+                          <CheckCircle2 className="mr-1 h-4 w-4" />
                           <span className="capitalize">Present</span>
                         </div>
                       )}
                       {attendanceForm[student.userId]?.status === "absent" && (
                         <div className="flex items-center">
-                          <XCircle className="h-4 w-4 mr-1" />
+                          <XCircle className="mr-1 h-4 w-4" />
                           <span className="capitalize">Absent</span>
                         </div>
                       )}
                       {attendanceForm[student.userId]?.status === "excused" && (
                         <div className="flex items-center">
-                          <Clock className="h-4 w-4 mr-1" />
+                          <Clock className="mr-1 h-4 w-4" />
                           <span className="capitalize">Excused</span>
                         </div>
                       )}
                       {attendanceForm[student.userId]?.status === "late" && (
                         <div className="flex items-center">
-                          <Clock className="h-4 w-4 mr-1" />
+                          <Clock className="mr-1 h-4 w-4" />
                           <span className="capitalize">Late</span>
                         </div>
                       )}

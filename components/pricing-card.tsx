@@ -31,12 +31,12 @@ export function PricingCard({
 }: PricingCardProps) {
   return (
     <Card
-      className={`bg-black border ${
+      className={`border bg-black ${
         popular ? "border-pink-500" : "border-purple-900/30"
-      } overflow-hidden relative h-full flex flex-col`}
+      } relative flex h-full flex-col overflow-hidden`}
     >
       {popular && (
-        <div className="absolute top-0 right-0 bg-gradient-to-r from-pink-500 to-purple-600 text-white text-xs font-medium px-3 py-1 rounded-bl-lg">
+        <div className="absolute right-0 top-0 rounded-bl-lg bg-gradient-to-r from-pink-500 to-purple-600 px-3 py-1 text-xs font-medium text-white">
           Most Popular
         </div>
       )}
@@ -46,26 +46,26 @@ export function PricingCard({
           <span className="text-4xl font-bold text-white">{price}</span>
           <span className="ml-1 text-purple-300">{period}</span>
         </div>
-        <CardDescription className="text-purple-200 mt-2">
+        <CardDescription className="mt-2 text-purple-200">
           {description}
         </CardDescription>
       </CardHeader>
-      <CardContent className="flex-grow">
-        <ul className="space-y-3 mt-4">
+      <CardContent className="grow">
+        <ul className="mt-4 space-y-3">
           {features.map((feature, index) => (
             <li key={index} className="flex items-start gap-2">
-              <CheckCircle className="h-5 w-5 text-pink-500 shrink-0 mt-0.5" />
+              <CheckCircle className="mt-0.5 h-5 w-5 shrink-0 text-pink-500" />
               <span className="text-purple-100">{feature}</span>
             </li>
           ))}
         </ul>
       </CardContent>
-      <CardFooter className="pt-4 mt-auto">
+      <CardFooter className="mt-auto pt-4">
         <Button
           className={`w-full ${
             popular
-              ? "bg-gradient-to-r from-pink-500 to-purple-600 hover:from-pink-600 hover:to-purple-700 text-white"
-              : "bg-black border border-purple-500 text-purple-100 hover:bg-purple-950/50"
+              ? "bg-gradient-to-r from-pink-500 to-purple-600 text-white hover:from-pink-600 hover:to-purple-700"
+              : "border border-purple-500 bg-black text-purple-100 hover:bg-purple-950/50"
           }`}
         >
           {buttonText}

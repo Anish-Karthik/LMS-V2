@@ -40,8 +40,14 @@ const CurrentPathNavigator = ({
               index + 1 === pathArr.length ||
               (index + 2 == pathArr.length &&
                 revParams?.has(pathArr[pathArr.length - 1]))
-                ? `${pathname.split("/").slice(0, index + 1).join("/")}`
-                : `${pathname.split("/").slice(0, index + 1).join("/")}`
+                ? `${pathname
+                    .split("/")
+                    .slice(0, index + 1)
+                    .join("/")}`
+                : `${pathname
+                    .split("/")
+                    .slice(0, index + 1)
+                    .join("/")}`
             }
             key={index}
             className="flex-start ml-2 flex gap-2"

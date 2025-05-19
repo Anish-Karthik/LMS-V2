@@ -17,7 +17,7 @@ export const EmptyBatchesForm = () => {
           with their own schedules.
         </AlertDescription>
       </Alert>
-      <div className="mt-4 text-sm text-muted-foreground">
+      <div className="text-muted-foreground mt-4 text-sm">
         <p>
           Self-paced courses do not require batches. For batch-based courses,
           you&apos;ll be able to:

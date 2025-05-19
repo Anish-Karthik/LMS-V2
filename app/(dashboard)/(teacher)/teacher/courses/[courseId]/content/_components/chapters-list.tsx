@@ -134,15 +134,15 @@ export const ChaptersList = ({ courseId, chapters }: ChaptersListProps) => {
                 {(provided) => (
                   <div
                     className={cn(
-                      "flex items-center gap-x-2 border-slate-200 border text-slate-700 rounded-md mb-4 text-sm",
-                      chapter.isPublished && "bg-sky-200 border-sky-200"
+                      "mb-4 flex items-center gap-x-2 rounded-md border border-slate-200 text-sm text-slate-700",
+                      chapter.isPublished && "border-sky-200 bg-sky-200"
                     )}
                     ref={provided.innerRef}
                     {...provided.draggableProps}
                   >
                     <div
                       className={cn(
-                        "px-2 py-3 border-r border-r-slate-200 hover:bg-slate-200 rounded-l-md transition",
+                        "rounded-l-md border-r border-r-slate-200 px-2 py-3 transition hover:bg-slate-200",
                         chapter.isPublished &&
                           "border-r-sky-200 hover:bg-sky-200"
                       )}
@@ -153,7 +153,7 @@ export const ChaptersList = ({ courseId, chapters }: ChaptersListProps) => {
                     <div className="flex w-full items-center justify-between gap-x-2 py-3">
                       <div className="ml-2 flex flex-col">
                         <div className="font-medium">{chapter.title}</div>
-                        <div className="flex items-center gap-x-2 text-muted-foreground">
+                        <div className="text-muted-foreground flex items-center gap-x-2">
                           {!!chapter.topics?.length && (
                             <div className="flex items-center gap-x-1 text-xs">
                               <span className="text-xs">
@@ -183,9 +183,9 @@ export const ChaptersList = ({ courseId, chapters }: ChaptersListProps) => {
                           size="sm"
                         >
                           {chapter.isPublished ? (
-                            <EyeOffIcon className="h-4 w-4 mr-2" />
+                            <EyeOffIcon className="mr-2 h-4 w-4" />
                           ) : (
-                            <EyeIcon className="h-4 w-4 mr-2" />
+                            <EyeIcon className="mr-2 h-4 w-4" />
                           )}
                           {chapter.isPublished ? "Unpublish" : "Publish"}
                         </Button>
@@ -193,7 +193,7 @@ export const ChaptersList = ({ courseId, chapters }: ChaptersListProps) => {
                           href={`/teacher/courses/${courseId}/content/chapters/${chapter.id}`}
                         >
                           <Button variant="ghost" size="sm">
-                            <Pencil className="h-4 w-4 mr-2" />
+                            <Pencil className="mr-2 h-4 w-4" />
                             Edit
                           </Button>
                         </a>
@@ -203,7 +203,7 @@ export const ChaptersList = ({ courseId, chapters }: ChaptersListProps) => {
                           variant="ghost"
                           size="sm"
                         >
-                          <Trash className="h-4 w-4 mr-2" />
+                          <Trash className="mr-2 h-4 w-4" />
                           Delete
                         </Button>
                       </div>

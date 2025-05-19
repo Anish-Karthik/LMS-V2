@@ -66,7 +66,9 @@ export const TopicActions = ({
           `/teacher/courses/${courseId}/batches/${batchId}/topics/${topicId}`
         )
       } else {
-        router.push(`/teacher/courses/${courseId}/content/chapters/${chapterId}`)
+        router.push(
+          `/teacher/courses/${courseId}/content/chapters/${chapterId}`
+        )
       }
     } catch {
       toast.error("Something went wrong")

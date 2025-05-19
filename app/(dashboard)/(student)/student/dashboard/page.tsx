@@ -119,7 +119,7 @@ const page = async () => {
 
       {/* Announcements */}
       <div className="mt-4">
-        <h2 className="text-xl font-bold mb-4">Recent Announcements</h2>
+        <h2 className="mb-4 text-xl font-bold">Recent Announcements</h2>
         <AnnouncementMiniCard announcements={announcements} />
       </div>
     </section>
