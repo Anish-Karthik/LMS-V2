@@ -46,7 +46,10 @@ const page = async ({
     await acceptInvite(searchParams.invite, user.id)
     redirect("/teacher/settings")
   }
-  // redirect(`/purchase/${courseId}?promo=${searchParams.promo}`)
+  if (searchParams.promo) {
+    redirect(`/purchase/${courseId}?promo=${searchParams.promo}`)
+  }
+  redirect(`/dashboard?${searchParamsUrl}`)
   return (
     <div className="h-full w-full bg-black">
       {/* <Banner variant="success" label="You already completed this topic." /> */}

@@ -20,6 +20,7 @@ import { Preview } from "@/components/preview"
 import { ChapterProgressButton } from "../../_components/chapter-progress-button"
 import { QuizAttemptHistory } from "../../_components/quiz-attempt-history"
 import { QuizStartForm } from "../../_components/quiz-start-form"
+import { QuizAttempt } from "@prisma/client"
 
 const QuizTopicPage = async ({
   params,
@@ -159,7 +160,7 @@ const QuizTopicPage = async ({
             <div className="mb-8">
               <h3 className="text-lg font-semibold mb-4">Your Quiz Results</h3>
               <QuizAttemptHistory
-                attempts={completedAttempts}
+                attempts={completedAttempts as QuizAttempt[]}
                 questions={questions}
               />
             </div>

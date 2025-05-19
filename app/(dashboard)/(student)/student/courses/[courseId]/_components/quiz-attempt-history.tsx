@@ -12,6 +12,7 @@ import {
 import { Badge } from "@/components/ui/badge"
 import { Separator } from "@/components/ui/separator"
 import { Preview } from "@/components/preview"
+import { QuizAttempt } from "@prisma/client"
 
 interface QuizOption {
   id: string
@@ -29,14 +30,6 @@ interface QuizQuestion {
   points: number
 }
 
-interface QuizAttempt {
-  id: string
-  answers: string
-  score: number
-  passed: boolean
-  timeTaken?: number
-  createdAt: Date
-}
 
 interface QuizAttemptHistoryProps {
   attempts: QuizAttempt[]

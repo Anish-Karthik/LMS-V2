@@ -199,7 +199,7 @@ export const sidebarLinksStudentMobile = [
 export const landingRoutes = [
   {
     label: "About",
-    href: "/purchase",
+    href: "/",
   },
   {
     label: "Contact",

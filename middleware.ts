@@ -9,7 +9,6 @@ export default authMiddleware({
     "/api/webhook",
     "/api/uploadthing",
     "/blog",
-    "/purchase",
     "/about",
     "/testimonials",
     "/contact",

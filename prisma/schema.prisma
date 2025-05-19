@@ -39,7 +39,7 @@ model User {
   city             String    @default("None")
   state            String    @default("None")
   gender           String    @default("prefer not to say")
-  role             String    @default("user")
+  role             String    @default("student")
   isBanned         Boolean   @default(false)
   referralCount    Int       @default(0)
   referralBonus    Int       @default(0)

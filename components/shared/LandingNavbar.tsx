@@ -75,12 +75,9 @@ const LandingNavbar = ({
       <div className="flex items-center gap-2">
         {/* <ThemeToggle /> */}
         {courses.length > 0 && (
-          <Link href={route || `/purchase/${courses[0].id}` || "/purchase"}>
+          <Link href={route || "/student/dashboard"}>
             <Button variant="outline" className="rounded-full">
-              {!route ||
-              !(route?.includes("teacher") || route?.includes("student"))
-                ? "Purchase Now"
-                : "Dashboard"}
+              {"Dashboard"}
             </Button>
           </Link>
         )}
@@ -89,18 +86,14 @@ const LandingNavbar = ({
             href={
               !userId
                 ? `/sign-in`
-                : pathname.includes("purchase")
-                ? `/purchase/${courses[0]?.id}${queryString}`
-                : route ?? `/purchase${queryString}`
+                : 'dashboard'
             }
           >
             <Button
               containerClassName="!h-11 !max-h-11 hover:!text-pink-color"
               className="hover:!text-pink-color"
             >
-              {!route || route.includes("purchase")
-                ? "Purchase Now"
-                : "Dashboard"}
+              {"Dashboard"}
             </Button>
           </Link>
         )}

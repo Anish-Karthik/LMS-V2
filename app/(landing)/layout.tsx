@@ -22,6 +22,7 @@ const LandingLayout = async ({ children }: { children: React.ReactNode }) => {
         route = "/teacher/dashboard"
     }
   }
+
   return (
     <div className="h-full w-full">
       <LandingNavbar
