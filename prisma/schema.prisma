@@ -382,7 +382,7 @@ model QuizAttempt {
   topicId String @db.ObjectId
   topic   Topic  @relation(fields: [topicId], references: [id], onDelete: Cascade)
 
-  answers   Json // User's answers to the quiz
+  answers   Json? // User's answers to the quiz (null means attempt in progress)
   score     Int // User's score (percentage)
   passed    Boolean // Whether the user passed the quiz
   timeTaken Int? // Time taken in seconds

@@ -224,6 +224,20 @@ export const getDetailedTopicClient = async ({
       },
     })
 
+    // Include quiz attempts if this is a quiz-type topic
+    let quizAttempts = null
+    if (topic.type === "quiz") {
+      quizAttempts = await db.quizAttempt.findMany({
+        where: {
+          userId,
+          topicId: topic.id,
+        },
+        orderBy: {
+          createdAt: "desc",
+        },
+      })
+    }
+
     return {
       chapter: currentChapter,
       topic,
@@ -234,6 +248,7 @@ export const getDetailedTopicClient = async ({
       nextTopicType: nextTopic?.type,
       userProgressTopic,
       purchase,
+      quizAttempts,
     }
   } catch (error: any) {
     console.log("[GET_CHAPTER]", error)
@@ -247,6 +262,7 @@ export const getDetailedTopicClient = async ({
       nextTopicType: null,
       userProgressTopic: null,
       purchase: null,
+      quizAttempts: null,
     }
   }
 }
