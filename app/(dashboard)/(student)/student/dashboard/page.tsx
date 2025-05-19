@@ -14,6 +14,8 @@ import CourseDetailCard from "@/components/card/course-detail-card"
 import AnnouncementMiniCard from "@/components/shared/announcement-mini-card"
 import { serverClient } from "@/app/_trpc/serverClient"
 
+import { StudentAnalyticsDashboard } from "./_components/student-analytics-dashboard"
+
 const ReferralCard = dynamic(() => import("@/components/card/referral-card"), {
   ssr: false,
 })
@@ -44,6 +46,12 @@ const page = async () => {
       expiresAt: new Date(Date.now() + 1000 * 60 * 60 * 24 * 30),
     })
   }
+
+  // Get purchased courses with analytics data
+  const coursesWithAnalytics = await serverClient.user.getAllCourseAnalytics(
+    user!.id
+  )
+
   const userPurchasedCourses = await serverClient.user.purchasedCourses(
     user!.id
   )
@@ -82,12 +90,21 @@ const page = async () => {
     take: 3,
   })
   return (
-    <section className="flex justify-center p-4 max-md:flex-col">
-      <div className="flex flex-col gap-4 px-4 max-md:pb-5">
-        <div className="flex flex-col gap-1">
-          <h1 className="text-2xl font-bold">Welcome back {userInfo?.name}</h1>
-          <p className="text-pink-color">You can access your course here.</p>
-        </div>
+    <section className="flex flex-col gap-8 p-4">
+      <div className="flex flex-col gap-1">
+        <h1 className="text-2xl font-bold">Welcome back {userInfo?.name}</h1>
+        <p className="text-pink-color">You can access your courses here.</p>
+      </div>
+
+      {/* Analytics Dashboard */}
+      <div className="w-full">
+        <StudentAnalyticsDashboard courses={coursesWithAnalytics} />
+      </div>
+
+      <Separator className="my-4" />
+
+      {/* Courses List */}
+      <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
         {userPurchasedCourses.map((course, i) => (
           <Link href={`/student/courses/${course.id}`} key={course.id}>
             <CourseDetailCard
@@ -96,36 +113,15 @@ const page = async () => {
             />
           </Link>
         ))}
-        <Separator className="my-2 md:hidden" />
       </div>
-      {/* <div className="flex w-fit flex-col md:max-w-sm">
-        <div className="flex flex-col gap-1 px-4 pb-2">
-          <h1 className="text-2xl font-bold">Join our Discord Community</h1>
-          <p className="text-text-secondary">
-            Join our discord community to get help from our mentors and
-            instructors.
-          </p>
-          <a
-            href="https://discord.gg/9R2KZjXJ"
-            target="_blank"
-            rel="noreferrer"
-            className="bg-primary text-purple-color mt-2 w-full rounded-md px-4 py-2 text-center"
-          >
-            Join Discord
-          </a>
-        </div>
 
-        <div className="flex flex-col gap-1 px-4">
-          <h1 className="text-2xl font-bold">Refer your Friend</h1>
-          <ReferralCard
-            promo={promoCode}
-            referralBonus={10}
-            coins={userInfo!.referralBonus}
-            referralCount={userInfo!.referralCount}
-          />
-        </div>
+      <Separator className="my-4" />
+
+      {/* Announcements */}
+      <div className="mt-4">
+        <h2 className="text-xl font-bold mb-4">Recent Announcements</h2>
         <AnnouncementMiniCard announcements={announcements} />
-      </div> */}
+      </div>
     </section>
   )
 }

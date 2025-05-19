@@ -393,4 +393,368 @@ export const userRouter = router({
         })
       }
     }),
+  getCourseAnalytics: publicProcedure
+    .input(
+      z.object({
+        userId: z.string(),
+        courseId: z.string(),
+      })
+    )
+    .query(async ({ input }) => {
+      try {
+        const { userId, courseId } = input
+
+        // Get course progress
+        const progressResult = await db.user.findUnique({
+          where: {
+            userId,
+          },
+          select: {
+            purchases: {
+              where: {
+                courseId,
+              },
+              select: {
+                createdAt: true,
+                Batch: {
+                  select: {
+                    chapters: {
+                      select: {
+                        topics: {
+                          select: {
+                            id: true,
+                            userProgressTopic: {
+                              where: {
+                                userId,
+                              },
+                              select: {
+                                isCompleted: true,
+                              },
+                            },
+                          },
+                        },
+                      },
+                    },
+                  },
+                },
+              },
+            },
+          },
+        })
+
+        // Get the course chapters directly (for self-paced courses)
+        const courseChapters = await db.chapter.findMany({
+          where: {
+            courseId,
+            isPublished: true,
+          },
+          select: {
+            topics: {
+              where: {
+                isPublished: true,
+              },
+              select: {
+                id: true,
+                userProgressTopic: {
+                  where: {
+                    userId,
+                  },
+                  select: {
+                    isCompleted: true,
+                  },
+                },
+              },
+            },
+          },
+        })
+
+        // Get all topics, either from batch or directly from course
+        let allTopics: {
+          id: string
+          userProgressTopic: { isCompleted: boolean }[]
+        }[] = []
+
+        if (progressResult?.purchases[0]?.Batch) {
+          // For batch-based courses
+          allTopics = progressResult.purchases[0].Batch.chapters.flatMap(
+            (ch) => ch.topics
+          )
+        } else {
+          // For self-paced courses
+          allTopics = courseChapters.flatMap((ch) => ch.topics)
+        }
+
+        // Calculate progress
+        const totalTopics = allTopics.length
+        const completedTopics = allTopics.filter((topic) =>
+          topic.userProgressTopic.some((progress) => progress.isCompleted)
+        ).length
+
+        const completionPercentage =
+          totalTopics > 0 ? (completedTopics / totalTopics) * 100 : 0
+
+        // Get purchase date
+        const purchaseDate =
+          progressResult?.purchases[0]?.createdAt || new Date()
+
+        // Get quiz attempts
+        const quizTopics = await db.topic.findMany({
+          where: {
+            OR: [
+              {
+                chapter: {
+                  courseId,
+                },
+              },
+              {
+                chapter: {
+                  batch: {
+                    courseId,
+                  },
+                },
+              },
+            ],
+            type: "quiz",
+            isPublished: true,
+          },
+          select: {
+            id: true,
+            title: true,
+            quizAttempts: {
+              where: {
+                userId,
+                answers: { not: null }, // Only completed attempts
+              },
+              select: {
+                id: true,
+                score: true,
+                passed: true,
+                timeTaken: true,
+                createdAt: true,
+              },
+              orderBy: {
+                createdAt: "desc",
+              },
+            },
+          },
+        })
+
+        // Format quiz attempts data
+        const quizAttempts = quizTopics.map((topic) => ({
+          topicId: topic.id,
+          topicTitle: topic.title,
+          attempts: topic.quizAttempts,
+        }))
+
+        return {
+          completionPercentage,
+          completedModules: completedTopics,
+          totalModules: totalTopics,
+          purchaseDate,
+          quizAttempts,
+        }
+      } catch (error: any) {
+        console.error("Error fetching course analytics:", error)
+        throw new TRPCError({
+          code: "INTERNAL_SERVER_ERROR",
+          message: error.message || "Failed to get course analytics",
+        })
+      }
+    }),
+
+  // Get analytics for all courses
+  getAllCourseAnalytics: publicProcedure
+    .input(z.string()) // userId
+    .query(async ({ input: userId }) => {
+      try {
+        // Get all purchased courses with their related data
+        const purchasedCourses = await db.purchase.findMany({
+          where: {
+            user: {
+              userId,
+            },
+          },
+          select: {
+            courseId: true,
+            createdAt: true,
+            course: {
+              select: {
+                id: true,
+                title: true,
+                imageUrl: true,
+                type: true,
+                price: true,
+                chapters: {
+                  where: {
+                    isPublished: true,
+                  },
+                  select: {
+                    id: true,
+                    topics: {
+                      where: {
+                        isPublished: true,
+                      },
+                      select: {
+                        id: true,
+                        title: true,
+                        type: true,
+                        userProgressTopic: {
+                          where: {
+                            userId,
+                          },
+                          select: {
+                            isCompleted: true,
+                          },
+                        },
+                        quizAttempts: {
+                          where: {
+                            userId,
+                            answers: { not: null }, // Only completed attempts
+                          },
+                          select: {
+                            id: true,
+                            score: true,
+                            passed: true,
+                            timeTaken: true,
+                            createdAt: true,
+                          },
+                          orderBy: {
+                            createdAt: "desc",
+                          },
+                        },
+                      },
+                    },
+                  },
+                },
+              },
+            },
+            batchId: true,
+            Batch: {
+              select: {
+                chapters: {
+                  where: {
+                    isPublished: true,
+                  },
+                  select: {
+                    id: true,
+                    topics: {
+                      where: {
+                        isPublished: true,
+                      },
+                      select: {
+                        id: true,
+                        title: true,
+                        type: true,
+                        userProgressTopic: {
+                          where: {
+                            userId,
+                          },
+                          select: {
+                            isCompleted: true,
+                          },
+                        },
+                        quizAttempts: {
+                          where: {
+                            userId,
+                            answers: { not: null }, // Only completed attempts
+                          },
+                          select: {
+                            id: true,
+                            score: true,
+                            passed: true,
+                            timeTaken: true,
+                            createdAt: true,
+                          },
+                          orderBy: {
+                            createdAt: "desc",
+                          },
+                        },
+                      },
+                    },
+                  },
+                },
+              },
+            },
+          },
+        })
+
+        // Type for topic data
+        type TopicData = {
+          id: string
+          title: string
+          type: string
+          userProgressTopic: { isCompleted: boolean }[]
+          quizAttempts: {
+            id: string
+            score: number
+            passed: boolean
+            timeTaken?: number | null
+            createdAt: Date
+          }[]
+        }
+
+        // Format the response
+        const coursesWithAnalytics = purchasedCourses.map((purchase) => {
+          // Get topics either from course chapters or batch chapters
+          let allTopics: TopicData[] = []
+          let quizTopics: TopicData[] = []
+
+          if (purchase.batchId && purchase.Batch) {
+            // For batch-based courses
+            allTopics = purchase.Batch.chapters.flatMap((ch) => ch.topics)
+          } else if (purchase.course?.chapters) {
+            // For self-paced courses
+            allTopics = purchase.course.chapters.flatMap((ch) => ch.topics)
+          }
+
+          // Calculate progress
+          const totalTopics = allTopics.length
+          const completedTopics = allTopics.filter((topic) =>
+            topic.userProgressTopic.some((progress) => progress.isCompleted)
+          ).length
+
+          const percentage =
+            totalTopics > 0 ? (completedTopics / totalTopics) * 100 : 0
+
+          // Format quiz attempts
+          quizTopics = allTopics.filter((topic) => topic.type === "quiz")
+          const quizAttempts = quizTopics.map((topic) => ({
+            topicId: topic.id,
+            topicTitle: topic.title,
+            attempts: topic.quizAttempts,
+          }))
+
+          const courseName = purchase.course?.title || "Untitled Course"
+          const courseId = purchase.course?.id || purchase.courseId
+          const imageUrl = purchase.course?.imageUrl || null
+          const price = purchase.course?.price || 0
+          const chaptersCount = purchase.course?.chapters?.length || 0
+
+          return {
+            id: courseId,
+            title: courseName,
+            imageUrl,
+            category: purchase.course?.type || "unknown",
+            chaptersCount,
+            topicsCount: totalTopics,
+            price,
+            progress: {
+              completedTopics,
+              totalTopics,
+              percentage,
+            },
+            quizAttempts,
+            purchaseDate: purchase.createdAt,
+          }
+        })
+
+        return coursesWithAnalytics
+      } catch (error: any) {
+        console.error("Error fetching all course analytics:", error)
+        throw new TRPCError({
+          code: "INTERNAL_SERVER_ERROR",
+          message: error.message || "Failed to get all course analytics",
+        })
+      }
+    }),
 })
