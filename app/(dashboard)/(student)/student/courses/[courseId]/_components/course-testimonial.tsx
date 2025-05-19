@@ -144,6 +144,7 @@ const CourseTestimonialInner = ({
           <div className="space-y-4">
             <div className="flex items-center">
               <Stars
+                // @ts-ignore
                 value={existingTestimonial.rating}
                 edit={false}
                 size={24}
@@ -165,6 +166,7 @@ const CourseTestimonialInner = ({
                     <FormLabel>Rating</FormLabel>
                     <FormControl>
                       <Stars
+                        // @ts-ignore
                         value={field.value}
                         onChange={(rating: number) => field.onChange(rating)}
                         size={32}
@@ -215,8 +217,8 @@ const CourseTestimonialInner = ({
         ) : (
           <div className="flex flex-col items-center justify-center py-6">
             <p className="text-muted-foreground mb-4 text-center">
-              You haven't reviewed this course yet. Share your experience to
-              help others!
+              You haven&apos;t reviewed this course yet. Share your experience
+              to help others!
             </p>
             <Button onClick={() => setIsEditing(true)}>Write a Review</Button>
           </div>

@@ -799,7 +799,7 @@ const TopicAttendancePage = () => {
                 : "Add Attendance Note"}
             </DialogTitle>
             <DialogDescription>
-              Add a note about this student's attendance status.
+              Add a note about this student&apos;s attendance status.
             </DialogDescription>
           </DialogHeader>
 

@@ -208,7 +208,7 @@ function checkIfAnswerIsCorrect(
     const allCorrectSelected = correctOptionIds.every((id) =>
       userAnswer.includes(id)
     )
-    const noIncorrectSelected = !userAnswer.some((id) =>
+    const noIncorrectSelected = !userAnswer.some((id: string) =>
       incorrectOptionIds.includes(id)
     )
 

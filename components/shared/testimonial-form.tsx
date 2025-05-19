@@ -46,11 +46,13 @@ const TestimonialForm = ({
   edit = false,
   defaultValue,
   id,
+  courseId,
 }: {
   userInfo: (User & { testimonials: Testimonial[] }) | null
   edit?: boolean
   defaultValue?: z.infer<typeof formSchema>
   id?: string
+  courseId?: string
 }) => {
   const [isEditing, setIsEditing] = React.useState(edit)
   const router = useRouter()!
@@ -82,6 +84,7 @@ const TestimonialForm = ({
           userId: userInfo?.userId || "",
           description: values.description,
           rating: Number(values.rating),
+          courseId: courseId || "",
         })
         toast.success("Testimonial created")
       }
@@ -111,7 +114,6 @@ const TestimonialForm = ({
                   <FormControl>
                     <Stars
                       // @ts-ignore
-                      // @ts-nocheck
                       value={field.value}
                       onChange={(rating: number) => {
                         return field.onChange(rating)

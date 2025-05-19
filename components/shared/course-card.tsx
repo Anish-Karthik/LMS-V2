@@ -46,7 +46,7 @@ const CourseCard = ({ course }: CourseCardProps) => {
           )}
         </div>
         <div className="mt-auto pt-4">
-          <p className="text-lg font-bold">{formatPrice(course.price)}</p>
+          <p className="text-lg font-bold">{formatPrice(course.price ?? 0)}</p>
         </div>
       </div>
     </div>

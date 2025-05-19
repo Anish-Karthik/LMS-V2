@@ -156,7 +156,7 @@ export function CourseAnalytics({ analytics }: { analytics: CourseAnalytics }) {
                 {quizStats.failedAttempts}
               </div>
               <p className="text-muted-foreground mt-2 text-xs">
-                Total quiz attempts that didn't pass
+                Total quiz attempts that didn&apos;t pass
               </p>
             </CardContent>
           </Card>
@@ -210,7 +210,7 @@ export function CourseAnalytics({ analytics }: { analytics: CourseAnalytics }) {
           <Card>
             <CardContent className="pt-6">
               <p className="text-muted-foreground text-center">
-                You haven't attempted any quizzes yet.
+                You haven&apos;t attempted any quizzes yet.
               </p>
             </CardContent>
           </Card>

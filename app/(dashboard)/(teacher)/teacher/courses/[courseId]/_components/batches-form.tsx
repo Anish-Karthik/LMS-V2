@@ -161,7 +161,7 @@ export const BatchesForm = ({ initialData, courseId }: BatchesFormProps) => {
           <p className="font-medium text-amber-600">
             Warning: This course has {data.batches.length}{" "}
             {data.batches.length === 1 ? "batch" : "batches"} that will be
-            hidden since it's now a self-paced course.
+            hidden since it&apos;s now a self-paced course.
           </p>
         </div>
       )}

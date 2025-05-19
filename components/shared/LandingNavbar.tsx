@@ -21,12 +21,10 @@ const font = Montserrat({
 })
 
 const LandingNavbar = ({
-  courses,
   route,
   className,
 }: {
   className?: string
-  courses: Course[]
   route?: string
 }) => {
   const { userId } = useAuth()
@@ -74,13 +72,13 @@ const LandingNavbar = ({
 
       <div className="flex items-center gap-2">
         {/* <ThemeToggle /> */}
-        {courses.length > 0 && (
-          <Link href={route || "/student/dashboard"}>
-            <Button variant="outline" className="rounded-full">
-              {"Dashboard"}
-            </Button>
-          </Link>
-        )}
+
+        <Link href={route || "/student/dashboard"}>
+          <Button variant="outline" className="rounded-full">
+            {"Dashboard"}
+          </Button>
+        </Link>
+
         {pathname.split("/").length < 2 && (
           <Link href={!userId ? `/sign-in` : "dashboard"}>
             <Button

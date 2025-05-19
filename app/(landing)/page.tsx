@@ -1,11 +1,15 @@
 import Image from "next/image"
 import Link from "next/link"
 import {
+  ArrowRight,
   Award,
   BarChart3,
   BookOpen,
   Calendar,
+  CheckCircle2,
   ChevronRight,
+  Layers,
+  Shield,
   Users,
   Zap,
 } from "lucide-react"
@@ -19,262 +23,395 @@ import { PricingCard } from "@/components/pricing-card"
 import { StatsCard } from "@/components/stats-card"
 import { TestimonialCard } from "@/components/testimonial-card"
 
-export default function Home() {
+export default function LandingPage() {
   return (
-    <div className="min-h-screen bg-black text-white">
-      {/* <Navbar /> */}
-
+    <div className="flex min-h-screen flex-col">
       {/* Hero Section */}
-      <section className="relative overflow-hidden py-20 md:py-32">
-        <div className="container px-4 md:px-6">
-          <div className="grid items-center gap-12 md:grid-cols-2 md:gap-16">
-            <div className="space-y-6">
-              <div className="inline-block rounded-full bg-gradient-to-r from-pink-500 to-purple-600 px-4 py-1.5 text-sm font-medium">
-                Next-Gen Learning Management System
-              </div>
-              <h1 className="bg-gradient-to-r from-pink-500 via-purple-500 to-pink-400 bg-clip-text text-4xl font-bold tracking-tighter text-transparent md:text-6xl">
-                Transform Your Corporate Training Experience
+      <section className="from-primary-50 relative overflow-hidden bg-gradient-to-b to-white py-20">
+        <div className="bg-grid-black/5 absolute inset-0 bg-center [mask-image:linear-gradient(180deg,white,rgba(255,255,255,0))]" />
+
+        <div className="container relative z-10 mx-auto px-4">
+          <div className="grid grid-cols-1 items-center gap-12 lg:grid-cols-2">
+            <div>
+              <h1 className="text-4xl font-bold tracking-tight text-slate-900 md:text-5xl lg:text-6xl">
+                Empower your <span className="text-primary">organization</span>{" "}
+                with modern learning
               </h1>
-              <p className="text-xl text-purple-200 md:text-2xl/relaxed lg:text-base/relaxed xl:text-xl/relaxed">
-                The all-in-one B2B learning platform that streamlines training,
-                enhances engagement, and delivers powerful analytics.
+              <p className="mt-6 max-w-xl text-lg text-slate-600">
+                A comprehensive learning management system designed for
+                businesses that want to train employees, partners, and customers
+                with ease.
               </p>
-              <div className="flex flex-col gap-4 sm:flex-row">
-                <Link href="/dashboard">
-                  <Button className="rounded-full bg-gradient-to-r from-pink-500 to-purple-600 px-8 py-6 text-lg font-medium text-white hover:from-pink-600 hover:to-purple-700">
-                    Get Started <ChevronRight className="ml-2 h-4 w-4" />
-                  </Button>
-                </Link>
-                <Button
-                  variant="outline"
-                  className="rounded-full border-purple-500 px-8 py-6 text-lg font-medium text-purple-300 hover:bg-purple-950/30"
-                >
-                  Book a Demo
+              <div className="mt-10 flex flex-col gap-4 sm:flex-row">
+                <Button size="lg" asChild>
+                  <Link href="/purchase">
+                    Get Started <ArrowRight className="ml-2 h-4 w-4" />
+                  </Link>
+                </Button>
+                <Button variant="outline" size="lg" asChild>
+                  <Link href="/contact">Request Demo</Link>
                 </Button>
               </div>
             </div>
-            <div className="relative">
-              <div className="relative z-10">
-                <HeroAnimation />
-              </div>
-              <div className="absolute inset-0 -translate-y-1/2 translate-x-1/4 rounded-full bg-gradient-to-r from-pink-500/20 to-purple-600/20 opacity-30 blur-3xl"></div>
+            <div className="relative h-[400px] overflow-hidden rounded-lg shadow-2xl lg:h-[500px]">
+              <Image
+                src="/placeholder-platform.jpg"
+                alt="LMS Platform Dashboard"
+                fill
+                className="object-cover"
+                priority
+              />
             </div>
           </div>
-        </div>
-
-        {/* Background elements */}
-        <div className="pointer-events-none absolute left-0 top-0 h-full w-full overflow-hidden">
-          <div className="absolute left-1/4 top-1/4 h-64 w-64 rounded-full bg-purple-600/20 blur-3xl"></div>
-          <div className="absolute bottom-1/4 right-1/4 h-80 w-80 rounded-full bg-pink-600/20 blur-3xl"></div>
         </div>
       </section>
 
       {/* Features Section */}
-      <section className="relative py-20 md:py-32">
-        <div className="container px-4 md:px-6">
+      <section className="bg-white py-24">
+        <div className="container mx-auto px-4">
           <div className="mx-auto mb-16 max-w-3xl text-center">
-            <h2 className="mb-4 bg-gradient-to-r from-pink-500 to-purple-600 bg-clip-text text-3xl font-bold tracking-tighter text-transparent md:text-5xl">
-              Comprehensive Features for Modern Learning
+            <h2 className="text-3xl font-bold text-slate-900">
+              Everything you need for effective training
             </h2>
-            <p className="text-lg text-purple-200">
-              Everything you need to create, manage, and optimize your corporate
-              training programs
+            <p className="mt-4 text-xl text-slate-600">
+              Our comprehensive platform provides all the tools to create,
+              deliver, and track learning across your organization.
             </p>
           </div>
 
-          <div className="grid gap-8 md:grid-cols-2 lg:grid-cols-3">
-            <FeatureCard
-              icon={<Calendar className="h-10 w-10 text-pink-500" />}
-              title="Attendance Management"
-              description="Track and manage attendance with automated reminders and comprehensive reporting."
-            />
-            <FeatureCard
-              icon={<BookOpen className="h-10 w-10 text-purple-500" />}
-              title="Batched Courses"
-              description="Organize learners into cohorts with batch-specific content and schedules."
-            />
-            <FeatureCard
-              icon={<Users className="h-10 w-10 text-pink-500" />}
-              title="Instructors Management"
-              description="Assign, schedule, and evaluate instructors with powerful management tools."
-            />
-            <FeatureCard
-              icon={<Award className="h-10 w-10 text-purple-500" />}
-              title="Interactive Quizzes"
-              description="Create engaging assessments with various question types and automated grading."
-            />
-            <FeatureCard
-              icon={<BarChart3 className="h-10 w-10 text-pink-500" />}
-              title="Powerful Analytics"
-              description="Gain insights with detailed reports on learner progress and engagement."
-            />
-            <FeatureCard
-              icon={<Zap className="h-10 w-10 text-purple-500" />}
-              title="Referral System"
-              description="Grow your user base with built-in referral tracking and reward mechanisms."
-            />
+          <div className="grid grid-cols-1 gap-8 md:grid-cols-2 lg:grid-cols-3">
+            {/* Feature 1 */}
+            <div className="rounded-xl border border-slate-200 bg-white p-8 shadow-sm transition-shadow hover:shadow-md">
+              <div className="bg-primary/10 text-primary mb-6 flex h-12 w-12 items-center justify-center rounded-full">
+                <Layers className="h-6 w-6" />
+              </div>
+              <h3 className="mb-3 text-xl font-semibold text-slate-900">
+                Course Management
+              </h3>
+              <p className="text-slate-600">
+                Create and organize courses with rich multimedia content,
+                quizzes, assignments, and live sessions.
+              </p>
+            </div>
+
+            {/* Feature 2 */}
+            <div className="rounded-xl border border-slate-200 bg-white p-8 shadow-sm transition-shadow hover:shadow-md">
+              <div className="bg-primary/10 text-primary mb-6 flex h-12 w-12 items-center justify-center rounded-full">
+                <Users className="h-6 w-6" />
+              </div>
+              <h3 className="mb-3 text-xl font-semibold text-slate-900">
+                User Management
+              </h3>
+              <p className="text-slate-600">
+                Manage users, teams, and permissions with ease. Create custom
+                roles and learning paths.
+              </p>
+            </div>
+
+            {/* Feature 3 */}
+            <div className="rounded-xl border border-slate-200 bg-white p-8 shadow-sm transition-shadow hover:shadow-md">
+              <div className="bg-primary/10 text-primary mb-6 flex h-12 w-12 items-center justify-center rounded-full">
+                <BarChart3 className="h-6 w-6" />
+              </div>
+              <h3 className="mb-3 text-xl font-semibold text-slate-900">
+                Advanced Analytics
+              </h3>
+              <p className="text-slate-600">
+                Track progress and engagement with detailed analytics and
+                customizable reporting.
+              </p>
+            </div>
+
+            {/* Feature 4 */}
+            <div className="rounded-xl border border-slate-200 bg-white p-8 shadow-sm transition-shadow hover:shadow-md">
+              <div className="bg-primary/10 text-primary mb-6 flex h-12 w-12 items-center justify-center rounded-full">
+                <BookOpen className="h-6 w-6" />
+              </div>
+              <h3 className="mb-3 text-xl font-semibold text-slate-900">
+                Interactive Learning
+              </h3>
+              <p className="text-slate-600">
+                Engage learners with interactive content, quizzes, discussions,
+                and live sessions.
+              </p>
+            </div>
+
+            {/* Feature 5 */}
+            <div className="rounded-xl border border-slate-200 bg-white p-8 shadow-sm transition-shadow hover:shadow-md">
+              <div className="bg-primary/10 text-primary mb-6 flex h-12 w-12 items-center justify-center rounded-full">
+                <Award className="h-6 w-6" />
+              </div>
+              <h3 className="mb-3 text-xl font-semibold text-slate-900">
+                Certifications
+              </h3>
+              <p className="text-slate-600">
+                Create and award certificates automatically upon course
+                completion to recognize achievements.
+              </p>
+            </div>
+
+            {/* Feature 6 */}
+            <div className="rounded-xl border border-slate-200 bg-white p-8 shadow-sm transition-shadow hover:shadow-md">
+              <div className="bg-primary/10 text-primary mb-6 flex h-12 w-12 items-center justify-center rounded-full">
+                <Shield className="h-6 w-6" />
+              </div>
+              <h3 className="mb-3 text-xl font-semibold text-slate-900">
+                Enterprise Security
+              </h3>
+              <p className="text-slate-600">
+                Enterprise-grade security with SSO integration, data encryption,
+                and compliance features.
+              </p>
+            </div>
           </div>
         </div>
-
-        {/* Background elements */}
-        <div className="absolute right-0 top-1/2 h-96 w-96 rounded-full bg-purple-600/10 blur-3xl"></div>
       </section>
 
-      {/* Stats Section */}
-      <section className="bg-gradient-to-r from-purple-900/30 to-pink-900/30 py-16">
-        <div className="container px-4 md:px-6">
-          <div className="grid gap-8 md:grid-cols-2 lg:grid-cols-4">
-            <StatsCard number="98%" label="Completion Rate" />
-            <StatsCard number="45%" label="Engagement Increase" />
-            <StatsCard number="3.5x" label="ROI on Training" />
-            <StatsCard number="24/7" label="Support Available" />
-          </div>
-        </div>
-      </section>
+      {/* Testimonials */}
+      <section className="bg-slate-50 py-24">
+        <div className="container mx-auto px-4">
+          <h2 className="mb-16 text-center text-3xl font-bold text-slate-900">
+            Trusted by leading organizations
+          </h2>
 
-      {/* Testimonials Section */}
-      <section className="relative py-20 md:py-32">
-        <div className="container px-4 md:px-6">
-          <div className="mx-auto mb-16 max-w-3xl text-center">
-            <h2 className="mb-4 bg-gradient-to-r from-pink-500 to-purple-600 bg-clip-text text-3xl font-bold tracking-tighter text-transparent md:text-5xl">
-              Trusted by Learning Leaders
-            </h2>
-            <p className="text-lg text-purple-200">
-              See what our customers are saying about our LMS platform
-            </p>
-          </div>
+          <div className="grid grid-cols-1 gap-8 md:grid-cols-2 lg:grid-cols-3">
+            {/* Testimonial 1 */}
+            <div className="rounded-xl border border-slate-200 bg-white p-8 shadow-sm">
+              <div className="mb-4 flex items-center">
+                <div className="flex text-amber-400">
+                  {[...Array(5)].map((_, i) => (
+                    <svg
+                      key={i}
+                      xmlns="http://www.w3.org/2000/svg"
+                      viewBox="0 0 24 24"
+                      fill="currentColor"
+                      className="h-5 w-5"
+                    >
+                      <path
+                        fillRule="evenodd"
+                        d="M10.788 3.21c.448-1.077 1.976-1.077 2.424 0l2.082 5.007 5.404.433c1.164.093 1.636 1.545.749 2.305l-4.117 3.527 1.257 5.273c.271 1.136-.964 2.033-1.96 1.425L12 18.354 7.373 21.18c-.996.608-2.231-.29-1.96-1.425l1.257-5.273-4.117-3.527c-.887-.76-.415-2.212.749-2.305l5.404-.433 2.082-5.006z"
+                        clipRule="evenodd"
+                      />
+                    </svg>
+                  ))}
+                </div>
+              </div>
+              <blockquote className="mb-6 text-slate-700">
+                &quot;This platform has transformed our training program.
+                We&apos;ve seen a 45% increase in course completion rates and
+                significantly improved employee engagement.&quot;
+              </blockquote>
+              <div className="flex items-center">
+                <div className="mr-4 flex h-12 w-12 items-center justify-center rounded-full bg-slate-200 font-bold text-slate-600">
+                  JD
+                </div>
+                <div>
+                  <p className="font-semibold text-slate-900">Jane Doe</p>
+                  <p className="text-sm text-slate-600">
+                    Head of Learning, Enterprise Co.
+                  </p>
+                </div>
+              </div>
+            </div>
 
-          <div className="grid gap-8 md:grid-cols-2 lg:grid-cols-3">
-            <TestimonialCard
-              quote="This platform revolutionized how we approach corporate training. The analytics alone saved us countless hours of manual work."
-              author="Sarah Johnson"
-              role="Head of L&D, TechCorp"
-              avatarUrl=""
-            />
-            <TestimonialCard
-              quote="The batch management and instructor scheduling features are game-changers. We've increased our training capacity by 200%."
-              author="Michael Chen"
-              role="Training Director, Global Finance"
-              avatarUrl=""
-            />
-            <TestimonialCard
-              quote="The quiz builder and automated grading have transformed our assessment process. Our team loves the intuitive interface."
-              author="Jessica Williams"
-              role="Chief Learning Officer, Retail Giant"
-              avatarUrl=""
-            />
-          </div>
-        </div>
+            {/* Testimonial 2 */}
+            <div className="rounded-xl border border-slate-200 bg-white p-8 shadow-sm">
+              <div className="mb-4 flex items-center">
+                <div className="flex text-amber-400">
+                  {[...Array(5)].map((_, i) => (
+                    <svg
+                      key={i}
+                      xmlns="http://www.w3.org/2000/svg"
+                      viewBox="0 0 24 24"
+                      fill="currentColor"
+                      className="h-5 w-5"
+                    >
+                      <path
+                        fillRule="evenodd"
+                        d="M10.788 3.21c.448-1.077 1.976-1.077 2.424 0l2.082 5.007 5.404.433c1.164.093 1.636 1.545.749 2.305l-4.117 3.527 1.257 5.273c.271 1.136-.964 2.033-1.96 1.425L12 18.354 7.373 21.18c-.996.608-2.231-.29-1.96-1.425l1.257-5.273-4.117-3.527c-.887-.76-.415-2.212.749-2.305l5.404-.433 2.082-5.006z"
+                        clipRule="evenodd"
+                      />
+                    </svg>
+                  ))}
+                </div>
+              </div>
+              <blockquote className="mb-6 text-slate-700">
+                &quot;The analytics and reporting features have been invaluable
+                for tracking our compliance training. Setup was easy and the
+                support team has been exceptional.&quot;
+              </blockquote>
+              <div className="flex items-center">
+                <div className="mr-4 flex h-12 w-12 items-center justify-center rounded-full bg-slate-200 font-bold text-slate-600">
+                  RS
+                </div>
+                <div>
+                  <p className="font-semibold text-slate-900">Robert Smith</p>
+                  <p className="text-sm text-slate-600">
+                    Training Director, Global Services
+                  </p>
+                </div>
+              </div>
+            </div>
 
-        {/* Background elements */}
-        <div className="absolute bottom-0 left-0 h-96 w-96 rounded-full bg-pink-600/10 blur-3xl"></div>
-      </section>
-
-      {/* Pricing Section */}
-      <section className="relative border-t border-purple-900/30 py-20 md:py-32">
-        <div className="container px-4 md:px-6">
-          <div className="mx-auto mb-16 max-w-3xl text-center">
-            <h2 className="mb-4 bg-gradient-to-r from-pink-500 to-purple-600 bg-clip-text text-3xl font-bold tracking-tighter text-transparent md:text-5xl">
-              Flexible Pricing for Teams of All Sizes
-            </h2>
-            <p className="text-lg text-purple-200">
-              Choose the plan that fits your organization's needs
-            </p>
-          </div>
-
-          <div className="grid gap-8 md:grid-cols-3">
-            <PricingCard
-              title="Starter"
-              price="$499"
-              period="/month"
-              description="Perfect for small teams just getting started with structured training."
-              features={[
-                "Up to 100 active users",
-                "Basic attendance tracking",
-                "5 instructor accounts",
-                "Standard quiz builder",
-                "Basic analytics dashboard",
-              ]}
-              buttonText="Get Started"
-              popular={false}
-            />
-            <PricingCard
-              title="Professional"
-              price="$999"
-              period="/month"
-              description="Ideal for growing organizations with comprehensive training needs."
-              features={[
-                "Up to 500 active users",
-                "Advanced attendance management",
-                "Unlimited instructor accounts",
-                "Advanced quiz builder with custom templates",
-                "Comprehensive analytics and reporting",
-                "Referral system",
-              ]}
-              buttonText="Get Started"
-              popular={true}
-            />
-            <PricingCard
-              title="Enterprise"
-              price="Custom"
-              period=""
-              description="Tailored solutions for large organizations with complex requirements."
-              features={[
-                "Unlimited users",
-                "Full attendance and compliance tracking",
-                "Custom integrations",
-                "White-labeling options",
-                "Dedicated account manager",
-                "24/7 priority support",
-              ]}
-              buttonText="Contact Sales"
-              popular={false}
-            />
+            {/* Testimonial 3 */}
+            <div className="rounded-xl border border-slate-200 bg-white p-8 shadow-sm">
+              <div className="mb-4 flex items-center">
+                <div className="flex text-amber-400">
+                  {[...Array(5)].map((_, i) => (
+                    <svg
+                      key={i}
+                      xmlns="http://www.w3.org/2000/svg"
+                      viewBox="0 0 24 24"
+                      fill="currentColor"
+                      className="h-5 w-5"
+                    >
+                      <path
+                        fillRule="evenodd"
+                        d="M10.788 3.21c.448-1.077 1.976-1.077 2.424 0l2.082 5.007 5.404.433c1.164.093 1.636 1.545.749 2.305l-4.117 3.527 1.257 5.273c.271 1.136-.964 2.033-1.96 1.425L12 18.354 7.373 21.18c-.996.608-2.231-.29-1.96-1.425l1.257-5.273-4.117-3.527c-.887-.76-.415-2.212.749-2.305l5.404-.433 2.082-5.006z"
+                        clipRule="evenodd"
+                      />
+                    </svg>
+                  ))}
+                </div>
+              </div>
+              <blockquote className="mb-6 text-slate-700">
+                &quot;We&apos;ve been able to scale our customer education
+                program with minimal resources. The self-paced and batch-based
+                course options give us the flexibility we need.&quot;
+              </blockquote>
+              <div className="flex items-center">
+                <div className="mr-4 flex h-12 w-12 items-center justify-center rounded-full bg-slate-200 font-bold text-slate-600">
+                  AJ
+                </div>
+                <div>
+                  <p className="font-semibold text-slate-900">Amy Johnson</p>
+                  <p className="text-sm text-slate-600">
+                    Customer Success, Tech Innovators
+                  </p>
+                </div>
+              </div>
+            </div>
           </div>
         </div>
       </section>
 
       {/* CTA Section */}
-      <section className="relative py-20 md:py-32">
-        <div className="container px-4 md:px-6">
-          <div className="relative overflow-hidden rounded-3xl bg-gradient-to-r from-purple-900/80 to-pink-900/80 p-8 md:p-12 lg:p-16">
-            <div className="grid items-center gap-6 md:grid-cols-2">
-              <div className="space-y-6">
-                <h2 className="text-3xl font-bold tracking-tighter text-white md:text-4xl">
-                  Ready to Transform Your Learning Experience?
-                </h2>
-                <p className="text-lg text-purple-100">
-                  Join hundreds of forward-thinking companies already using our
-                  platform to elevate their training programs.
+      <section className="bg-primary py-20">
+        <div className="container mx-auto px-4 text-center">
+          <h2 className="mb-6 text-3xl font-bold text-white md:text-4xl">
+            Ready to transform your organization&apos;s learning?
+          </h2>
+          <p className="text-primary-50 mx-auto mb-10 max-w-3xl text-xl">
+            Join thousands of businesses that are improving training outcomes
+            with our platform.
+          </p>
+          <div className="flex flex-col justify-center gap-4 sm:flex-row">
+            <Button size="lg" variant="secondary" asChild>
+              <Link href="/purchase">Get Started</Link>
+            </Button>
+            <Button
+              size="lg"
+              variant="outline"
+              className="hover:bg-primary-700 border-white bg-transparent text-white"
+              asChild
+            >
+              <Link href="/contact">Talk to Sales</Link>
+            </Button>
+          </div>
+        </div>
+      </section>
+
+      {/* Why Choose Us */}
+      <section className="bg-white py-24">
+        <div className="container mx-auto px-4">
+          <div className="mx-auto mb-16 max-w-3xl text-center">
+            <h2 className="text-3xl font-bold text-slate-900">
+              Why choose our LMS platform?
+            </h2>
+            <p className="mt-4 text-xl text-slate-600">
+              A complete solution that grows with your organization&apos;s
+              learning needs
+            </p>
+          </div>
+
+          <div className="mx-auto grid max-w-5xl grid-cols-1 gap-8 md:grid-cols-2">
+            <div className="flex gap-4">
+              <CheckCircle2 className="mt-1 h-6 w-6 shrink-0 text-emerald-500" />
+              <div>
+                <h3 className="mb-2 text-xl font-semibold text-slate-900">
+                  Scalable Solution
+                </h3>
+                <p className="text-slate-600">
+                  Our platform scales from small teams to enterprise
+                  organizations with thousands of learners.
                 </p>
-                <div className="flex flex-col gap-4 sm:flex-row">
-                  <Button className="rounded-full bg-white px-8 py-6 text-lg font-medium text-purple-900 hover:bg-purple-100">
-                    Schedule a Demo
-                  </Button>
-                  <Button
-                    variant="outline"
-                    className="rounded-full border-white px-8 py-6 text-lg font-medium text-white hover:bg-white/10"
-                  >
-                    View Case Studies
-                  </Button>
-                </div>
-              </div>
-              <div className="relative hidden md:block">
-                {/* <Image
-                  src="/placeholder.svg?height=300&width=400"
-                  alt="Platform dashboard preview"
-                  width={400}
-                  height={300}
-                  className="rounded-xl shadow-2xl"
-                /> */}
-                <div className="absolute inset-0 h-[300px] w-[400px] rounded-xl bg-gradient-to-r from-pink-500/20 to-purple-600/20 blur-xl"></div>
-                <div className="h-[300px] w-[400px] rounded-xl border border-purple-800/30 bg-purple-800/30 shadow-2xl" />
               </div>
             </div>
 
-            {/* Background elements */}
-            <div className="absolute right-0 top-0 h-64 w-64 -translate-y-1/2 translate-x-1/2 rounded-full bg-pink-600/30 blur-3xl"></div>
-            <div className="absolute bottom-0 left-0 h-64 w-64 -translate-x-1/2 translate-y-1/2 rounded-full bg-purple-600/30 blur-3xl"></div>
+            <div className="flex gap-4">
+              <CheckCircle2 className="mt-1 h-6 w-6 shrink-0 text-emerald-500" />
+              <div>
+                <h3 className="mb-2 text-xl font-semibold text-slate-900">
+                  Custom Branding
+                </h3>
+                <p className="text-slate-600">
+                  White-label the platform with your organization&apos;s
+                  branding and domain.
+                </p>
+              </div>
+            </div>
+
+            <div className="flex gap-4">
+              <CheckCircle2 className="mt-1 h-6 w-6 shrink-0 text-emerald-500" />
+              <div>
+                <h3 className="mb-2 text-xl font-semibold text-slate-900">
+                  Integration Ready
+                </h3>
+                <p className="text-slate-600">
+                  Seamlessly integrate with your existing tools via our API and
+                  pre-built connectors.
+                </p>
+              </div>
+            </div>
+
+            <div className="flex gap-4">
+              <CheckCircle2 className="mt-1 h-6 w-6 shrink-0 text-emerald-500" />
+              <div>
+                <h3 className="mb-2 text-xl font-semibold text-slate-900">
+                  Mobile Friendly
+                </h3>
+                <p className="text-slate-600">
+                  Deliver learning experiences that work on any device with our
+                  responsive design.
+                </p>
+              </div>
+            </div>
+
+            <div className="flex gap-4">
+              <CheckCircle2 className="mt-1 h-6 w-6 shrink-0 text-emerald-500" />
+              <div>
+                <h3 className="mb-2 text-xl font-semibold text-slate-900">
+                  Dedicated Support
+                </h3>
+                <p className="text-slate-600">
+                  Get support from our team of learning experts to maximize your
+                  platform usage.
+                </p>
+              </div>
+            </div>
+
+            <div className="flex gap-4">
+              <CheckCircle2 className="mt-1 h-6 w-6 shrink-0 text-emerald-500" />
+              <div>
+                <h3 className="mb-2 text-xl font-semibold text-slate-900">
+                  Regular Updates
+                </h3>
+                <p className="text-slate-600">
+                  Benefit from continuous improvement with regular feature
+                  updates and enhancements.
+                </p>
+              </div>
+            </div>
           </div>
         </div>
       </section>

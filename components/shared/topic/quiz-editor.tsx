@@ -467,7 +467,8 @@ export const QuizEditor = ({ topicId, initialData }: QuizEditorProps) => {
                             />
                           </FormControl>
                           <FormDescription>
-                            The student's answer must match this text exactly.
+                            The student&apos;s answer must match this text
+                            exactly.
                           </FormDescription>
                           <FormMessage />
                         </FormItem>

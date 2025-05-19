@@ -21,7 +21,9 @@ export function TestimonialCard({
     <Card className="overflow-hidden border border-purple-900/30 bg-black">
       <CardContent className="relative pt-6">
         <QuoteIcon className="absolute left-6 top-6 h-8 w-8 text-pink-500/30" />
-        <div className="relative z-10 pl-4 text-purple-100">"{quote}"</div>
+        <div className="relative z-10 pl-4 text-purple-100">
+          &quot;{quote}&quot;
+        </div>
       </CardContent>
       <CardFooter className="mt-4 border-t border-purple-900/20 pt-4">
         <div className="flex items-center gap-4">

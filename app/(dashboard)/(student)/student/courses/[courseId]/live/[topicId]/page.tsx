@@ -162,7 +162,7 @@ const LiveTopicPage = async ({
               <div className="pt-4">
                 <Button asChild className="w-full" size="lg">
                   <Link
-                    href={topic.liveLink}
+                    href={topic.liveLink!}
                     target="_blank"
                     rel="noopener noreferrer"
                   >

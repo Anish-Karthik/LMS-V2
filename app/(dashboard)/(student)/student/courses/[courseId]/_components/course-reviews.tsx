@@ -49,6 +49,7 @@ const CourseReviewsInner = ({
     <div className="space-y-6">
       <div className="flex items-center gap-4">
         <div className="flex items-center">
+          {/* @ts-ignore */}
           <Stars value={averageRating} edit={false} size={24} />
           <span className="ml-2 font-medium">{averageRating.toFixed(1)}</span>
         </div>
@@ -82,6 +83,7 @@ const CourseReviewsInner = ({
                     <h4 className="font-medium">{testimonial.user.name}</h4>
                     <div className="flex items-center">
                       <Stars
+                        // @ts-ignore
                         value={testimonial.rating}
                         edit={false}
                         size={16}

@@ -91,7 +91,7 @@ export function StudentAnalyticsDashboard({
       <Card>
         <CardContent className="pt-6">
           <p className="text-muted-foreground text-center">
-            You haven't enrolled in any courses yet.
+            You haven&apos;t enrolled in any courses yet.
           </p>
         </CardContent>
       </Card>
