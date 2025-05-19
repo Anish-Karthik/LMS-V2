@@ -53,6 +53,7 @@ model User {
   admin             Admin?
   attendances       Attendance[] // Relation to track student attendance
   markedAttendances Attendance[]   @relation("AttendanceMarker") // Relation to track who marked attendance
+  quizAttempts      QuizAttempt[] // Relation to track quiz attempts
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
@@ -191,7 +192,7 @@ model Topic {
   position    Int
   description String?
   videoUrl    String?
-  type        String  @default("video") // "video", "quiz", "assignment", "live"
+  type        String  @default("video") // "video", "quiz", "assignment", "live", "article"
   isPublished Boolean @default(false)
   isNotified  Boolean @default(false)
   isFree      Boolean @default(false)
@@ -201,6 +202,15 @@ model Topic {
   duration  Int? // Duration in minutes
   liveLink  String? // URL for the live class
 
+  // Fields for quiz
+  questions       Json? // Array of questions, options, and answers
+  timeLimit       Int? // Time limit in minutes for the quiz
+  passingScore    Int? // Minimum score to pass the quiz (percentage)
+  allowedAttempts Int? // Number of attempts allowed
+
+  // Fields for article type
+  content String? // Markdown content for article-type topics
+
   chapterId String  @db.ObjectId
   chapter   Chapter @relation(fields: [chapterId], references: [id], onDelete: Cascade)
 
@@ -209,6 +219,7 @@ model Topic {
   userProgressTopic UserProgressTopic[]
   videoData         VideoData?
   attendances       Attendance[] // Relation to track attendance for this topic
+  quizAttempts      QuizAttempt[] // Relation to track quiz attempts
 
   @@index([chapterId])
 }
@@ -359,4 +370,27 @@ model Testimonial {
   user        User     @relation(fields: [userObjId], references: [id], onDelete: Cascade)
   createdAt   DateTime @default(now())
   updatedAt   DateTime @updatedAt
+}
+
+// New model for tracking quiz attempts
+model QuizAttempt {
+  id        String @id @default(auto()) @map("_id") @db.ObjectId
+  userId    String
+  userObjId String @db.ObjectId
+  user      User   @relation(fields: [userObjId], references: [id], onDelete: Cascade)
+
+  topicId String @db.ObjectId
+  topic   Topic  @relation(fields: [topicId], references: [id], onDelete: Cascade)
+
+  answers   Json // User's answers to the quiz
+  score     Int // User's score (percentage)
+  passed    Boolean // Whether the user passed the quiz
+  timeTaken Int? // Time taken in seconds
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@unique([userId, topicId, createdAt]) // Allow multiple attempts with different timestamps
+  @@index([topicId])
+  @@index([userId])
 }

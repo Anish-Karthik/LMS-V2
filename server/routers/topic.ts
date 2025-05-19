@@ -47,8 +47,25 @@ export const topicRouter = router({
         id: z.string(),
         title: z.string().optional(),
         description: z.string().optional(),
+        type: z
+          .enum(["video", "quiz", "assignment", "live", "article"])
+          .optional(),
         videoUrl: z.string().optional(),
         isFree: z.boolean().optional(),
+
+        // Live class fields
+        startTime: z.date().optional(),
+        duration: z.number().optional(),
+        liveLink: z.string().optional(),
+
+        // Quiz fields
+        timeLimit: z.number().optional(),
+        passingScore: z.number().optional(),
+        allowedAttempts: z.number().optional(),
+        questions: z.any().optional(), // Will be refined later for the quiz editor
+
+        // Article field
+        content: z.string().optional(),
       })
     )
     .mutation(async ({ input }) => {
@@ -58,8 +75,23 @@ export const topicRouter = router({
           data: {
             title: input.title,
             description: input.description,
+            type: input.type,
             videoUrl: input.videoUrl,
             isFree: input.isFree,
+
+            // Live class fields
+            startTime: input.startTime,
+            duration: input.duration,
+            liveLink: input.liveLink,
+
+            // Quiz fields
+            timeLimit: input.timeLimit,
+            passingScore: input.passingScore,
+            allowedAttempts: input.allowedAttempts,
+            questions: input.questions,
+
+            // Article field
+            content: input.content,
           },
         })
 
@@ -301,4 +333,34 @@ export const topicRouter = router({
       throw new Error("Topic not found: ", error.message)
     }
   }),
+
+  // Add this new endpoint for updating quiz questions
+  updateQuizQuestions: publicProcedure
+    .input(
+      z.object({
+        id: z.string(),
+        questions: z.string(), // JSON string of questions
+      })
+    )
+    .mutation(async ({ input }) => {
+      try {
+        // Parse the questions to validate that it's valid JSON
+        JSON.parse(input.questions)
+
+        const topic = await db.topic.update({
+          where: { id: input.id },
+          data: {
+            questions: input.questions,
+          },
+        })
+
+        return topic
+      } catch (error: any) {
+        console.error("Error updating quiz questions:", error)
+        throw new TRPCError({
+          code: "BAD_REQUEST",
+          message: error.message || "Failed to update quiz questions",
+        })
+      }
+    }),
 })
