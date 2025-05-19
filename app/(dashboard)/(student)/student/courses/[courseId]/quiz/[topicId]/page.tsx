@@ -18,6 +18,7 @@ import { Banner } from "@/components/banner"
 import { Preview } from "@/components/preview"
 
 import { ChapterProgressButton } from "../../_components/chapter-progress-button"
+import { QuizAttemptHistory } from "../../_components/quiz-attempt-history"
 import { QuizStartForm } from "../../_components/quiz-start-form"
 
 const QuizTopicPage = async ({
@@ -98,23 +99,25 @@ const QuizTopicPage = async ({
   // Parse quiz questions
   const questions = topic.questions ? JSON.parse(topic.questions as string) : []
 
+  // Get completed attempts (with answers)
+  const completedAttempts =
+    quizAttempts?.filter((attempt) => attempt.answers) || []
+
   // Check if user has reached maximum attempts
   const hasAttempts =
-    !topic.allowedAttempts ||
-    (quizAttempts && quizAttempts.length < topic.allowedAttempts)
+    !topic.allowedAttempts || completedAttempts.length < topic.allowedAttempts
 
   // Check if user has already passed the quiz
   const hasPassed =
-    quizAttempts && quizAttempts.some((attempt) => attempt.passed)
+    completedAttempts.length > 0 &&
+    completedAttempts.some((attempt) => attempt.passed)
 
-  // Get latest attempt
-  const latestAttempt =
-    quizAttempts && quizAttempts.length > 0
-      ? quizAttempts.sort(
-          (a, b) =>
-            new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime()
-        )[0]
-      : null
+  // Check if all attempts are used
+  const allAttemptsUsed =
+    topic.allowedAttempts && completedAttempts.length >= topic.allowedAttempts
+
+  // Check if we should show answers (user passed or all attempts used)
+  const shouldShowAnswers = hasPassed || allAttemptsUsed
 
   return (
     <div>
@@ -145,12 +148,29 @@ const QuizTopicPage = async ({
 
         {/* Quiz information */}
         <div className="p-4">
-          {/* Previous attempts summary */}
-          {quizAttempts && quizAttempts.length > 0 && (
+          {/* Quiz description */}
+          <div className="mb-8">
+            <h3 className="text-lg font-semibold mb-2">Instructions</h3>
+            <Preview value={topic.description || "No instructions provided."} />
+          </div>
+
+          {/* Show completed attempts with answers if user has passed or used all attempts */}
+          {shouldShowAnswers && completedAttempts.length > 0 && (
+            <div className="mb-8">
+              <h3 className="text-lg font-semibold mb-4">Your Quiz Results</h3>
+              <QuizAttemptHistory
+                attempts={completedAttempts}
+                questions={questions}
+              />
+            </div>
+          )}
+
+          {/* Previous attempts summary when still taking quiz */}
+          {!shouldShowAnswers && completedAttempts.length > 0 && (
             <div className="mb-8">
               <h3 className="text-lg font-semibold mb-4">Previous Attempts</h3>
               <div className="space-y-2">
-                {quizAttempts.map((attempt) => (
+                {completedAttempts.map((attempt) => (
                   <div
                     key={attempt.id}
                     className={`p-4 border rounded-md ${
@@ -180,12 +200,6 @@ const QuizTopicPage = async ({
             </div>
           )}
 
-          {/* Quiz description */}
-          <div className="mb-8">
-            <h3 className="text-lg font-semibold mb-2">Instructions</h3>
-            <Preview value={topic.description || "No instructions provided."} />
-          </div>
-
           {/* Quiz form or messages */}
           {!hasAttempts && (
             <Banner
@@ -210,7 +224,7 @@ const QuizTopicPage = async ({
                 timeLimit={topic.timeLimit || undefined}
                 passingScore={topic.passingScore || undefined}
                 allowedAttempts={topic.allowedAttempts || undefined}
-                attemptsUsed={quizAttempts?.length || 0}
+                attemptsUsed={completedAttempts.length}
                 description={topic.description || ""}
               />
             </div>

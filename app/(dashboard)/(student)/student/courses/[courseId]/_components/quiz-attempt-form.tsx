@@ -23,7 +23,6 @@ import { Input } from "@/components/ui/input"
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group"
 import { Separator } from "@/components/ui/separator"
 import { Preview } from "@/components/preview"
-import TRPCProvider from "@/app/_trpc/Provider"
 import { trpc } from "@/app/_trpc/client"
 
 // Define the interface for quiz questions and options
@@ -51,6 +50,8 @@ interface QuizAttemptFormProps {
   passingScore?: number
   allowedAttempts?: number
   userId: string
+  attemptId: string
+  attemptStartTime: Date
 }
 
 // Dynamic form schema that will adapt to the questions
@@ -78,8 +79,7 @@ const createFormSchema = (questions: QuizQuestion[]) => {
   return z.object(schemaFields)
 }
 
-// The inner form component that uses trpc
-const QuizAttemptFormInner = ({
+export const QuizAttemptForm = ({
   topicId,
   courseId,
   questions,
@@ -87,12 +87,30 @@ const QuizAttemptFormInner = ({
   passingScore,
   allowedAttempts,
   userId,
+  attemptId,
+  attemptStartTime,
 }: QuizAttemptFormProps) => {
   const router = useRouter()
-  const [timeRemaining, setTimeRemaining] = useState<number | null>(
-    timeLimit ? timeLimit * 60 : null
-  )
+  const [timeRemaining, setTimeRemaining] = useState<number | null>(null)
   const [autoSubmitting, setAutoSubmitting] = useState(false)
+
+  // Calculate initial remaining time
+  useEffect(() => {
+    if (!timeLimit) return
+
+    // Calculate elapsed time in seconds
+    const startTime = new Date(attemptStartTime)
+    const now = new Date()
+    const elapsedSeconds = Math.floor(
+      (now.getTime() - startTime.getTime()) / 1000
+    )
+
+    // Calculate remaining time
+    const totalSeconds = timeLimit * 60
+    const remaining = Math.max(0, totalSeconds - elapsedSeconds)
+
+    setTimeRemaining(remaining)
+  }, [timeLimit, attemptStartTime])
 
   // Create form schema based on questions
   const formSchema = createFormSchema(questions)
@@ -117,7 +135,7 @@ const QuizAttemptFormInner = ({
   })
 
   const onSubmit = (values: FormValues) => {
-    // Calculate time taken - this will be calculated on the server
+    // Calculate time taken based on original time limit and remaining time
     const timeTaken = timeLimit ? timeLimit * 60 - (timeRemaining || 0) : 0
 
     // Format answers
@@ -138,7 +156,7 @@ const QuizAttemptFormInner = ({
 
   // Setup timer if there's a time limit
   useEffect(() => {
-    if (!timeLimit || !timeRemaining) return
+    if (!timeLimit || timeRemaining === null) return
 
     const timer = setInterval(() => {
       setTimeRemaining((prev) => {
@@ -322,14 +340,5 @@ const QuizAttemptFormInner = ({
         </form>
       </Form>
     </div>
-  )
-}
-
-// Wrapper component that provides TRPC context
-export const QuizAttemptForm = (props: QuizAttemptFormProps) => {
-  return (
-    <TRPCProvider>
-      <QuizAttemptFormInner {...props} />
-    </TRPCProvider>
   )
 }

@@ -13,6 +13,7 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card"
+import TRPCProvider from "@/app/_trpc/Provider"
 import { trpc } from "@/app/_trpc/client"
 
 interface QuizStartFormProps {
@@ -25,7 +26,8 @@ interface QuizStartFormProps {
   description: string
 }
 
-export const QuizStartForm = ({
+// Inner component that uses TRPC
+const QuizStartFormInner = ({
   topicId,
   courseId,
   timeLimit,
@@ -123,5 +125,14 @@ export const QuizStartForm = ({
         </div>
       </div>
     </div>
+  )
+}
+
+// Wrapper component that provides TRPC context
+export const QuizStartForm = (props: QuizStartFormProps) => {
+  return (
+    <TRPCProvider>
+      <QuizStartFormInner {...props} />
+    </TRPCProvider>
   )
 }
