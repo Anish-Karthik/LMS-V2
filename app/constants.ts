@@ -209,10 +209,10 @@ export const landingRoutes = [
     label: "Blog",
     href: "/blog",
   },
-  {
-    label: "Testimonials",
-    href: "/testimonials",
-  },
+  // {
+  //   label: "Testimonials",
+  //   href: "/testimonials",
+  // },
   // {
   //   label: "Policies",
   //   href: "/policies",

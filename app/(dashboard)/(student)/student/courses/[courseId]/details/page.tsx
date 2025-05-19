@@ -1,318 +1,347 @@
-"use client"
-
-import React, { useEffect, useState } from "react"
-import Image from "next/image"
-import { useParams, useRouter } from "next/navigation"
-import { Chapter, Course, Topic } from "@prisma/client"
-import { ChevronRight, Clock, Lock } from "lucide-react"
-
-import { formatPrice } from "@/lib/format"
+import { currentUser } from "@clerk/nextjs"
 import {
-  Accordion,
-  AccordionContent,
-  AccordionItem,
-  AccordionTrigger,
-} from "@/components/ui/accordion"
+  BookOpen,
+  CalendarDays,
+  Clock,
+  Users
+} from "lucide-react"
+import Image from "next/image"
+import { redirect } from "next/navigation"
+
 import { Badge } from "@/components/ui/badge"
 import { Button } from "@/components/ui/button"
-import CourseEnrollButton from "@/components/shared/course-enroll-button"
-import CurrentPathNavigator from "@/components/shared/current-pathname"
+import { getCourseById } from "@/lib/actions/course.actions"
+import { db } from "@/lib/db"
+import { formatPrice } from "@/lib/format"
 
-const CourseDetailsPage = () => {
-  const router = useRouter()
-  const params = useParams() as { courseId: string }
-  const [course, setCourse] = useState<Course | null>(null)
-  const [chapters, setChapters] = useState<(Chapter & { topics: Topic[] })[]>(
-    []
-  )
-  const [loading, setLoading] = useState(true)
-  const [userId, setUserId] = useState<string | null>(null)
-  const [batches, setBatches] = useState([])
-  const [isPurchased, setIsPurchased] = useState(false)
+import CourseReviews from "../_components/course-reviews"
+import CourseTestimonial from "../_components/course-testimonial"
 
-  useEffect(() => {
-    const fetchUserData = async () => {
-      try {
-        const res = await fetch("/api/user")
-        if (res.ok) {
-          const data = await res.json()
-          setUserId(data.userId)
+const CourseDetailsPage = async ({
+  params,
+}: {
+  params: { courseId: string }
+}) => {
+  const user = await currentUser()
+  if (!user) redirect("/sign-in")
 
-          // Check if user has already purchased the course
-          const purchaseRes = await fetch(
-            `/api/courses/${params.courseId}/purchase-status`
-          )
-          if (purchaseRes.ok) {
-            const purchaseData = await purchaseRes.json()
-            setIsPurchased(purchaseData.isPurchased)
+  // Get the course to check it exists
+  const course = await getCourseById(params.courseId)
+  if (!course) redirect("/student/courses")
 
-            // If purchased, redirect to the course page
-            if (purchaseData.isPurchased) {
-              router.push(`/student/courses/${params.courseId}`)
-            }
-          }
-        }
-      } catch (error) {
-        console.error("Error fetching user data:", error)
-      }
-    }
+  // Check if the user has purchased this course
+  const userPurchase = await db.purchase.findFirst({
+    where: {
+      userId: user.id,
+      courseId: params.courseId,
+    },
+  })
 
-    fetchUserData()
+  // Find the user object in the database (needed for testimonial)
+  const dbUser = await db.user.findUnique({
+    where: {
+      userId: user.id,
+    },
+  })
 
-    const fetchCourseData = async () => {
-      try {
-        setLoading(true)
-        // Fetch course details
-        const courseRes = await fetch(`/api/courses/${params.courseId}`)
-        if (!courseRes.ok) {
-          throw new Error("Failed to fetch course")
-        }
-        const courseData = await courseRes.json()
-        setCourse(courseData)
-
-        // Get batches for the course if needed
-        if (courseData.type === "batch-based") {
-          const batchesRes = await fetch(
-            `/api/courses/${params.courseId}/batches`
-          )
-          if (batchesRes.ok) {
-            const batchesData = await batchesRes.json()
-            setBatches(batchesData)
-          }
-        }
-
-        // Only fetch chapters for self-paced courses
-        if (courseData.type === "self-paced") {
-          const chaptersRes = await fetch(
-            `/api/courses/${params.courseId}/chapters`
-          )
-          if (!chaptersRes.ok) {
-            throw new Error("Failed to fetch chapters")
-          }
-          const chaptersData = await chaptersRes.json()
-          setChapters(chaptersData)
-        }
-      } catch (error) {
-        console.error("Error fetching data:", error)
-        // Redirect on error
-        router.push("/student/courses")
-      } finally {
-        setLoading(false)
-      }
-    }
-
-    fetchCourseData()
-  }, [params.courseId, router])
-
-  if (loading) {
-    return (
-      <div className="container mx-auto p-6 flex justify-center items-center min-h-[50vh]">
-        <div className="text-center">
-          <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-primary mx-auto"></div>
-          <p className="mt-4 text-slate-600">Loading course details...</p>
-        </div>
-      </div>
-    )
+  if (!dbUser) {
+    redirect("/student/courses")
   }
 
-  if (!course) return null
+  // Find user's testimonial for this course
+  const userTestimonial = await db.testimonial.findFirst({
+    where: {
+      userObjId: dbUser.id,
+      courseId: params.courseId,
+    },
+  })
 
-  const totalTopics = chapters.reduce(
-    (acc, chapter) => acc + chapter.topics.length,
-    0
-  )
+  // Fetch all published testimonials for this course
+  const courseTestimonials = await db.testimonial.findMany({
+    where: {
+      courseId: params.courseId,
+      isPublished: true,
+    },
+    include: {
+      user: {
+        select: {
+          name: true,
+          image: true,
+        },
+      },
+    },
+    orderBy: {
+      createdAt: "desc",
+    },
+  })
 
-  // For batch-based courses, show a simpler UI with just course info
-  if (course.type !== "self-paced") {
-    return (
-      <>
-        <CurrentPathNavigator />
-        <div className="container mx-auto p-6">
-          <div className="max-w-3xl mx-auto">
-            <h1 className="text-3xl font-bold mb-4">{course.title}</h1>
-            <div className="mb-6">
-              <p className="text-gray-700">{course.description}</p>
-            </div>
+  // Calculate average rating
+  const averageRating =
+    courseTestimonials.length > 0
+      ? courseTestimonials.reduce((acc, t) => acc + t.rating, 0) /
+        courseTestimonials.length
+      : 0
 
-            <div className="rounded-md p-6 my-6">
-              <h2 className="text-xl font-semibold mb-2">Course Information</h2>
-              <p className="mb-4">
-                This is a batch-based course, which means you'll join scheduled
-                sessions with an instructor.
-              </p>
-              <div className="mt-4 border-t pt-4">
-                <p className="font-bold text-xl mb-4">
-                  {formatPrice(course.price || 0)}
-                </p>
-                {userId ? (
-                  <Button
-                    className="w-full md:w-auto bg-emerald-600 hover:bg-emerald-700"
-                    size="lg"
-                    onClick={() =>
-                      router.push(
-                        `/purchase/${course.id}`
-                      )
-                    }
-                  >
-                    Enroll
-                  </Button>
-                ) : (
-                  <Button
-                    className="w-full md:w-auto bg-emerald-600 hover:bg-emerald-700"
-                    size="lg"
-                    onClick={() =>
-                      router.push(
-                        `/sign-in?redirect=${encodeURIComponent(
-                          window.location.pathname
-                        )}`
-                      )
-                    }
-                  >
-                    Sign in to Purchase
-                  </Button>
-                )}
-              </div>
-            </div>
-          </div>
-        </div>
-      </>
-    )
-  }
+  // Get teacher information
+  const teacherInfo = await db.teacher.findMany({
+    where: {
+      courseIds: {
+        has: params.courseId,
+      },
+    },
+    include: {
+      user: {
+        select: {
+          name: true,
+          image: true,
+        },
+      },
+    },
+  })
 
   return (
-    <>
-      <CurrentPathNavigator />
-      <div className="container mx-auto p-6">
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-          <div className="md:col-span-2">
-            <h1 className="text-3xl font-bold mb-4">{course.title}</h1>
-            <div className="mb-6">
-              <p className="text-gray-700">{course.description}</p>
+    <div className="container py-8">
+      <div className="grid grid-cols-1 lg:grid-cols-3 gap-10">
+        {/* Main content area - Course details */}
+        <div className="lg:col-span-2 space-y-8">
+          {/* Course image and basic info */}
+          <div className="relative rounded-xl overflow-hidden">
+            <div className="aspect-video w-full">
+              <Image
+                src={course.imageUrl || "/placeholder-course.jpg"}
+                alt={course.title}
+                fill
+                className="object-cover"
+              />
             </div>
-            {/* Load Course Image */}
-            <Image
-              src={course.imageUrl || ""}
-              alt={course.title}
-              width={800}
-              height={500}
-              className="rounded-md"
-            />
+          </div>
 
-            <div className="mb-8">
-              <h2 className="text-xl font-semibold mb-4">Course Content</h2>
-              <div className="rounded-md p-4 mb-4">
-                <div className="flex justify-between items-center mb-4">
-                  <span className="text-sm text-slate-600">
-                    {chapters.length}{" "}
-                    {chapters.length === 1 ? "chapter" : "chapters"} •{" "}
-                    {totalTopics} {totalTopics === 1 ? "topic" : "topics"}
+          {/* Course title and overview */}
+          <div>
+            <h1 className="text-3xl font-bold mb-3">{course.title}</h1>
+            <div className="flex items-center space-x-4 mb-4">
+              <Badge
+                variant={course.type === "self-paced" ? "secondary" : "default"}
+              >
+                {course.type === "self-paced" ? "Self-paced" : "Batch-based"}
+              </Badge>
+              {averageRating > 0 && (
+                <div className="flex items-center">
+                  <span className="text-yellow-500">★</span>
+                  <span className="ml-1 font-medium">
+                    {averageRating.toFixed(1)}
                   </span>
-                  <Badge className="bg-blue-600">
-                    <Clock className="h-3 w-3 mr-1" />
-                    Self-paced
-                  </Badge>
+                  <span className="ml-1 text-muted-foreground">
+                    ({courseTestimonials.length} reviews)
+                  </span>
                 </div>
+              )}
+            </div>
 
-                <Accordion type="single" collapsible className="w-full">
-                  {chapters.map((chapter) => (
-                    <AccordionItem
-                      key={chapter.id}
-                      value={chapter.id}
-                      className="border-b border-slate-200"
-                    >
-                      <AccordionTrigger className="py-4 hover:no-underline">
-                        <div className="flex items-start text-left">
-                          <span className="font-medium">{chapter.title}</span>
-                        </div>
-                      </AccordionTrigger>
-                      <AccordionContent>
-                        <div className="space-y-2 pl-4">
-                          {chapter.topics.map((topic) => (
-                            <div
-                              key={topic.id}
-                              className="flex items-center justify-between py-2 text-sm"
-                            >
-                              <div className="flex items-center gap-2">
-                                <ChevronRight className="h-4 w-4 text-slate-500" />
-                                <span>{topic.title}</span>
-                                {topic.isFree && (
-                                  <Badge className="bg-emerald-600 text-xs">
-                                    Free
-                                  </Badge>
-                                )}
-                              </div>
-                              {!topic.isFree && (
-                                <Lock className="h-4 w-4 text-slate-400" />
-                              )}
-                            </div>
-                          ))}
-                        </div>
-                      </AccordionContent>
-                    </AccordionItem>
-                  ))}
-                </Accordion>
+            <p className="text-lg text-muted-foreground">
+              {course.description ||
+                "No description available for this course."}
+            </p>
+          </div>
+
+          {/* Course features */}
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
+            <div className="bg-background rounded-lg p-4 shadow-sm border">
+              <div className="flex flex-col items-center text-center">
+                <Clock className="h-8 w-8 text-primary mb-2" />
+                <h3 className="font-medium">Learning Format</h3>
+                <p className="text-sm text-muted-foreground">
+                  {course.type === "self-paced"
+                    ? "Learn at your own pace"
+                    : "Scheduled sessions"}
+                </p>
+              </div>
+            </div>
+            <div className="bg-background rounded-lg p-4 shadow-sm border">
+              <div className="flex flex-col items-center text-center">
+                <Users className="h-8 w-8 text-primary mb-2" />
+                <h3 className="font-medium">Expert Teachers</h3>
+                <p className="text-sm text-muted-foreground">
+                  {teacherInfo.length} instructor
+                  {teacherInfo.length !== 1 ? "s" : ""}
+                </p>
+              </div>
+            </div>
+            <div className="bg-background rounded-lg p-4 shadow-sm border">
+              <div className="flex flex-col items-center text-center">
+                <CalendarDays className="h-8 w-8 text-primary mb-2" />
+                <h3 className="font-medium">Access</h3>
+                <p className="text-sm text-muted-foreground">Lifetime access</p>
+              </div>
+            </div>
+            <div className="bg-background rounded-lg p-4 shadow-sm border">
+              <div className="flex flex-col items-center text-center">
+                <BookOpen className="h-8 w-8 text-primary mb-2" />
+                <h3 className="font-medium">Resources</h3>
+                <p className="text-sm text-muted-foreground">
+                  Downloadable materials
+                </p>
               </div>
             </div>
           </div>
 
-          <div className="md:col-span-1">
-            <div className="border border-slate-200 rounded-md p-6 sticky top-24">
-              <div className="mb-4">
-                <h3 className="text-2xl font-bold mb-2">
-                  {formatPrice(course.price || 0)}
-                </h3>
+          {/* Instructors section */}
+          {teacherInfo.length > 0 && (
+            <div className="bg-background rounded-xl p-6 shadow-sm border">
+              <h2 className="text-2xl font-bold mb-4">Your Instructors</h2>
+              <div className="space-y-4">
+                {teacherInfo.map((teacher) => (
+                  <div key={teacher.id} className="flex items-start gap-4">
+                    <div className="relative h-12 w-12 rounded-full overflow-hidden">
+                      {teacher.user.image ? (
+                        <Image
+                          src={teacher.user.image}
+                          alt={teacher.user.name}
+                          fill
+                          className="object-cover"
+                        />
+                      ) : (
+                        <div className="bg-primary h-full w-full flex items-center justify-center text-white font-bold">
+                          {teacher.user.name.charAt(0)}
+                        </div>
+                      )}
+                    </div>
+                    <div>
+                      <h3 className="font-bold">{teacher.user.name}</h3>
+                      <p className="text-sm text-muted-foreground">
+                        Course Instructor
+                      </p>
+                    </div>
+                  </div>
+                ))}
               </div>
+            </div>
+          )}
 
-              {userId ? (
-                  <Button
-                    className="w-full md:w-auto bg-emerald-600 hover:bg-emerald-700"
-                    size="lg"
-                    onClick={() =>
-                      router.push(
-                        `/purchase/${course.id}`
-                      )
-                    }
-                  >
-                    Enroll
-                  </Button>
+          {/* Reviews section */}
+          <div className="bg-background rounded-xl p-6 shadow-sm border">
+            <h2 className="text-2xl font-bold mb-4">Student Reviews</h2>
+            <CourseReviews
+              courseId={params.courseId}
+              // initialTestimonials={courseTestimonials}
+            />
+          </div>
+        </div>
+
+        {/* Sidebar content - Purchase & Review */}
+        <div className="lg:col-span-1">
+          <div className="sticky top-24 space-y-6">
+            {/* Price card */}
+            <div className="bg-background rounded-xl p-6 shadow-sm border">
+              <h2 className="text-2xl font-bold mb-4">
+                {formatPrice(course.price || 0)}
+              </h2>
+              {userPurchase ? (
+                <Button size="lg" className="w-full mb-4" asChild>
+                  <a href={`/student/courses/${params.courseId}`}>
+                    Go to Course
+                  </a>
+                </Button>
               ) : (
-                <Button
-                  className="w-full mb-4 bg-emerald-600 hover:bg-emerald-700"
-                  size="lg"
-                  onClick={() =>
-                    router.push(
-                      `/sign-in?redirect=${encodeURIComponent(
-                        window.location.pathname
-                      )}`
-                    )
-                  }
-                >
-                  Sign in to Purchase
+                <Button size="lg" className="w-full mb-4" asChild>
+                  <a href={`/purchase/${params.courseId}`}>Enroll Now</a>
                 </Button>
               )}
 
-              <div className="space-y-4 text-sm">
-                <div className="flex items-center gap-2">
-                  <ChevronRight className="h-4 w-4 text-emerald-600" />
-                  <span>
-                    Access to {chapters.length}{" "}
-                    {chapters.length === 1 ? "chapter" : "chapters"}
-                  </span>
-                </div>
-                <div className="flex items-center gap-2">
-                  <ChevronRight className="h-4 w-4 text-emerald-600" />
-                  <span>Full lifetime access</span>
-                </div>
-                <div className="flex items-center gap-2">
-                  <ChevronRight className="h-4 w-4 text-emerald-600" />
-                  <span>Learn at your own pace</span>
-                </div>
+              <div className="pt-4 border-t">
+                <h3 className="font-medium mb-2">This course includes:</h3>
+                <ul className="space-y-2 text-sm">
+                  <li className="flex items-center">
+                    <svg
+                      className="h-5 w-5 text-green-500 mr-2"
+                      fill="none"
+                      viewBox="0 0 24 24"
+                      stroke="currentColor"
+                    >
+                      <path
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                        strokeWidth={2}
+                        d="M5 13l4 4L19 7"
+                      />
+                    </svg>
+                    {course.type === "self-paced"
+                      ? "Self-paced learning"
+                      : "Live instructor sessions"}
+                  </li>
+                  <li className="flex items-center">
+                    <svg
+                      className="h-5 w-5 text-green-500 mr-2"
+                      fill="none"
+                      viewBox="0 0 24 24"
+                      stroke="currentColor"
+                    >
+                      <path
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                        strokeWidth={2}
+                        d="M5 13l4 4L19 7"
+                      />
+                    </svg>
+                    Downloadable resources
+                  </li>
+                  <li className="flex items-center">
+                    <svg
+                      className="h-5 w-5 text-green-500 mr-2"
+                      fill="none"
+                      viewBox="0 0 24 24"
+                      stroke="currentColor"
+                    >
+                      <path
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                        strokeWidth={2}
+                        d="M5 13l4 4L19 7"
+                      />
+                    </svg>
+                    Full lifetime access
+                  </li>
+                  <li className="flex items-center">
+                    <svg
+                      className="h-5 w-5 text-green-500 mr-2"
+                      fill="none"
+                      viewBox="0 0 24 24"
+                      stroke="currentColor"
+                    >
+                      <path
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                        strokeWidth={2}
+                        d="M5 13l4 4L19 7"
+                      />
+                    </svg>
+                    Access on mobile and desktop
+                  </li>
+                </ul>
               </div>
+            </div>
+
+            {/* Your review card */}
+            <div className="bg-background rounded-xl p-6 shadow-sm border">
+              <h2 className="text-xl font-bold mb-4">Your Review</h2>
+              {userPurchase ? (
+                <CourseTestimonial
+                  courseId={params.courseId}
+                  userObjId={dbUser.id}
+                  existingTestimonial={userTestimonial}
+                />
+              ) : (
+                <div>
+                  <p className="text-muted-foreground text-sm">
+                    You must purchase this course to leave a review.
+                  </p>
+                </div>
+              )}
             </div>
           </div>
         </div>
       </div>
-    </>
+    </div>
   )
 }
 

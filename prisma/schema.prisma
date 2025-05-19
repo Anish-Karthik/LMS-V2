@@ -130,6 +130,7 @@ model Course {
   batches       Batch[]
   announcements Announcement[]
   Purchase      Purchase[]
+  testimonials  Testimonial[]
 
   // New direct relationship with chapters for self-paced courses
   chapters Chapter[] @relation("CourseToChapter")
@@ -362,14 +363,21 @@ model RazorpayPurchase {
 }
 
 model Testimonial {
-  id          String   @id @default(auto()) @map("_id") @db.ObjectId
-  rating      Int      @default(5)
+  id          String  @id @default(auto()) @map("_id") @db.ObjectId
+  rating      Int     @default(5)
   description String
-  isPublished Boolean  @default(false)
-  userObjId   String   @db.ObjectId
-  user        User     @relation(fields: [userObjId], references: [id], onDelete: Cascade)
-  createdAt   DateTime @default(now())
-  updatedAt   DateTime @updatedAt
+  isPublished Boolean @default(true)
+  userObjId   String  @db.ObjectId
+  user        User    @relation(fields: [userObjId], references: [id], onDelete: Cascade)
+
+  courseId String @db.ObjectId
+  course   Course @relation(fields: [courseId], references: [id], onDelete: Cascade)
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@unique([userObjId, courseId])
+  @@index([courseId])
 }
 
 // New model for tracking quiz attempts

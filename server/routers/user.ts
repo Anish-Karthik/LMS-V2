@@ -655,8 +655,7 @@ export const userRouter = router({
                         },
                         quizAttempts: {
                           where: {
-                            userId,
-                            answers: { not: null }, // Only completed attempts
+                            userId // Only completed attempts
                           },
                           select: {
                             id: true,

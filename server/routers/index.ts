@@ -24,5 +24,15 @@ export const appRouter = router({
 })
 
 export type AppRouter = typeof appRouter
-export { promoRouter, announcementRouter, batchRouter, chapterRouter, courseRouter, testimonialRouter, topicRouter, userRouter, attendanceRouter, quizRouter }
-
+export {
+  promoRouter,
+  announcementRouter,
+  batchRouter,
+  chapterRouter,
+  courseRouter,
+  testimonialRouter,
+  topicRouter,
+  userRouter,
+  attendanceRouter,
+  quizRouter,
+}
