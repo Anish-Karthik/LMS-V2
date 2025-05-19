@@ -54,7 +54,7 @@ export const topicRouter = router({
         isFree: z.boolean().optional(),
 
         // Live class fields
-        startTime: z.date().optional(),
+        startTime: z.coerce.date().optional(),
         duration: z.number().optional(),
         liveLink: z.string().optional(),
 

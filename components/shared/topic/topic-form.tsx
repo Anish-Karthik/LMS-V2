@@ -163,7 +163,10 @@ export const TopicForm = ({
         isFree: values.isFree,
 
         // Live class fields
-        startTime: values.type === "live" ? values.startTime : undefined,
+        startTime:
+          values.type === "live" && values.startTime
+            ? new Date(values.startTime)
+            : undefined,
         duration: values.type === "live" ? values.duration : undefined,
         liveLink: values.type === "live" ? values.liveLink : undefined,
 
