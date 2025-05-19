@@ -42,8 +42,12 @@ const CourseReviewsInner = ({
   }
 
   // Calculate average rating
-  const averageRating =
-    testimonials.reduce((acc, t) => acc + t.rating, 0) / testimonials.length
+  // @ts-ignore
+  const sumRatings = testimonials.reduce(
+    (total: number, testimonial: any) => total + testimonial.rating,
+    0
+  )
+  const averageRating = sumRatings / testimonials.length
 
   return (
     <div className="space-y-6">
