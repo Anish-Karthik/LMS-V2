@@ -52,7 +52,7 @@ const LandingNavbar = ({
           </div>
           <div className="max-sm:hidden">
             <h1 className={cn("text-2xl font-bold", font.className)}>
-              PRAGLIS
+              CLOVERS
             </h1>
           </div>
         </Link>
@@ -74,14 +74,16 @@ const LandingNavbar = ({
 
       <div className="flex items-center gap-2">
         {/* <ThemeToggle /> */}
-        {courses.length > 0 && <Link href={route || `/purchase/${courses[0].id}` || "/purchase"}>
-          <Button variant="outline" className="rounded-full">
-            {!route ||
-            !(route?.includes("teacher") || route?.includes("student"))
-              ? "Purchase Now"
-              : "Dashboard"}
-          </Button>
-        </Link>}
+        {courses.length > 0 && (
+          <Link href={route || `/purchase/${courses[0].id}` || "/purchase"}>
+            <Button variant="outline" className="rounded-full">
+              {!route ||
+              !(route?.includes("teacher") || route?.includes("student"))
+                ? "Purchase Now"
+                : "Dashboard"}
+            </Button>
+          </Link>
+        )}
         {pathname.split("/").length < 2 && (
           <Link
             href={

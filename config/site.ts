@@ -1,9 +1,9 @@
 export type SiteConfig = typeof siteConfig
 
 export const siteConfig = {
-  name: "Praglis",
+  name: "Clovers",
   description:
-    "Praglis is a platform for learning and training to trade online. We provide tools to help you create and analyse your own online trades.",
+    "Clovers is a platform for learning and training to trade online. We provide tools to help you create and analyse your own online trades.",
   mainNav: [
     {
       title: "Home",

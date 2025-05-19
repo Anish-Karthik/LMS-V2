@@ -39,7 +39,7 @@ const details = [
     heading: "Earn",
     subheading: "Achieve financial success",
     description:
-      "As you progress, witness the transformation of your skills into financial success. Praglis alumni have consistently achieved their earning goals. Join the ranks of successful traders who have turned their education into a profitable venture.",
+      "As you progress, witness the transformation of your skills into financial success. Clovers alumni have consistently achieved their earning goals. Join the ranks of successful traders who have turned their education into a profitable venture.",
     image: "/landing/earn.jpg",
     className: "bg-pink-color/90 text-purple-color",
     color: "",

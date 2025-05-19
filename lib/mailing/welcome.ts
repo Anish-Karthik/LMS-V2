@@ -127,11 +127,11 @@ export const sendWelcomeEmail = async (email: string, name: string) => {
           </style>
           <div class="email-container">
             <div class="header">
-              <h1>Welcome to Praglis!</h1>
+              <h1>Welcome to Clovers!</h1>
             </div>
             <div class="content">
               <p>Hi ${name},</p>
-              <p>Thank you for joining us! We're excited to have you on board. Here at Praglis, we strive to provide
+              <p>Thank you for joining us! We're excited to have you on board. Here at Clovers, we strive to provide
                 the best experience for our users.</p>
               <p>To get started, click the button to view course</p>
               <p style="text-align: center;">
@@ -139,10 +139,10 @@ export const sendWelcomeEmail = async (email: string, name: string) => {
               </p>
               <p>If you have any questions, feel free to reply to this email or visit our <a href="${contactPage}">support
                   page</a>.</p>
-              <p>Best regards,<br>The Praglis Team</p>
+              <p>Best regards,<br>The Clovers Team</p>
             </div>
             <div class="footer">
-              <p>© ${currentYear} Praglis. All rights reserved.</p>
+              <p>© ${currentYear} Clovers. All rights reserved.</p>
             </div>
           </div>
         </body>
@@ -151,7 +151,7 @@ export const sendWelcomeEmail = async (email: string, name: string) => {
     console.log(process.env.NEXT_PUBLIC_APP_URL)
     sendmail({
       to: [email],
-      subject: "Welcome to Praglis!",
+      subject: "Welcome to Clovers!",
       html: welcomeMailTemplate,
     })
   } catch (err) {

@@ -34,7 +34,7 @@ const DashBoardLayout = async ({
             {/* <TeamSwitcher /> */}
             <Image
               src={"/images/logo2.jpg"}
-              alt="PRAGLIS"
+              alt="CLOVERS"
               width={50}
               height={50}
             />

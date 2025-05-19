@@ -34,7 +34,7 @@ const advantages = [
   {
     heading: "Cutting-edge resources",
     description:
-      "Stay ahead of the curve with access to cutting-edge tools and resources. Praglis provides you with the latest market analysis, research reports, and trading software to sharpen your skills.",
+      "Stay ahead of the curve with access to cutting-edge tools and resources. Clovers provides you with the latest market analysis, research reports, and trading software to sharpen your skills.",
     image: "/landing/brain.svg",
   },
   {
@@ -51,7 +51,7 @@ const words = [
       "rounded-md bg-gradient-to-r from-orange-500 to-pink-500 bg-clip-text text-transparent landing-section_header max-sm:!text-2xl",
   },
   {
-    text: "Praglis",
+    text: "Clovers",
     className:
       "rounded-md bg-gradient-to-r from-pink-500 to-violet-500 bg-clip-text text-transparent landing-section_header max-sm:!text-2xl",
   },

@@ -21,7 +21,7 @@ const page = async () => {
       <div className="mx-auto mb-24 mt-12 flex w-full max-w-4xl flex-col items-start">
         <div className="ml-4 mt-8 w-full">
           <h1 className="text-center text-4xl font-bold">
-            Latest Blogs from PRAGLIS
+            Latest Blogs from CLOVERS
           </h1>
         </div>
         <AnnouncementPage

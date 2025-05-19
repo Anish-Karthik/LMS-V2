@@ -83,11 +83,11 @@ const HeaderCard = () => {
 
       <h1 className="xs:text-4xl text-center text-3xl font-extrabold sm:text-5xl md:text-6xl">
         <span className="absolute -z-10 rounded-md bg-black/90 px-4 py-2 text-center text-transparent blur-xl">
-          Smartly with Praglis
+          Smartly with Clovers
         </span>
         Smartly with{" "}
         <span className="z-50 rounded-md bg-gradient-to-r from-pink-500 to-purple-500 bg-clip-text text-center text-transparent">
-          Praglis
+          Clovers
         </span>
       </h1>
       <h1 className="max-w-4xl text-5xl font-extrabold">
@@ -105,7 +105,7 @@ const ContentCard = () => {
   return (
     <section>
       <h1 className="xs:text-xl my-2 text-center text-lg font-extrabold md:text-2xl">
-        From Novice to Ninja: Praglis trading community unlocks your trading
+        From Novice to Ninja: Clovers trading community unlocks your trading
         potential
       </h1>
     </section>

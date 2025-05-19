@@ -11,7 +11,7 @@ const testimonials1 = [
     avatar: "N",
     title: "Student",
     description:
-      "Hello all This is Nikhil S, I recently had the opportunity to attend a trading course offered by Praglis, and I must say, it was an enlightening experience ,the course was meticulously structured by Siddharth my college senior. As someone new to the trading arena, the comprehensive curriculum designed by them not only laid down the fundamentals but also seamlessly integrated advanced trading strategies in an easy-to-understand manner. I joined the team as Cohort /Batch 3 and now I have even evolved to do paper trading and practice more. All thanks to team.",
+      "Hello all This is Nikhil S, I recently had the opportunity to attend a trading course offered by Clovers, and I must say, it was an enlightening experience ,the course was meticulously structured by Siddharth my college senior. As someone new to the trading arena, the comprehensive curriculum designed by them not only laid down the fundamentals but also seamlessly integrated advanced trading strategies in an easy-to-understand manner. I joined the team as Cohort /Batch 3 and now I have even evolved to do paper trading and practice more. All thanks to team.",
     svg: (
       <svg
         width="101"
@@ -505,14 +505,14 @@ const testimonials1 = [
   // Name: Akash
   // Occupation : Student
 
-  // Bro you are the one who jst taught the very basics of the market.And the support u gave to me naan ivlo live support irukkum neenga kathukratha again solli kuduppinganuh ellam nenachu kooda pakkala trading la evlo learn pannalum the credit is always to praglis(SID&ADHI). Unga way of teaching is something nxt lvl still Enakku neenga sonna examples mindla irukku. Tq bro
+  // Bro you are the one who jst taught the very basics of the market.And the support u gave to me naan ivlo live support irukkum neenga kathukratha again solli kuduppinganuh ellam nenachu kooda pakkala trading la evlo learn pannalum the credit is always to clovers(SID&ADHI). Unga way of teaching is something nxt lvl still Enakku neenga sonna examples mindla irukku. Tq bro
 
   {
     name: "Akash",
     avatar: "A",
     title: "Student",
     description:
-      "Bro you are the one who jst taught the very basics of the market.And the support u gave to me naan ivlo live support irukkum neenga kathukratha again solli kuduppinganuh ellam nenachu kooda pakkala trading la evlo learn pannalum the credit is always to praglis(SID&ADHI). Unga way of teaching is something nxt lvl still Enakku neenga sonna examples mindla irukku. Tq bro",
+      "Bro you are the one who jst taught the very basics of the market.And the support u gave to me naan ivlo live support irukkum neenga kathukratha again solli kuduppinganuh ellam nenachu kooda pakkala trading la evlo learn pannalum the credit is always to clovers(SID&ADHI). Unga way of teaching is something nxt lvl still Enakku neenga sonna examples mindla irukku. Tq bro",
     svg: (
       <svg
         width="101"
@@ -676,14 +676,14 @@ const testimonials1 = [
   // Name : Mohana Priya
   // Occupation: Software Engineer
 
-  // Praglis team has handled excellent and highly comprehensive trading sessions, which is really impressive. With examples from real world situations, their explanations of everything from fundamentals to trade setup for swing and intraday sessions were outstanding.From my experience, I can tell that it is really detailed oriented session for people with no prior market expertise. In fact I can state that we are making money by following every idea that has been covered in class with proper risk management.
+  // Clovers team has handled excellent and highly comprehensive trading sessions, which is really impressive. With examples from real world situations, their explanations of everything from fundamentals to trade setup for swing and intraday sessions were outstanding.From my experience, I can tell that it is really detailed oriented session for people with no prior market expertise. In fact I can state that we are making money by following every idea that has been covered in class with proper risk management.
 
   {
     name: "Mohana Priya",
     avatar: "M",
     title: "Software Engineer",
     description:
-      "Praglis team has handled excellent and highly comprehensive trading sessions, which is really impressive. With examples from real world situations, their explanations of everything from fundamentals to trade setup for swing and intraday sessions were outstanding.From my experience, I can tell that it is really detailed oriented session for people with no prior market expertise. In fact I can state that we are making money by following every idea that has been covered in class with proper risk management.",
+      "Clovers team has handled excellent and highly comprehensive trading sessions, which is really impressive. With examples from real world situations, their explanations of everything from fundamentals to trade setup for swing and intraday sessions were outstanding.From my experience, I can tell that it is really detailed oriented session for people with no prior market expertise. In fact I can state that we are making money by following every idea that has been covered in class with proper risk management.",
     svg: (
       <svg
         width="101"
@@ -847,14 +847,14 @@ const testimonials1 = [
   // Name: Harritha S.
   // Occupation : Software Developer
 
-  // I always want to make passive income as I don't have to spend my time and tried Praglis course to know about trading and stuff. As I started the course just happened to learn a lot about trading and stocks. So it is my first and best thing I have ever done to increase my income. It greatly improves my view on the stock market. Just thankful for the Praglis team
+  // I always want to make passive income as I don't have to spend my time and tried Clovers course to know about trading and stuff. As I started the course just happened to learn a lot about trading and stocks. So it is my first and best thing I have ever done to increase my income. It greatly improves my view on the stock market. Just thankful for the Clovers team
 
   {
     name: "Harritha S.",
     avatar: "H",
     title: "Software Developer",
     description:
-      "I always want to make passive income as I don't have to spend my time and tried Praglis course to know about trading and stuff. As I started the course just happened to learn a lot about trading and stocks. So it is my first and best thing I have ever done to increase my income. It greatly improves my view on the stock market. Just thankful for the Praglis team",
+      "I always want to make passive income as I don't have to spend my time and tried Clovers course to know about trading and stuff. As I started the course just happened to learn a lot about trading and stocks. So it is my first and best thing I have ever done to increase my income. It greatly improves my view on the stock market. Just thankful for the Clovers team",
     svg: (
       <svg
         width="101"
@@ -1018,14 +1018,14 @@ const testimonials1 = [
   // Name: Dharani
   // Occupation : Student
 
-  // Praglis is really a friendly environment to learn trade, the lectures and the course was informative.We could find opportunities for real time experience on the concepts. Enough provisions and support was extended for clarifying our doubts .Interactive live sessions were the best ones to know the live market movements and practical concepts of taking a trade was clearly explained.The team is always helpful in clearing doubts and the sufficient resources were provided for further understanding and development.Praglis is simply a neat and organized teaching team to learn and earn in trade.
+  // Clovers is really a friendly environment to learn trade, the lectures and the course was informative.We could find opportunities for real time experience on the concepts. Enough provisions and support was extended for clarifying our doubts .Interactive live sessions were the best ones to know the live market movements and practical concepts of taking a trade was clearly explained.The team is always helpful in clearing doubts and the sufficient resources were provided for further understanding and development.Clovers is simply a neat and organized teaching team to learn and earn in trade.
 
   {
     name: "Dharani",
     avatar: "D",
     title: "Student",
     description:
-      "Praglis is really a friendly environment to learn trade, the lectures and the course was informative.We could find opportunities for real time experience on the concepts. Enough provisions and support was extended for clarifying our doubts .Interactive live sessions were the best ones to know the live market movements and practical concepts of taking a trade was clearly explained.The team is always helpful in clearing doubts and the sufficient resources were provided for further understanding and development.Praglis is simply a neat and organized teaching team to learn and earn in trade.",
+      "Clovers is really a friendly environment to learn trade, the lectures and the course was informative.We could find opportunities for real time experience on the concepts. Enough provisions and support was extended for clarifying our doubts .Interactive live sessions were the best ones to know the live market movements and practical concepts of taking a trade was clearly explained.The team is always helpful in clearing doubts and the sufficient resources were provided for further understanding and development.Clovers is simply a neat and organized teaching team to learn and earn in trade.",
     svg: (
       <svg
         width="101"
@@ -1189,7 +1189,7 @@ const testimonials1 = [
   // Name: Ashik Raja
   // Occupation : Business
 
-  // A very well versed beginner’s course for learning the basics of the stock market - the main objective of this course offered by Praglis team is understanding the technical analysis of market by using candle sticks , and insight about the fundamentals analysis .
+  // A very well versed beginner’s course for learning the basics of the stock market - the main objective of this course offered by Clovers team is understanding the technical analysis of market by using candle sticks , and insight about the fundamentals analysis .
 
   // The presentation and explanation of the course which covers various tools is crystal clear and easy to understand even for a person who doesn’t know anything about share market !
 
@@ -1206,7 +1206,7 @@ const testimonials1 = [
     avatar: "A",
     title: "Business",
     description:
-      "A very well versed beginner’s course for learning the basics of the stock market - the main objective of this course offered by Praglis team is understanding the technical analysis of market by using candle sticks , and insight about the fundamentals analysis .The presentation and explanation of the course which covers various tools is crystal clear and easy to understand even for a person who doesn’t know anything about share market !The highlight of joining this course is , the team continues to offer you a discord group where the traders are interacting with each other and explains the trend of the market which gives us an overview about how the trades are done correctly!The guidance for trading is given for life time is an added advantage.I felt it to be a very useful course, hope you too will find.Thanks",
+      "A very well versed beginner’s course for learning the basics of the stock market - the main objective of this course offered by Clovers team is understanding the technical analysis of market by using candle sticks , and insight about the fundamentals analysis .The presentation and explanation of the course which covers various tools is crystal clear and easy to understand even for a person who doesn’t know anything about share market !The highlight of joining this course is , the team continues to offer you a discord group where the traders are interacting with each other and explains the trend of the market which gives us an overview about how the trades are done correctly!The guidance for trading is given for life time is an added advantage.I felt it to be a very useful course, hope you too will find.Thanks",
     svg: (
       <svg
         width="101"

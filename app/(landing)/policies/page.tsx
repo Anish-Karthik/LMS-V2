@@ -21,11 +21,11 @@ const termsAndConditions: (NestedSection | SimpleSection)[] = [
     heading: "Terms & Conditions",
     content: [
       <span>
-        Welcome to Praglis! These terms and conditions outline the rules and
-        regulations for the use of Praglis&apos;s Website, located at
-        <Link href={"https://www.praglis.in/"}>https://www.praglis.in/</Link>
+        Welcome to Clovers! These terms and conditions outline the rules and
+        regulations for the use of Clovers&apos;s Website, located at
+        <Link href={"https://www.clovers.in/"}>https://www.clovers.in/</Link>
       </span>,
-      `By accessing this website, we assume you accept these terms and conditions. Do not continue to use Praglis if you do not agree to take all of the terms and conditions stated on this page.`,
+      `By accessing this website, we assume you accept these terms and conditions. Do not continue to use Clovers if you do not agree to take all of the terms and conditions stated on this page.`,
     ],
   },*/
   {
@@ -45,18 +45,18 @@ const termsAndConditions: (NestedSection | SimpleSection)[] = [
         content: [
           "For the purposes of these Terms and Conditions:",
           "Country refers to India.",
-          `Company (referred to as either "the Company", "We", "Us", or "Our" in this Agreement) refers to Praglis, 30/4, Tharavad, Shanthi medu, Nehru nagar, Coimbatore, Tamil nadu. PIN: 641019.`,
+          `Company (referred to as either "the Company", "We", "Us", or "Our" in this Agreement) refers to Clovers, 30/4, Tharavad, Shanthi medu, Nehru nagar, Coimbatore, Tamil nadu. PIN: 641019.`,
           "Device means any device that can access the Service, such as a computer, a cellphone, or a digital tablet.",
           "Service refers to the Website.",
           'Terms and Conditions (also referred to as "Terms") mean these Terms and Conditions that form the entire agreement between You and the Company regarding the use of the Service.',
           "Third-party Social Media Service means any services or content (including data, information, products, or services) provided by a third-party that may be displayed, included, or made available by the Service.",
           <span>
-            The website refers to Praglis, accessible from{" "}
+            The website refers to Clovers, accessible from{" "}
             <Link
-              href={"https://www.praglis.in"}
+              href={"https://www.clovers.in"}
               className="text-blue-500 underline hover:text-blue-400"
             >
-              https://www.praglis.in
+              https://www.clovers.in
             </Link>
             .
           </span>,
@@ -182,7 +182,7 @@ const termsAndConditions: (NestedSection | SimpleSection)[] = [
     sectionType: "SIMPLE",
     heading: "Refund Policy",
     content: [
-      `Once paid, registration fees for the membership and other plans are non-refundable. If a registrant desires to reschedule his or her date of training, the registration is transferable to another training date/event hosted by Praglis, its affiliates, subsidiaries or successors so long as registrant provides us with at least five (5) days written or electronic (emailed) notice of the desire to transfer the registration.`,
+      `Once paid, registration fees for the membership and other plans are non-refundable. If a registrant desires to reschedule his or her date of training, the registration is transferable to another training date/event hosted by Clovers, its affiliates, subsidiaries or successors so long as registrant provides us with at least five (5) days written or electronic (emailed) notice of the desire to transfer the registration.`,
       <span>
         In order to exercise Your right of transfer, You must inform Us of your
         decision by means of a clear statement. You can inform us of your
@@ -224,7 +224,7 @@ const termsAndConditions: (NestedSection | SimpleSection)[] = [
     sectionType: "SIMPLE",
     heading: "Privacy Policy",
     content: [
-      `Our Privacy Policy is designed to clarify how we handle your personal information. In this policy, certain terms are defined to ensure consistency in interpretation. For instance, an "Account" refers to the unique access you have to our services, while "Company" denotes PRAGLIS, the entity responsible for this agreement. "Cookies" are small files placed on your device by our website, which may contain browsing history details and other relevant information. This policy applies regardless of whether these terms appear in singular or plural form.`,
+      `Our Privacy Policy is designed to clarify how we handle your personal information. In this policy, certain terms are defined to ensure consistency in interpretation. For instance, an "Account" refers to the unique access you have to our services, while "Company" denotes CLOVERS, the entity responsible for this agreement. "Cookies" are small files placed on your device by our website, which may contain browsing history details and other relevant information. This policy applies regardless of whether these terms appear in singular or plural form.`,
       `When you use our service, we may ask you to provide certain personally identifiable information, such as your email address, name, phone number, and address. Additionally, we automatically collect usage data, including your device's IP address, browser type, pages visited, and more. We utilize tracking technologies like cookies, flash cookies, and web beacons to improve and analyze our service. While using cookies is optional, disabling them may limit your ability to access certain parts of our service.`,
       `We use your personal data for various purposes, including providing and maintaining our service, managing your account, contacting you, providing news and offers, and managing your requests. Your personal information may be shared with service providers, affiliates, business partners, other users, or with your consent. We retain your personal data only for as long as necessary and take steps to ensure its security, although no method of transmission over the internet is completely secure.`,
       `Our service may contain links to third-party websites that are not operated by us. We have no control over the content, privacy policies, or practices of these third-party sites and assume no responsibility for them. We may update our privacy policy from time to time, and any changes will be communicated to you via email or through a prominent notice on our service. It's important to review this policy periodically for any updates or changes.`,
@@ -254,7 +254,7 @@ const termsAndConditions: (NestedSection | SimpleSection)[] = [
     sectionType: "SIMPLE",
     heading: "Rescheduling Option",
     content: [
-      `We do offer the option to reschedule your registration to another training date/event hosted by Praglis, its affiliates, subsidiaries, or successors. To be eligible to reschedule, you must provide us with at least five (5) days written or electronic (emailed) notice before the originally scheduled date of your training.`,
+      `We do offer the option to reschedule your registration to another training date/event hosted by Clovers, its affiliates, subsidiaries, or successors. To be eligible to reschedule, you must provide us with at least five (5) days written or electronic (emailed) notice before the originally scheduled date of your training.`,
     ],
   },
   {
@@ -329,19 +329,19 @@ const page = () => {
             Terms & Conditions
           </h1>
           <p>
-            {`Welcome to Praglis! These terms and conditions outline the rules and
-          regulations for the use of Praglis's Website, located at `}
+            {`Welcome to Clovers! These terms and conditions outline the rules and
+          regulations for the use of Clovers's Website, located at `}
             <Link
-              href={"https://www.praglis.in"}
+              href={"https://www.clovers.in"}
               className="text-blue-500 underline hover:text-blue-400"
             >
-              https://www.praglis.in
+              https://www.clovers.in
             </Link>
             .
           </p>
           <p>
             By accessing this website, we assume you accept these terms and
-            conditions. Do not continue to use Praglis if you do not agree to
+            conditions. Do not continue to use Clovers if you do not agree to
             take all of the terms and conditions stated on this page.
           </p>
         </section>

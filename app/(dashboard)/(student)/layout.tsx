@@ -9,6 +9,7 @@ import { ThemeToggle } from "@/components/theme-toggle"
 
 import { MainNav } from "./_components/main-nav"
 import MobileNav from "./_components/mobile-nav"
+import Link from "next/link"
 
 const DashBoardLayout = async ({ children }: { children: React.ReactNode }) => {
   const user = await currentUser()
@@ -25,12 +26,14 @@ const DashBoardLayout = async ({ children }: { children: React.ReactNode }) => {
         <div className="border-b">
           <div className="flex h-16 items-center px-4">
             {/* <TeamSwitcher /> */}
-            <Image
-              src={"/images/logo2.jpg"}
-              alt="PRAGLIS"
-              width={50}
-              height={50}
-            />
+            <Link href={"/"}>
+              <Image
+                src={"/images/logo2.jpg"}
+                alt="CLOVERS"
+                width={50}
+                height={50}
+              />
+            </Link>
             <MainNav className="mx-6" />
             <div className="ml-auto flex items-center space-x-4">
               {/* <Search /> */}

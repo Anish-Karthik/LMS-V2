@@ -41,7 +41,7 @@ const MakePaymentComponent = () => {
     const { currency, amount, id, ...rest } = data
     const options = {
       key: process.env.RAZORPAY_KEY, // Enter the Key ID generated from the Dashboard
-      name: "www.praglis.in",
+      name: "www.clovers.in",
       currency: currency,
       amount: amount,
       order_id: id,
@@ -72,7 +72,7 @@ const MakePaymentComponent = () => {
       },
       prefill: {
         name: "Siddarth Praveer",
-        email: "media.praglis@gmail.com",
+        email: "media.clovers@gmail.com",
         contact: "9853785519",
       },
     }
